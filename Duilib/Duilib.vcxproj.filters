@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\Control">
+      <UniqueIdentifier>{6ae2c6a7-f27e-4e64-ab29-a73a9d22af79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Control">
+      <UniqueIdentifier>{7531e56e-806e-4970-acda-a0078238f636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Core">
+      <UniqueIdentifier>{ffe7d021-60b1-4363-9f9c-e45501ed7243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core">
+      <UniqueIdentifier>{5128d26e-8bd0-4f18-a140-5aeb9e6098d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Utils">
+      <UniqueIdentifier>{853931c1-b55e-47e8-a9c2-b7e64cbb84a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Utils">
+      <UniqueIdentifier>{a8650d62-6513-48a5-b2d9-c70558c03ef2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -24,6 +42,9 @@
     <ClInclude Include="Duilib.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Core\DuiPaintManager.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -34,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DuiPaintManager.cpp">
+      <Filter>源文件\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
