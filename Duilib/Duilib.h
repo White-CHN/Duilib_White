@@ -45,6 +45,8 @@
 #include <comdef.h>
 #include <gdiplus.h>
 
+#include "Core/DuiPaintManager.h"
+
 #pragma comment( lib, "comctl32.lib" )
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "Imm32.lib" )
