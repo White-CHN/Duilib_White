@@ -8,6 +8,9 @@
 #define WIN32_LEAN_AND_MEAN             //  从 Windows 头文件中排除极少使用的信息
 // Windows 头文件:
 
+#ifdef _MSC_VER
+#pragma warning (disable : 4996) // function or variable may be unsafe (deprecated)
+#endif // _MSC_VER
 
 #include "DUIlib.h"
 

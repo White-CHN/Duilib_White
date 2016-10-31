@@ -45,6 +45,15 @@
     <ClInclude Include="Core\DuiPaintManager.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\DuiDefine.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\DuiUtils.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\DuiString.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -58,6 +67,15 @@
     </ClCompile>
     <ClCompile Include="Core\DuiPaintManager.cpp">
       <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DuiDefine.cpp">
+      <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\DuiUtils.cpp">
+      <Filter>源文件\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\DuiString.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

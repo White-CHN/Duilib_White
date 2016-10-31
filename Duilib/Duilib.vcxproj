@@ -548,11 +548,15 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\DuiDefine.h" />
     <ClInclude Include="Core\DuiPaintManager.h" />
     <ClInclude Include="Duilib.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Utils\DuiString.h" />
+    <ClInclude Include="Utils\DuiUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\DuiDefine.cpp" />
     <ClCompile Include="Core\DuiPaintManager.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
@@ -623,6 +627,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseA|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='SReleaseA|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Utils\DuiString.cpp" />
+    <ClCompile Include="Utils\DuiUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
