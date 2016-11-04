@@ -3458,8 +3458,8 @@ int unzLocateFile (unzFile file, const TCHAR *szFileName, int iCaseSensitivity)
 #endif
 
 	// support Windows subdirectory by:daviyang35
-	int iLen=strlen(szFileNameA);
-	for (int i=0;i<iLen;i++)
+	size_t iLen=strlen(szFileNameA);
+	for (size_t i=0;i<iLen;i++)
 	{
 		if (szFileNameA[i]=='\\')
 		{

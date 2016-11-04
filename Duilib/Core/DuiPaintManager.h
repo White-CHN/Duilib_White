@@ -158,6 +158,8 @@ namespace DuiLib {
 		virtual LRESULT MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) = 0;
 	};
 
+	typedef CDuiControl* (*LPCREATECONTROL)(LPCTSTR pstrType);
+
 	class DUILIB_API CDuiPaintManager
 	{
 	public:
@@ -299,6 +301,9 @@ namespace DuiLib {
 		static void MessageLoop();
 
 		static void GetChildWndRect(HWND hWnd, HWND hChildWnd, RECT& rcChildWnd);
+		//插件
+		static BOOL LoadPlugin(LPCTSTR pstrModuleName);
+		static CStdPtrArray* GetPlugins();
 	private:
 		static BOOL TranslateMessage(const LPMSG pMsg);
 
@@ -378,6 +383,7 @@ namespace DuiLib {
 		static CDuiString m_strResourcePath;	//资源目录路径
 		static CDuiString m_strResourceZip;	//资源文件名
 		static CStdPtrArray m_aPreMessages;		//所有CDuiPaintManager句柄
+		static CStdPtrArray m_aPlugins;			//所有插件
 		static TResInfo m_SharedResInfo;		//默认属性
 
 		static short m_H;

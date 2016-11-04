@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Duilib", "Duilib\Duilib.vcxproj", "{2ED1C2F1-2FFC-4453-BD60-B3580BC2FCC2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiDemo", "DuiDemo\DuiDemo.vcxproj", "{82B0C080-7613-49B0-BE5F-78433589051F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2ED1C2F1-2FFC-4453-BD60-B3580BC2FCC2} = {2ED1C2F1-2FFC-4453-BD60-B3580BC2FCC2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

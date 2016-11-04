@@ -4,7 +4,7 @@
 namespace DuiLib {
 
 
-	CDuiMarkupNode::CDuiMarkupNode(CDuiMarkup* pOwner, int iPos)
+	CDuiMarkupNode::CDuiMarkupNode(CDuiMarkup* pOwner, size_t iPos)
 		: m_iPos(iPos)
 		, m_nAttributes(0)
 		, m_pOwner(pOwner)
@@ -37,7 +37,7 @@ namespace DuiLib {
 		{
 			return CDuiMarkupNode();
 		}
-		ULONG iPos = m_pOwner->m_pElements[m_iPos].iParent;
+		size_t iPos = m_pOwner->m_pElements[m_iPos].iParent;
 		if( iPos == 0 ) 
 		{
 			return CDuiMarkupNode();
@@ -51,7 +51,7 @@ namespace DuiLib {
 		{
 			return CDuiMarkupNode();
 		}
-		ULONG iPos = m_pOwner->m_pElements[m_iPos].iNext;
+		size_t iPos = m_pOwner->m_pElements[m_iPos].iNext;
 		if( iPos == 0 ) 
 		{
 			return CDuiMarkupNode();
@@ -65,7 +65,7 @@ namespace DuiLib {
 		{
 			return CDuiMarkupNode();
 		}
-		ULONG iPos = m_pOwner->m_pElements[m_iPos].iChild;
+		size_t iPos = m_pOwner->m_pElements[m_iPos].iChild;
 		if( iPos == 0 ) 
 		{
 			return CDuiMarkupNode();
@@ -79,7 +79,7 @@ namespace DuiLib {
 		{
 			return CDuiMarkupNode();
 		}
-		ULONG iPos = m_pOwner->m_pElements[m_iPos].iChild;
+		size_t iPos = m_pOwner->m_pElements[m_iPos].iChild;
 		while( iPos != 0 ) 
 		{
 			if( _tcsicmp(m_pOwner->m_pstrXML + m_pOwner->m_pElements[iPos].iStart, pstrName) == 0 ) 

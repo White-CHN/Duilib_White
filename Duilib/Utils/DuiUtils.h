@@ -56,12 +56,12 @@ namespace DuiLib {
 
 		void Empty();
 		void Resize(int iSize);
-		bool IsEmpty() const;
+		BOOL IsEmpty() const;
 		int Find(LPVOID pData) const;
-		bool Add(LPVOID pData);
-		bool SetAt(int iIndex, LPVOID pData);
-		bool InsertAt(int iIndex, LPVOID pData);
-		bool Remove(int iIndex);
+		BOOL Add(LPVOID pData);
+		BOOL SetAt(int iIndex, LPVOID pData);
+		BOOL InsertAt(int iIndex, LPVOID pData);
+		BOOL Remove(int iIndex);
 		int GetSize() const;
 		LPVOID* GetData();
 
@@ -89,10 +89,10 @@ namespace DuiLib {
 		~CStdStringPtrMap();
 
 		void Resize(int nSize = 83);
-		LPVOID Find(LPCTSTR key, bool optimize = true) const;
-		bool Insert(LPCTSTR key, LPVOID pData);
+		LPVOID Find(LPCTSTR key, BOOL optimize = TRUE) const;
+		BOOL Insert(LPCTSTR key, LPVOID pData);
 		LPVOID Set(LPCTSTR key, LPVOID pData);
-		bool Remove(LPCTSTR key);
+		BOOL Remove(LPCTSTR key);
 		void RemoveAll();
 		int GetSize() const;
 		LPCTSTR GetAt(int iIndex) const;

@@ -466,6 +466,30 @@ namespace DuiLib {
 				CDuiString strClass =  _T("CDui");
 				strClass = strClass + pstrClass ;
 				pControl = dynamic_cast<CDuiControl*>(CDuiControlFactory::GetInstance()->CreateControl(strClass));
+
+				// 检查插件
+				if( pControl == NULL ) 
+				{
+					CStdPtrArray* pPlugins = CDuiPaintManager::GetPlugins();
+					LPCREATECONTROL lpCreateControl = NULL;
+					for( int i = 0; i < pPlugins->GetSize(); ++i ) 
+					{
+						lpCreateControl = (LPCREATECONTROL)pPlugins->GetAt(i);
+						if( lpCreateControl != NULL ) 
+						{
+							pControl = lpCreateControl(pstrClass);
+							if( pControl != NULL ) 
+							{
+								break;
+							}
+						}
+					}
+				}
+				// 回掉创建
+				if( pControl == NULL && m_pCallback != NULL ) 
+				{
+					pControl = m_pCallback->CreateControl(pstrClass);
+				}
 			}
 			if( pControl == NULL ) {
 #ifdef _DEBUG

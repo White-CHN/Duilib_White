@@ -308,7 +308,7 @@ namespace DuiLib {
 		 return m_pElements != NULL;
 	}
 
-	void CDuiMarkup::SetPreserveWhitespace(BOOL bPreserve /*= true*/)
+	void CDuiMarkup::SetPreserveWhitespace(BOOL bPreserve /*= TRUE*/)
 	{
 		m_bPreserveWhitespace = bPreserve;
 	}
@@ -341,10 +341,10 @@ namespace DuiLib {
 		return _Parse(pstrXML, 0);
 	}
 
-	BOOL CDuiMarkup::_Parse(LPTSTR& pstrText, ULONG iParent)
+	BOOL CDuiMarkup::_Parse(LPTSTR& pstrText, size_t iParent)
 	{
 		_SkipWhitespace(pstrText);
-		ULONG iPrevious = 0;
+		size_t iPrevious = 0;
 		while(TRUE)
 		{
 			if( *pstrText == _T('\0') && iParent <= 1 ) 
@@ -384,7 +384,7 @@ namespace DuiLib {
 			_SkipWhitespace(pstrText);
 			// Fill out element structure
 			XMLELEMENT* pEl = _ReserveElement();
-			ULONG iPos = pEl - m_pElements;
+			size_t iPos = pEl - m_pElements;
 			pEl->iStart = pstrText - m_pstrXML;
 			pEl->iParent = iParent;
 			pEl->iNext = pEl->iChild = 0;

@@ -207,12 +207,12 @@ namespace DuiLib {
 		m_iCount = iSize;
 	}
 
-	bool CStdPtrArray::IsEmpty() const
+	BOOL CStdPtrArray::IsEmpty() const
 	{
 		return m_iCount == 0;
 	}
 
-	bool CStdPtrArray::Add(LPVOID pData)
+	BOOL CStdPtrArray::Add(LPVOID pData)
 	{
 		if( ++m_iCount >= m_iAllocated) 
 		{
@@ -227,14 +227,14 @@ namespace DuiLib {
 			else 
 			{
 				--m_iCount;
-				return false;
+				return FALSE;
 			}
 		}
 		m_ppData[m_iCount - 1] = pData;
-		return true;
+		return TRUE;
 	}
 
-	bool CStdPtrArray::InsertAt(int iIndex, LPVOID pData)
+	BOOL CStdPtrArray::InsertAt(int iIndex, LPVOID pData)
 	{
 		if( iIndex == m_iCount ) 
 		{
@@ -242,7 +242,7 @@ namespace DuiLib {
 		}
 		if( iIndex < 0 || iIndex > m_iCount ) 
 		{
-			return false;
+			return FALSE;
 		}
 		if( ++m_iCount >= m_iAllocated) 
 		{
@@ -260,35 +260,35 @@ namespace DuiLib {
 			else 
 			{
 				--m_iCount;
-				return false;
+				return FALSE;
 			}
 		}
 		memmove(&m_ppData[iIndex + 1], &m_ppData[iIndex], (m_iCount - iIndex - 1) * sizeof(LPVOID));
 		m_ppData[iIndex] = pData;
-		return true;
+		return TRUE;
 	}
 
-	bool CStdPtrArray::SetAt(int iIndex, LPVOID pData)
+	BOOL CStdPtrArray::SetAt(int iIndex, LPVOID pData)
 	{
 		if( iIndex < 0 || iIndex >= m_iCount ) 
 		{
-			return false;
+			return FALSE;
 		}
 		m_ppData[iIndex] = pData;
-		return true;
+		return TRUE;
 	}
 
-	bool CStdPtrArray::Remove(int iIndex)
+	BOOL CStdPtrArray::Remove(int iIndex)
 	{
 		if( iIndex < 0 || iIndex >= m_iCount ) 
 		{
-			return false;
+			return FALSE;
 		}
 		if( iIndex < --m_iCount ) 
 		{
 			::CopyMemory(m_ppData + iIndex, m_ppData + iIndex + 1, (m_iCount - iIndex) * sizeof(LPVOID));
 		}
-		return true;
+		return TRUE;
 	}
 
 	int CStdPtrArray::Find(LPVOID pData) const
@@ -403,7 +403,7 @@ namespace DuiLib {
 		m_nCount = 0;
 	}
 
-	LPVOID CStdStringPtrMap::Find(LPCTSTR key, bool optimize) const
+	LPVOID CStdStringPtrMap::Find(LPCTSTR key, BOOL optimize) const
 	{
 		if( m_nBuckets == 0 || GetSize() == 0 ) return NULL;
 
@@ -428,10 +428,10 @@ namespace DuiLib {
 		return NULL;
 	}
 
-	bool CStdStringPtrMap::Insert(LPCTSTR key, LPVOID pData)
+	BOOL CStdStringPtrMap::Insert(LPCTSTR key, LPVOID pData)
 	{
-		if( m_nBuckets == 0 ) return false;
-		if( Find(key) ) return false;
+		if( m_nBuckets == 0 ) return FALSE;
+		if( Find(key) ) return FALSE;
 
 		// Add first in bucket
 		UINT slot = HashKey(key) % m_nBuckets;
@@ -444,7 +444,7 @@ namespace DuiLib {
 			pItem->pNext->pPrev = pItem;
 		m_aT[slot] = pItem;
 		m_nCount++;
-		return true;
+		return TRUE;
 	}
 
 	LPVOID CStdStringPtrMap::Set(LPCTSTR key, LPVOID pData)
@@ -467,9 +467,9 @@ namespace DuiLib {
 		return NULL;
 	}
 
-	bool CStdStringPtrMap::Remove(LPCTSTR key)
+	BOOL CStdStringPtrMap::Remove(LPCTSTR key)
 	{
-		if( m_nBuckets == 0 || GetSize() == 0 ) return false;
+		if( m_nBuckets == 0 || GetSize() == 0 ) return FALSE;
 
 		UINT slot = HashKey(key) % m_nBuckets;
 		TITEM** ppItem = &m_aT[slot];
@@ -481,12 +481,12 @@ namespace DuiLib {
 					(*ppItem)->pPrev = pKill->pPrev;
 				delete pKill;
 				m_nCount--;
-				return true;
+				return TRUE;
 			}
 			ppItem = &((*ppItem)->pNext);
 		}
 
-		return false;
+		return FALSE;
 	}
 
 	int CStdStringPtrMap::GetSize() const
@@ -504,7 +504,7 @@ namespace DuiLib {
 
 	LPCTSTR CStdStringPtrMap::GetAt(int iIndex) const
 	{
-		if( m_nBuckets == 0 || GetSize() == 0 ) return false;
+		if( m_nBuckets == 0 || GetSize() == 0 ) return FALSE;
 
 		int pos = 0;
 		int len = m_nBuckets;

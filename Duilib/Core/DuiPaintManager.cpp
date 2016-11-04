@@ -133,6 +133,7 @@ namespace DuiLib {
 	CDuiString CDuiPaintManager::m_strResourcePath = _T("");
 	CDuiString CDuiPaintManager::m_strResourceZip = _T("");
 	CStdPtrArray CDuiPaintManager::m_aPreMessages;
+	CStdPtrArray CDuiPaintManager::m_aPlugins;
 
 	short CDuiPaintManager::m_H = 180;
 	short CDuiPaintManager::m_S = 100;
@@ -321,7 +322,7 @@ namespace DuiLib {
 					return TRUE;
 				}
 
-				bool bNeedSizeMsg = FALSE;
+				BOOL bNeedSizeMsg = FALSE;
 				RECT rcClient = { 0 };
 				::GetClientRect(m_hWndPaint, &rcClient);
 				DWORD dwWidth = rcClient.right - rcClient.left;
@@ -1822,6 +1823,35 @@ namespace DuiLib {
 		::ScreenToClient(hWnd, &pt);
 		rcChildWnd.right = pt.x;
 		rcChildWnd.bottom = pt.y;
+	}
+
+	BOOL CDuiPaintManager::LoadPlugin(LPCTSTR pstrModuleName)
+	{
+		ASSERT( !::IsBadStringPtr(pstrModuleName,-1) || pstrModuleName == NULL );
+		if( pstrModuleName == NULL ) 
+		{
+			return FALSE;
+		}
+		HMODULE hModule = ::LoadLibrary(pstrModuleName);
+		if( hModule != NULL ) 
+		{
+			LPCREATECONTROL lpCreateControl = (LPCREATECONTROL)::GetProcAddress(hModule, "CreateControl");
+			if( lpCreateControl != NULL ) 
+			{
+				if( m_aPlugins.Find(lpCreateControl) >= 0 ) 
+				{
+					return TRUE;
+				}
+				m_aPlugins.Add(lpCreateControl);
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
+	CStdPtrArray* CDuiPaintManager::GetPlugins()
+	{
+		return &m_aPlugins;
 	}
 
 }

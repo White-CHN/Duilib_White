@@ -2322,7 +2322,7 @@ namespace DuiLib {
 		if( pstrText == NULL || pManager == NULL ) return size;
 		::SetBkMode(hDC, TRANSPARENT);
 		HFONT hOldFont = (HFONT)::SelectObject(hDC, pManager->GetFont(iFont));
-		GetTextExtentPoint32(hDC, pstrText, _tcslen(pstrText) , &size);
+		GetTextExtentPoint32(hDC, pstrText, (int)_tcslen(pstrText) , &size);
 		::SelectObject(hDC, hOldFont);
 		return size;
 	}

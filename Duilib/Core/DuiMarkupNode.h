@@ -10,7 +10,7 @@ namespace DuiLib {
 		friend class CDuiMarkup;
 	public:
 		CDuiMarkupNode();
-		CDuiMarkupNode(CDuiMarkup* pOwner, int iPos);
+		CDuiMarkupNode(CDuiMarkup* pOwner, size_t iPos);
 		~CDuiMarkupNode(void);
 	public:
 		BOOL IsValid() const;
@@ -40,11 +40,11 @@ namespace DuiLib {
 	private:
 		typedef struct
 		{
-			ULONG iName;
-			ULONG iValue;
+			size_t iName;
+			size_t iValue;
 		} XMLATTRIBUTE;
 	private:
-		int m_iPos;
+		size_t m_iPos;
 		int m_nAttributes;
 		XMLATTRIBUTE m_aAttributes[MAX_XML_ATTRIBUTES];
 		CDuiMarkup* m_pOwner;

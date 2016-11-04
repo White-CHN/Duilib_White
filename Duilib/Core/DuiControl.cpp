@@ -194,7 +194,7 @@ namespace DuiLib {
 		return m_pManager;
 	}
 
-	void CDuiControl::SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit /*= true*/)
+	void CDuiControl::SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit /*= TRUE*/)
 	{
 		m_pManager = pManager;
 		m_pParent = pParent;
@@ -446,7 +446,7 @@ namespace DuiLib {
 	void CDuiControl::SetVirtualWnd(LPCTSTR pstrValue)
 	{
 		m_sVirtualWnd = pstrValue;
-		m_pManager->UsedVirtualWnd(true);
+		m_pManager->UsedVirtualWnd(TRUE);
 	}
 
 	const RECT& CDuiControl::GetPos() const

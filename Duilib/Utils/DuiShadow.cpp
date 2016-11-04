@@ -75,7 +75,7 @@ namespace DuiLib
 		GetShadowMap()[hParentWnd] = this;
 
 		// Determine the initial show state of shadow according to parent window's state
-		LONG lParentStyle = GetWindowLongPtr(hParentWnd, GWL_STYLE);
+		LONG_PTR lParentStyle = GetWindowLongPtr(hParentWnd, GWL_STYLE);
 
 		// Create the shadow window
 		LONG styleValue = lParentStyle & WS_CAPTION;
@@ -568,7 +568,7 @@ namespace DuiLib
 			}
 			else {
 				// Determine the initial show state of shadow according to parent window's state
-				LONG lParentStyle = GetWindowLongPtr(GetParent(m_hWnd), GWL_STYLE);
+				LONG_PTR lParentStyle = GetWindowLongPtr(GetParent(m_hWnd), GWL_STYLE);
 
 
 				if (!(WS_VISIBLE & lParentStyle))	// Parent invisible

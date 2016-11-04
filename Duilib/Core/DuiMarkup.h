@@ -23,7 +23,7 @@ namespace DuiLib {
 		void Release();
 		BOOL IsValid() const;
 
-		void SetPreserveWhitespace(BOOL bPreserve = true);
+		void SetPreserveWhitespace(BOOL bPreserve = TRUE);
 		void GetLastErrorMessage(LPTSTR pstrMessage, SIZE_T cchMax) const;
 		void GetLastErrorLocation(LPTSTR pstrSource, SIZE_T cchMax) const;
 
@@ -31,15 +31,15 @@ namespace DuiLib {
 	public:
 		typedef struct tagXMLELEMENT
 		{
-			ULONG iStart;
-			ULONG iChild;
-			ULONG iNext;
-			ULONG iParent;
-			ULONG iData;
+			size_t iStart;
+			size_t iChild;
+			size_t iNext;
+			size_t iParent;
+			size_t iData;
 		} XMLELEMENT;
 	private:
 		BOOL _Parse();
-		BOOL _Parse(LPTSTR& pstrText, ULONG iParent);
+		BOOL _Parse(LPTSTR& pstrText, size_t iParent);
 		XMLELEMENT* _ReserveElement();
 		inline void _SkipWhitespace(LPTSTR& pstr) const;
 		inline void _SkipWhitespace(LPCTSTR& pstr) const;
