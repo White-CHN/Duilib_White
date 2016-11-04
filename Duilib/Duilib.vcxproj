@@ -545,19 +545,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\Help\属性列表.xml" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\DuiControlFactory.h" />
+    <ClInclude Include="Core\DuiContainer.h" />
+    <ClInclude Include="Core\DuiControl.h" />
     <ClInclude Include="Core\DuiDefine.h" />
+    <ClInclude Include="Core\DuiDlgBuilder.h" />
+    <ClInclude Include="Core\DuiDlgImplBase.h" />
+    <ClInclude Include="Core\DuiMarkup.h" />
+    <ClInclude Include="Core\DuiMarkupNode.h" />
     <ClInclude Include="Core\DuiPaintManager.h" />
+    <ClInclude Include="Core\DuiRender.h" />
+    <ClInclude Include="Core\DuiWnd.h" />
     <ClInclude Include="Duilib.h" />
+    <ClInclude Include="Layout\DuiHorizontalLayout.h" />
+    <ClInclude Include="Layout\DuiVerticalLayout.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Utils\DuiDelegate.h" />
+    <ClInclude Include="Utils\DuiDPI.h" />
+    <ClInclude Include="Utils\DuiShadow.h" />
     <ClInclude Include="Utils\DuiString.h" />
     <ClInclude Include="Utils\DuiUtils.h" />
+    <ClInclude Include="Utils\stb_image.h" />
+    <ClInclude Include="Utils\VersionHelpers.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\DuiControlFactory.cpp" />
+    <ClCompile Include="Core\DuiContainer.cpp" />
+    <ClCompile Include="Core\DuiControl.cpp" />
     <ClCompile Include="Core\DuiDefine.cpp" />
+    <ClCompile Include="Core\DuiDlgBuilder.cpp" />
+    <ClCompile Include="Core\DuiDlgImplBase.cpp" />
+    <ClCompile Include="Core\DuiMarkup.cpp" />
+    <ClCompile Include="Core\DuiMarkupNode.cpp" />
     <ClCompile Include="Core\DuiPaintManager.cpp" />
+    <ClCompile Include="Core\DuiRender.cpp" />
+    <ClCompile Include="Core\DuiWnd.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='SDebug|Win32'">false</CompileAsManaged>
@@ -609,6 +635,8 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Duilib.cpp" />
+    <ClCompile Include="Layout\DuiHorizontalLayout.cpp" />
+    <ClCompile Include="Layout\DuiVerticalLayout.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='SDebug|Win32'">Create</PrecompiledHeader>
@@ -627,8 +655,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseA|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='SReleaseA|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Utils\DuiDelegate.cpp" />
+    <ClCompile Include="Utils\DuiDPI.cpp" />
+    <ClCompile Include="Utils\DuiShadow.cpp" />
     <ClCompile Include="Utils\DuiString.cpp" />
     <ClCompile Include="Utils\DuiUtils.cpp" />
+    <ClCompile Include="Utils\XUnzip.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

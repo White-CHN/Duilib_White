@@ -381,7 +381,7 @@ namespace DuiLib
 	int CDuiString::Find(LPCTSTR lpStrSub, int iPos /*= 0*/) const
 	{
 		ASSERT(!::IsBadStringPtr(lpStrSub,-1));
-		if( iPos < 0 || iPos >= GetLength() )
+		if( iPos < 0 || iPos >= GetLength() || lpStrSub == NULL)
 		{
 			return -1;
 		}
@@ -397,6 +397,10 @@ namespace DuiLib
 
 	int CDuiString::Replace(LPCTSTR lpStrFrom, LPCTSTR lpStrTo)
 	{
+		if (lpStrFrom == NULL || lpStrTo == NULL)
+		{
+			return -1;
+		}
 		CDuiString strTemp;
 		int iCount = 0;
 		int iPos = Find(lpStrFrom);
@@ -416,6 +420,10 @@ namespace DuiLib
 
 	int __cdecl CDuiString::Format(LPCTSTR lpStrFormat, ...)
 	{
+		if (lpStrFormat == NULL)
+		{
+			return -1;
+		}
 		va_list Args;
 		va_start(Args, lpStrFormat);
 		int iRet = InnerFormat(lpStrFormat, Args);
@@ -425,6 +433,10 @@ namespace DuiLib
 
 	int __cdecl CDuiString::SmallFormat(LPCTSTR lpStrFormat, ...)
 	{
+		if (lpStrFormat == NULL)
+		{
+			return -1;
+		}
 		CDuiString strFormat = lpStrFormat;
 		TCHAR strBuffer[MAX_LOCAL_STRING_LEN + 1] = { 0 };
 		va_list argList;

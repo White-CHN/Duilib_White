@@ -10,7 +10,10 @@
 
 #ifdef _MSC_VER
 #pragma warning (disable : 4996) // function or variable may be unsafe (deprecated)
+
 #endif // _MSC_VER
+
+//#define USE_XIMAGE_EFFECT //使用ximage的gif控件CGifAnimExUI开关，提升性能,默认不使用
 
 #include "DUIlib.h"
 

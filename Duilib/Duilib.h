@@ -44,21 +44,42 @@
 #include <malloc.h>
 #include <comdef.h>
 #include <gdiplus.h>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+#include <tchar.h>
+#include <algorithm>
+#include <map>
+#include <vector>
 
+using namespace std;
 
-#include "Utils/DuiUtils.h"
+#include "vld.h"
 #include "Utils/DuiString.h"
+#include "Utils/DuiUtils.h"
+#include "Utils/DuiDPI.h"
+#include "Utils/DuiDelegate.h"
+#include "Utils/DuiShadow.h"
 
+#include "Core/DuiMarkupNode.h"
+#include "Core/DuiMarkup.h"
 #include "Core/DuiDefine.h"
+#include "Core/DuiControlFactory.h"
+
+
 #include "Core/DuiPaintManager.h"
+#include "Core/DuiControl.h"
+#include "Core/DuiContainer.h"
+#include "Core/DuiWnd.h"
+#include "Core/DuiDlgBuilder.h"
+#include "Core/DuiDlgImplBase.h"
+#include "Core/DuiRender.h"
 
 
-
-
-
-
-
-
+#include "Layout/DuiVerticalLayout.h"
+#include "Layout/DuiHorizontalLayout.h"
 
 
 

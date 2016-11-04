@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window size="800,572" sizebox="4,4,6,6"  roundcorner="4,4" caption="0,0,0,32"  mininfo="400,300" showshadow="true" shadowimage="main/shadow.png" shadowsize="6" shadowdarkness="100" shadowcorner="8,8,8,8" >
+	<VerticalLayout name="root" bkimage="main/1.jpg">
+		<HorizontalLayout height="32" bkcolor="#FF00BFFF" >
+		</HorizontalLayout>
+	</VerticalLayout>
+
+</Window>
