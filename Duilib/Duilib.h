@@ -1,21 +1,21 @@
 #pragma once
 
 #ifdef DUILIB_STATIC
-	#define DUILIB_API 
+    #define DUILIB_API
 #else
-	#if defined(DUILIB_EXPORTS)
-		#if defined(_MSC_VER)
-			#define DUILIB_API __declspec(dllexport)
-		#else
-			#define DUILIB_API 
-		#endif
-	#else
-		#if defined(_MSC_VER)
-			#define DUILIB_API __declspec(dllimport)
-		#else
-			#define DUILIB_API 
-		#endif
-	#endif
+    #if defined(DUILIB_EXPORTS)
+        #if defined(_MSC_VER)
+            #define DUILIB_API __declspec(dllexport)
+        #else
+            #define DUILIB_API
+        #endif
+    #else
+        #if defined(_MSC_VER)
+            #define DUILIB_API __declspec(dllimport)
+        #else
+            #define DUILIB_API
+        #endif
+    #endif
 #endif
 
 
@@ -23,13 +23,13 @@
 
 
 #if defined _M_IX86
-#pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
+    #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #elif defined _M_IA64
-#pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='ia64' publicKeyToken='6595b64144ccf1df' language='*'\"")
+    #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='ia64' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #elif defined _M_X64
-#pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
+    #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #else
-#pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+    #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 
 
@@ -57,6 +57,7 @@
 using namespace std;
 
 #include "vld.h"
+
 #include "Utils/DuiString.h"
 #include "Utils/DuiUtils.h"
 #include "Utils/DuiDPI.h"
@@ -67,8 +68,6 @@ using namespace std;
 #include "Core/DuiMarkup.h"
 #include "Core/DuiDefine.h"
 #include "Core/DuiControlFactory.h"
-
-
 #include "Core/DuiPaintManager.h"
 #include "Core/DuiControl.h"
 #include "Core/DuiContainer.h"
@@ -80,6 +79,10 @@ using namespace std;
 
 #include "Layout/DuiVerticalLayout.h"
 #include "Layout/DuiHorizontalLayout.h"
+
+#include "Control/DuiScrollBar.h"
+#include "Control/DuiLabel.h"
+
 
 
 

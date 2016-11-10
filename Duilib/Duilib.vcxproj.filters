@@ -110,6 +110,12 @@
     <ClInclude Include="Utils\DuiShadow.h">
       <Filter>头文件\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiLabel.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\DuiScrollBar.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -177,6 +183,12 @@
     </ClCompile>
     <ClCompile Include="Utils\DuiShadow.cpp">
       <Filter>源文件\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiLabel.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiScrollBar.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

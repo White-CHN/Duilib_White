@@ -549,6 +549,8 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Control\DuiLabel.h" />
+    <ClInclude Include="Control\DuiScrollBar.h" />
     <ClInclude Include="Core\DuiControlFactory.h" />
     <ClInclude Include="Core\DuiContainer.h" />
     <ClInclude Include="Core\DuiControl.h" />
@@ -573,6 +575,8 @@
     <ClInclude Include="Utils\VersionHelpers.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Control\DuiLabel.cpp" />
+    <ClCompile Include="Control\DuiScrollBar.cpp" />
     <ClCompile Include="Core\DuiControlFactory.cpp" />
     <ClCompile Include="Core\DuiContainer.cpp" />
     <ClCompile Include="Core\DuiControl.cpp" />

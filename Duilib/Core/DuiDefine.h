@@ -1,8 +1,9 @@
 #pragma once
 
-namespace DuiLib {
+namespace DuiLib
+{
 
-	//!检查并释放指针
+    //!检查并释放指针
 #ifndef DUI_FREE_POINT
 #define DUI_FREE_POINT(x)			\
 	{									\
@@ -13,7 +14,7 @@ namespace DuiLib {
 		}								\
 	}
 #endif
-	//!检查并释放数组
+    //!检查并释放数组
 #ifndef DUI_FREE_ARRAY
 #define DUI_FREE_ARRAY(x)			\
 	{									\
@@ -33,14 +34,14 @@ namespace DuiLib {
 #define CLAMP(x,a,b) (MIN(b,MAX(a,x)))
 
 #ifndef SIZEOF_ARRAY
-#define SIZEOF_ARRAY(x) ((sizeof(x))/(sizeof(x[0])))
+    #define SIZEOF_ARRAY(x) ((sizeof(x))/(sizeof(x[0])))
 #endif // SIZEOF_ARRAY
 
 #ifndef ASSERT
-#define ASSERT(expr)  _ASSERTE(expr)
+    #define ASSERT(expr)  _ASSERTE(expr)
 #endif
 
-	// 鼠标光标定义
+    // 鼠标光标定义
 #define DUI_ARROW           32512
 #define DUI_IBEAM           32513
 #define DUI_WAIT            32514
@@ -56,7 +57,7 @@ namespace DuiLib {
 #define DUI_NO              32648
 #define DUI_HAND            32649
 
-	// Flags for FindControl()
+    // Flags for FindControl()
 #define UIFIND_ALL           0x00000000
 #define UIFIND_VISIBLE       0x00000001
 #define UIFIND_ENABLED       0x00000002
@@ -64,13 +65,27 @@ namespace DuiLib {
 #define UIFIND_UPDATETEST    0x00000008
 #define UIFIND_TOP_FIRST     0x00000010
 #define UIFIND_ME_FIRST      0x80000000
-	// Flags for CControlUI::GetControlFlags()
+    // Flags for CControlUI::GetControlFlags()
 #define UIFLAG_TABSTOP       0x00000001
 #define UIFLAG_SETCURSOR     0x00000002
 #define UIFLAG_WANTRETURN    0x00000004
 
-	//定义所有消息类型
-	//////////////////////////////////////////////////////////////////////////
+
+#define UI_WNDSTYLE_CONTAINER  (0)
+#define UI_WNDSTYLE_FRAME      (WS_VISIBLE | WS_OVERLAPPEDWINDOW)
+#define UI_WNDSTYLE_CHILD      (WS_VISIBLE | WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN)
+#define UI_WNDSTYLE_DIALOG     (WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_DLGFRAME | WS_CLIPSIBLINGS | WS_CLIPCHILDREN)
+
+#define UI_WNDSTYLE_EX_FRAME   (WS_EX_WINDOWEDGE)
+#define UI_WNDSTYLE_EX_DIALOG  (WS_EX_TOOLWINDOW | WS_EX_DLGMODALFRAME)
+
+#define UI_CLASSSTYLE_CONTAINER  (0)
+#define UI_CLASSSTYLE_FRAME      (CS_VREDRAW | CS_HREDRAW)
+#define UI_CLASSSTYLE_CHILD      (CS_VREDRAW | CS_HREDRAW | CS_DBLCLKS | CS_SAVEBITS)
+#define UI_CLASSSTYLE_DIALOG     (CS_VREDRAW | CS_HREDRAW | CS_DBLCLKS | CS_SAVEBITS)
+
+    //定义所有消息类型
+    //////////////////////////////////////////////////////////////////////////
 #define DUI_MSGTYPE_MENU                   (_T("menu"))
 #define DUI_MSGTYPE_LINK                   (_T("link"))
 
@@ -125,7 +140,7 @@ namespace DuiLib {
 #define DUI_MSGTYPE_LISTHEADITEMCHECKED		(_T("listheaditemchecked"))
 #define DUI_MSGTYPE_LISTPAGECHANGED			(_T("listpagechanged"))
 
-	//////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
 
 //////////////BEGIN控件名称宏定义//////////////////////////////////////////////////
 ///
@@ -187,21 +202,21 @@ namespace DuiLib {
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 
 #ifdef _DEBUG
-	#ifndef DUI_TRACE
-	#define DUI_TRACE(...) _tprintf(_T("\r\n[%s][Line:%d]"),__FUNCTIONW__,__LINE__);DuiTrace(__VA_ARGS__)
-	#endif	
+    #ifndef DUI_TRACE
+        #define DUI_TRACE(...) _tprintf(_T("\r\n[%s][Line:%d]"),__FUNCTIONW__,__LINE__);DuiTrace(__VA_ARGS__)
+    #endif
 #else
-	#ifndef DUI_TRACE
-	#define DUI_TRACE 
-	#endif
+    #ifndef DUI_TRACE
+        #define DUI_TRACE
+    #endif
 #endif	// _DEBUG
 
-void DUILIB_API DuiTrace(LPCTSTR pstrFormat, ...);
+    void DUILIB_API DuiTrace(LPCTSTR pstrFormat, ...);
 
 
 
 // 核心控件
-class CDuiControl;
+    class CDuiControl;
 
 
 

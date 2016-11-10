@@ -9,7 +9,7 @@
 // Windows м╥нд╪Ч:
 
 #ifdef _MSC_VER
-#pragma warning (disable : 4996) // function or variable may be unsafe (deprecated)
+    #pragma warning (disable : 4996) // function or variable may be unsafe (deprecated)
 
 #endif // _MSC_VER
 
