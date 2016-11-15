@@ -21,6 +21,7 @@
 
 #define DUILIB_COMDAT __declspec(selectany)
 
+//#define USE_XIMAGE_EFFECT //使用ximage的gif控件CGifAnimExUI开关，提升性能,默认不使用
 
 #if defined _M_IX86
     #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
@@ -35,19 +36,8 @@
 
 #include <windows.h>
 #include <windowsx.h>
-#include <commctrl.h>
-#include <stddef.h>
-#include <richedit.h>
-#include <tchar.h>
-#include <assert.h>
-#include <crtdbg.h>
-#include <malloc.h>
 #include <comdef.h>
 #include <gdiplus.h>
-#include <time.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <locale.h>
 #include <tchar.h>
 #include <algorithm>
@@ -84,9 +74,4 @@ using namespace std;
 #include "Control/DuiLabel.h"
 
 
-
-
-#pragma comment( lib, "comctl32.lib" )
 #pragma comment( lib, "GdiPlus.lib" )
-#pragma comment( lib, "Imm32.lib" )
-#pragma comment( lib, "winmm.lib" )

@@ -3,9 +3,8 @@
 namespace DuiLib
 {
 
-    //!检查并释放指针
-#ifndef DUI_FREE_POINT
-#define DUI_FREE_POINT(x)			\
+//!检查并释放指针
+#define DUI_FREE_POINT(x)				\
 	{									\
 		if (NULL != x)					\
 		{								\
@@ -13,10 +12,9 @@ namespace DuiLib
 			x = NULL;					\
 		}								\
 	}
-#endif
-    //!检查并释放数组
-#ifndef DUI_FREE_ARRAY
-#define DUI_FREE_ARRAY(x)			\
+
+//!检查并释放数组
+#define DUI_FREE_ARRAY(x)				\
 	{									\
 		if (NULL != x)					\
 		{								\
@@ -24,7 +22,7 @@ namespace DuiLib
 			x = NULL;					\
 		}								\
 	}
-#endif
+
 
 #define MAX_FONT_ID		30000
 

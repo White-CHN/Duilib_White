@@ -13,8 +13,9 @@
 
 #endif // _MSC_VER
 
-//#define USE_XIMAGE_EFFECT //使用ximage的gif控件CGifAnimExUI开关，提升性能,默认不使用
-
-#include "DUIlib.h"
 
 // TODO: 在此处引用程序需要的其他头文件
+
+#include "Duilib.h"
+
+

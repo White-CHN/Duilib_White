@@ -1812,7 +1812,6 @@ namespace DuiLib
     {
         ASSERT(hInstance);
         m_hInstance = hInstance;
-        InitCommonControls();	//注册并初始化通用控件窗口类
         if(m_hMsimg32Module == NULL)
         {
             m_hMsimg32Module = ::LoadLibrary(_T("msimg32.dll"));
