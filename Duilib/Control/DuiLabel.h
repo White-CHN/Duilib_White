@@ -33,7 +33,7 @@ namespace DuiLib
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 
         virtual void PaintText(HDC hDC);
-    protected:
+    private:
         BOOL	m_bShowHtml;
         BOOL	m_bAutoCalcWidth;
         int		m_iFont;

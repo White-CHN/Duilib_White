@@ -59,19 +59,33 @@ namespace DuiLib
     {
     }
 
-    DuiLib::CDuiString CDuiControl::GetName() const
-    {
-        return m_sName;
-    }
-
-    void CDuiControl::SetName(LPCTSTR pstrName)
-    {
-        m_sName = pstrName;
-    }
-
     LPCTSTR CDuiControl::GetClass() const
     {
         return _T("Control");
+    }
+
+    LPVOID CDuiControl::GetInterface(LPCTSTR pstrName)
+    {
+        if(_tcsicmp(pstrName, DUI_CTR_CONTROL) == 0)
+        {
+            return this;
+        }
+        return NULL;
+    }
+
+    UINT CDuiControl::GetControlFlags() const
+    {
+        return 0;
+    }
+
+    CDuiControl* CDuiControl::GetParent() const
+    {
+        return m_pParent;
+    }
+
+    RECT& CDuiControl::GetPaintRect()
+    {
+        return m_rcPaint;
     }
 
     void CDuiControl::Invalidate()
@@ -135,97 +149,6 @@ namespace DuiLib
         }
     }
 
-    CDuiControl* CDuiControl::ApplyAttributeList(LPCTSTR pstrValue)
-    {
-        // 解析样式表
-        if(m_pManager != NULL)
-        {
-            LPCTSTR pStyle = m_pManager->GetStyle(pstrValue);
-            if(pStyle != NULL)
-            {
-                return ApplyAttributeList(pStyle);
-            }
-        }
-        CDuiString sXmlData = pstrValue;
-        sXmlData.Replace(_T("&quot;"), _T("\""));
-        LPCTSTR pstrList = sXmlData.GetData();
-        // 解析样式属性
-        CDuiString sItem;
-        CDuiString sValue;
-        while(*pstrList != _T('\0'))
-        {
-            sItem.SetEmpty();
-            sValue.SetEmpty();
-            while(*pstrList != _T('\0') && *pstrList != _T('='))
-            {
-                LPTSTR pstrTemp = ::CharNext(pstrList);
-                while(pstrList < pstrTemp)
-                {
-                    sItem += *pstrList++;
-                }
-            }
-            ASSERT(*pstrList == _T('='));
-            if(*pstrList++ != _T('='))
-            {
-                return this;
-            }
-            ASSERT(*pstrList == _T('\"'));
-            if(*pstrList++ != _T('\"'))
-            {
-                return this;
-            }
-            while(*pstrList != _T('\0') && *pstrList != _T('\"'))
-            {
-                LPTSTR pstrTemp = ::CharNext(pstrList);
-                while(pstrList < pstrTemp)
-                {
-                    sValue += *pstrList++;
-                }
-            }
-            ASSERT(*pstrList == _T('\"'));
-            if(*pstrList++ != _T('\"'))
-            {
-                return this;
-            }
-            SetAttribute(sItem, sValue);
-            if(*pstrList++ != _T(' ') && *pstrList++ != _T(','))
-            {
-                return this;
-            }
-        }
-        return this;
-    }
-
-    DWORD CDuiControl::GetAdjustColor(DWORD dwColor)
-    {
-        if(!m_bColorHSL)
-        {
-            return dwColor;
-        }
-        short H, S, L;
-        CDuiPaintManager::GetHSL(&H, &S, &L);
-        return CRenderEngine::AdjustColor(dwColor, H, S, L);
-    }
-
-    CDuiPaintManager* CDuiControl::GetManager() const
-    {
-        return m_pManager;
-    }
-
-    void CDuiControl::SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit /*= TRUE*/)
-    {
-        m_pManager = pManager;
-        m_pParent = pParent;
-        if(bInit && m_pParent)
-        {
-            Init();
-        }
-    }
-
-    CDuiControl* CDuiControl::GetParent() const
-    {
-        return m_pParent;
-    }
 
     void CDuiControl::SetBkColor(DWORD dwBackColor)
     {
@@ -373,6 +296,45 @@ namespace DuiLib
         Invalidate();
     }
 
+    CDuiString CDuiControl::GetVirtualWnd() const
+    {
+        CDuiString str;
+        if(!m_sVirtualWnd.IsEmpty())
+        {
+            str = m_sVirtualWnd;
+        }
+        else
+        {
+            CDuiControl* pParent = GetParent();
+            if(pParent != NULL)
+            {
+                str = pParent->GetVirtualWnd();
+            }
+            else
+            {
+                str = _T("");
+            }
+        }
+        return str;
+    }
+
+    void CDuiControl::SetVirtualWnd(LPCTSTR pstrValue)
+    {
+        m_sVirtualWnd = pstrValue;
+        m_pManager->UsedVirtualWnd(TRUE);
+    }
+
+
+    CDuiString CDuiControl::GetName() const
+    {
+        return m_sName;
+    }
+
+    void CDuiControl::SetName(LPCTSTR pstrName)
+    {
+        m_sName = pstrName;
+    }
+
     CDuiString CDuiControl::GetText() const
     {
         return m_sText;
@@ -439,34 +401,6 @@ namespace DuiLib
     void CDuiControl::SetUserData(LPCTSTR pstrText)
     {
         m_sUserData = pstrText;
-    }
-
-    CDuiString CDuiControl::GetVirtualWnd() const
-    {
-        CDuiString str;
-        if(!m_sVirtualWnd.IsEmpty())
-        {
-            str = m_sVirtualWnd;
-        }
-        else
-        {
-            CDuiControl* pParent = GetParent();
-            if(pParent != NULL)
-            {
-                str = pParent->GetVirtualWnd();
-            }
-            else
-            {
-                str = _T("");
-            }
-        }
-        return str;
-    }
-
-    void CDuiControl::SetVirtualWnd(LPCTSTR pstrValue)
-    {
-        m_sVirtualWnd = pstrValue;
-        m_pManager->UsedVirtualWnd(TRUE);
     }
 
     const RECT& CDuiControl::GetPos() const
@@ -811,6 +745,11 @@ namespace DuiLib
         return m_bFocused;
     }
 
+    void CDuiControl::SetFocused(BOOL bFocused)
+    {
+        m_bFocused = bFocused;
+    }
+
     void CDuiControl::SetFocus()
     {
         if(m_pManager != NULL)
@@ -838,6 +777,67 @@ namespace DuiLib
     {
         m_piFloatPercent = piFloatPercent;
         NeedParentUpdate();
+    }
+
+    CDuiControl* CDuiControl::ApplyAttributeList(LPCTSTR pstrValue)
+    {
+        // 解析样式表
+        if(m_pManager != NULL)
+        {
+            LPCTSTR pStyle = m_pManager->GetStyle(pstrValue);
+            if(pStyle != NULL)
+            {
+                return ApplyAttributeList(pStyle);
+            }
+        }
+        CDuiString sXmlData = pstrValue;
+        sXmlData.Replace(_T("&quot;"), _T("\""));
+        LPCTSTR pstrList = sXmlData.GetData();
+        // 解析样式属性
+        CDuiString sItem;
+        CDuiString sValue;
+        while(*pstrList != _T('\0'))
+        {
+            sItem.SetEmpty();
+            sValue.SetEmpty();
+            while(*pstrList != _T('\0') && *pstrList != _T('='))
+            {
+                LPTSTR pstrTemp = ::CharNext(pstrList);
+                while(pstrList < pstrTemp)
+                {
+                    sItem += *pstrList++;
+                }
+            }
+            ASSERT(*pstrList == _T('='));
+            if(*pstrList++ != _T('='))
+            {
+                return this;
+            }
+            ASSERT(*pstrList == _T('\"'));
+            if(*pstrList++ != _T('\"'))
+            {
+                return this;
+            }
+            while(*pstrList != _T('\0') && *pstrList != _T('\"'))
+            {
+                LPTSTR pstrTemp = ::CharNext(pstrList);
+                while(pstrList < pstrTemp)
+                {
+                    sValue += *pstrList++;
+                }
+            }
+            ASSERT(*pstrList == _T('\"'));
+            if(*pstrList++ != _T('\"'))
+            {
+                return this;
+            }
+            SetAttribute(sItem, sValue);
+            if(*pstrList++ != _T(' ') && *pstrList++ != _T(','))
+            {
+                return this;
+            }
+        }
+        return this;
     }
 
     void CDuiControl::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
@@ -1243,6 +1243,16 @@ namespace DuiLib
         }
     }
 
+    DWORD CDuiControl::GetAdjustColor(DWORD dwColor)
+    {
+        if(!m_bColorHSL)
+        {
+            return dwColor;
+        }
+        short H, S, L;
+        CDuiPaintManager::GetHSL(&H, &S, &L);
+        return CRenderEngine::AdjustColor(dwColor, H, S, L);
+    }
 
     BOOL CDuiControl::DrawImage(HDC hDC, LPCTSTR pStrImage, LPCTSTR pStrModify /*= NULL*/)
     {
@@ -1417,11 +1427,22 @@ namespace DuiLib
 
     void CDuiControl::Init()
     {
-        DoInit();
     }
 
-    void CDuiControl::DoInit()
+
+    CDuiPaintManager* CDuiControl::GetManager() const
     {
+        return m_pManager;
+    }
+
+    void CDuiControl::SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit /*= TRUE*/)
+    {
+        m_pManager = pManager;
+        m_pParent = pParent;
+        if(bInit && m_pParent)
+        {
+            Init();
+        }
     }
 
     void CDuiControl::Event(TEventUI& event)
@@ -1477,11 +1498,6 @@ namespace DuiLib
         }
     }
 
-    UINT CDuiControl::GetControlFlags() const
-    {
-        return 0;
-    }
-
     CDuiControl* CDuiControl::FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags)
     {
         if((uFlags & UIFIND_VISIBLE) != 0 && !IsVisible())
@@ -1498,14 +1514,4 @@ namespace DuiLib
         }
         return Proc(this, pData);
     }
-
-    LPVOID CDuiControl::GetInterface(LPCTSTR pstrName)
-    {
-        if(_tcsicmp(pstrName, DUI_CTR_CONTROL) == 0)
-        {
-            return this;
-        }
-        return NULL;
-    }
-
 }

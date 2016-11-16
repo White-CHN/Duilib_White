@@ -561,7 +561,7 @@ namespace DuiLib
                 }
                 if(!pContainer->Add(pControl))
                 {
-                    delete pControl;
+                    DUI_FREE_POINT(pControl);
                     continue;
                 }
             }

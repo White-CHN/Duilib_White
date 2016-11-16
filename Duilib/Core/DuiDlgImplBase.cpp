@@ -197,7 +197,7 @@ namespace DuiLib
 
     LRESULT CDuiDlgImplBase::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
-        bHandled = FALSE;
+        PostQuitMessage(0);
         return 0;
     }
 
@@ -396,6 +396,7 @@ namespace DuiLib
     LRESULT CDuiDlgImplBase::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         bHandled = FALSE;
+        Close();
         return 0;
     }
 

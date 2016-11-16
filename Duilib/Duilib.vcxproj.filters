@@ -33,14 +33,26 @@
     <Filter Include="源文件\Layout">
       <UniqueIdentifier>{2fc0826d-127c-4ec7-8347-4503f8aa5356}</UniqueIdentifier>
     </Filter>
-    <Filter Include="属性列表">
+    <Filter Include="help">
       <UniqueIdentifier>{49a8303c-9482-4755-baeb-6e806e96cea2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
     <None Include="..\Help\属性列表.xml">
-      <Filter>属性列表</Filter>
+      <Filter>help</Filter>
+    </None>
+    <None Include="..\Help\directui license.txt">
+      <Filter>help</Filter>
+    </None>
+    <None Include="..\Help\duilib license.txt">
+      <Filter>help</Filter>
+    </None>
+    <None Include="..\Help\版权说明.txt">
+      <Filter>help</Filter>
+    </None>
+    <None Include="..\Help\感谢.txt">
+      <Filter>help</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

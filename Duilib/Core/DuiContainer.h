@@ -26,19 +26,29 @@ namespace DuiLib
     public:
         CDuiContainer(void);
         virtual ~CDuiContainer(void);
-    protected:
 
         virtual LPVOID GetInterface(LPCTSTR pstrName);
 
         virtual LPCTSTR GetClass() const;
 
         virtual RECT GetInset() const;
+        virtual void SetInset(RECT rcInset); // 设置内边距，相当于设置客户区
+
+        virtual int GetChildPadding() const;
+        virtual void SetChildPadding(int iPadding);
 
         virtual UINT GetChildAlign() const;
 
         virtual UINT GetChildVAlign() const;
 
         virtual BOOL IsMouseChildEnabled() const;
+        virtual void SetMouseChildEnabled(BOOL bEnable = TRUE);
+
+
+        virtual void SetScrollStepSize(int nSize);
+
+        virtual CDuiScrollBar* GetVerticalScrollBar() const;
+        virtual CDuiScrollBar* GetHorizontalScrollBar() const;
 
         virtual CDuiControl* GetItemAt(int iIndex) const;
         virtual int GetItemIndex(CDuiControl* pControl) const ;
@@ -53,15 +63,21 @@ namespace DuiLib
         virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
         virtual void DoPaint(HDC hDC, const RECT& rcPaint);
 
-        CDuiControl* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags);
+        virtual void EnableScrollBar(BOOL bEnableVertical = TRUE, bool bEnableHorizontal = FALSE);
+
+        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+
+        virtual CDuiControl* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags);
     protected:
         virtual void SetFloatPos(int iIndex);
-    protected:
+        virtual void ProcessScrollBar(RECT rc, int cxRequired, int cyRequired);
+    private:
         BOOL m_bAutoDestroy;
         BOOL m_bDelayedDestroy;
         BOOL m_bMouseChildEnabled;
 
         int m_iChildPadding;
+        int	m_nScrollStepSize;
 
         UINT m_iChildAlign;
         UINT m_iChildVAlign;
@@ -71,7 +87,11 @@ namespace DuiLib
 
         RECT m_rcInset;
 
+        CDuiString	m_sVerticalScrollBarStyle;
+        CDuiString	m_sHorizontalScrollBarStyle;
+
         CStdPtrArray m_items;
+
     };
 
 

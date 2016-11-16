@@ -21,24 +21,18 @@ namespace DuiLib
         CDuiControl(void);
         virtual ~CDuiControl(void);
     public:
-        virtual CDuiString GetName() const;
-        virtual void SetName(LPCTSTR pstrName);
         virtual LPCTSTR GetClass() const;
+        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        virtual UINT GetControlFlags() const;
 
+        virtual CDuiControl* GetParent() const;
+
+        RECT& GetPaintRect();
+        // 刷新相关
         void Invalidate();
         BOOL IsUpdateNeeded() const;
         void NeedParentUpdate();
         void NeedUpdate();
-        CDuiControl* ApplyAttributeList(LPCTSTR pstrValue);
-
-
-        DWORD GetAdjustColor(DWORD dwColor);
-
-
-        virtual CDuiPaintManager* GetManager() const;
-        virtual void SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit = TRUE);
-        virtual CDuiControl* GetParent() const;
-
         // 图形相关
         void SetBkColor(DWORD dwBackColor);
         void SetBkColor2(DWORD dwBackColor);
@@ -59,7 +53,13 @@ namespace DuiLib
         void SetRightBorderSize(int nSize);
         void SetBottomBorderSize(int nSize);
         void SetBorderStyle(int nStyle);
+        //虚拟窗口
+        CDuiString GetVirtualWnd() const;
+        void SetVirtualWnd(LPCTSTR pstrValue);
 
+        //name属性
+        virtual CDuiString GetName() const;
+        virtual void SetName(LPCTSTR pstrName);
         //文本相关
         virtual CDuiString GetText() const;
         virtual void SetText(LPCTSTR pstrText);
@@ -84,10 +84,6 @@ namespace DuiLib
 
         // 用户属性
         virtual void SetUserData(LPCTSTR pstrText); // 辅助函数，供用户使用
-
-        //虚拟窗口参数
-        CDuiString GetVirtualWnd() const;
-        void SetVirtualWnd(LPCTSTR pstrValue);
 
         //位置相关
         virtual const RECT& GetPos() const;
@@ -132,17 +128,20 @@ namespace DuiLib
         virtual void SetKeyboardEnabled(BOOL bEnable = TRUE);
         virtual void SetInternVisible(BOOL bVisible = TRUE); // 仅供内部调用，有些UI拥有窗口句柄，需要重写此函数
 
+        //焦点
         virtual BOOL IsFocused() const;
+        virtual void SetFocused(BOOL bFocused);
         virtual void SetFocus();
-
+        //float属性
         virtual BOOL IsFloat() const;
         virtual void SetFloat(BOOL bFloat = TRUE);
         virtual void SetFloatPercent(TPercentInfo piFloatPercent);
-
-
-
+        //设置属性
+        CDuiControl* ApplyAttributeList(LPCTSTR pstrValue);
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 
+        //绘制相关
+        DWORD GetAdjustColor(DWORD dwColor);
         BOOL DrawImage(HDC hDC, LPCTSTR pStrImage, LPCTSTR pStrModify = NULL);
         virtual void PaintBkColor(HDC hDC);
         virtual void PaintBkImage(HDC hDC);
@@ -151,26 +150,22 @@ namespace DuiLib
         virtual void PaintForeImage(HDC hDC);
         virtual void PaintText(HDC hDC);
         virtual void PaintBorder(HDC hDC);
-
-
         virtual void DoPaint(HDC hDC, const RECT& rcPaint);
         virtual void DoPostPaint(HDC hDC, const RECT& rcPaint);
 
         virtual void Init();
-        virtual void DoInit();
+        virtual CDuiPaintManager* GetManager() const;
+        virtual void SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit = TRUE);
 
         virtual void Event(TEventUI& event);
         virtual void DoEvent(TEventUI& event);
 
-        virtual UINT GetControlFlags() const;
         virtual CDuiControl* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags);
-
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
     public:
         CEventSource OnSize;
         CEventSource OnEvent;
         CEventSource OnNotify;
-    protected:
+    private:
         TCHAR m_chShortcut;			//shortcut属性
         BOOL m_bUpdateNeeded;
         BOOL m_bVisible;
@@ -204,16 +199,16 @@ namespace DuiLib
         CDuiString m_sUserData;		//userdata属性
         CDuiString m_sVirtualWnd;	//virtualwnd属性
 
-        RECT m_rcItem;
-        RECT m_rcPadding;			// padding属性
-        RECT m_rcBorderSize;		// bordersize属性
+        RECT m_rcItem;				//实际位置
+        RECT m_rcPadding;			//padding属性
+        RECT m_rcBorderSize;		//bordersize属性
         RECT m_rcPaint;
 
-        SIZE m_cXY;					// pos属性
-        SIZE m_cxyFixed;			// pos属性
-        SIZE m_cxyBorderRound;		// borderround属性
-        SIZE m_cxyMin;				// minwidth minhegiht属性
-        SIZE m_cxyMax;				// maxwidth maxhegiht属性
+        SIZE m_cXY;					//pos属性
+        SIZE m_cxyFixed;			//pos属性
+        SIZE m_cxyBorderRound;		//borderround属性
+        SIZE m_cxyMin;				//minwidth minhegiht属性
+        SIZE m_cxyMax;				//maxwidth maxhegiht属性
 
         TPercentInfo m_piFloatPercent;		//float 的数值
 

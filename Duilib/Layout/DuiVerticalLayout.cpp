@@ -23,8 +23,43 @@ namespace DuiLib
     void CDuiVerticalLayout::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)
     {
         CDuiControl::SetPos(rc, bNeedInvalidate);
-        rc = m_rcItem;
+        rc = GetPos();
+        // Adjust for inset
+        RECT rcInset = GetInset();
+        if(GetManager())
+        {
+            GetManager()->GetDPIObj()->Scale(&rcInset);
+        }
+        rc.left += rcInset.left;
+        rc.top += rcInset.top;
+        rc.right -= rcInset.right;
+        rc.bottom -= rcInset.bottom;
+        CDuiScrollBar* pVerticalScrollBar = GetVerticalScrollBar();
+        CDuiScrollBar* pHorizontalScrollBar = GetHorizontalScrollBar();
+
+        if(pVerticalScrollBar && pVerticalScrollBar->IsVisible())
+        {
+            rc.right -= pVerticalScrollBar->GetFixedWidth();
+        }
+        if(pHorizontalScrollBar && pHorizontalScrollBar->IsVisible())
+        {
+            rc.bottom -= pHorizontalScrollBar->GetFixedHeight();
+        }
+        if(GetCount() == 0)
+        {
+            ProcessScrollBar(rc, 0, 0);
+            return;
+        }
+        // Determine the minimum size
         SIZE szAvailable = { rc.right - rc.left, rc.bottom - rc.top };
+        if(pHorizontalScrollBar && pHorizontalScrollBar->IsVisible())
+        {
+            szAvailable.cx += pHorizontalScrollBar->GetScrollRange();
+        }
+        if(pVerticalScrollBar && pVerticalScrollBar->IsVisible())
+        {
+            szAvailable.cy += pVerticalScrollBar->GetScrollRange();
+        }
         int cxNeeded = 0;
         int nAdjustables = 0;
         int cyFixed = 0;
@@ -32,9 +67,9 @@ namespace DuiLib
         SIZE szControlAvailable;
         int iControlMaxWidth = 0;
         int iControlMaxHeight = 0;
-        for(int it1 = 0; it1 < m_items.GetSize(); it1++)
+        for(int it1 = 0; it1 < GetCount(); it1++)
         {
-            CDuiControl* pControl = static_cast<CDuiControl*>(m_items[it1]);
+            CDuiControl* pControl = static_cast<CDuiControl*>(GetItemAt(it1));
             if(!pControl->IsVisible())
             {
                 continue;
@@ -93,7 +128,7 @@ namespace DuiLib
             cxNeeded = MAX(cxNeeded, sz.cx + rcPadding.left + rcPadding.right);
             nEstimateNum++;
         }
-        cyFixed += (nEstimateNum - 1) * m_iChildPadding;
+        cyFixed += (nEstimateNum - 1) * GetChildPadding();
         // Place elements
         int cyNeeded = 0;
         int cyExpand = 0;
@@ -104,15 +139,16 @@ namespace DuiLib
         // Position the elements
         SIZE szRemaining = szAvailable;
         int iPosY = rc.top;
-        /*if( m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible() ) {
-        iPosY -= m_pVerticalScrollBar->GetScrollPos();
-        }*/
+        if(pVerticalScrollBar && pVerticalScrollBar->IsVisible())
+        {
+            iPosY -= pVerticalScrollBar->GetScrollPos();
+        }
         int iEstimate = 0;
         int iAdjustable = 0;
         int cyFixedRemaining = cyFixed;
-        for(int it2 = 0; it2 < m_items.GetSize(); it2++)
+        for(int it2 = 0; it2 < GetCount(); it2++)
         {
-            CDuiControl* pControl = static_cast<CDuiControl*>(m_items[it2]);
+            CDuiControl* pControl = static_cast<CDuiControl*>(GetItemAt(it2));
             if(!pControl->IsVisible())
             {
                 continue;
@@ -148,7 +184,7 @@ namespace DuiLib
             cyFixedRemaining = cyFixedRemaining - (rcPadding.top + rcPadding.bottom);
             if(iEstimate > 1)
             {
-                cyFixedRemaining = cyFixedRemaining - m_iChildPadding;
+                cyFixedRemaining = cyFixedRemaining - GetChildPadding();
             }
             SIZE sz = pControl->EstimateSize(szControlAvailable);
             if(sz.cy == 0)
@@ -205,37 +241,42 @@ namespace DuiLib
             if(iChildAlign == DT_CENTER)
             {
                 int iPosX = (rc.right + rc.left) / 2;
-                /*if( m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible() ) {
-                iPosX += m_pHorizontalScrollBar->GetScrollRange() / 2;
-                iPosX -= m_pHorizontalScrollBar->GetScrollPos();
-                }*/
+                if(pHorizontalScrollBar && pHorizontalScrollBar->IsVisible())
+                {
+                    iPosX += pHorizontalScrollBar->GetScrollRange() / 2;
+                    iPosX -= pHorizontalScrollBar->GetScrollPos();
+                }
                 RECT rcCtrl = { iPosX - sz.cx / 2, iPosY + rcPadding.top, iPosX + sz.cx - sz.cx / 2, iPosY + sz.cy + rcPadding.top };
-                pControl->SetPos(rcCtrl, false);
+                pControl->SetPos(rcCtrl, FALSE);
             }
             else if(iChildAlign == DT_RIGHT)
             {
                 int iPosX = rc.right;
-                /*if( m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible() ) {
-                iPosX += m_pHorizontalScrollBar->GetScrollRange();
-                iPosX -= m_pHorizontalScrollBar->GetScrollPos();
-                }*/
+                if(pHorizontalScrollBar && pHorizontalScrollBar->IsVisible())
+                {
+                    iPosX += pHorizontalScrollBar->GetScrollRange();
+                    iPosX -= pHorizontalScrollBar->GetScrollPos();
+                }
                 RECT rcCtrl = { iPosX - rcPadding.right - sz.cx, iPosY + rcPadding.top, iPosX - rcPadding.right, iPosY + sz.cy + rcPadding.top };
-                pControl->SetPos(rcCtrl, false);
+                pControl->SetPos(rcCtrl, FALSE);
             }
             else
             {
                 int iPosX = rc.left;
-                /*if( m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible() ) {
-                iPosX -= m_pHorizontalScrollBar->GetScrollPos();
-                }*/
+                if(pHorizontalScrollBar && pHorizontalScrollBar->IsVisible())
+                {
+                    iPosX -= pHorizontalScrollBar->GetScrollPos();
+                }
                 RECT rcCtrl = { iPosX + rcPadding.left, iPosY + rcPadding.top, iPosX + rcPadding.left + sz.cx, iPosY + sz.cy + rcPadding.top };
-                pControl->SetPos(rcCtrl, false);
+                pControl->SetPos(rcCtrl, FALSE);
             }
-            iPosY += sz.cy + m_iChildPadding + rcPadding.top + rcPadding.bottom;
+            iPosY += sz.cy + GetChildPadding() + rcPadding.top + rcPadding.bottom;
             cyNeeded += sz.cy + rcPadding.top + rcPadding.bottom;
-            szRemaining.cy -= sz.cy + m_iChildPadding + rcPadding.bottom;
+            szRemaining.cy -= sz.cy + GetChildPadding() + rcPadding.bottom;
         }
-        cyNeeded += (nEstimateNum - 1) * m_iChildPadding;
+        cyNeeded += (nEstimateNum - 1) * GetChildPadding();
+        // Process the scrollbar
+        ProcessScrollBar(rc, cxNeeded, cyNeeded);
     }
 
 }

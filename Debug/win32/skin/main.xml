@@ -5,8 +5,10 @@
 
 	<VerticalLayout vscrollbar="true" hscrollbar="true" name="root" bkimage="main/1.jpg">
 		<HorizontalLayout width="1032" height="1032" bkcolor="#FF00BFFF" >
+		<Label text="12312312" height="300" width="80" bkcolor="#FFFFFFFF" />
 		</HorizontalLayout>
 		<HorizontalLayout width="1032" height="1032" bkcolor="#FFFFBFFF" >
+		
 		</HorizontalLayout>
 	</VerticalLayout>
 

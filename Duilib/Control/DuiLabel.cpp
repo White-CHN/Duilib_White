@@ -100,17 +100,17 @@ namespace DuiLib
             int nLinks = 0;
             if(m_bShowHtml)
             {
-                CRenderEngine::DrawHtmlText(m_pManager->GetPaintDC(), m_pManager, rcText, sText, m_dwTextColor, NULL, NULL, nLinks, DT_CALCRECT | m_uTextStyle);
+                CRenderEngine::DrawHtmlText(GetManager()->GetPaintDC(), GetManager(), rcText, sText, m_dwTextColor, NULL, NULL, nLinks, DT_CALCRECT | m_uTextStyle);
             }
             else
             {
-                CRenderEngine::DrawText(m_pManager->GetPaintDC(), m_pManager, rcText, sText, m_dwTextColor, m_iFont, DT_CALCRECT | m_uTextStyle);
+                CRenderEngine::DrawText(GetManager()->GetPaintDC(), GetManager(), rcText, sText, m_dwTextColor, m_iFont, DT_CALCRECT | m_uTextStyle);
             }
-            m_cxyFixed.cx = MulDiv(rcText.right - rcText.left + GetManager()->GetDPIObj()->Scale(m_rcTextPadding.left) + GetManager()->GetDPIObj()->Scale(m_rcTextPadding.right), 100, GetManager()->GetDPIObj()->GetScale());
+            SetFixedWidth(MulDiv(rcText.right - rcText.left + GetManager()->GetDPIObj()->Scale(m_rcTextPadding.left) + GetManager()->GetDPIObj()->Scale(m_rcTextPadding.right), 100, GetManager()->GetDPIObj()->GetScale()));
         }
-        if(m_cxyFixed.cy == 0)
+        if(GetFixedHeight() == 0)
         {
-            return CDuiSize(GetManager()->GetDPIObj()->Scale(m_cxyFixed.cx), m_pManager->GetFontInfo(GetFont())->tm.tmHeight + 4);
+            return CDuiSize(GetManager()->GetDPIObj()->Scale(GetFixedWidth()), GetManager()->GetFontInfo(GetFont())->tm.tmHeight + 4);
         }
         return __super::EstimateSize(szAvailable);
     }
@@ -119,12 +119,12 @@ namespace DuiLib
     {
         if(event.Type == UIEVENT_SETFOCUS)
         {
-            m_bFocused = TRUE;
+            SetFocused(TRUE);
             return;
         }
         if(event.Type == UIEVENT_KILLFOCUS)
         {
-            m_bFocused = FALSE;
+            SetFocused(FALSE);
             return;
         }
         __super::DoEvent(event);
@@ -259,13 +259,13 @@ namespace DuiLib
     {
         if(m_dwTextColor == 0)
         {
-            m_dwTextColor = m_pManager->GetDefaultFontColor();
+            m_dwTextColor = GetManager()->GetDefaultFontColor();
         }
         if(m_dwDisabledTextColor == 0)
         {
-            m_dwDisabledTextColor = m_pManager->GetDefaultDisabledColor();
+            m_dwDisabledTextColor = GetManager()->GetDefaultDisabledColor();
         }
-        RECT rc = m_rcItem;
+        RECT rc = GetPos();
         RECT rcTextPadding = GetTextPadding();
         GetManager()->GetDPIObj()->Scale(&rcTextPadding);
         rc.left += rcTextPadding.left;
@@ -282,12 +282,12 @@ namespace DuiLib
         {
             if(m_bShowHtml)
             {
-                CRenderEngine::DrawHtmlText(hDC, m_pManager, rc, sText, m_dwTextColor,
+                CRenderEngine::DrawHtmlText(hDC, GetManager(), rc, sText, m_dwTextColor,
                                             NULL, NULL, nLinks, m_uTextStyle);
             }
             else
             {
-                CRenderEngine::DrawText(hDC, m_pManager, rc, sText, m_dwTextColor,
+                CRenderEngine::DrawText(hDC, GetManager(), rc, sText, m_dwTextColor,
                                         m_iFont, m_uTextStyle);
             }
         }
@@ -295,12 +295,12 @@ namespace DuiLib
         {
             if(m_bShowHtml)
             {
-                CRenderEngine::DrawHtmlText(hDC, m_pManager, rc, sText, m_dwDisabledTextColor,
+                CRenderEngine::DrawHtmlText(hDC, GetManager(), rc, sText, m_dwDisabledTextColor,
                                             NULL, NULL, nLinks, m_uTextStyle);
             }
             else
             {
-                CRenderEngine::DrawText(hDC, m_pManager, rc, sText, m_dwDisabledTextColor,
+                CRenderEngine::DrawText(hDC, GetManager(), rc, sText, m_dwDisabledTextColor,
                                         m_iFont, m_uTextStyle);
             }
         }

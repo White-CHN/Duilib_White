@@ -9,6 +9,114 @@ namespace DuiLib
     public:
         CDuiScrollBar(void);
         virtual ~CDuiScrollBar(void);
+
+        void SetOwner(CDuiContainer* pOwner);
+
+        void SetHorizontal(BOOL bHorizontal = TRUE);
+
+        int GetScrollPos() const;
+        void SetScrollPos(int nPos);
+
+        void SetScrollRange(int nRange);
+        int GetScrollRange() const;
+
+        void SetLineSize(int nSize);
+
+        void SetShowButton1(BOOL bShow);
+        void SetButton1NormalImage(LPCTSTR pStrImage);
+        void SetButton1HotImage(LPCTSTR pStrImage);
+        void SetButton1PushedImage(LPCTSTR pStrImage);
+        void SetButton1DisabledImage(LPCTSTR pStrImage);
+
+        void SetShowButton2(BOOL bShow);
+        void SetButton2NormalImage(LPCTSTR pStrImage);
+        void SetButton2HotImage(LPCTSTR pStrImage);
+        void SetButton2PushedImage(LPCTSTR pStrImage);
+        void SetButton2DisabledImage(LPCTSTR pStrImage);
+
+        void SetThumbNormalImage(LPCTSTR pStrImage);
+        void SetThumbHotImage(LPCTSTR pStrImage);
+        void SetThumbPushedImage(LPCTSTR pStrImage);
+        void SetThumbDisabledImage(LPCTSTR pStrImage);
+
+        void SetRailNormalImage(LPCTSTR pStrImage);
+        void SetRailHotImage(LPCTSTR pStrImage);
+        void SetRailPushedImage(LPCTSTR pStrImage);
+        void SetRailDisabledImage(LPCTSTR pStrImage);
+
+        LPCTSTR GetBkNormalImage();
+        void SetBkNormalImage(LPCTSTR pStrImage);
+        LPCTSTR GetBkHotImage();
+        void SetBkHotImage(LPCTSTR pStrImage);
+        LPCTSTR GetBkPushedImage();
+        void SetBkPushedImage(LPCTSTR pStrImage);
+        LPCTSTR GetBkDisabledImage();
+        void SetBkDisabledImage(LPCTSTR pStrImage);
+
+        void PaintBk(HDC hDC);
+        void PaintButton1(HDC hDC);
+        void PaintButton2(HDC hDC);
+        void PaintThumb(HDC hDC);
+        void PaintRail(HDC hDC);
+
+        virtual LPCTSTR GetClass() const;
+        virtual LPVOID GetInterface(LPCTSTR pstrName);
+
+        virtual void SetPos(RECT rc, bool bNeedInvalidate = TRUE);
+        virtual void DoPaint(HDC hDC, const RECT& rcPaint);
+        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+        virtual void DoEvent(TEventUI& event);
+    private:
+        enum
+        {
+            DEFAULT_SCROLLBAR_SIZE = 16,
+            DEFAULT_TIMERID = 10,
+        };
+    private:
+        BOOL m_bHorizontal;
+        BOOL m_bShowButton1;
+        BOOL m_bShowButton2;
+
+        int m_nScrollPos;
+        int m_nRange;
+        int m_nLineSize;
+
+        UINT m_uThumbState;
+        UINT m_uButton1State;
+        UINT m_uButton2State;
+
+        CDuiContainer* m_pOwner;
+
+        RECT m_rcThumb;
+        RECT m_rcButton1;
+        RECT m_rcButton2;
+
+        CDuiString m_sBkDisabledImage;
+        CDuiString m_sBkPushedImage;
+        CDuiString m_sBkHotImage;
+        CDuiString m_sBkNormalImage;
+
+        CDuiString m_sButton1NormalImage;
+        CDuiString m_sButton1HotImage;
+        CDuiString m_sButton1PushedImage;
+        CDuiString m_sButton1DisabledImage;
+
+        CDuiString m_sButton2NormalImage;
+        CDuiString m_sButton2HotImage;
+        CDuiString m_sButton2PushedImage;
+        CDuiString m_sButton2DisabledImage;
+
+        CDuiString m_sThumbNormalImage;
+        CDuiString m_sThumbHotImage;
+        CDuiString m_sThumbPushedImage;
+        CDuiString m_sThumbDisabledImage;
+
+        CDuiString m_sRailNormalImage;
+        CDuiString m_sRailHotImage;
+        CDuiString m_sRailPushedImage;
+        CDuiString m_sRailDisabledImage;
+
+        CDuiString m_sImageModify;
     };
 
 }

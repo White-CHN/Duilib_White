@@ -16,7 +16,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
     {
         return 0;
     }
-    CDuiConsole Console ;// 调试信息控制台
+    //CDuiConsole Console ;// 调试信息控制台
     // 初始化UI管理器
     CDuiPaintManager::Initialize(hInstance);
     // 资源类型

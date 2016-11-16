@@ -224,7 +224,7 @@ namespace DuiLib
         // 样式管理
         void AddStyle(LPCTSTR pName, LPCTSTR pstrStyle, BOOL bShared = FALSE);
         LPCTSTR GetStyle(LPCTSTR pName) const;
-
+        void RemoveAllStyle(BOOL bShared = FALSE);
         //焦点相关
         CDuiControl* GetFocus() const;
         void SetFocus(CDuiControl* pControl);
@@ -238,11 +238,13 @@ namespace DuiLib
         HFONT AddFont(int id, LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared = FALSE);
         HFONT GetFont(int id);
         HFONT GetFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic);
+        void RemoveAllFonts(BOOL bShared = FALSE);
         TFontInfo* GetFontInfo(int id);
         TFontInfo* GetFontInfo(HFONT hFont);
 
+        //鼠标捕获
         void SetCapture();
-
+        void ReleaseCapture();
         //虚拟窗口
         void UsedVirtualWnd(BOOL bUsed);
         //Gdiplus相关
@@ -269,7 +271,7 @@ namespace DuiLib
 
         void AddDefaultAttributeList(LPCTSTR pStrControlName, LPCTSTR pStrControlAttrList, BOOL bShared = FALSE);
         LPCTSTR GetDefaultAttributeList(LPCTSTR pStrControlName) const;
-
+        void RemoveAllDefaultAttributeList(BOOL bShared = FALSE);
 
         BOOL InitControls(CDuiControl* pControl, CDuiControl* pParent = NULL);
         BOOL AttachDialog(CDuiControl* pControl);
@@ -282,13 +284,14 @@ namespace DuiLib
         const TImageInfo* GetImageEx(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, HINSTANCE instance = NULL);
         const TImageInfo* AddImage(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, BOOL bShared = FALSE, HINSTANCE instance = NULL);
         const TImageInfo* AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int iWidth, int iHeight, BOOL bAlpha, BOOL bShared = FALSE);
+        void RemoveAllImages(BOOL bShared = FALSE);
 
         const TDrawInfo* GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify);
-    private:
+        void RemoveAllDrawInfos();
+
         BOOL TranslateAccelerator(LPMSG pMsg);
         BOOL PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
 
-    public:
         static HINSTANCE GetInstance();
         static BOOL Initialize(HINSTANCE hInstance);
         static void Uninitialize();
@@ -321,7 +324,7 @@ namespace DuiLib
     private:
         HWND m_hWndPaint;						//所属的窗体的句柄
         HDC m_hDcPaint;							//所属的窗体的HDC
-        HDC m_hDcOffscreen;
+        HDC m_hDcOffscreen;						//m_hDcPaint的内存缓冲区
         HBITMAP m_hbmpOffscreen;
 
         BYTE m_nOpacity;						//alpha数值
@@ -337,7 +340,7 @@ namespace DuiLib
         BOOL m_bFirstLayout;
         BOOL m_bLayeredChanged;
         BOOL m_bMouseCapture;					//是否设置鼠标捕获
-
+        BOOL m_bDragMode;						//是否拖拽
         BOOL m_bUseGdiplusText;					//gdiplustext属性,是否用gdi+渲染文字
         int m_trh;								//textrenderinghint属性,gdi+渲染文字提示
         ULONG_PTR m_gdiplusToken;				//Gdiplus相关
@@ -360,8 +363,6 @@ namespace DuiLib
         SIZE m_szMinWindow;						//mininfo属性
         SIZE m_szMaxWindow;						//maxinfo属性
 
-
-
         CStdPtrArray m_aMessageFilters;
         CStdPtrArray m_aTranslateAccelerator;
         CStdPtrArray m_aPreMessageFilters;		//拦截在DispatchMessage消息之前的消息，注册的窗口句柄
@@ -379,8 +380,7 @@ namespace DuiLib
 
         TResInfo m_ResInfo;
 
-
-        CDuiShadow m_shadow;						// 窗口阴影
+        CDuiShadow m_shadow;					// 窗口阴影
 
         static HINSTANCE m_hInstance;			//应用程序实例
         static HINSTANCE m_hResourceInstance;	//资源实例
@@ -389,7 +389,7 @@ namespace DuiLib
         static HANDLE m_hResourceZip;
         static int m_iResourceType;				//资源加载的方式
         static CDuiString m_strResourcePath;	//资源目录路径
-        static CDuiString m_strResourceZip;	//资源文件名
+        static CDuiString m_strResourceZip;		//资源文件名
         static CStdPtrArray m_aPreMessages;		//所有CDuiPaintManager句柄
         static CStdPtrArray m_aPlugins;			//所有插件
         static TResInfo m_SharedResInfo;		//默认属性
@@ -398,7 +398,6 @@ namespace DuiLib
         static short m_S;
         static short m_L;
         static BOOL m_bUseHSL;
-
     };
 
 }

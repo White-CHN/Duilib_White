@@ -220,6 +220,7 @@ namespace DuiLib
         , m_bFirstLayout(TRUE)
         , m_bLayeredChanged(FALSE)
         , m_bMouseCapture(FALSE)
+        , m_bDragMode(FALSE)
         , m_bUseGdiplusText(FALSE)
         , m_trh(0)
         , m_gdiplusToken(0)
@@ -270,12 +271,47 @@ namespace DuiLib
 
     CDuiPaintManager::~CDuiPaintManager(void)
     {
-        //Ð¶ÔØGDIPlus
+        for(int i = 0; i < m_aDelayedCleanup.GetSize(); i++)
+        {
+            CDuiControl* pControl = static_cast<CDuiControl*>(m_aDelayedCleanup[i]);
+            DUI_FREE_POINT(pControl);
+        }
+        for(int i = 0; i < m_aAsyncNotify.GetSize(); i++)
+        {
+            TNotifyUI* pNotify = static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
+            DUI_FREE_POINT(pNotify);
+        }
+        RemoveAllFonts();
+        RemoveAllImages();
+        RemoveAllDrawInfos();
+        RemoveAllDefaultAttributeList();
+        RemoveAllStyle();
+        if(m_hDcOffscreen != NULL)
+        {
+            ::DeleteDC(m_hDcOffscreen);
+            m_hDcOffscreen = NULL;
+        }
+        if(m_hbmpOffscreen != NULL)
+        {
+            ::DeleteObject(m_hbmpOffscreen);
+            m_hbmpOffscreen = NULL;
+        }
+        if(m_ResInfo.m_DefaultFontInfo.hFont != NULL)
+        {
+            ::DeleteObject(m_ResInfo.m_DefaultFontInfo.hFont);
+            m_ResInfo.m_DefaultFontInfo.hFont = NULL;
+        }
+        if(m_hDcPaint != NULL)
+        {
+            ::ReleaseDC(m_hWndPaint, m_hDcPaint);
+            m_hDcPaint = NULL;
+        }
         if(m_gdiplusToken != 0)
         {
+            //Ð¶ÔØGDIPlus
             Gdiplus::GdiplusShutdown(m_gdiplusToken);
+            m_gdiplusToken = 0;
         }
-        ::DeleteObject(m_ResInfo.m_DefaultFontInfo.hFont);
         DUI_FREE_POINT(m_pDPI);
         DUI_FREE_POINT(m_pGdiplusStartupInput);
         DUI_FREE_POINT(m_pRoot);
@@ -678,6 +714,29 @@ namespace DuiLib
                 pControl->Event(event);
             }
             break;
+            case WM_LBUTTONUP:
+            {
+                ReleaseCapture();
+                POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+                m_ptLastMousePos = pt;
+                if(m_pEventClick == NULL)
+                {
+                    break;
+                }
+
+                TEventUI event = { 0 };
+                event.Type = UIEVENT_BUTTONUP;
+                event.pSender = m_pEventClick;
+                event.wParam = wParam;
+                event.lParam = lParam;
+                event.ptMouse = pt;
+                event.wKeyState = (WORD)wParam;
+                event.dwTimestamp = ::GetTickCount();
+                CDuiControl* pClick = m_pEventClick;
+                m_pEventClick = NULL;
+                pClick->Event(event);
+            }
+            break;
             default:
                 break;
         }
@@ -983,6 +1042,35 @@ namespace DuiLib
         return NULL;
     }
 
+    void CDuiPaintManager::RemoveAllStyle(BOOL bShared /*= FALSE*/)
+    {
+        CDuiString* pStyle = NULL;
+        if(bShared)
+        {
+            for(int i = 0; i < m_SharedResInfo.m_StyleHash.GetSize(); i++)
+            {
+                if(LPCTSTR key = m_SharedResInfo.m_StyleHash.GetAt(i))
+                {
+                    pStyle = static_cast<CDuiString*>(m_SharedResInfo.m_StyleHash.Find(key));
+                    DUI_FREE_POINT(pStyle);
+                }
+            }
+            m_SharedResInfo.m_StyleHash.RemoveAll();
+        }
+        else
+        {
+            for(int i = 0; i < m_ResInfo.m_StyleHash.GetSize(); i++)
+            {
+                if(LPCTSTR key = m_ResInfo.m_StyleHash.GetAt(i))
+                {
+                    pStyle = static_cast<CDuiString*>(m_ResInfo.m_StyleHash.Find(key));
+                    DUI_FREE_POINT(pStyle);
+                }
+            }
+            m_ResInfo.m_StyleHash.RemoveAll();
+        }
+    }
+
     CDuiControl* CDuiPaintManager::GetFocus() const
     {
         return m_pFocus;
@@ -1063,7 +1151,7 @@ namespace DuiLib
             _tcsncpy(lf.lfFaceName, szFaceName, LF_FACESIZE);
         }
         lf.lfCharSet = DEFAULT_CHARSET;
-        lf.lfHeight = -GetDPIObj()->Scale(nSize);;
+        lf.lfHeight = -GetDPIObj()->Scale(nSize);
         if(bBold)
         {
             lf.lfWeight += FW_BOLD;
@@ -1253,6 +1341,43 @@ namespace DuiLib
         return NULL;
     }
 
+    void CDuiPaintManager::RemoveAllFonts(BOOL bShared /*= FALSE*/)
+    {
+        TFontInfo* pFontInfo = NULL;
+        if(bShared)
+        {
+            for(int i = 0; i < m_SharedResInfo.m_CustomFonts.GetSize(); i++)
+            {
+                if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i))
+                {
+                    pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key, false));
+                    if(pFontInfo)
+                    {
+                        ::DeleteObject(pFontInfo->hFont);
+                        DUI_FREE_POINT(pFontInfo);
+                    }
+                }
+            }
+            m_SharedResInfo.m_CustomFonts.RemoveAll();
+        }
+        else
+        {
+            for(int i = 0; i < m_ResInfo.m_CustomFonts.GetSize(); i++)
+            {
+                if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i))
+                {
+                    pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key, false));
+                    if(pFontInfo)
+                    {
+                        ::DeleteObject(pFontInfo->hFont);
+                        DUI_FREE_POINT(pFontInfo);
+                    }
+                }
+            }
+            m_ResInfo.m_CustomFonts.RemoveAll();
+        }
+    }
+
     TFontInfo* CDuiPaintManager::GetFontInfo(int id)
     {
         if(id < 0)
@@ -1325,6 +1450,13 @@ namespace DuiLib
     {
         ::SetCapture(m_hWndPaint);
         m_bMouseCapture = TRUE;
+    }
+
+    void CDuiPaintManager::ReleaseCapture()
+    {
+        ::ReleaseCapture();
+        m_bMouseCapture = FALSE;
+        m_bDragMode = FALSE;
     }
 
     void CDuiPaintManager::UsedVirtualWnd(BOOL bUsed)
@@ -1487,10 +1619,7 @@ namespace DuiLib
             if(pDefaultAttr != NULL)
             {
                 CDuiString* pOldDefaultAttr = static_cast<CDuiString*>(m_SharedResInfo.m_AttrHash.Set(pStrControlName, (LPVOID)pDefaultAttr));
-                if(pOldDefaultAttr)
-                {
-                    delete pOldDefaultAttr;
-                }
+                DUI_FREE_POINT(pOldDefaultAttr);
             }
         }
         else
@@ -1499,10 +1628,7 @@ namespace DuiLib
             if(pDefaultAttr != NULL)
             {
                 CDuiString* pOldDefaultAttr = static_cast<CDuiString*>(m_ResInfo.m_AttrHash.Set(pStrControlName, (LPVOID)pDefaultAttr));
-                if(pOldDefaultAttr)
-                {
-                    delete pOldDefaultAttr;
-                }
+                DUI_FREE_POINT(pOldDefaultAttr);
             }
         }
     }
@@ -1519,6 +1645,36 @@ namespace DuiLib
             return pDefaultAttr->GetData();
         }
         return NULL;
+    }
+
+
+    void CDuiPaintManager::RemoveAllDefaultAttributeList(BOOL bShared /*= FALSE*/)
+    {
+        CDuiString* pDefaultAttr = NULL;
+        if(bShared)
+        {
+            for(int i = 0; i < m_SharedResInfo.m_AttrHash.GetSize(); i++)
+            {
+                if(LPCTSTR key = m_SharedResInfo.m_AttrHash.GetAt(i))
+                {
+                    pDefaultAttr = static_cast<CDuiString*>(m_SharedResInfo.m_AttrHash.Find(key));
+                    DUI_FREE_POINT(pDefaultAttr);
+                }
+            }
+            m_SharedResInfo.m_AttrHash.RemoveAll();
+        }
+        else
+        {
+            for(int i = 0; i < m_ResInfo.m_AttrHash.GetSize(); i++)
+            {
+                if(LPCTSTR key = m_ResInfo.m_AttrHash.GetAt(i))
+                {
+                    pDefaultAttr = static_cast<CDuiString*>(m_ResInfo.m_AttrHash.Find(key));
+                    DUI_FREE_POINT(pDefaultAttr);
+                }
+            }
+            m_ResInfo.m_AttrHash.RemoveAll();
+        }
     }
 
     BOOL CDuiPaintManager::InitControls(CDuiControl* pControl, CDuiControl* pParent /*= NULL*/)
@@ -1716,6 +1872,41 @@ namespace DuiLib
         return data;
     }
 
+    void CDuiPaintManager::RemoveAllImages(BOOL bShared /*= FALSE*/)
+    {
+        TImageInfo* data = NULL;
+        if(bShared)
+        {
+            for(int i = 0; i < m_SharedResInfo.m_ImageHash.GetSize(); i++)
+            {
+                if(LPCTSTR key = m_SharedResInfo.m_ImageHash.GetAt(i))
+                {
+                    data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(key, FALSE));
+                    if(data)
+                    {
+                        CRenderEngine::FreeImage(data);
+                    }
+                }
+            }
+            m_SharedResInfo.m_ImageHash.RemoveAll();
+        }
+        else
+        {
+            for(int i = 0; i < m_ResInfo.m_ImageHash.GetSize(); i++)
+            {
+                if(LPCTSTR key = m_ResInfo.m_ImageHash.GetAt(i))
+                {
+                    data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(key, FALSE));
+                    if(data)
+                    {
+                        CRenderEngine::FreeImage(data);
+                    }
+                }
+            }
+            m_ResInfo.m_ImageHash.RemoveAll();
+        }
+    }
+
     const TDrawInfo* CDuiPaintManager::GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify)
     {
         CDuiString sStrImage = pStrImage;
@@ -1729,6 +1920,21 @@ namespace DuiLib
             m_ResInfo.m_DrawInfoHash.Insert(sKey, pDrawInfo);
         }
         return pDrawInfo;
+    }
+
+    void CDuiPaintManager::RemoveAllDrawInfos()
+    {
+        TDrawInfo* pDrawInfo = NULL;
+        for(int i = 0; i < m_ResInfo.m_DrawInfoHash.GetSize(); i++)
+        {
+            LPCTSTR key = m_ResInfo.m_DrawInfoHash.GetAt(i);
+            if(key != NULL)
+            {
+                pDrawInfo = static_cast<TDrawInfo*>(m_ResInfo.m_DrawInfoHash.Find(key, FALSE));
+                DUI_FREE_POINT(pDrawInfo);
+            }
+        }
+        m_ResInfo.m_DrawInfoHash.RemoveAll();
     }
 
     BOOL CDuiPaintManager::TranslateAccelerator(LPMSG pMsg)
@@ -1826,6 +2032,17 @@ namespace DuiLib
         {
             FreeModule(m_hMsimg32Module);
         }
+        CDuiString* pDefaultAttr = NULL;
+        for(int i = 0; i < m_SharedResInfo.m_AttrHash.GetSize(); i++)
+        {
+            if(LPCTSTR key = m_SharedResInfo.m_AttrHash.GetAt(i))
+            {
+                pDefaultAttr = static_cast<CDuiString*>(m_SharedResInfo.m_AttrHash.Find(key));
+                DUI_FREE_POINT(pDefaultAttr);
+            }
+        }
+        m_SharedResInfo.m_AttrHash.RemoveAll();
+        CDuiControlFactory::GetInstance()->Release();
     }
 
     DuiLib::CDuiString CDuiPaintManager::GetInstancePath()
