@@ -26,33 +26,29 @@ namespace DuiLib
         , m_nBorderSize(0)
         , m_nBorderStyle(0)
         , m_nTooltipWidth(300)
+        , m_uFloatAlign(0)
         , m_dwBackColor(0)
         , m_dwBackColor2(0)
         , m_dwBackColor3(0)
         , m_dwForeColor(0)
         , m_dwBorderColor(0)
         , m_dwFocusBorderColor(0)
-        , m_sBkImage(_T(""))
-        , m_sForeImage(_T(""))
-        , m_sName(_T(""))
-        , m_sText(_T(""))
-        , m_sToolTip(_T(""))
-        , m_sUserData(_T(""))
-        , m_sVirtualWnd(_T(""))
+        , m_hInstance(NULL)
         , m_pParent(NULL)
         , m_pManager(NULL)
-        , m_hInstance(NULL)
     {
-        ZeroMemory(&m_rcItem, sizeof(m_rcItem));
         ZeroMemory(&m_cXY, sizeof(m_cXY));
         ZeroMemory(&m_cxyFixed, sizeof(m_cxyFixed));
-        ZeroMemory(&m_piFloatPercent, sizeof(m_piFloatPercent));
-        ZeroMemory(&m_rcPadding, sizeof(m_rcPadding));
-        ZeroMemory(&m_rcBorderSize, sizeof(m_rcBorderSize));
         ZeroMemory(&m_cxyBorderRound, sizeof(m_cxyBorderRound));
         ZeroMemory(&m_cxyMin, sizeof(m_cxyMin));
-        ZeroMemory(&m_rcPaint, sizeof(m_rcPaint));
         m_cxyMax.cx = m_cxyMax.cy = 9999;
+
+        ZeroMemory(&m_rcItem, sizeof(m_rcItem));
+        ZeroMemory(&m_rcPaint, sizeof(m_rcPaint));
+        ZeroMemory(&m_rcPadding, sizeof(m_rcPadding));
+        ZeroMemory(&m_rcBorderSize, sizeof(m_rcBorderSize));
+
+        ZeroMemory(&m_piFloatPercent, sizeof(m_piFloatPercent));
     }
 
 
@@ -191,6 +187,11 @@ namespace DuiLib
         Invalidate();
     }
 
+    CDuiString CDuiControl::GetBkImage()
+    {
+        return m_sBkImage;
+    }
+
     void CDuiControl::SetBkImage(LPCTSTR pStrImage)
     {
         if(m_pManager)
@@ -203,6 +204,11 @@ namespace DuiLib
         }
         m_sBkImage = pStrImage;
         Invalidate();
+    }
+
+    CDuiString CDuiControl::GetForeImage() const
+    {
+        return m_sForeImage;
     }
 
     void CDuiControl::SetForeImage(LPCTSTR pStrImage)
@@ -394,6 +400,11 @@ namespace DuiLib
             return m_pManager->GetDPIObj()->Scale(m_nTooltipWidth);
         }
         return m_nTooltipWidth;
+    }
+
+    WORD CDuiControl::GetCursor()
+    {
+        return m_wCursor;
     }
 
     void CDuiControl::SetCursor(WORD wCursor)
@@ -734,6 +745,19 @@ namespace DuiLib
         return m_bEnabled;
     }
 
+    BOOL CDuiControl::Activate()
+    {
+        if(!IsVisible())
+        {
+            return FALSE;
+        }
+        if(!IsEnabled())
+        {
+            return FALSE;
+        }
+        return true;
+    }
+
     BOOL CDuiControl::IsMouseEnabled() const
     {
         return m_bMouseEnabled;
@@ -742,6 +766,11 @@ namespace DuiLib
     void CDuiControl::SetMouseEnabled(BOOL bEnable /*= TRUE*/)
     {
         m_bMouseEnabled = bEnable;
+    }
+
+    BOOL CDuiControl::IsKeyboardEnabled() const
+    {
+        return m_bKeyboardEnabled ;
     }
 
     void CDuiControl::SetKeyboardEnabled(BOOL bEnable /*= TRUE*/)
@@ -795,6 +824,17 @@ namespace DuiLib
     void CDuiControl::SetFloatPercent(TPercentInfo piFloatPercent)
     {
         m_piFloatPercent = piFloatPercent;
+        NeedParentUpdate();
+    }
+
+    UINT CDuiControl::GetFloatAlign() const
+    {
+        return m_uFloatAlign;
+    }
+
+    void CDuiControl::SetFloatAlign(UINT uAlign)
+    {
+        m_uFloatAlign = uAlign;
         NeedParentUpdate();
     }
 
@@ -911,6 +951,63 @@ namespace DuiLib
                 SetFloatPercent(piFloatPercent);
                 SetFloat(TRUE);
             }
+        }
+        else if(_tcsicmp(pstrName, _T("floatalign")) == 0)
+        {
+            UINT uAlign = GetFloatAlign();
+            // Ω‚ŒˆŒƒ◊÷ Ù–‘
+            while(*pstrValue != _T('\0'))
+            {
+                CDuiString sValue;
+                while(*pstrValue == _T(',') || *pstrValue == _T(' '))
+                {
+                    pstrValue = ::CharNext(pstrValue);
+                }
+
+                while(*pstrValue != _T('\0') && *pstrValue != _T(',') && *pstrValue != _T(' '))
+                {
+                    LPTSTR pstrTemp = ::CharNext(pstrValue);
+                    while(pstrValue < pstrTemp)
+                    {
+                        sValue += *pstrValue++;
+                    }
+                }
+                if(sValue.CompareNoCase(_T("null")) == 0)
+                {
+                    uAlign = 0;
+                }
+                if(sValue.CompareNoCase(_T("left")) == 0)
+                {
+                    uAlign &= ~(DT_CENTER | DT_RIGHT);
+                    uAlign |= DT_LEFT;
+                }
+                else if(sValue.CompareNoCase(_T("center")) == 0)
+                {
+                    uAlign &= ~(DT_LEFT | DT_RIGHT);
+                    uAlign |= DT_CENTER;
+                }
+                else if(sValue.CompareNoCase(_T("right")) == 0)
+                {
+                    uAlign &= ~(DT_LEFT | DT_CENTER);
+                    uAlign |= DT_RIGHT;
+                }
+                else if(sValue.CompareNoCase(_T("top")) == 0)
+                {
+                    uAlign &= ~(DT_BOTTOM | DT_VCENTER);
+                    uAlign |= DT_TOP;
+                }
+                else if(sValue.CompareNoCase(_T("vcenter")) == 0)
+                {
+                    uAlign &= ~(DT_TOP | DT_BOTTOM);
+                    uAlign |= DT_VCENTER;
+                }
+                else if(sValue.CompareNoCase(_T("bottom")) == 0)
+                {
+                    uAlign &= ~(DT_TOP | DT_VCENTER);
+                    uAlign |= DT_BOTTOM;
+                }
+            }
+            SetFloatAlign(uAlign);
         }
         else if(_tcsicmp(pstrName, _T("padding")) == 0)
         {

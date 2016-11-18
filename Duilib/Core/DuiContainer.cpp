@@ -1026,22 +1026,77 @@ namespace DuiLib
         {
             return;
         }
+
         CDuiControl* pControl = static_cast<CDuiControl*>(m_items[iIndex]);
-        if(!pControl->IsVisible() || !pControl->IsFloat())
+
+        if(!pControl->IsVisible())
         {
             return;
         }
+        if(!pControl->IsFloat())
+        {
+            return;
+        }
+
         SIZE szXY = pControl->GetFixedXY();
         SIZE sz = {pControl->GetFixedWidth(), pControl->GetFixedHeight()};
-        TPercentInfo rcPercent = pControl->GetFloatPercent();
-        LONG width = GetPos().right - GetPos().left;
-        LONG height = GetPos().bottom - GetPos().top;
-        RECT rcCtrl = { 0 };
-        rcCtrl.left = (LONG)(width * rcPercent.left) + szXY.cx + GetPos().left;
-        rcCtrl.top = (LONG)(height * rcPercent.top) + szXY.cy + GetPos().top;
-        rcCtrl.right = (LONG)(width * rcPercent.right) + szXY.cx + sz.cx + GetPos().left;
-        rcCtrl.bottom = (LONG)(height * rcPercent.bottom) + szXY.cy + sz.cy + GetPos().top;
-        pControl->SetPos(rcCtrl, false);
+
+        int nParentWidth = GetPos().right - GetPos().left;
+        int nParentHeight = GetPos().bottom - GetPos().top;
+        if(sz.cx <= 0)
+        {
+            sz.cx = nParentWidth;
+        }
+        if(sz.cy <= 0)
+        {
+            sz.cy = nParentHeight;
+        }
+
+        UINT uAlign = pControl->GetFloatAlign();
+        if(uAlign != 0)
+        {
+            RECT rcCtrl = {0, 0, sz.cx, sz.cy};
+            if((uAlign & DT_CENTER) != 0)
+            {
+                ::OffsetRect(&rcCtrl, (nParentWidth - sz.cx) / 2, 0);
+            }
+            else if((uAlign & DT_RIGHT) != 0)
+            {
+                ::OffsetRect(&rcCtrl, nParentWidth - sz.cx, 0);
+            }
+            else
+            {
+                ::OffsetRect(&rcCtrl, szXY.cx, 0);
+            }
+
+            if((uAlign & DT_VCENTER) != 0)
+            {
+                ::OffsetRect(&rcCtrl, 0, (nParentHeight - sz.cy) / 2);
+            }
+            else if((uAlign & DT_BOTTOM) != 0)
+            {
+                ::OffsetRect(&rcCtrl, 0, nParentHeight - sz.cy);
+            }
+            else
+            {
+                ::OffsetRect(&rcCtrl, 0, szXY.cy);
+            }
+
+            ::OffsetRect(&rcCtrl, GetPos().left, GetPos().top);
+            pControl->SetPos(rcCtrl, false);
+        }
+        else
+        {
+            TPercentInfo rcPercent = pControl->GetFloatPercent();
+            LONG width = GetPos().right - GetPos().left;
+            LONG height = GetPos().bottom - GetPos().top;
+            RECT rcCtrl = { 0 };
+            rcCtrl.left = (LONG)(width * rcPercent.left) + szXY.cx + GetPos().left;
+            rcCtrl.top = (LONG)(height * rcPercent.top) + szXY.cy + GetPos().top;
+            rcCtrl.right = (LONG)(width * rcPercent.right) + szXY.cx + sz.cx + GetPos().left;
+            rcCtrl.bottom = (LONG)(height * rcPercent.bottom) + szXY.cy + sz.cy + GetPos().top;
+            pControl->SetPos(rcCtrl, false);
+        }
     }
 
     void CDuiContainer::ProcessScrollBar(RECT rc, int cxRequired, int cyRequired)

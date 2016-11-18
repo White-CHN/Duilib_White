@@ -16,5 +16,12 @@ public:
     virtual CDuiControl* CreateControl(LPCTSTR pstrClass);
 
     virtual void Notify(TNotifyUI& msg) ;
+private:
+    CDuiButton* m_pCloseBtn;
+    CDuiButton* m_pMaxBtn;
+    CDuiButton* m_pRestoreBtn;
+    CDuiButton* m_pMinBtn;
+    CDuiButton* m_pSkinBtn;
+    CDuiIcon m_Icon;
 };
 

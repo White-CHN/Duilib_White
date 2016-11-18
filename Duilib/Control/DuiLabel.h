@@ -15,20 +15,27 @@ namespace DuiLib
         virtual LPVOID GetInterface(LPCTSTR pstrName);
         virtual UINT GetControlFlags() const;
 
-        void SetFont(int index);
         int GetFont() const;
+        void SetFont(int index);
 
+        UINT GetTextStyle() const;
+
+        DWORD GetTextColor() const;
         void SetTextColor(DWORD dwTextColor);
 
+        DWORD GetDisabledTextColor() const;
         void SetDisabledTextColor(DWORD dwTextColor);
 
         RECT GetTextPadding() const;
         void SetTextPadding(RECT rc);
 
+        BOOL IsShowHtml();
         void SetShowHtml(BOOL bShowHtml = TRUE);
 
-        virtual void SetAutoCalcWidth(BOOL bAutoCalcWidth);
+        virtual void SetText(LPCTSTR pstrText);
 
+        virtual BOOL GetAutoCalcWidth() const;
+        virtual void SetAutoCalcWidth(BOOL bAutoCalcWidth);
 
         virtual SIZE EstimateSize(SIZE szAvailable);
         virtual void DoEvent(TEventUI& event);

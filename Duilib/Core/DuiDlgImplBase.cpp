@@ -14,6 +14,11 @@ namespace DuiLib
     {
     }
 
+    CDuiPaintManager* CDuiDlgImplBase::GetPaintManager()
+    {
+        return &m_PaintManager;
+    }
+
     void CDuiDlgImplBase::InitWindow()
     {
     }
@@ -35,7 +40,6 @@ namespace DuiLib
         }
         else if(wParam == VK_ESCAPE)
         {
-            Close(0);
             return TRUE;
         }
         return FALSE;

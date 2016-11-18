@@ -47,13 +47,12 @@
 
 using namespace std;
 
-#include "vld.h"
-
 #include "Utils/DuiString.h"
 #include "Utils/DuiUtils.h"
 #include "Utils/DuiDPI.h"
 #include "Utils/DuiDelegate.h"
 #include "Utils/DuiShadow.h"
+#include "Utils/DuiIcon.h"
 
 #include "Core/DuiMarkupNode.h"
 #include "Core/DuiMarkup.h"
@@ -73,6 +72,7 @@ using namespace std;
 
 #include "Control/DuiScrollBar.h"
 #include "Control/DuiLabel.h"
+#include "Control/DuiButton.h"
 
 
 #pragma comment( lib, "GdiPlus.lib" )

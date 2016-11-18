@@ -1037,6 +1037,40 @@ namespace DuiLib
                 ::SendMessage(m_hWndPaint, WM_MOUSEMOVE, 0, (LPARAM) MAKELPARAM(m_ptLastMousePos.x, m_ptLastMousePos.y));
             }
             break;
+            case WM_SETCURSOR:
+            {
+                if(LOWORD(lParam) != HTCLIENT)
+                {
+                    break;
+                }
+                if(m_bMouseCapture)
+                {
+                    return true;
+                }
+
+                POINT pt = { 0 };
+                ::GetCursorPos(&pt);
+                ::ScreenToClient(m_hWndPaint, &pt);
+                CDuiControl* pControl = FindControl(pt);
+                if(pControl == NULL)
+                {
+                    break;
+                }
+                if((pControl->GetControlFlags() & UIFLAG_SETCURSOR) == 0)
+                {
+                    break;
+                }
+                TEventUI event = { 0 };
+                event.Type = UIEVENT_SETCURSOR;
+                event.pSender = pControl;
+                event.wParam = wParam;
+                event.lParam = lParam;
+                event.ptMouse = pt;
+                event.wKeyState = MapKeyState();
+                event.dwTimestamp = ::GetTickCount();
+                pControl->Event(event);
+            }
+            return true;
             default:
                 break;
         }
@@ -1316,14 +1350,14 @@ namespace DuiLib
         {
             if(!m_SharedResInfo.m_StyleHash.Insert(pName, pStyle))
             {
-                delete pStyle;
+                DUI_FREE_POINT(pStyle);
             }
         }
         else
         {
             if(!m_ResInfo.m_StyleHash.Insert(pName, pStyle))
             {
-                delete pStyle;
+                DUI_FREE_POINT(pStyle);
             }
         }
     }

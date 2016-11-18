@@ -42,21 +42,36 @@ namespace DuiLib
         return IsEnabled() ? UIFLAG_SETCURSOR : 0;
     }
 
+    int CDuiLabel::GetFont() const
+    {
+        return m_iFont;
+    }
+
     void CDuiLabel::SetFont(int index)
     {
         m_iFont = index;
         Invalidate();
     }
 
-    int CDuiLabel::GetFont() const
+    UINT CDuiLabel::GetTextStyle() const
     {
-        return m_iFont;
+        return m_uTextStyle;
+    }
+
+    DWORD CDuiLabel::GetTextColor() const
+    {
+        return m_dwTextColor;
     }
 
     void CDuiLabel::SetTextColor(DWORD dwTextColor)
     {
         m_dwTextColor = dwTextColor;
         Invalidate();
+    }
+
+    DWORD CDuiLabel::GetDisabledTextColor() const
+    {
+        return m_dwDisabledTextColor;
     }
 
     void CDuiLabel::SetDisabledTextColor(DWORD dwTextColor)
@@ -76,6 +91,11 @@ namespace DuiLib
         Invalidate();
     }
 
+    BOOL CDuiLabel::IsShowHtml()
+    {
+        return m_bShowHtml;
+    }
+
     void CDuiLabel::SetShowHtml(BOOL bShowHtml /*= TRUE*/)
     {
         if(m_bShowHtml == bShowHtml)
@@ -86,12 +106,24 @@ namespace DuiLib
         Invalidate();
     }
 
+    void CDuiLabel::SetText(LPCTSTR pstrText)
+    {
+        __super::SetText(pstrText);
+        if(GetAutoCalcWidth())
+        {
+            NeedParentUpdate();
+        }
+    }
+
+    BOOL CDuiLabel::GetAutoCalcWidth() const
+    {
+        return m_bAutoCalcWidth;
+    }
+
     void CDuiLabel::SetAutoCalcWidth(BOOL bAutoCalcWidth)
     {
         m_bAutoCalcWidth = bAutoCalcWidth;
     }
-
-
 
     SIZE CDuiLabel::EstimateSize(SIZE szAvailable)
     {

@@ -131,6 +131,12 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\DuiIcon.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\DuiButton.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -203,6 +209,12 @@
       <Filter>源文件\Control</Filter>
     </ClCompile>
     <ClCompile Include="Control\DuiScrollBar.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\DuiIcon.cpp">
+      <Filter>源文件\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiButton.cpp">
       <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>

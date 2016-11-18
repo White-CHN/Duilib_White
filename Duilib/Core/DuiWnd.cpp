@@ -18,6 +18,10 @@ namespace DuiLib
 
     HWND CDuiWnd::GetHWND() const
     {
+        if(!IsWindow(m_hWnd))
+        {
+            return NULL;
+        }
         return m_hWnd;
     }
 

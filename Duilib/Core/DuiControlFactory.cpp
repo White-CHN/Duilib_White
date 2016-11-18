@@ -9,8 +9,9 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiContainer);
         INNER_REGISTER_DUICONTROL(CDuiVerticalLayout);
         INNER_REGISTER_DUICONTROL(CDuiHorizontalLayout);
-        INNER_REGISTER_DUICONTROL(CDuiLabel);
         INNER_REGISTER_DUICONTROL(CDuiScrollBar);
+        INNER_REGISTER_DUICONTROL(CDuiLabel);
+        INNER_REGISTER_DUICONTROL(CDuiButton);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

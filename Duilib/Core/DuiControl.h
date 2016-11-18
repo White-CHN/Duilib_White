@@ -38,7 +38,9 @@ namespace DuiLib
         void SetBkColor2(DWORD dwBackColor);
         void SetBkColor3(DWORD dwBackColor);
         void SetForeColor(DWORD dwForeColor);
+        CDuiString GetBkImage();
         void SetBkImage(LPCTSTR pStrImage);
+        CDuiString GetForeImage() const;
         void SetForeImage(LPCTSTR pStrImage);
 
         void SetFocusBorderColor(DWORD dwBorderColor);
@@ -75,6 +77,7 @@ namespace DuiLib
         virtual void SetToolTip(LPCTSTR pstrText);
         virtual int GetToolTipWidth(void);	// 多行ToolTip单行最长宽度
         // 光标
+        virtual WORD GetCursor();
         virtual void SetCursor(WORD wCursor);
 
         // 快捷键
@@ -124,8 +127,10 @@ namespace DuiLib
         virtual void SetVisible(BOOL bVisible = TRUE);
         virtual void SetEnabled(BOOL bEnable = TRUE);
         virtual BOOL IsEnabled() const;
+        virtual BOOL Activate();
         virtual BOOL IsMouseEnabled() const;
         virtual void SetMouseEnabled(BOOL bEnable = TRUE);
+        virtual BOOL IsKeyboardEnabled() const;
         virtual void SetKeyboardEnabled(BOOL bEnable = TRUE);
         virtual void SetInternVisible(BOOL bVisible = TRUE); // 仅供内部调用，有些UI拥有窗口句柄，需要重写此函数
 
@@ -137,6 +142,9 @@ namespace DuiLib
         virtual BOOL IsFloat() const;
         virtual void SetFloat(BOOL bFloat = TRUE);
         virtual void SetFloatPercent(TPercentInfo piFloatPercent);
+        //floatalign属性
+        virtual UINT GetFloatAlign() const;
+        virtual void SetFloatAlign(UINT uAlign);
         //设置属性
         CDuiControl* ApplyAttributeList(LPCTSTR pstrValue);
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
@@ -168,6 +176,7 @@ namespace DuiLib
         CEventSource OnNotify;
     private:
         TCHAR m_chShortcut;			//shortcut属性
+
         BOOL m_bUpdateNeeded;
         BOOL m_bVisible;
         BOOL m_bInternVisible;
@@ -182,16 +191,39 @@ namespace DuiLib
         BOOL m_bKeyboardEnabled;	//keyboard属性
         BOOL m_bFocused;			//是否焦点
         BOOL m_bMenuUsed;			//menu属性
+
         WORD m_wCursor;				//cursor属性
+
         int m_nBorderSize;			//bordersize属性
         int m_nBorderStyle;			//borderstyle属性
         int m_nTooltipWidth;		//多行tip单行最大宽度
+
+        UINT m_uFloatAlign;			//FloatAlign属性
+
         DWORD m_dwBackColor;		//bkcolor与bkcolor1属性
         DWORD m_dwBackColor2;		//bkcolor2属性
         DWORD m_dwBackColor3;		//bkcolor3属性
         DWORD m_dwForeColor;		//forecolor属性
         DWORD m_dwBorderColor;		//bordercolor属性
         DWORD m_dwFocusBorderColor;	//focusbordercolor属性
+
+        HINSTANCE m_hInstance;
+
+        CDuiControl* m_pParent;			//父控件指针
+        CDuiPaintManager* m_pManager;
+
+        SIZE m_cXY;					//pos属性
+        SIZE m_cxyFixed;			//pos属性
+        SIZE m_cxyBorderRound;		//borderround属性
+        SIZE m_cxyMin;				//minwidth minhegiht属性
+        SIZE m_cxyMax;				//maxwidth maxhegiht属性
+
+        RECT m_rcItem;				//实际位置
+        RECT m_rcPadding;			//padding属性
+        RECT m_rcBorderSize;		//bordersize属性
+        RECT m_rcPaint;
+
+        TPercentInfo m_piFloatPercent;		//float 的数值
 
         CDuiString m_sBkImage;		//bkimage属性
         CDuiString m_sForeImage;	//foreimage属性
@@ -200,24 +232,6 @@ namespace DuiLib
         CDuiString m_sToolTip;		//tooltip属性
         CDuiString m_sUserData;		//userdata属性
         CDuiString m_sVirtualWnd;	//virtualwnd属性
-
-        RECT m_rcItem;				//实际位置
-        RECT m_rcPadding;			//padding属性
-        RECT m_rcBorderSize;		//bordersize属性
-        RECT m_rcPaint;
-
-        SIZE m_cXY;					//pos属性
-        SIZE m_cxyFixed;			//pos属性
-        SIZE m_cxyBorderRound;		//borderround属性
-        SIZE m_cxyMin;				//minwidth minhegiht属性
-        SIZE m_cxyMax;				//maxwidth maxhegiht属性
-
-        TPercentInfo m_piFloatPercent;		//float 的数值
-
-        CDuiControl* m_pParent;			//父控件指针
-        CDuiPaintManager* m_pManager;
-
-        HINSTANCE m_hInstance;
     };
 
 

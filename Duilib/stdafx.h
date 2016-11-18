@@ -15,7 +15,7 @@
 
 
 // TODO: 在此处引用程序需要的其他头文件
-
+#include "vld.h" //检测内存泄漏工具，可注释
 #include "Duilib.h"
 
 

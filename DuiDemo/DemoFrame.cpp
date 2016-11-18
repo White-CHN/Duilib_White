@@ -14,6 +14,12 @@ CDemoFrame::~CDemoFrame(void)
 void CDemoFrame::InitWindow()
 {
     SetIcon(IDR_MAINFRAME);
+    m_Icon.CreateIcon(GetHWND(), IDR_MAINFRAME, _T("Duilib开源项目\nDuilib开源项目"));
+    m_pCloseBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("closebtn")));
+    m_pMaxBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("maxbtn")));
+    m_pRestoreBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("restorebtn")));
+    m_pMinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("minbtn")));
+    m_pSkinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("skinbtn")));
 }
 
 DuiLib::CDuiString CDemoFrame::GetSkinFile()
@@ -48,8 +54,31 @@ CDuiControl* CDemoFrame::CreateControl(LPCTSTR pstrClass)
 
 void CDemoFrame::Notify(TNotifyUI& msg)
 {
-    if(msg.sType == _T("windowinit"))
+    if(msg.sType == DUI_MSGTYPE_WINDOWINIT)
     {
+    }
+    else if(msg.sType == DUI_MSGTYPE_CLICK)
+    {
+        if(msg.pSender == m_pMinBtn)
+        {
+            SendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0);
+            return;
+        }
+        else if(msg.pSender == m_pMaxBtn)
+        {
+            SendMessage(WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+            return;
+        }
+        else if(msg.pSender == m_pRestoreBtn)
+        {
+            SendMessage(WM_SYSCOMMAND, SC_RESTORE, 0);
+            return;
+        }
+        else if(msg.pSender == m_pCloseBtn)
+        {
+            Close(0);
+            return;
+        }
     }
 }
 

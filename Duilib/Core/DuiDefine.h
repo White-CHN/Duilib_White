@@ -154,6 +154,7 @@ namespace DuiLib
 #define  DUI_CTR_CONTROL                         (_T("Control"))
 #define  DUI_CTR_LABEL                           (_T("Label"))
 #define  DUI_CTR_SCROLLBAR                       (_T("ScrollBar"))
+#define  DUI_CTR_BUTTON                          (_T("Button"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
@@ -168,6 +169,13 @@ namespace DuiLib
         TIMERID_CARET			=	0x1999
     };
 
+    enum
+    {
+        // 内部保留消息
+        DUIMSG_ICON = WM_USER + 1,
+        // 程序自定义消息
+        DUIMSG_USER = WM_USER + 100,
+    };
 #ifdef _DEBUG
     #ifndef DUI_TRACE
         #define DUI_TRACE(...) _tprintf(_T("\r\n[%s][Line:%d]"),__FUNCTIONW__,__LINE__);DuiTrace(__VA_ARGS__)

@@ -553,6 +553,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Control\DuiButton.h" />
     <ClInclude Include="Control\DuiLabel.h" />
     <ClInclude Include="Control\DuiScrollBar.h" />
     <ClInclude Include="Core\DuiControlFactory.h" />
@@ -573,6 +574,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Utils\DuiDelegate.h" />
     <ClInclude Include="Utils\DuiDPI.h" />
+    <ClInclude Include="Utils\DuiIcon.h" />
     <ClInclude Include="Utils\DuiShadow.h" />
     <ClInclude Include="Utils\DuiString.h" />
     <ClInclude Include="Utils\DuiUtils.h" />
@@ -580,6 +582,7 @@
     <ClInclude Include="Utils\VersionHelpers.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Control\DuiButton.cpp" />
     <ClCompile Include="Control\DuiLabel.cpp" />
     <ClCompile Include="Control\DuiScrollBar.cpp" />
     <ClCompile Include="Core\DuiControlFactory.cpp" />
@@ -666,6 +669,7 @@
     </ClCompile>
     <ClCompile Include="Utils\DuiDelegate.cpp" />
     <ClCompile Include="Utils\DuiDPI.cpp" />
+    <ClCompile Include="Utils\DuiIcon.cpp" />
     <ClCompile Include="Utils\DuiShadow.cpp" />
     <ClCompile Include="Utils\DuiString.cpp" />
     <ClCompile Include="Utils\DuiUtils.cpp" />

@@ -12,7 +12,8 @@ namespace DuiLib
     public:
         CDuiDlgImplBase(void);
         ~CDuiDlgImplBase(void);
-
+    public:
+        CDuiPaintManager* GetPaintManager();
     protected:
         virtual void InitWindow();
 
