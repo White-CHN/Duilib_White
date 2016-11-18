@@ -12,12 +12,17 @@ namespace DuiLib
         , m_nScrollPos(0)
         , m_nRange(100)
         , m_nLineSize(8)
+        , m_nLastScrollOffset(0)
+        , m_nScrollRepeatDelay(0)
+        , m_nLastScrollPos(0)
         , m_uThumbState(0)
         , m_uButton1State(0)
         , m_uButton2State(0)
         , m_pOwner(NULL)
     {
         SetFixedWidth(DEFAULT_SCROLLBAR_SIZE);
+
+        ZeroMemory(&m_ptLastMouse, sizeof(m_ptLastMouse));
         ZeroMemory(&m_rcThumb, sizeof(m_rcThumb));
         ZeroMemory(&m_rcButton1, sizeof(m_rcButton1));
         ZeroMemory(&m_rcButton2, sizeof(m_rcButton2));
@@ -26,6 +31,20 @@ namespace DuiLib
 
     CDuiScrollBar::~CDuiScrollBar(void)
     {
+    }
+
+    LPCTSTR CDuiScrollBar::GetClass() const
+    {
+        return DUI_CTR_SCROLLBAR;
+    }
+
+    LPVOID CDuiScrollBar::GetInterface(LPCTSTR pstrName)
+    {
+        if(_tcsicmp(pstrName, DUI_CTR_SCROLLBAR) == 0)
+        {
+            return static_cast<CDuiScrollBar*>(this);
+        }
+        return __super::GetInterface(pstrName);
     }
 
     void CDuiScrollBar::SetOwner(CDuiContainer* pOwner)
@@ -114,6 +133,11 @@ namespace DuiLib
     int CDuiScrollBar::GetScrollRange() const
     {
         return m_nRange;
+    }
+
+    int CDuiScrollBar::GetLineSize() const
+    {
+        return m_nLineSize;
     }
 
     void CDuiScrollBar::SetLineSize(int nSize)
@@ -638,20 +662,6 @@ namespace DuiLib
         }
     }
 
-    LPCTSTR CDuiScrollBar::GetClass() const
-    {
-        return _T("ScrollBarUI");
-    }
-
-    LPVOID CDuiScrollBar::GetInterface(LPCTSTR pstrName)
-    {
-        if(_tcsicmp(pstrName, DUI_CTR_SCROLLBAR) == 0)
-        {
-            return static_cast<CDuiScrollBar*>(this);
-        }
-        return __super::GetInterface(pstrName);
-    }
-
     void CDuiScrollBar::SetPos(RECT rc, bool bNeedInvalidate /*= TRUE*/)
     {
         __super::SetPos(rc, bNeedInvalidate);
@@ -1000,8 +1010,376 @@ namespace DuiLib
         {
             return;
         }
-        if(event.Type == UIEVENT_KILLFOCUS)
+        else if(event.Type == UIEVENT_KILLFOCUS)
         {
+            return;
+        }
+        else if(event.Type == UIEVENT_CONTEXTMENU)
+        {
+            return;
+        }
+        else if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
+        {
+            if(!IsEnabled())
+            {
+                return;
+            }
+            m_nLastScrollOffset = 0;
+            m_nScrollRepeatDelay = 0;
+            GetManager()->SetTimer(this, TIMERID_SCROLLBAR, 50);
+            if(::PtInRect(&m_rcButton1, event.ptMouse))
+            {
+                m_uButton1State |= UISTATE_PUSHED;
+                if(!m_bHorizontal)
+                {
+                    if(m_pOwner != NULL)
+                    {
+                        m_pOwner->LineUp();
+                    }
+                    else
+                    {
+                        SetScrollPos(m_nScrollPos - m_nLineSize);
+                    }
+                }
+                else
+                {
+                    if(m_pOwner != NULL)
+                    {
+                        m_pOwner->LineLeft();
+                    }
+                    else
+                    {
+                        SetScrollPos(m_nScrollPos - m_nLineSize);
+                    }
+                }
+            }
+            else if(::PtInRect(&m_rcButton2, event.ptMouse))
+            {
+                m_uButton2State |= UISTATE_PUSHED;
+                if(!m_bHorizontal)
+                {
+                    if(m_pOwner != NULL)
+                    {
+                        m_pOwner->LineDown();
+                    }
+                    else
+                    {
+                        SetScrollPos(m_nScrollPos + m_nLineSize);
+                    }
+                }
+                else
+                {
+                    if(m_pOwner != NULL)
+                    {
+                        m_pOwner->LineRight();
+                    }
+                    else
+                    {
+                        SetScrollPos(m_nScrollPos + m_nLineSize);
+                    }
+                }
+            }
+            else if(::PtInRect(&m_rcThumb, event.ptMouse))
+            {
+                m_uThumbState |= (UISTATE_CAPTURED | UISTATE_PUSHED);
+                m_ptLastMouse = event.ptMouse;
+                m_nLastScrollPos = m_nScrollPos;
+            }
+            else
+            {
+                if(!m_bHorizontal)
+                {
+                    if(event.ptMouse.y < m_rcThumb.top)
+                    {
+                        if(m_pOwner != NULL)
+                        {
+                            m_pOwner->PageUp();
+                        }
+                        else
+                        {
+                            SetScrollPos(m_nScrollPos + GetPos().top - GetPos().bottom);
+                        }
+                    }
+                    else if(event.ptMouse.y > m_rcThumb.bottom)
+                    {
+                        if(m_pOwner != NULL)
+                        {
+                            m_pOwner->PageDown();
+                        }
+                        else
+                        {
+                            SetScrollPos(m_nScrollPos - GetPos().top + GetPos().bottom);
+                        }
+                    }
+                }
+                else
+                {
+                    if(event.ptMouse.x < m_rcThumb.left)
+                    {
+                        if(m_pOwner != NULL)
+                        {
+                            m_pOwner->PageLeft();
+                        }
+                        else
+                        {
+                            SetScrollPos(m_nScrollPos + GetPos().left - GetPos().right);
+                        }
+                    }
+                    else if(event.ptMouse.x > m_rcThumb.right)
+                    {
+                        if(m_pOwner != NULL)
+                        {
+                            m_pOwner->PageRight();
+                        }
+                        else
+                        {
+                            SetScrollPos(m_nScrollPos - GetPos().left + GetPos().right);
+                        }
+                    }
+                }
+            }
+        }
+        else if(event.Type == UIEVENT_BUTTONUP)
+        {
+            m_nScrollRepeatDelay = 0;
+            m_nLastScrollOffset = 0;
+            GetManager()->KillTimer(this, TIMERID_SCROLLBAR);
+
+            if((m_uThumbState & UISTATE_CAPTURED) != 0)
+            {
+                m_uThumbState &= ~(UISTATE_CAPTURED | UISTATE_PUSHED);
+                Invalidate();
+            }
+            else if((m_uButton1State & UISTATE_PUSHED) != 0)
+            {
+                m_uButton1State &= ~UISTATE_PUSHED;
+                Invalidate();
+            }
+            else if((m_uButton2State & UISTATE_PUSHED) != 0)
+            {
+                m_uButton2State &= ~UISTATE_PUSHED;
+                Invalidate();
+            }
+            return;
+        }
+        else if(event.Type == UIEVENT_MOUSEMOVE)
+        {
+            if((m_uThumbState & UISTATE_CAPTURED) != 0)
+            {
+                if(!m_bHorizontal)
+                {
+                    int vRange = GetPos().bottom - GetPos().top - m_rcThumb.bottom + m_rcThumb.top - 2 * GetFixedWidth();
+                    if(vRange != 0)
+                    {
+                        m_nLastScrollOffset = (event.ptMouse.y - m_ptLastMouse.y) * m_nRange / vRange;
+                    }
+                }
+                else
+                {
+                    int hRange = GetPos().right - GetPos().left - m_rcThumb.right + m_rcThumb.left - 2 * GetFixedHeight();
+                    if(hRange != 0)
+                    {
+                        m_nLastScrollOffset = (event.ptMouse.x - m_ptLastMouse.x) * m_nRange / hRange;
+                    }
+                }
+            }
+            else
+            {
+                if((m_uThumbState & UISTATE_HOT) != 0)
+                {
+                    if(!::PtInRect(&m_rcThumb, event.ptMouse))
+                    {
+                        m_uThumbState &= ~UISTATE_HOT;
+                        Invalidate();
+                    }
+                }
+                else
+                {
+                    if(!IsEnabled())
+                    {
+                        return;
+                    }
+                    if(::PtInRect(&m_rcThumb, event.ptMouse))
+                    {
+                        m_uThumbState |= UISTATE_HOT;
+                        Invalidate();
+                    }
+                }
+            }
+            return;
+        }
+        else if(event.Type == UIEVENT_MOUSEENTER)
+        {
+            if(IsEnabled())
+            {
+                m_uButton1State |= UISTATE_HOT;
+                m_uButton2State |= UISTATE_HOT;
+                if(::PtInRect(&m_rcThumb, event.ptMouse))
+                {
+                    m_uThumbState |= UISTATE_HOT;
+                }
+                Invalidate();
+            }
+            return;
+        }
+        else if(event.Type == UIEVENT_MOUSELEAVE)
+        {
+            if(IsEnabled())
+            {
+                m_uButton1State &= ~UISTATE_HOT;
+                m_uButton2State &= ~UISTATE_HOT;
+                m_uThumbState &= ~UISTATE_HOT;
+                Invalidate();
+            }
+            return;
+        }
+        else if(event.Type == UIEVENT_TIMER && event.wParam == TIMERID_SCROLLBAR)
+        {
+            ++m_nScrollRepeatDelay;
+            if((m_uThumbState & UISTATE_CAPTURED) != 0)
+            {
+                if(!m_bHorizontal)
+                {
+                    if(m_pOwner != NULL) m_pOwner->SetScrollPos(CDuiSize(m_pOwner->GetScrollPos().cx, \
+                                m_nLastScrollPos + m_nLastScrollOffset));
+                    else
+                    {
+                        SetScrollPos(m_nLastScrollPos + m_nLastScrollOffset);
+                    }
+                }
+                else
+                {
+                    if(m_pOwner != NULL) m_pOwner->SetScrollPos(CDuiSize(m_nLastScrollPos + m_nLastScrollOffset, \
+                                m_pOwner->GetScrollPos().cy));
+                    else
+                    {
+                        SetScrollPos(m_nLastScrollPos + m_nLastScrollOffset);
+                    }
+                }
+                Invalidate();
+            }
+            else if((m_uButton1State & UISTATE_PUSHED) != 0)
+            {
+                if(m_nScrollRepeatDelay <= 5)
+                {
+                    return;
+                }
+                if(!m_bHorizontal)
+                {
+                    if(m_pOwner != NULL)
+                    {
+                        m_pOwner->LineUp();
+                    }
+                    else
+                    {
+                        SetScrollPos(m_nScrollPos - m_nLineSize);
+                    }
+                }
+                else
+                {
+                    if(m_pOwner != NULL)
+                    {
+                        m_pOwner->LineLeft();
+                    }
+                    else
+                    {
+                        SetScrollPos(m_nScrollPos - m_nLineSize);
+                    }
+                }
+            }
+            else if((m_uButton2State & UISTATE_PUSHED) != 0)
+            {
+                if(m_nScrollRepeatDelay <= 5)
+                {
+                    return;
+                }
+                if(!m_bHorizontal)
+                {
+                    if(m_pOwner != NULL)
+                    {
+                        m_pOwner->LineDown();
+                    }
+                    else
+                    {
+                        SetScrollPos(m_nScrollPos + m_nLineSize);
+                    }
+                }
+                else
+                {
+                    if(m_pOwner != NULL)
+                    {
+                        m_pOwner->LineRight();
+                    }
+                    else
+                    {
+                        SetScrollPos(m_nScrollPos + m_nLineSize);
+                    }
+                }
+            }
+            else
+            {
+                if(m_nScrollRepeatDelay <= 5)
+                {
+                    return;
+                }
+                POINT pt = { 0 };
+                ::GetCursorPos(&pt);
+                ::ScreenToClient(GetManager()->GetPaintWindow(), &pt);
+                if(!m_bHorizontal)
+                {
+                    if(pt.y < m_rcThumb.top)
+                    {
+                        if(m_pOwner != NULL)
+                        {
+                            m_pOwner->PageUp();
+                        }
+                        else
+                        {
+                            SetScrollPos(m_nScrollPos + GetPos().top - GetPos().bottom);
+                        }
+                    }
+                    else if(pt.y > m_rcThumb.bottom)
+                    {
+                        if(m_pOwner != NULL)
+                        {
+                            m_pOwner->PageDown();
+                        }
+                        else
+                        {
+                            SetScrollPos(m_nScrollPos - GetPos().top + GetPos().bottom);
+                        }
+                    }
+                }
+                else
+                {
+                    if(pt.x < m_rcThumb.left)
+                    {
+                        if(m_pOwner != NULL)
+                        {
+                            m_pOwner->PageLeft();
+                        }
+                        else
+                        {
+                            SetScrollPos(m_nScrollPos + GetPos().left - GetPos().right);
+                        }
+                    }
+                    else if(pt.x > m_rcThumb.right)
+                    {
+                        if(m_pOwner != NULL)
+                        {
+                            m_pOwner->PageRight();
+                        }
+                        else
+                        {
+                            SetScrollPos(m_nScrollPos - GetPos().left + GetPos().right);
+                        }
+                    }
+                }
+            }
+            if(GetManager() != NULL && m_pOwner == NULL)
+            {
+                GetManager()->SendNotify(this, DUI_MSGTYPE_SCROLL);
+            }
             return;
         }
         if(m_pOwner != NULL)

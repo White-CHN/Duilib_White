@@ -25,6 +25,7 @@ namespace DuiLib
         , m_wCursor(0)
         , m_nBorderSize(0)
         , m_nBorderStyle(0)
+        , m_nTooltipWidth(300)
         , m_dwBackColor(0)
         , m_dwBackColor2(0)
         , m_dwBackColor3(0)
@@ -61,7 +62,7 @@ namespace DuiLib
 
     LPCTSTR CDuiControl::GetClass() const
     {
-        return _T("Control");
+        return DUI_CTR_CONTROL;
     }
 
     LPVOID CDuiControl::GetInterface(LPCTSTR pstrName)
@@ -370,11 +371,29 @@ namespace DuiLib
         Invalidate();
     }
 
+    CDuiString CDuiControl::GetToolTip() const
+    {
+        //if(!IsResourceText())
+        {
+            return m_sToolTip;
+        }
+        //return CResourceManager::GetInstance()->GetText(m_sToolTip);
+    }
+
     void CDuiControl::SetToolTip(LPCTSTR pstrText)
     {
         CDuiString strTemp(pstrText);
         strTemp.Replace(_T("<n>"), _T("\r\n"));
         m_sToolTip = strTemp;
+    }
+
+    int CDuiControl::GetToolTipWidth(void)
+    {
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_nTooltipWidth);
+        }
+        return m_nTooltipWidth;
     }
 
     void CDuiControl::SetCursor(WORD wCursor)

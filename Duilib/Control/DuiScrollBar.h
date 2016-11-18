@@ -10,6 +10,9 @@ namespace DuiLib
         CDuiScrollBar(void);
         virtual ~CDuiScrollBar(void);
 
+        virtual LPCTSTR GetClass() const;
+        virtual LPVOID GetInterface(LPCTSTR pstrName);
+
         void SetOwner(CDuiContainer* pOwner);
 
         void SetHorizontal(BOOL bHorizontal = TRUE);
@@ -20,6 +23,7 @@ namespace DuiLib
         void SetScrollRange(int nRange);
         int GetScrollRange() const;
 
+        int GetLineSize() const;
         void SetLineSize(int nSize);
 
         void SetShowButton1(BOOL bShow);
@@ -59,9 +63,6 @@ namespace DuiLib
         void PaintThumb(HDC hDC);
         void PaintRail(HDC hDC);
 
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
-
         virtual void SetPos(RECT rc, bool bNeedInvalidate = TRUE);
         virtual void DoPaint(HDC hDC, const RECT& rcPaint);
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
@@ -70,7 +71,6 @@ namespace DuiLib
         enum
         {
             DEFAULT_SCROLLBAR_SIZE = 16,
-            DEFAULT_TIMERID = 10,
         };
     private:
         BOOL m_bHorizontal;
@@ -81,11 +81,17 @@ namespace DuiLib
         int m_nRange;
         int m_nLineSize;
 
+        int m_nLastScrollOffset;
+        int m_nScrollRepeatDelay;
+        int m_nLastScrollPos;
+
         UINT m_uThumbState;
         UINT m_uButton1State;
         UINT m_uButton2State;
 
         CDuiContainer* m_pOwner;
+
+        POINT m_ptLastMouse;
 
         RECT m_rcThumb;
         RECT m_rcButton1;

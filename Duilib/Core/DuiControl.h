@@ -71,8 +71,9 @@ namespace DuiLib
         virtual void SetResourceText(BOOL bResource);
 
         // 鼠标提示
+        virtual CDuiString GetToolTip() const;
         virtual void SetToolTip(LPCTSTR pstrText);
-
+        virtual int GetToolTipWidth(void);	// 多行ToolTip单行最长宽度
         // 光标
         virtual void SetCursor(WORD wCursor);
 
@@ -184,6 +185,7 @@ namespace DuiLib
         WORD m_wCursor;				//cursor属性
         int m_nBorderSize;			//bordersize属性
         int m_nBorderStyle;			//borderstyle属性
+        int m_nTooltipWidth;		//多行tip单行最大宽度
         DWORD m_dwBackColor;		//bkcolor与bkcolor1属性
         DWORD m_dwBackColor2;		//bkcolor2属性
         DWORD m_dwBackColor3;		//bkcolor3属性

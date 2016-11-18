@@ -139,6 +139,15 @@ namespace DuiLib
         BOOL bNextIsIt;
     } FINDTABINFO;
 
+    typedef struct tagTIMERINFO
+    {
+        CDuiControl* pSender;
+        UINT nLocalID;
+        HWND hWnd;
+        UINT uWinTimer;
+        BOOL bKilled;
+    } TIMERINFO;
+
     class ITranslateAccelerator
     {
     public:
@@ -224,7 +233,7 @@ namespace DuiLib
         // 样式管理
         void AddStyle(LPCTSTR pName, LPCTSTR pstrStyle, BOOL bShared = FALSE);
         LPCTSTR GetStyle(LPCTSTR pName) const;
-        void RemoveAllStyle(BOOL bShared = FALSE);
+        void RemoveAllStyle();
         //焦点相关
         CDuiControl* GetFocus() const;
         void SetFocus(CDuiControl* pControl);
@@ -238,7 +247,7 @@ namespace DuiLib
         HFONT AddFont(int id, LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared = FALSE);
         HFONT GetFont(int id);
         HFONT GetFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic);
-        void RemoveAllFonts(BOOL bShared = FALSE);
+        void RemoveAllFonts();
         TFontInfo* GetFontInfo(int id);
         TFontInfo* GetFontInfo(HFONT hFont);
 
@@ -271,7 +280,7 @@ namespace DuiLib
 
         void AddDefaultAttributeList(LPCTSTR pStrControlName, LPCTSTR pStrControlAttrList, BOOL bShared = FALSE);
         LPCTSTR GetDefaultAttributeList(LPCTSTR pStrControlName) const;
-        void RemoveAllDefaultAttributeList(BOOL bShared = FALSE);
+        void RemoveAllDefaultAttributeList();
 
         BOOL InitControls(CDuiControl* pControl, CDuiControl* pParent = NULL);
         BOOL AttachDialog(CDuiControl* pControl);
@@ -284,7 +293,7 @@ namespace DuiLib
         const TImageInfo* GetImageEx(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, HINSTANCE instance = NULL);
         const TImageInfo* AddImage(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, BOOL bShared = FALSE, HINSTANCE instance = NULL);
         const TImageInfo* AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int iWidth, int iHeight, BOOL bAlpha, BOOL bShared = FALSE);
-        void RemoveAllImages(BOOL bShared = FALSE);
+        void RemoveAllImages();
 
         const TDrawInfo* GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify);
         void RemoveAllDrawInfos();
@@ -292,8 +301,13 @@ namespace DuiLib
         BOOL TranslateAccelerator(LPMSG pMsg);
         BOOL PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
 
+        BOOL SetTimer(CDuiControl* pControl, UINT nTimerID, UINT uElapse);
+        BOOL KillTimer(CDuiControl* pControl, UINT nTimerID);
+        void RemoveAllTimers();
+
         static HINSTANCE GetInstance();
         static BOOL Initialize(HINSTANCE hInstance);
+        static void RemoveAllShared();
         static void Uninitialize();
         static CDuiString GetInstancePath();
         static HINSTANCE GetResourceDll();
@@ -307,6 +321,7 @@ namespace DuiLib
         static HANDLE GetResourceZipHandle();
 
         static BOOL GetHSL(short* H, short* S, short* L);
+        static UINT MapKeyState();
 
         static BOOL TranslateMessage(const LPMSG pMsg);
         static void MessageLoop();
@@ -323,6 +338,7 @@ namespace DuiLib
         static CDuiControl* CALLBACK __FindControlFromPoint(CDuiControl* pThis, LPVOID pData);
     private:
         HWND m_hWndPaint;						//所属的窗体的句柄
+        HWND m_hwndTooltip;						//提示消息
         HDC m_hDcPaint;							//所属的窗体的HDC
         HDC m_hDcOffscreen;						//m_hDcPaint的内存缓冲区
         HBITMAP m_hbmpOffscreen;
@@ -336,25 +352,32 @@ namespace DuiLib
         BOOL m_bIsPainting;
         BOOL m_bFocusNeeded;
         BOOL m_bOffscreenPaint;
-        BOOL m_bShowUpdateRect;					//窗口红色边框
+        BOOL m_bShowUpdateRect;					//是否显示窗口边框(默认红色)
         BOOL m_bFirstLayout;
         BOOL m_bLayeredChanged;
         BOOL m_bMouseCapture;					//是否设置鼠标捕获
         BOOL m_bDragMode;						//是否拖拽
         BOOL m_bUseGdiplusText;					//gdiplustext属性,是否用gdi+渲染文字
+        BOOL m_bCaretActive;					//光标相关
+        BOOL m_bMouseTracking;					//鼠标是否在本窗口区域
         int m_trh;								//textrenderinghint属性,gdi+渲染文字提示
+        UINT m_uTimerID;
         ULONG_PTR m_gdiplusToken;				//Gdiplus相关
-        Gdiplus::GdiplusStartupInput* m_pGdiplusStartupInput;
+
+        CDPI* m_pDPI;
 
         BYTE* m_pOffscreenBits;
 
         CDuiControl* m_pRoot;					//xml 根节点
         CDuiControl* m_pFocus;					//当前焦点控件
         CDuiControl* m_pEventClick;				//当前点击的控件
+        CDuiControl* m_pEventHover;				//鼠标停留
+        CDuiControl* m_pEventKey;				//键盘键值
 
-        CDPI* m_pDPI;
+        Gdiplus::GdiplusStartupInput* m_pGdiplusStartupInput;
 
         POINT m_ptLastMousePos;					//鼠标坐标
+        RECT m_rtCaret;							//光标相关
         RECT m_rcLayeredUpdate;
         RECT m_rcSizeBox;						//sizebox属性
         RECT m_rcCaption;						//caption属性
@@ -363,6 +386,9 @@ namespace DuiLib
         SIZE m_szMinWindow;						//mininfo属性
         SIZE m_szMaxWindow;						//maxinfo属性
 
+        TOOLINFO m_ToolTip;
+
+        CStdPtrArray m_aTimers;					//定时器
         CStdPtrArray m_aMessageFilters;
         CStdPtrArray m_aTranslateAccelerator;
         CStdPtrArray m_aPreMessageFilters;		//拦截在DispatchMessage消息之前的消息，注册的窗口句柄
@@ -390,8 +416,8 @@ namespace DuiLib
         static int m_iResourceType;				//资源加载的方式
         static CDuiString m_strResourcePath;	//资源目录路径
         static CDuiString m_strResourceZip;		//资源文件名
-        static CStdPtrArray m_aPreMessages;		//所有CDuiPaintManager句柄
-        static CStdPtrArray m_aPlugins;			//所有插件
+        static CStdPtrArray m_aPreMessages;		//CDuiPaintManager句柄
+        static CStdPtrArray m_aPlugins;			//插件
         static TResInfo m_SharedResInfo;		//默认属性
 
         static short m_H;

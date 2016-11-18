@@ -482,7 +482,7 @@
 		<Attribute name="textpadding" default="0,0,0,0" type="RECT" comment="文字显示的边距,如(2,2,2,2)"/>
 		<Attribute name="showhtml" default="false" type="BOOL" comment="是否使用类html富文本绘制,如(false)"/>
 		<Attribute name="align" default="left" type="STRING" comment="文字横向对齐方式,取值left、center、right"/>
-		<Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、center、bottom"/>
+		<Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、vcenter、bottom"/>
 		<Attribute name="autocalcwidth" default="false" type="INT" comment="是否自动计算宽度"/>
     <Attribute name="wordbreak" default="false" type="INT" comment="是否支持多行文字"/>
   </Label>
@@ -521,7 +521,7 @@
     <Attribute name="disabledtextcolor" default="0x00000000" type="DWORD" comment="disabled字体颜色，0表示使用默认disabled字体颜色,如(0xFFFF0000)"/>
     <Attribute name="textpadding" default="0,0,0,0" type="RECT" comment="文字显示的边距,如(2,2,2,2)"/>
     <Attribute name="align" default="left" type="STRING" comment="文字横向对齐方式,取值left、center、right"/>
-    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、center、bottom"/>
+    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、vcenter、bottom"/>
     <Attribute name="rhaa" default="0" type="STRING" comment="字体质量0-5"/>
     <Attribute name="autocalcwidth" default="false" type="INT" comment="是否自动计算宽度"/>
   </DateTime>
@@ -560,7 +560,7 @@
     <Attribute name="disabledtextcolor" default="0x00000000" type="DWORD" comment="disabled字体颜色，0表示使用默认disabled字体颜色,如(0xFFFF0000)"/>
     <Attribute name="textpadding" default="0,0,0,0" type="RECT" comment="文字显示的边距,如(2,2,2,2)"/>
     <Attribute name="align" default="left" type="STRING" comment="文字横向对齐方式,取值left、center、right"/>
-    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、center、bottom"/>
+    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、vcenter、bottom"/>
     <Attribute name="rhaa" default="0" type="STRING" comment="字体质量0-5"/>
     <Attribute name="readonly" default="false" type="BOOL" comment="是否只读,如(false)"/>
   </IPAddress>
@@ -596,7 +596,7 @@
 		<Attribute name="shortcut" default="" type="CHAR" comment="对应的快捷键,如(P)"/>
 		<Attribute name="menu" default="false" type="BOOL" comment="是否需要右键菜单,如(true)"/>
     <Attribute name="align" default="left" type="STRING" comment="文字横向对齐方式,取值left、center、right"/>
-    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、center、bottom"/>
+    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、vcenter、bottom"/>
 		<Attribute name="endellipsis" default="false" type="BOOL" comment="句末显示不完是否使用...代替,如(true)"/>
 		<Attribute name="font" default="-1" type="INT" comment="字体id,如(0)"/>
 		<Attribute name="textcolor" default="0x00000000" type="DWORD" comment="字体颜色，0表示使用默认字体颜色,如(0xFFFF0000)"/>
@@ -648,7 +648,7 @@
 		<Attribute name="shortcut" default="" type="CHAR" comment="对应的快捷键,如(P)"/>
 		<Attribute name="menu" default="false" type="BOOL" comment="是否需要右键菜单,如(true)"/>
     <Attribute name="align" default="left" type="STRING" comment="文字横向对齐方式,取值left、center、right"/>
-    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、center、bottom"/>
+    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、vcenter、bottom"/>
 		<Attribute name="endellipsis" default="false" type="BOOL" comment="句末显示不完是否使用...代替,如(true)"/>
 		<Attribute name="font" default="-1" type="INT" comment="字体id,如(0)"/>
 		<Attribute name="textcolor" default="0x00000000" type="DWORD" comment="字体颜色，0表示使用默认字体颜色,如(0xFFFF0000)"/>
@@ -706,7 +706,7 @@
 		<Attribute name="shortcut" default="" type="CHAR" comment="对应的快捷键,如(P)"/>
 		<Attribute name="menu" default="false" type="BOOL" comment="是否需要右键菜单,如(true)"/>
     <Attribute name="align" default="left" type="STRING" comment="文字横向对齐方式,取值left、center、right"/>
-    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、center、bottom"/>
+    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、vcenter、bottom"/>
 		<Attribute name="endellipsis" default="false" type="BOOL" comment="句末显示不完是否使用...代替,如(true)"/>
 		<Attribute name="font" default="-1" type="INT" comment="字体id,如(0)"/>
 		<Attribute name="textcolor" default="0x00000000" type="DWORD" comment="字体颜色，0表示使用默认字体颜色,如(0xFFFF0000)"/>
@@ -745,7 +745,7 @@
 		<Attribute name="shortcut" default="" type="CHAR" comment="对应的快捷键,如(P)"/>
 		<Attribute name="menu" default="false" type="BOOL" comment="是否需要右键菜单,如(true)"/>
     <Attribute name="align" default="left" type="STRING" comment="文字横向对齐方式,取值left、center、right"/>
-    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、center、bottom"/>
+    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、vcenter、bottom"/>
     <Attribute name="endellipsis" default="false" type="BOOL" comment="句末显示不完是否使用...代替,如(true)"/>
 		<Attribute name="font" default="-1" type="INT" comment="字体id,如(0)"/>
 		<Attribute name="textcolor" default="0x00000000" type="DWORD" comment="字体颜色，0表示使用默认字体颜色,如(0xFFFF0000)"/>
@@ -790,7 +790,7 @@
 		<Attribute name="shortcut" default="" type="CHAR" comment="对应的快捷键,如(P)"/>
 		<Attribute name="menu" default="false" type="BOOL" comment="是否需要右键菜单,如(true)"/>
     <Attribute name="align" default="left" type="STRING" comment="文字横向对齐方式,取值left、center、right"/>
-    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、center、bottom"/>
+    <Attribute name="valign" default="center" type="STRING" comment="文字纵向对齐方式,取值top、vcenter、bottom"/>
 		<Attribute name="endellipsis" default="false" type="BOOL" comment="句末显示不完是否使用...代替,如(true)"/>
 		<Attribute name="font" default="-1" type="INT" comment="字体id,如(0)"/>
 		<Attribute name="textcolor" default="0x00000000" type="DWORD" comment="字体颜色，0表示使用默认字体颜色,如(0xFFFF0000)"/>

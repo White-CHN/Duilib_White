@@ -37,6 +37,7 @@
 #include <windows.h>
 #include <windowsx.h>
 #include <comdef.h>
+#include <commctrl.h>
 #include <gdiplus.h>
 #include <locale.h>
 #include <tchar.h>
@@ -75,3 +76,4 @@ using namespace std;
 
 
 #pragma comment( lib, "GdiPlus.lib" )
+#pragma comment( lib, "comctl32.lib" )

@@ -29,6 +29,10 @@ namespace DuiLib
         DUI_FREE_POINT(m_pHorizontalScrollBar);
     }
 
+    LPCTSTR CDuiContainer::GetClass() const
+    {
+        return DUI_CTR_CONTAINER;
+    }
 
     LPVOID CDuiContainer::GetInterface(LPCTSTR pstrName)
     {
@@ -43,10 +47,7 @@ namespace DuiLib
         return __super::GetInterface(pstrName);
     }
 
-    LPCTSTR CDuiContainer::GetClass() const
-    {
-        return _T("Container");
-    }
+
 
     RECT CDuiContainer::GetInset() const
     {
@@ -94,12 +95,237 @@ namespace DuiLib
         m_bMouseChildEnabled = bEnable;
     }
 
+    SIZE CDuiContainer::GetScrollPos() const
+    {
+        SIZE sz = {0, 0};
+        if(m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible())
+        {
+            sz.cy = m_pVerticalScrollBar->GetScrollPos();
+        }
+        if(m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible())
+        {
+            sz.cx = m_pHorizontalScrollBar->GetScrollPos();
+        }
+        return sz;
+    }
+
+    SIZE CDuiContainer::GetScrollRange() const
+    {
+        SIZE sz = {0, 0};
+        if(m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible())
+        {
+            sz.cy = m_pVerticalScrollBar->GetScrollRange();
+        }
+        if(m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible())
+        {
+            sz.cx = m_pHorizontalScrollBar->GetScrollRange();
+        }
+        return sz;
+    }
+
+    int CDuiContainer::GetScrollStepSize() const
+    {
+        if(GetManager())
+        {
+            return GetManager()->GetDPIObj()->Scale(m_nScrollStepSize);
+        }
+
+        return m_nScrollStepSize;
+    }
+
     void CDuiContainer::SetScrollStepSize(int nSize)
     {
         if(nSize > 0)
         {
             m_nScrollStepSize = nSize;
         }
+    }
+
+    void CDuiContainer::SetScrollPos(SIZE szPos, BOOL bMsg /*= TURE*/)
+    {
+        int cx = 0;
+        int cy = 0;
+        if(m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible())
+        {
+            int iLastScrollPos = m_pVerticalScrollBar->GetScrollPos();
+            m_pVerticalScrollBar->SetScrollPos(szPos.cy);
+            cy = m_pVerticalScrollBar->GetScrollPos() - iLastScrollPos;
+        }
+
+        if(m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible())
+        {
+            int iLastScrollPos = m_pHorizontalScrollBar->GetScrollPos();
+            m_pHorizontalScrollBar->SetScrollPos(szPos.cx);
+            cx = m_pHorizontalScrollBar->GetScrollPos() - iLastScrollPos;
+        }
+
+        if(cx == 0 && cy == 0)
+        {
+            return;
+        }
+
+        RECT rcPos;
+        for(int it2 = 0; it2 < m_items.GetSize(); it2++)
+        {
+            CDuiControl* pControl = static_cast<CDuiControl*>(m_items[it2]);
+            if(!pControl->IsVisible())
+            {
+                continue;
+            }
+            if(pControl->IsFloat())
+            {
+                continue;
+            }
+
+            rcPos = pControl->GetPos();
+            rcPos.left -= cx;
+            rcPos.right -= cx;
+            rcPos.top -= cy;
+            rcPos.bottom -= cy;
+            pControl->SetPos(rcPos);
+        }
+
+        Invalidate();
+
+        if(m_pVerticalScrollBar)
+        {
+            // 发送滚动消息
+            if(GetManager() != NULL && bMsg)
+            {
+                int nPage = (m_pVerticalScrollBar->GetScrollPos() + m_pVerticalScrollBar->GetLineSize()) / m_pVerticalScrollBar->GetLineSize();
+                GetManager()->SendNotify(this, DUI_MSGTYPE_SCROLL, (WPARAM)nPage);
+            }
+        }
+    }
+
+    void CDuiContainer::LineUp()
+    {
+        int cyLine = GetScrollStepSize();
+        if(cyLine == 0)
+        {
+            cyLine = 8;
+            if(GetManager())
+            {
+                cyLine = GetManager()->GetDefaultFontInfo()->tm.tmHeight + 8;
+            }
+        }
+
+        SIZE sz = GetScrollPos();
+        sz.cy -= cyLine;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::LineDown()
+    {
+        int cyLine = GetScrollStepSize();
+        if(cyLine == 0)
+        {
+            cyLine = 8;
+            if(GetManager())
+            {
+                cyLine = GetManager()->GetDefaultFontInfo()->tm.tmHeight + 8;
+            }
+        }
+
+        SIZE sz = GetScrollPos();
+        sz.cy += cyLine;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::LineLeft()
+    {
+        int nScrollStepSize = GetScrollStepSize();
+        int cxLine = nScrollStepSize == 0 ? 8 : nScrollStepSize;
+
+        SIZE sz = GetScrollPos();
+        sz.cx -= cxLine;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::LineRight()
+    {
+        int nScrollStepSize = GetScrollStepSize();
+        int cxLine = nScrollStepSize == 0 ? 8 : nScrollStepSize;
+
+        SIZE sz = GetScrollPos();
+        sz.cx += cxLine;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::PageUp()
+    {
+        SIZE sz = GetScrollPos();
+        int iOffset = GetPos().bottom - GetPos().top - m_rcInset.top - m_rcInset.bottom;
+        if(m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible())
+        {
+            iOffset -= m_pHorizontalScrollBar->GetFixedHeight();
+        }
+        sz.cy -= iOffset;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::PageDown()
+    {
+        SIZE sz = GetScrollPos();
+        int iOffset = GetPos().bottom - GetPos().top - m_rcInset.top - m_rcInset.bottom;
+        if(m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible())
+        {
+            iOffset -= m_pHorizontalScrollBar->GetFixedHeight();
+        }
+        sz.cy += iOffset;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::PageLeft()
+    {
+        SIZE sz = GetScrollPos();
+        int iOffset = GetPos().right - GetPos().left - m_rcInset.left - m_rcInset.right;
+        if(m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible())
+        {
+            iOffset -= m_pVerticalScrollBar->GetFixedWidth();
+        }
+        sz.cx -= iOffset;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::PageRight()
+    {
+        SIZE sz = GetScrollPos();
+        int iOffset = GetPos().right - GetPos().left - m_rcInset.left - m_rcInset.right;
+        if(m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible())
+        {
+            iOffset -= m_pVerticalScrollBar->GetFixedWidth();
+        }
+        sz.cx += iOffset;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::HomeUp()
+    {
+        SIZE sz = GetScrollPos();
+        sz.cy = 0;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::EndDown()
+    {
+        SIZE sz = GetScrollPos();
+        sz.cy = GetScrollRange().cy;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::HomeLeft()
+    {
+        SIZE sz = GetScrollPos();
+        sz.cx = 0;
+        SetScrollPos(sz);
+    }
+
+    void CDuiContainer::EndRight()
+    {
+        SIZE sz = GetScrollPos();
+        sz.cx = GetScrollRange().cx;
+        SetScrollPos(sz);
     }
 
     CDuiScrollBar* CDuiContainer::GetVerticalScrollBar() const
@@ -414,6 +640,111 @@ namespace DuiLib
         }
     }
 
+    void CDuiContainer::DoEvent(TEventUI& event)
+    {
+        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        {
+            if(GetParent() != NULL)
+            {
+                GetParent()->DoEvent(event);
+            }
+            else
+            {
+                CDuiControl::DoEvent(event);
+            }
+            return;
+        }
+        if(event.Type == UIEVENT_SETFOCUS)
+        {
+            SetFocused(TRUE);
+            return;
+        }
+        else if(event.Type == UIEVENT_KILLFOCUS)
+        {
+            SetFocused(FALSE);
+            return;
+        }
+        else if(event.Type == UIEVENT_KEYDOWN)
+        {
+            if(m_pVerticalScrollBar != NULL && m_pVerticalScrollBar->IsVisible() && m_pVerticalScrollBar->IsEnabled())
+            {
+                switch(event.chKey)
+                {
+                    case VK_DOWN:
+                        LineDown();
+                        return;
+                    case VK_UP:
+                        LineUp();
+                        return;
+                    case VK_NEXT:
+                        PageDown();
+                        return;
+                    case VK_PRIOR:
+                        PageUp();
+                        return;
+                    case VK_HOME:
+                        HomeUp();
+                        return;
+                    case VK_END:
+                        EndDown();
+                        return;
+                }
+            }
+            if(m_pHorizontalScrollBar != NULL && m_pHorizontalScrollBar->IsVisible() && m_pHorizontalScrollBar->IsEnabled())
+            {
+                switch(event.chKey)
+                {
+                    case VK_RIGHT:
+                        LineRight();
+                        return;
+                    case VK_LEFT:
+                        LineLeft();
+                        return;
+                    case VK_NEXT:
+                        PageRight();
+                        return;
+                    case VK_PRIOR:
+                        PageLeft();
+                        return;
+                    case VK_HOME:
+                        HomeLeft();
+                        return;
+                    case VK_END:
+                        EndRight();
+                        return;
+                }
+            }
+        }
+        else if(event.Type == UIEVENT_SCROLLWHEEL)
+        {
+            if(m_pVerticalScrollBar != NULL && m_pVerticalScrollBar->IsVisible() && m_pVerticalScrollBar->IsEnabled())
+            {
+                switch(LOWORD(event.wParam))
+                {
+                    case SB_LINEUP:
+                        LineUp();
+                        return;
+                    case SB_LINEDOWN:
+                        LineDown();
+                        return;
+                }
+            }
+            if(m_pHorizontalScrollBar != NULL && m_pHorizontalScrollBar->IsVisible() && m_pHorizontalScrollBar->IsEnabled())
+            {
+                switch(LOWORD(event.wParam))
+                {
+                    case SB_LINEUP:
+                        LineLeft();
+                        return;
+                    case SB_LINEDOWN:
+                        LineRight();
+                        return;
+                }
+            }
+        }
+        CDuiControl::DoEvent(event);
+    }
+
     void CDuiContainer::EnableScrollBar(BOOL bEnableVertical /*= TRUE*/, bool bEnableHorizontal /*= FALSE*/)
     {
         if(bEnableVertical && !m_pVerticalScrollBar)
@@ -561,6 +892,24 @@ namespace DuiLib
         {
             CDuiControl::SetAttribute(pstrName, pstrValue);
         }
+    }
+
+    void CDuiContainer::SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit /*= TRUE*/)
+    {
+        for(int i = 0; i < m_items.GetSize(); i++)
+        {
+            static_cast<CDuiControl*>(m_items[i])->SetManager(pManager, this, bInit);
+        }
+
+        if(m_pVerticalScrollBar != NULL)
+        {
+            m_pVerticalScrollBar->SetManager(pManager, this, bInit);
+        }
+        if(m_pHorizontalScrollBar != NULL)
+        {
+            m_pHorizontalScrollBar->SetManager(pManager, this, bInit);
+        }
+        CDuiControl::SetManager(pManager, pParent, bInit);
     }
 
     CDuiControl* CDuiContainer::FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags)

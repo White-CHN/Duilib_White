@@ -28,7 +28,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
     // 资源路径
     CDuiString strResourcePath = CDuiPaintManager::GetInstancePath();
     // 加载资源
-    strResourcePath += _T("skin\\");
+    strResourcePath += _T("DuiDemo\\");
     CDuiPaintManager::SetResourcePath(strResourcePath.GetData());
     switch(CDuiPaintManager::GetResourceType())
     {

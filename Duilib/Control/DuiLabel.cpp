@@ -23,6 +23,25 @@ namespace DuiLib
     {
     }
 
+    LPCTSTR CDuiLabel::GetClass() const
+    {
+        return DUI_CTR_LABEL;
+    }
+
+    LPVOID CDuiLabel::GetInterface(LPCTSTR pstrName)
+    {
+        if(_tcsicmp(pstrName, DUI_CTR_LABEL) == 0)
+        {
+            return static_cast<CDuiLabel*>(this);
+        }
+        return __super::GetInterface(pstrName);
+    }
+
+    UINT CDuiLabel::GetControlFlags() const
+    {
+        return IsEnabled() ? UIFLAG_SETCURSOR : 0;
+    }
+
     void CDuiLabel::SetFont(int index)
     {
         m_iFont = index;
@@ -72,24 +91,7 @@ namespace DuiLib
         m_bAutoCalcWidth = bAutoCalcWidth;
     }
 
-    LPCTSTR CDuiLabel::GetClass() const
-    {
-        return _T("Label");
-    }
 
-    LPVOID CDuiLabel::GetInterface(LPCTSTR pstrName)
-    {
-        if(_tcsicmp(pstrName, _T("Label")) == 0)
-        {
-            return static_cast<CDuiLabel*>(this);
-        }
-        return __super::GetInterface(pstrName);
-    }
-
-    UINT CDuiLabel::GetControlFlags() const
-    {
-        return IsEnabled() ? UIFLAG_SETCURSOR : 0;
-    }
 
     SIZE CDuiLabel::EstimateSize(SIZE szAvailable)
     {

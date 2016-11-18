@@ -569,6 +569,7 @@
     <ClInclude Include="Duilib.h" />
     <ClInclude Include="Layout\DuiHorizontalLayout.h" />
     <ClInclude Include="Layout\DuiVerticalLayout.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Utils\DuiDelegate.h" />
     <ClInclude Include="Utils\DuiDPI.h" />

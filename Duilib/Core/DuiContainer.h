@@ -27,9 +27,8 @@ namespace DuiLib
         CDuiContainer(void);
         virtual ~CDuiContainer(void);
 
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
-
         virtual LPCTSTR GetClass() const;
+        virtual LPVOID GetInterface(LPCTSTR pstrName);
 
         virtual RECT GetInset() const;
         virtual void SetInset(RECT rcInset); // 设置内边距，相当于设置客户区
@@ -44,8 +43,23 @@ namespace DuiLib
         virtual BOOL IsMouseChildEnabled() const;
         virtual void SetMouseChildEnabled(BOOL bEnable = TRUE);
 
-
+        virtual SIZE GetScrollPos() const;
+        virtual SIZE GetScrollRange() const;
+        virtual int GetScrollStepSize() const;
         virtual void SetScrollStepSize(int nSize);
+        virtual void SetScrollPos(SIZE szPos, BOOL bMsg = TRUE);
+        virtual void LineUp();
+        virtual void LineDown();
+        virtual void LineLeft();
+        virtual void LineRight();
+        virtual void PageUp();
+        virtual void PageDown();
+        virtual void PageLeft();
+        virtual void PageRight();
+        virtual void HomeUp();
+        virtual void EndDown();
+        virtual void HomeLeft();
+        virtual void EndRight();
 
         virtual CDuiScrollBar* GetVerticalScrollBar() const;
         virtual CDuiScrollBar* GetHorizontalScrollBar() const;
@@ -61,11 +75,16 @@ namespace DuiLib
         virtual void RemoveAll();
 
         virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
+
         virtual void DoPaint(HDC hDC, const RECT& rcPaint);
+
+        virtual void DoEvent(TEventUI& event);
 
         virtual void EnableScrollBar(BOOL bEnableVertical = TRUE, bool bEnableHorizontal = FALSE);
 
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+
+        virtual void SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit = TRUE);
 
         virtual CDuiControl* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags);
     protected:

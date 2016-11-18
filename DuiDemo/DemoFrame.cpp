@@ -11,6 +11,11 @@ CDemoFrame::~CDemoFrame(void)
 {
 }
 
+void CDemoFrame::InitWindow()
+{
+    SetIcon(IDR_MAINFRAME);
+}
+
 DuiLib::CDuiString CDemoFrame::GetSkinFile()
 {
     return _T("main.xml");
@@ -32,7 +37,8 @@ void CDemoFrame::OnFinalMessage(HWND hWnd)
 
 LRESULT CDemoFrame::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
-    return 0;
+
+    return __super::MessageHandler(uMsg, wParam, lParam, bHandled);
 }
 
 CDuiControl* CDemoFrame::CreateControl(LPCTSTR pstrClass)

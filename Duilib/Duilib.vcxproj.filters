@@ -128,6 +128,9 @@
     <ClInclude Include="Control\DuiScrollBar.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

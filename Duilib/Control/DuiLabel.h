@@ -11,6 +11,10 @@ namespace DuiLib
         CDuiLabel(void);
         virtual ~CDuiLabel(void);
     public:
+        virtual LPCTSTR GetClass() const;
+        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        virtual UINT GetControlFlags() const;
+
         void SetFont(int index);
         int GetFont() const;
 
@@ -25,9 +29,7 @@ namespace DuiLib
 
         virtual void SetAutoCalcWidth(BOOL bAutoCalcWidth);
 
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
-        virtual UINT GetControlFlags() const;
+
         virtual SIZE EstimateSize(SIZE szAvailable);
         virtual void DoEvent(TEventUI& event);
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);

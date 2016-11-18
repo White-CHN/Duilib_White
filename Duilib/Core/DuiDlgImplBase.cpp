@@ -35,6 +35,7 @@ namespace DuiLib
         }
         else if(wParam == VK_ESCAPE)
         {
+            Close(0);
             return TRUE;
         }
         return FALSE;
@@ -396,7 +397,6 @@ namespace DuiLib
     LRESULT CDuiDlgImplBase::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         bHandled = FALSE;
-        Close();
         return 0;
     }
 
