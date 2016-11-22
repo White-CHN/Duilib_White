@@ -20,16 +20,16 @@ namespace DuiLib
         HWND SubClass(HWND hWnd);
         void UnSubClass();
 
-        void ShowWindow(BOOL bShow = TRUE, BOOL bTakeFocus = TRUE);
-        void CenterWindow();	// 居中，支持扩展屏幕
+        BOOL ShowWindow(BOOL bShow = TRUE, BOOL bTakeFocus = TRUE);
+        BOOL CenterWindow();	// 居中，支持扩展屏幕
 
-        UINT ShowModal();
+        UINT_PTR ShowModal();
 
         void Close(UINT nRet = IDOK);
 
         void SetIcon(UINT nRes);
 
-        void ResizeClient(int cx = -1, int cy = -1);
+        BOOL ResizeClient(int cx = -1, int cy = -1);
     protected:
         virtual UINT GetClassStyle() const;
         virtual LPCTSTR GetSuperClassName() const;

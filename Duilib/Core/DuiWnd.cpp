@@ -20,6 +20,7 @@ namespace DuiLib
     {
         if(!IsWindow(m_hWnd))
         {
+            DUI_ERROR(_T("this[%x] m_hWnd[%x]"), this, m_hWnd);
             return NULL;
         }
         return m_hWnd;
@@ -27,6 +28,11 @@ namespace DuiLib
 
     CDuiWnd::operator HWND() const
     {
+        if(!IsWindow(m_hWnd))
+        {
+            DUI_ERROR(_T("this[%x] m_hWnd[%x]"), this, m_hWnd);
+            return NULL;
+        }
         return m_hWnd;
     }
 
@@ -39,13 +45,17 @@ namespace DuiLib
     {
         if(GetSuperClassName() != NULL && !RegisterSuperClass())
         {
+            DUI_ERROR(_T("this[%x] GetSuperClassName[%s] RegisterSuperClass[FALSE]"), this, GetSuperClassName());
             return NULL;
         }
         if(GetSuperClassName() == NULL && !RegisterWindowClass())
         {
+            DUI_ERROR(_T("this[%x] GetSuperClassName[NULL] RegisterWindowClass[FALSE]"), this);
             return NULL;
         }
         m_hWnd = ::CreateWindowEx(dwExStyle, GetWindowClassName(), lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, CDuiPaintManager::GetInstance(), this);
+        DUI_TRACE(_T("this[%x] dwExStyle[%x] ClassName[%s] WindowName[%s] dwStyle[%x] x[%d] y[%d] nWidth[%d] nHeight[%d] hWndParent[%x] hInstance[%x] m_hWnd[%x]"),
+                  this, dwExStyle, GetWindowClassName(), lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, CDuiPaintManager::GetInstance(), m_hWnd);
         ASSERT(m_hWnd != NULL);
         return m_hWnd;
     }
@@ -69,11 +79,15 @@ namespace DuiLib
         m_OldWndProc = SubclassWindow(hWnd, __WndProc);
         if(m_OldWndProc == NULL)
         {
+            DUI_ERROR(_T("this[%x] SubclassWindow[NULL]"), this);
             return NULL;
         }
         m_bSubclassed = TRUE;
         m_hWnd = hWnd;
-        ::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LPARAM>(this));
+        if(::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LPARAM>(this)) == NULL)
+        {
+            DUI_ERROR(_T("this[%x] SetWindowLongPtr[NULL]"), this);
+        }
         return m_hWnd;
     }
 
@@ -89,23 +103,23 @@ namespace DuiLib
         m_bSubclassed = FALSE;
     }
 
-    void CDuiWnd::ShowWindow(BOOL bShow /*= TRUE*/, BOOL bTakeFocus /*= TRUE*/)
+    BOOL CDuiWnd::ShowWindow(BOOL bShow /*= TRUE*/, BOOL bTakeFocus /*= TRUE*/)
     {
         ASSERT(::IsWindow(m_hWnd));
         if(!::IsWindow(m_hWnd))
         {
-            return;
+            return FALSE;
         }
-        ::ShowWindow(m_hWnd, bShow ? (bTakeFocus ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE) : SW_HIDE);
+        return ::ShowWindow(m_hWnd, bShow ? (bTakeFocus ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE) : SW_HIDE);
     }
 
-    void CDuiWnd::CenterWindow()
+    BOOL CDuiWnd::CenterWindow()
     {
         ASSERT(::IsWindow(m_hWnd));
         ASSERT((GetWindowStyle(m_hWnd)&WS_CHILD) == 0);
         RECT rcDlg = { 0 };
         ::GetWindowRect(m_hWnd, &rcDlg);
-        HWND hWnd = *this;
+        HWND hWnd = GetHWND();
         HWND hWndCenter = ::GetWindowOwner(m_hWnd);
         if(hWndCenter != NULL)
         {
@@ -148,13 +162,18 @@ namespace DuiLib
         {
             yTop = rcArea.bottom - DlgHeight;
         }
-        ::SetWindowPos(m_hWnd, NULL, xLeft, yTop, -1, -1, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+        if(::SetWindowPos(m_hWnd, NULL, xLeft, yTop, -1, -1, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE) == NULL)
+        {
+            DUI_ERROR(_T("this[%x] SetWindowPos[FALSE] m_hWnd[%x] xLeft[%d] yTop[%d] uFlag[%x]"), this, m_hWnd, xLeft, yTop, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+            return FALSE;
+        }
+        return TRUE;
     }
 
-    UINT CDuiWnd::ShowModal()
+    UINT_PTR CDuiWnd::ShowModal()
     {
         ASSERT(::IsWindow(m_hWnd));
-        UINT nRet = 0;
+        UINT_PTR nRet = 0;
         HWND hWndParent = GetWindowOwner(m_hWnd);
         ::ShowWindow(m_hWnd, SW_SHOWNORMAL);
         ::EnableWindow(hWndParent, FALSE);
@@ -181,7 +200,7 @@ namespace DuiLib
         ::SetFocus(hWndParent);
         if(msg.message == WM_QUIT)
         {
-            ::PostQuitMessage(msg.wParam);
+            ::PostQuitMessage((INT)msg.wParam);
         }
         return nRet;
     }
@@ -210,13 +229,13 @@ namespace DuiLib
         SendMessage(WM_SETICON, (WPARAM) FALSE, (LPARAM) hIcon);
     }
 
-    void CDuiWnd::ResizeClient(int cx /*= -1*/, int cy /*= -1*/)
+    BOOL CDuiWnd::ResizeClient(int cx /*= -1*/, int cy /*= -1*/)
     {
         ASSERT(::IsWindow(m_hWnd));
         RECT rc = { 0 };
         if(!::GetClientRect(m_hWnd, &rc))
         {
-            return;
+            return FALSE;
         }
         if(cx != -1)
         {
@@ -228,9 +247,15 @@ namespace DuiLib
         }
         if(!::AdjustWindowRectEx(&rc, GetWindowStyle(m_hWnd), (!(GetWindowStyle(m_hWnd) & WS_CHILD) && (::GetMenu(m_hWnd) != NULL)), GetWindowExStyle(m_hWnd)))
         {
-            return;
+            DUI_ERROR(_T("this[%x] AdjustWindowRectEx[FALSE] m_hWnd[%x]"), this, m_hWnd);
+            return FALSE;
         }
-        ::SetWindowPos(m_hWnd, NULL, 0, 0, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE);
+        if(::SetWindowPos(m_hWnd, NULL, 0, 0, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE) == NULL)
+        {
+            DUI_ERROR(_T("this[%x] SetWindowPos[FALSE] m_hWnd[%x] cx[%d] cy[%d] uFlag[%x]"), this, m_hWnd, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE);
+            return FALSE;
+        }
+        return TRUE;
     }
 
     UINT CDuiWnd::GetClassStyle() const

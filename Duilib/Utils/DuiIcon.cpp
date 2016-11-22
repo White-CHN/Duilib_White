@@ -69,7 +69,7 @@ namespace DuiLib
         return SetTooltipText(mbuf);
     }
 
-    DuiLib::CDuiString CDuiIcon::GetTooltipText() const
+    CDuiString CDuiIcon::GetTooltipText() const
     {
         return m_Data.szTip;
     }

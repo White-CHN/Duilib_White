@@ -22,14 +22,14 @@ void CDemoFrame::InitWindow()
     m_pSkinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("skinbtn")));
 }
 
-DuiLib::CDuiString CDemoFrame::GetSkinFile()
+CDuiString CDemoFrame::GetSkinFile()
 {
-    return _T("main.xml");
+    return _T("DuiDemo.xml");
 }
 
 LPCTSTR CDemoFrame::GetWindowClassName() const
 {
-    return _T("MainWnd");
+    return _T("CDemoFrame");
 }
 
 LRESULT CDemoFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)

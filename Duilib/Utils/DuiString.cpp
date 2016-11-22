@@ -345,7 +345,7 @@ namespace DuiLib
         _tcslwr(m_lpStr);
     }
 
-    DuiLib::CDuiString CDuiString::Left(int iLength) const
+    CDuiString CDuiString::Left(int iLength) const
     {
         if(iLength < 0)
         {
@@ -358,7 +358,7 @@ namespace DuiLib
         return CDuiString(m_lpStr, iLength);
     }
 
-    DuiLib::CDuiString CDuiString::Mid(int iPos, int iLength /*= -1*/) const
+    CDuiString CDuiString::Mid(int iPos, int iLength /*= -1*/) const
     {
         if(iLength < 0)
         {
@@ -375,7 +375,7 @@ namespace DuiLib
         return CDuiString(m_lpStr + iPos, iLength);
     }
 
-    DuiLib::CDuiString CDuiString::Right(int iLength) const
+    CDuiString CDuiString::Right(int iLength) const
     {
         int iPos = GetLength() - iLength;
         if(iPos < 0)

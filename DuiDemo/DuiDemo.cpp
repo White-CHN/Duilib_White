@@ -40,7 +40,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
         }
     }
     CDemoFrame* pDemoFrame = new CDemoFrame;
-    pDemoFrame->Create(NULL, _T("duilib使用例子集锦（By White）"), UI_WNDSTYLE_FRAME, 0L, 0, 0, 800, 572);
+    pDemoFrame->Create(NULL, _T("Duilib开源项目展示(By White)"), UI_WNDSTYLE_FRAME, 0L, 0, 0, 800, 572);
     pDemoFrame->CenterWindow();
     CDuiPaintManager::MessageLoop();
     DUI_FREE_POINT(pDemoFrame);

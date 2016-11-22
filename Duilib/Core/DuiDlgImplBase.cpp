@@ -23,7 +23,7 @@ namespace DuiLib
     {
     }
 
-    DuiLib::CDuiString CDuiDlgImplBase::GetSkinType()
+    CDuiString CDuiDlgImplBase::GetSkinType()
     {
         return _T("");
     }
@@ -155,15 +155,16 @@ namespace DuiLib
     LRESULT CDuiDlgImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         // 去掉对话框标题栏
-        LONG styleValue = ::GetWindowLong(GetHWND(), GWL_STYLE);
+        HWND hWnd = GetHWND();
+        LONG styleValue = ::GetWindowLong(hWnd, GWL_STYLE);
         styleValue &= (~WS_CAPTION);
-        ::SetWindowLong(GetHWND(), GWL_STYLE, styleValue | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
+        ::SetWindowLong(hWnd, GWL_STYLE, styleValue | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
         // 调整窗口尺寸
         RECT rcClient;
-        ::GetClientRect(GetHWND(), &rcClient);
-        ::SetWindowPos(GetHWND(), NULL, rcClient.left, rcClient.top, rcClient.right - rcClient.left, rcClient.bottom - rcClient.top, SWP_FRAMECHANGED);
+        ::GetClientRect(hWnd, &rcClient);
+        ::SetWindowPos(hWnd, NULL, rcClient.left, rcClient.top, rcClient.right - rcClient.left, rcClient.bottom - rcClient.top, SWP_FRAMECHANGED);
         // 关联UI管理器
-        m_PaintManager.Init(GetHWND());
+        m_PaintManager.Init(hWnd);
         // 注册PreMessage回调
         m_PaintManager.AddPreMessageFilter(this);
         // 注册Notify回调
@@ -361,9 +362,9 @@ namespace DuiLib
             return 0;
         }
 #if defined(WIN32) && !defined(UNDER_CE)
-        BOOL bZoomed = ::IsZoomed(*this);
+        BOOL bZoomed = ::IsZoomed(GetHWND());
         LRESULT lRes = __super::HandleMessage(uMsg, wParam, lParam);
-        if(::IsZoomed(*this) != bZoomed)
+        if(::IsZoomed(GetHWND()) != bZoomed)
         {
             if(!bZoomed)
             {

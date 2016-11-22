@@ -28,7 +28,7 @@ namespace DuiLib
         return m_xml.GetLastErrorLocation(pstrSource, cchMax);
     }
 
-    CDuiControl* DuiLib::CDuiDlgBuilder::Create(STRINGorID xml, LPCTSTR type /*= NULL*/, IDialogBuilderCallback* pCallback /*= NULL*/, CDuiPaintManager* pManager /*= NULL*/, CDuiControl* pParent /*= NULL*/)
+    CDuiControl* CDuiDlgBuilder::Create(STRINGorID xml, LPCTSTR type /*= NULL*/, IDialogBuilderCallback* pCallback /*= NULL*/, CDuiPaintManager* pManager /*= NULL*/, CDuiControl* pParent /*= NULL*/)
     {
         m_pstrtype = type;
         m_pManager = pManager;
@@ -41,6 +41,7 @@ namespace DuiLib
             {
                 if(!m_xml.Load(xml.m_lpstr))
                 {
+                    DUI_ERROR(_T("this[%x] CDuiMarkup::Load[FALSE] m_lpstr[%s]"), this, xml.m_lpstr);
                     return NULL;
                 }
             }
@@ -48,6 +49,7 @@ namespace DuiLib
             {
                 if(!m_xml.LoadFromFile(xml.m_lpstr))
                 {
+                    DUI_ERROR(_T("this[%x] CDuiMarkup::LoadFromFile[FALSE] m_lpstr[%s]"), this, xml.m_lpstr);
                     return NULL;
                 }
             }
@@ -57,21 +59,25 @@ namespace DuiLib
             HINSTANCE hInstence = CDuiPaintManager::GetResourceDll();
             if(hInstence == NULL)
             {
+                DUI_ERROR(_T("this[%x] GetResourceDll[NULL] "), this);
                 return NULL;
             }
             HRSRC hResource = ::FindResource(hInstence, xml.m_lpstr, type);
             if(hResource == NULL)
             {
+                DUI_ERROR(_T("this[%x] FindResource[NULL] hInstence[%x] m_lpstr[%s] type[%d]"), this, hInstence, xml.m_lpstr, type);
                 return NULL;
             }
             HGLOBAL hGlobal = ::LoadResource(hInstence, hResource);
             if(hGlobal == NULL)
             {
+                DUI_ERROR(_T("this[%x] LoadResource[NULL] hInstence[%x] hResource[%x]"), this, hInstence, hResource);
                 FreeResource(hResource);
                 return NULL;
             }
             if(!m_xml.LoadFromMem((BYTE*)::LockResource(hGlobal), ::SizeofResource(hInstence, hResource)))
             {
+                DUI_ERROR(_T("this[%x] LoadFromMem[FALSE] hGlobal[%x] hInstence[%x] hResource[%x]"), this, hGlobal, hInstence, hResource);
                 ::FreeResource(hResource);
                 return NULL;
             }
@@ -80,11 +86,12 @@ namespace DuiLib
         return Create(pParent);
     }
 
-    CDuiControl* DuiLib::CDuiDlgBuilder::Create(CDuiControl* pParent)
+    CDuiControl* CDuiDlgBuilder::Create(CDuiControl* pParent)
     {
         CDuiMarkupNode root = m_xml.GetRoot();
         if(!root.IsValid())
         {
+            DUI_ERROR(_T("this[%x] CDuiMarkupNode::IsValid[FALSE] "), this);
             return NULL;
         }
         if(m_pManager)
@@ -535,7 +542,7 @@ namespace DuiLib
             if(pControl == NULL)
             {
 #ifdef _DEBUG
-                DUI_TRACE(_T("未知控件:%s"), pstrClass);
+                DUI_TRACE(_T("this[%x] 未知控件[%s]"), this, pstrClass);
 #else
                 continue;
 #endif

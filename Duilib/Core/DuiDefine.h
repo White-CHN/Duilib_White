@@ -30,6 +30,7 @@ namespace DuiLib
 #define MAX max
 #define MIN min
 #define CLAMP(x,a,b) (MIN(b,MAX(a,x)))
+#define PRINTBOOL(x) (TRUE == x ? _T("TRUE"):_T("FALSE"))
 
 #ifndef SIZEOF_ARRAY
     #define SIZEOF_ARRAY(x) ((sizeof(x))/(sizeof(x[0])))
@@ -178,11 +179,13 @@ namespace DuiLib
     };
 #ifdef _DEBUG
     #ifndef DUI_TRACE
-        #define DUI_TRACE(...) _tprintf(_T("\r\n[%s][Line:%d]"),__FUNCTIONW__,__LINE__);DuiTrace(__VA_ARGS__)
+        #define DUI_TRACE(...) _tprintf(_T("\r\n[TRACE][%s][Line:%d]:<"),__FUNCTIONW__,__LINE__);DuiTrace(__VA_ARGS__);_tprintf(_T(">"));
+        #define DUI_ERROR(...) _tprintf(_T("\r\n[ERROR][%s][Line:%d]:<"),__FUNCTIONW__,__LINE__);DuiTrace(__VA_ARGS__);_tprintf(_T(">"));
     #endif
 #else
     #ifndef DUI_TRACE
         #define DUI_TRACE
+        #define DUI_ERROR
     #endif
 #endif	// _DEBUG
 

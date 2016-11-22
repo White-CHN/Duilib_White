@@ -8,11 +8,11 @@
 	<VerticalLayout   bkimage="bkimage/12.jpg">
 		<HorizontalLayout  height="64" >
 			<HorizontalLayout  >
-			<Control width="64" height="64" bkimage="bkimage/logo.jpg" />
-			<Label  text="Duilib开源项目展示" valign="vcenter" align="left" textpadding="10,0,0,0" textcolor="#FFFFFFFF" font="1" tooltip="duilib开源项目圈"/>
+				<Control width="64" height="64" bkimage="bkimage/logo.jpg" />
+				<Label  text="Duilib开源项目展示" valign="vcenter" align="left" textpadding="10,0,0,0" textcolor="#FFFFFFFF" font="1" tooltip="duilib开源项目圈"/>
 			</HorizontalLayout>
 			<HorizontalLayout inset="0,-1,0,0" float="true" width="151" floatalign="right,top">
-				<Button name="menubtn" width="28" height="20" tooltip="菜单" normalimage="sysbtn_menu_normal" hotimage="sysbtn_menu_hot" pushedimage="sysbtn_menu_pushed"/>
+				<Button name="menubtn" width="28" height="20" tooltip="菜单" normalimage="file='sysbtn/btn_menu_normal.png'" hotimage="file='sysbtn/btn_menu_highlight.png'" pushedimage="file='sysbtn/btn_menu_down.png'"/>
 				<Button name="skinbtn" width="28" height="20" tooltip="皮肤" normalimage="file='sysbtn/btn_skin_normal.png'" hotimage="file='sysbtn/btn_skin_highlight.png'" pushedimage="file='sysbtn/btn_skin_down.png' "/>
 				<Button name="minbtn" width="28" height="20" tooltip="最小化" normalimage="file='sysbtn/btn_mini_normal.png'" hotimage="file='sysbtn/btn_mini_highlight.png'" pushedimage="file='sysbtn/btn_mini_down.png' "/>
 				<Button name="maxbtn" width="28" height="20" tooltip="最大化" normalimage="file='sysbtn/btn_max_normal.png'" hotimage="file='sysbtn/btn_max_highlight.png'" pushedimage="file='sysbtn/btn_max_down.png' "/>
@@ -20,10 +20,24 @@
 				<Button name="closebtn" width="39" height="20" tooltip="关闭" normalimage="file='sysbtn/btn_close_normal.png'" hotimage="file='sysbtn/btn_close_highlight.png'" pushedimage="file='sysbtn/btn_close_down.png' "/>
 			</HorizontalLayout>
 		</HorizontalLayout>
-		<Label height="2"  bkimage="line/hor_line.bmp"/>
-		<HorizontalLayout vscrollbar="true" hscrollbar="true"  >
-			<Button height="30" width="80" text="aasda啊啊啊" textcolor="#FFFFFFFF"  style="btn_style" />
-			<Label valign="center" cursor="hand" align="center" tooltip="tooltip" text="aasda啊啊啊" height="300" width="80" bkcolor="#FFFFFFFF" />
-		</HorizontalLayout>
+		<Label height="1"  bkimage="line/hor_line.bmp"/>
+		<VerticalLayout vscrollbar="true" hscrollbar="true"  >
+			<HorizontalLayout  childvalign="vcenter" >
+				<Label valign="center" cursor="hand" align="center" tooltip="Label演示" text="Label演示"  width="80" textcolor="#FFFFFFFF" />
+			</HorizontalLayout>
+			<Label height="1"  bkimage="line/hor_line.bmp"/>
+			<HorizontalLayout  childpadding="6" childvalign="vcenter" >
+				<Label valign="center" cursor="hand" align="center" tooltip="Button演示" text="Button演示"  width="80" textcolor="#FFFFFFFF" />
+				<HorizontalLayout height="30" childpadding="12" bordersize="1,1,1,1" bordercolor="#0" >
+					<Button  width="120" text="aasda啊啊啊" textcolor="#FFFFFFFF"  style="btn_style" />
+					<Button  width="120" text="aasda啊啊啊" textcolor="#FFFFFFFF"  style="btn_style" />
+					<Button  width="120" text="aasda啊啊啊" textcolor="#FFFFFFFF"  style="btn_style" />
+				</HorizontalLayout>
+
+			</HorizontalLayout>
+			<Label height="1"  bkimage="line/hor_line.bmp"/>
+			<HorizontalLayout  childvalign="vcenter" >
+			</HorizontalLayout>
+		</VerticalLayout>
 	</VerticalLayout>
 </Window>
