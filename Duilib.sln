@@ -8,6 +8,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiDemo", "DuiDemo\DuiDemo.
 		{2ED1C2F1-2FFC-4453-BD60-B3580BC2FCC2} = {2ED1C2F1-2FFC-4453-BD60-B3580BC2FCC2}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Help", "Help", "{94FEBF8F-B8A9-488C-A13E-F17EF1DF020E}"
+	ProjectSection(SolutionItems) = preProject
+		Help\directui license.txt = Help\directui license.txt
+		Help\duilib license.txt = Help\duilib license.txt
+		Help\属性列表.xml = Help\属性列表.xml
+		Help\感谢.txt = Help\感谢.txt
+		Help\版权说明.txt = Help\版权说明.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32

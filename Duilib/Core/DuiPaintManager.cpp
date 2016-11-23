@@ -1,6 +1,13 @@
 #include "StdAfx.h"
 #include "DuiPaintManager.h"
 
+DECLARE_HANDLE(HZIP);	// An HZIP identifies a zip file that has been opened
+typedef DWORD ZRESULT;
+#define OpenZip OpenZipU
+#define CloseZip(hz) CloseZipU(hz)
+extern HZIP OpenZipU(void* z, unsigned int len, DWORD flags);
+extern ZRESULT CloseZipU(HZIP hz);
+
 namespace DuiLib
 {
 
@@ -2070,11 +2077,6 @@ namespace DuiLib
         m_aTimers.Empty();
     }
 
-    HINSTANCE CDuiPaintManager::GetInstance()
-    {
-        return m_hInstance;
-    }
-
     BOOL CDuiPaintManager::Initialize(HINSTANCE hInstance)
     {
         ASSERT(hInstance);
@@ -2177,6 +2179,11 @@ namespace DuiLib
         }
     }
 
+    HINSTANCE CDuiPaintManager::GetInstance()
+    {
+        return m_hInstance;
+    }
+
     CDuiString CDuiPaintManager::GetInstancePath()
     {
         if(m_hInstance == NULL)
@@ -2208,19 +2215,14 @@ namespace DuiLib
         return m_iResourceType;
     }
 
-    const CDuiString& CDuiPaintManager::GetResourcePath()
-    {
-        return m_strResourcePath;
-    }
-
-    const CDuiString& CDuiPaintManager::GetResourceZip()
-    {
-        return m_strResourceZip;
-    }
-
     void CDuiPaintManager::SetResourceType(int iResourceType)
     {
         m_iResourceType = iResourceType;
+    }
+
+    const CDuiString& CDuiPaintManager::GetResourcePath()
+    {
+        return m_strResourcePath;
     }
 
     void CDuiPaintManager::SetResourcePath(LPCTSTR pStrPath)
@@ -2236,6 +2238,60 @@ namespace DuiLib
             m_strResourcePath += _T('\\');
         }
     }
+
+    const CDuiString& CDuiPaintManager::GetResourceZip()
+    {
+        return m_strResourceZip;
+    }
+
+    void CDuiPaintManager::SetResourceZip(LPVOID pVoid, unsigned int len)
+    {
+        if(m_strResourceZip == _T("membuffer"))
+        {
+            return;
+        }
+        if(m_bCachedResourceZip && m_hResourceZip != NULL)
+        {
+            CloseZip((HZIP)m_hResourceZip);
+            m_hResourceZip = NULL;
+        }
+        m_strResourceZip = _T("membuffer");
+        if(m_bCachedResourceZip)
+        {
+            m_hResourceZip = (HANDLE)OpenZip(pVoid, len, 3);
+            if(m_hResourceZip == NULL)
+            {
+                DUI_ERROR("OpenZip[NULL] File[%s] ", sFile);
+            }
+        }
+    }
+
+    void CDuiPaintManager::SetResourceZip(LPCTSTR pstrZip, BOOL bCachedResourceZip /*= FALSE*/)
+    {
+        if(m_strResourceZip == pstrZip && m_bCachedResourceZip == bCachedResourceZip)
+        {
+            return;
+        }
+        if(m_bCachedResourceZip && m_hResourceZip != NULL)
+        {
+            CloseZip((HZIP)m_hResourceZip);
+            m_hResourceZip = NULL;
+        }
+        m_strResourceZip = pstrZip;
+        m_bCachedResourceZip = bCachedResourceZip;
+        if(m_bCachedResourceZip)
+        {
+            CDuiString sFile = CDuiPaintManager::GetResourcePath();
+            sFile += CDuiPaintManager::GetResourceZip();
+            m_hResourceZip = (HANDLE)OpenZip((void*)sFile.GetData(), 0, 2);
+            if(m_hResourceZip == NULL)
+            {
+                DUI_ERROR("OpenZip[NULL] File[%s] ", sFile);
+            }
+        }
+    }
+
+
 
     BOOL CDuiPaintManager::IsCachedResourceZip()
     {

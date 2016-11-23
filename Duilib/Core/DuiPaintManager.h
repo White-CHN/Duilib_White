@@ -320,17 +320,28 @@ namespace DuiLib
         void KillTimer(CDuiControl* pControl);
         void RemoveAllTimers();
 
-        static HINSTANCE GetInstance();
         static BOOL Initialize(HINSTANCE hInstance);
         static void RemoveAllShared();
         static void Uninitialize();
+
+        static HINSTANCE GetInstance();
+
         static CDuiString GetInstancePath();
+
         static HINSTANCE GetResourceDll();
+
         static int GetResourceType();
-        static const CDuiString& GetResourcePath();
-        static const CDuiString& GetResourceZip();
         static void SetResourceType(int iResourceType);
+
+        static const CDuiString& GetResourcePath();
         static void SetResourcePath(LPCTSTR pStrPath);
+
+        static const CDuiString& GetResourceZip();
+        static void SetResourceZip(LPVOID pVoid, unsigned int len);
+        static void SetResourceZip(LPCTSTR pstrZip, BOOL bCachedResourceZip = FALSE);
+
+
+
 
         static BOOL IsCachedResourceZip();
         static HANDLE GetResourceZipHandle();
@@ -424,6 +435,8 @@ namespace DuiLib
 
         TOOLINFO m_ToolTip;
 
+        TResInfo m_ResInfo;
+
         CStdPtrArray m_aTimers;					//定时器
         CStdPtrArray m_aMessageFilters;
         CStdPtrArray m_aTranslateAccelerator;
@@ -436,8 +449,6 @@ namespace DuiLib
         CStdPtrArray m_aChildWnds;
 
         CStdStringPtrMap m_mNameHash;
-
-        TResInfo m_ResInfo;
 
         CDuiShadow m_shadow;					// 窗口阴影
 

@@ -136,6 +136,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="res\DuiDemo.ico" />
+    <None Include="res\DuiDemo.zip" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DemoFrame.h" />

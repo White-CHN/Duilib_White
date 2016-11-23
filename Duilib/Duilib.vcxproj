@@ -545,11 +545,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="..\Help\directui license.txt" />
-    <None Include="..\Help\duilib license.txt" />
-    <None Include="..\Help\属性列表.xml" />
-    <None Include="..\Help\感谢.txt" />
-    <None Include="..\Help\版权说明.txt" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
