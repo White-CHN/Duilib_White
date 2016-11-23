@@ -572,6 +572,7 @@
     <ClInclude Include="Layout\DuiVerticalLayout.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Utils\DragDropImpl.h" />
     <ClInclude Include="Utils\DuiDelegate.h" />
     <ClInclude Include="Utils\DuiDPI.h" />
     <ClInclude Include="Utils\DuiIcon.h" />
@@ -667,6 +668,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseA|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='SReleaseA|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Utils\DragDropImpl.cpp" />
     <ClCompile Include="Utils\DuiDelegate.cpp" />
     <ClCompile Include="Utils\DuiDPI.cpp" />
     <ClCompile Include="Utils\DuiIcon.cpp" />

@@ -634,10 +634,10 @@ namespace DuiLib
     BOOL CDuiMarkup::_Failed(LPCTSTR pstrError, LPCTSTR pstrLocation /*= NULL*/)
     {
         // Register last error
-        DUI_TRACE(_T("XML Error: %s"), pstrError);
+        DUI_TRACE("XML Error: %s", pstrError);
         if(pstrLocation != NULL)
         {
-            DUI_TRACE(pstrLocation);
+            DUI_TRACE("%s", pstrLocation);
         }
         _tcsncpy(m_szErrorMsg, pstrError, (sizeof(m_szErrorMsg) / sizeof(m_szErrorMsg[0])) - 1);
         _tcsncpy(m_szErrorXML, pstrLocation != NULL ? pstrLocation : _T(""), SIZEOF_ARRAY(m_szErrorXML) - 1);

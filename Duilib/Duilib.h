@@ -46,6 +46,7 @@
 #include <vector>
 
 using namespace std;
+using namespace Gdiplus;
 
 #include "Utils/DuiString.h"
 #include "Utils/DuiUtils.h"
@@ -53,6 +54,7 @@ using namespace std;
 #include "Utils/DuiDelegate.h"
 #include "Utils/DuiShadow.h"
 #include "Utils/DuiIcon.h"
+#include "Utils/DragDropImpl.h"
 
 #include "Core/DuiMarkupNode.h"
 #include "Core/DuiMarkup.h"

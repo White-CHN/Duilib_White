@@ -137,6 +137,9 @@
     <ClInclude Include="Control\DuiButton.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\DragDropImpl.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -216,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="Control\DuiButton.cpp">
       <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\DragDropImpl.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

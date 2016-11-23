@@ -67,6 +67,13 @@ namespace DuiLib
         return 0;
     }
 
+    void CDuiDlgImplBase::OnFinalMessage(HWND hWnd)
+    {
+        m_PaintManager.RemovePreMessageFilter(this);
+        m_PaintManager.RemoveNotifier(this);
+        m_PaintManager.ReapObjects(m_PaintManager.GetRoot());
+    }
+
     LRESULT CDuiDlgImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         LRESULT lRes = 0;

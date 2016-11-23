@@ -39,6 +39,7 @@ LRESULT CDemoFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void CDemoFrame::OnFinalMessage(HWND hWnd)
 {
+    __super::OnFinalMessage(hWnd);
 }
 
 LRESULT CDemoFrame::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)

@@ -18,7 +18,8 @@ namespace DuiLib
         UIEVENT_KEYDOWN,
         UIEVENT_KEYUP,
         UIEVENT_CHAR,
-        UIEVENT_SYSKEY,
+        UIEVENT_SYSKEYDOWN,
+        UIEVENT_SYSKEYUP,
         UIEVENT__KEYEND,
         UIEVENT__MOUSEBEGIN,
         UIEVENT_MOUSEMOVE,
@@ -43,6 +44,11 @@ namespace DuiLib
         UIEVENT__LAST,
     };
 
+    typedef struct tagSHORTCUT
+    {
+        TCHAR ch;
+        BOOL bPickNext;
+    } SHORTCUT;
     // Structure for notifications from the system
     // to the control implementation.
     typedef struct tagTEventUI
@@ -170,7 +176,7 @@ namespace DuiLib
 
     typedef CDuiControl* (*LPCREATECONTROL)(LPCTSTR pstrType);
 
-    class DUILIB_API CDuiPaintManager
+    class DUILIB_API CDuiPaintManager : public CIDropTarget
     {
     public:
         CDuiPaintManager(void);
@@ -190,6 +196,7 @@ namespace DuiLib
 
         BOOL MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
         BOOL AddPreMessageFilter(IMessageFilterUI* pFilter);
+        BOOL RemovePreMessageFilter(IMessageFilterUI* pFilter);
 
         HWND GetPaintWindow() const;
 
@@ -237,7 +244,11 @@ namespace DuiLib
         //焦点相关
         CDuiControl* GetFocus() const;
         void SetFocus(CDuiControl* pControl);
-
+        // 拖拽
+        BOOL InitDragDrop();
+        static WORD DIBNumColors(void* pv);
+        static WORD ColorTableSize(LPVOID lpv);
+        virtual bool OnDrop(FORMATETC* pFmtEtc, STGMEDIUM& medium, DWORD* pdwEffect);
         // 光标
         void DrawCaret(HDC hDC, const RECT& rcPaint);
 
@@ -271,6 +282,7 @@ namespace DuiLib
         BOOL AddNotifier(INotifyUI* pNotifier);
         void SendNotify(TNotifyUI& Msg, BOOL bAsync = FALSE);
         void SendNotify(CDuiControl* pControl, LPCTSTR pstrMessage, WPARAM wParam = 0, LPARAM lParam = 0, BOOL bAsync = FALSE);
+        BOOL RemoveNotifier(INotifyUI* pNotifier);
 
         void AddDelayedCleanup(CDuiControl* pControl);
 
@@ -284,7 +296,9 @@ namespace DuiLib
 
         BOOL InitControls(CDuiControl* pControl, CDuiControl* pParent = NULL);
         BOOL AttachDialog(CDuiControl* pControl);
+        void ReapObjects(CDuiControl* pControl);
 
+        CDuiControl* GetRoot() const;
         CDuiControl* FindControl(POINT pt) const;
         CDuiControl* FindControl(LPCTSTR pstrName) const;
 
@@ -303,6 +317,7 @@ namespace DuiLib
 
         BOOL SetTimer(CDuiControl* pControl, UINT nTimerID, UINT uElapse);
         BOOL KillTimer(CDuiControl* pControl, UINT nTimerID);
+        void KillTimer(CDuiControl* pControl);
         void RemoveAllTimers();
 
         static HINSTANCE GetInstance();
@@ -351,51 +366,57 @@ namespace DuiLib
         static CDuiControl* CALLBACK __FindControlsFromUpdate(CDuiControl* pThis, LPVOID pData);
         static CDuiControl* CALLBACK __FindControlFromTab(CDuiControl* pThis, LPVOID pData);
         static CDuiControl* CALLBACK __FindControlFromPoint(CDuiControl* pThis, LPVOID pData);
+        static CDuiControl* CALLBACK __FindControlFromShortcut(CDuiControl* pThis, LPVOID pData);
     private:
-        HWND m_hWndPaint;						//所属的窗体的句柄
+        HWND m_hWndPaint;						//绘制窗口的句柄
         HWND m_hwndTooltip;						//提示消息
-        HDC m_hDcPaint;							//所属的窗体的HDC
+
+        HDC m_hDcPaint;							//绘制窗口的设备上下文环境HDC
         HDC m_hDcOffscreen;						//m_hDcPaint的内存缓冲区
-        HBITMAP m_hbmpOffscreen;
+
+        HBITMAP m_hbmpOffscreen;				//与设备无关位图的句柄
+        HBITMAP m_hDragBitmap;					//拖拽位图句柄
 
         BYTE m_nOpacity;						//alpha数值
 
-        BOOL m_bUpdateNeeded;
-        BOOL m_bLayered;
-        BOOL m_bForceUseSharedRes;
+        BOOL m_bUpdateNeeded;					//第一次更新界面标志位
+        BOOL m_bLayered;						//是否分层
+        BOOL m_bForceUseSharedRes;				//是否将资源添加到共享的属性中
         BOOL m_bUsedVirtualWnd;					//虚拟窗口
-        BOOL m_bIsPainting;
-        BOOL m_bFocusNeeded;
+        BOOL m_bIsPainting;						//是否正在绘制
+        BOOL m_bFocusNeeded;					//第一个tab的控件设置焦点的标志位
         BOOL m_bOffscreenPaint;
         BOOL m_bShowUpdateRect;					//是否显示窗口边框(默认红色)
-        BOOL m_bFirstLayout;
-        BOOL m_bLayeredChanged;
+        BOOL m_bFirstLayout;					//第一次界面绘制完的标志位
+        BOOL m_bLayeredChanged;					//分层alpha值改变了
         BOOL m_bMouseCapture;					//是否设置鼠标捕获
         BOOL m_bDragMode;						//是否拖拽
         BOOL m_bUseGdiplusText;					//gdiplustext属性,是否用gdi+渲染文字
         BOOL m_bCaretActive;					//光标相关
         BOOL m_bMouseTracking;					//鼠标是否在本窗口区域
+
         int m_trh;								//textrenderinghint属性,gdi+渲染文字提示
+
         UINT m_uTimerID;
+
         ULONG_PTR m_gdiplusToken;				//Gdiplus相关
 
         CDPI* m_pDPI;
-
         BYTE* m_pOffscreenBits;
-
         CDuiControl* m_pRoot;					//xml 根节点
         CDuiControl* m_pFocus;					//当前焦点控件
         CDuiControl* m_pEventClick;				//当前点击的控件
-        CDuiControl* m_pEventHover;				//鼠标停留
+        CDuiControl* m_pEventHover;				//当前鼠标停留的控件
         CDuiControl* m_pEventKey;				//键盘键值
-
-        Gdiplus::GdiplusStartupInput* m_pGdiplusStartupInput;
+        GdiplusStartupInput* m_pGdiplusStartupInput;
 
         POINT m_ptLastMousePos;					//鼠标坐标
+
         RECT m_rtCaret;							//光标相关
         RECT m_rcLayeredUpdate;
         RECT m_rcSizeBox;						//sizebox属性
         RECT m_rcCaption;						//caption属性
+
         SIZE m_szInitWindowSize;				//size属性
         SIZE m_szRoundCorner;					//roundcorner属性
         SIZE m_szMinWindow;						//mininfo属性
@@ -409,12 +430,9 @@ namespace DuiLib
         CStdPtrArray m_aPreMessageFilters;		//拦截在DispatchMessage消息之前的消息，注册的窗口句柄
         CStdPtrArray m_aNotifiers;				//
         CStdPtrArray m_aAsyncNotify;			//
-
         CStdPtrArray m_aDelayedCleanup;
-
         CStdPtrArray m_aPostPaintControls;
         CStdPtrArray m_aFoundControls;
-
         CStdPtrArray m_aChildWnds;
 
         CStdStringPtrMap m_mNameHash;
@@ -433,7 +451,7 @@ namespace DuiLib
         static CDuiString m_strResourceZip;		//资源文件名
         static CStdPtrArray m_aPreMessages;		//CDuiPaintManager句柄
         static CStdPtrArray m_aPlugins;			//插件
-        static TResInfo m_SharedResInfo;		//默认属性
+        static TResInfo m_SharedResInfo;		//共享的所有属性
 
         static short m_H;
         static short m_S;

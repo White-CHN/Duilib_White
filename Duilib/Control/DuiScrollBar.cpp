@@ -147,108 +147,180 @@ namespace DuiLib
 
     void CDuiScrollBar::SetShowButton1(BOOL bShow)
     {
+        if(m_bShowButton1 == bShow)
+        {
+            return;
+        }
         m_bShowButton1 = bShow;
         SetPos(GetPos());
     }
 
     void CDuiScrollBar::SetButton1NormalImage(LPCTSTR pStrImage)
     {
+        if(m_sButton1NormalImage == pStrImage)
+        {
+            return;
+        }
         m_sButton1NormalImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetButton1HotImage(LPCTSTR pStrImage)
     {
+        if(m_sButton1HotImage == pStrImage)
+        {
+            return;
+        }
         m_sButton1HotImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetButton1PushedImage(LPCTSTR pStrImage)
     {
+        if(m_sButton1PushedImage == pStrImage)
+        {
+            return;
+        }
         m_sButton1PushedImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetButton1DisabledImage(LPCTSTR pStrImage)
     {
+        if(m_sButton1DisabledImage == pStrImage)
+        {
+            return;
+        }
         m_sButton1DisabledImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetShowButton2(BOOL bShow)
     {
+        if(m_bShowButton2 == bShow)
+        {
+            return;
+        }
         m_bShowButton2 = bShow;
         SetPos(GetPos());
     }
 
     void CDuiScrollBar::SetButton2NormalImage(LPCTSTR pStrImage)
     {
+        if(m_sButton2NormalImage == pStrImage)
+        {
+            return;
+        }
         m_sButton2NormalImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetButton2HotImage(LPCTSTR pStrImage)
     {
+        if(m_sButton2HotImage == pStrImage)
+        {
+            return;
+        }
         m_sButton2HotImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetButton2PushedImage(LPCTSTR pStrImage)
     {
+        if(m_sButton2PushedImage == pStrImage)
+        {
+            return;
+        }
         m_sButton2PushedImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetButton2DisabledImage(LPCTSTR pStrImage)
     {
+        if(m_sButton2DisabledImage == pStrImage)
+        {
+            return;
+        }
         m_sButton2DisabledImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetThumbNormalImage(LPCTSTR pStrImage)
     {
+        if(m_sThumbNormalImage == pStrImage)
+        {
+            return;
+        }
         m_sThumbNormalImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetThumbHotImage(LPCTSTR pStrImage)
     {
+        if(m_sThumbHotImage == pStrImage)
+        {
+            return;
+        }
         m_sThumbHotImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetThumbPushedImage(LPCTSTR pStrImage)
     {
+        if(m_sThumbPushedImage == pStrImage)
+        {
+            return;
+        }
         m_sThumbPushedImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetThumbDisabledImage(LPCTSTR pStrImage)
     {
+        if(m_sThumbDisabledImage == pStrImage)
+        {
+            return;
+        }
         m_sThumbDisabledImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetRailNormalImage(LPCTSTR pStrImage)
     {
+        if(m_sRailNormalImage == pStrImage)
+        {
+            return;
+        }
         m_sRailNormalImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetRailHotImage(LPCTSTR pStrImage)
     {
+        if(m_sRailHotImage == pStrImage)
+        {
+            return;
+        }
         m_sRailHotImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetRailPushedImage(LPCTSTR pStrImage)
     {
+        if(m_sRailPushedImage == pStrImage)
+        {
+            return;
+        }
         m_sRailPushedImage = pStrImage;
         Invalidate();
     }
 
     void CDuiScrollBar::SetRailDisabledImage(LPCTSTR pStrImage)
     {
+        if(m_sRailDisabledImage == pStrImage)
+        {
+            return;
+        }
         m_sRailDisabledImage = pStrImage;
         Invalidate();
     }
@@ -260,6 +332,10 @@ namespace DuiLib
 
     void CDuiScrollBar::SetBkNormalImage(LPCTSTR pStrImage)
     {
+        if(m_sBkNormalImage == pStrImage)
+        {
+            return;
+        }
         m_sBkNormalImage = pStrImage;
         Invalidate();
     }
@@ -271,6 +347,10 @@ namespace DuiLib
 
     void CDuiScrollBar::SetBkHotImage(LPCTSTR pStrImage)
     {
+        if(m_sBkHotImage == pStrImage)
+        {
+            return;
+        }
         m_sBkHotImage = pStrImage;
         Invalidate();
     }
@@ -282,6 +362,10 @@ namespace DuiLib
 
     void CDuiScrollBar::SetBkPushedImage(LPCTSTR pStrImage)
     {
+        if(m_sBkPushedImage == pStrImage)
+        {
+            return;
+        }
         m_sBkPushedImage = pStrImage;
         Invalidate();
     }
@@ -293,6 +377,10 @@ namespace DuiLib
 
     void CDuiScrollBar::SetBkDisabledImage(LPCTSTR pStrImage)
     {
+        if(m_sBkDisabledImage == pStrImage)
+        {
+            return;
+        }
         m_sBkDisabledImage = pStrImage;
         Invalidate();
     }

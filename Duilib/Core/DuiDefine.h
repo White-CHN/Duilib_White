@@ -179,8 +179,8 @@ namespace DuiLib
     };
 #ifdef _DEBUG
     #ifndef DUI_TRACE
-        #define DUI_TRACE(...) _tprintf(_T("\r\n[TRACE][%s][Line:%d]:<"),__FUNCTIONW__,__LINE__);DuiTrace(__VA_ARGS__);_tprintf(_T(">"));
-        #define DUI_ERROR(...) _tprintf(_T("\r\n[ERROR][%s][Line:%d]:<"),__FUNCTIONW__,__LINE__);DuiTrace(__VA_ARGS__);_tprintf(_T(">"));
+        #define DUI_TRACE(...) _tprintf(_T("\r\n[TRACE][%s][Line:%d]:<"),__FUNCTIONW__,__LINE__);DuiTrace(_T(__VA_ARGS__));_tprintf(_T(">"));
+        #define DUI_ERROR(...) _tprintf(_T("\r\n[ERROR][%s][Line:%d]:<"),__FUNCTIONW__,__LINE__);DuiTrace(_T(__VA_ARGS__));_tprintf(_T(">"));
     #endif
 #else
     #ifndef DUI_TRACE

@@ -1,7 +1,8 @@
 #pragma once
-#pragma warning (disable : 4251)
+
 namespace DuiLib
 {
+#pragma warning (disable : 4251)
     typedef CDuiControl* (*CreateClass)();
     typedef std::map<CDuiString, CreateClass> MAP_DUI_CTRATECLASS;
 

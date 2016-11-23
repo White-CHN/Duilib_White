@@ -49,6 +49,10 @@ namespace DuiLib
 
     void CDuiButton::SetNormalImage(LPCTSTR pStrImage)
     {
+        if(m_sNormalImage == pStrImage)
+        {
+            return;
+        }
         m_sNormalImage = pStrImage;
         Invalidate();
     }
@@ -60,6 +64,10 @@ namespace DuiLib
 
     void CDuiButton::SetHotImage(LPCTSTR pStrImage)
     {
+        if(m_sHotImage == pStrImage)
+        {
+            return;
+        }
         m_sHotImage = pStrImage;
         Invalidate();
     }
@@ -71,6 +79,10 @@ namespace DuiLib
 
     void CDuiButton::SetPushedImage(LPCTSTR pStrImage)
     {
+        if(m_sPushedImage == pStrImage)
+        {
+            return;
+        }
         m_sPushedImage = pStrImage;
         Invalidate();
     }
@@ -82,6 +94,10 @@ namespace DuiLib
 
     void CDuiButton::SetFocusedImage(LPCTSTR pStrImage)
     {
+        if(m_sFocusedImage == pStrImage)
+        {
+            return;
+        }
         m_sFocusedImage = pStrImage;
         Invalidate();
     }
@@ -93,6 +109,10 @@ namespace DuiLib
 
     void CDuiButton::SetDisabledImage(LPCTSTR pStrImage)
     {
+        if(m_sDisabledImage == pStrImage)
+        {
+            return;
+        }
         m_sDisabledImage = pStrImage;
         Invalidate();
     }
@@ -104,6 +124,10 @@ namespace DuiLib
 
     void CDuiButton::SetHotForeImage(LPCTSTR pStrImage)
     {
+        if(m_sHotForeImage == pStrImage)
+        {
+            return;
+        }
         m_sHotForeImage = pStrImage;
         Invalidate();
     }
@@ -604,6 +628,26 @@ namespace DuiLib
             {
                 m_uButtonState &= ~UISTATE_HOT;
                 Invalidate();
+            }
+        }
+        else if(event.Type == UIEVENT_SYSKEYDOWN)
+        {
+            if(event.chKey == GetShortcut() && IsEnabled())
+            {
+                m_uButtonState |= UISTATE_PUSHED | UISTATE_CAPTURED;
+                Invalidate();
+            }
+        }
+        else if(event.Type == UIEVENT_SYSKEYUP)
+        {
+            if(event.chKey == GetShortcut() && IsEnabled())
+            {
+                if((m_uButtonState & UISTATE_CAPTURED) != 0)
+                {
+                    m_uButtonState &= ~(UISTATE_PUSHED | UISTATE_CAPTURED);
+                    Invalidate();
+                    Activate();
+                }
             }
         }
         else

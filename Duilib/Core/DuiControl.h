@@ -65,7 +65,8 @@ namespace DuiLib
         //文本相关
         virtual CDuiString GetText() const;
         virtual void SetText(LPCTSTR pstrText);
-
+        //拖拽
+        virtual BOOL IsDragEnabled() const;
         virtual void SetDragEnable(BOOL bDrag);
 
         virtual void SetDropEnable(BOOL bDrop);
@@ -81,6 +82,7 @@ namespace DuiLib
         virtual void SetCursor(WORD wCursor);
 
         // 快捷键
+        virtual TCHAR GetShortcut() const;
         virtual void SetShortcut(TCHAR ch);
         // 菜单
         virtual BOOL IsContextMenuUsed() const;

@@ -26,6 +26,8 @@ namespace DuiLib
         virtual LRESULT MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
         virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+
+        virtual void OnFinalMessage(HWND hWnd);
         virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 
         virtual LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);

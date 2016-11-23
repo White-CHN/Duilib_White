@@ -209,6 +209,7 @@ namespace DuiLib
         , m_hwndTooltip(NULL)
         , m_hDcPaint(NULL)
         , m_hDcOffscreen(NULL)
+        , m_hDragBitmap(NULL)
         , m_nOpacity(0xFF)
         , m_bUpdateNeeded(TRUE)
         , m_bLayered(FALSE)
@@ -254,8 +255,8 @@ namespace DuiLib
         m_ResInfo.m_dwDefaultLinkFontColor		= m_SharedResInfo.m_dwDefaultLinkFontColor;
         m_ResInfo.m_dwDefaultLinkHoverFontColor = m_SharedResInfo.m_dwDefaultLinkHoverFontColor;
         m_ResInfo.m_dwDefaultSelectedBkColor	= m_SharedResInfo.m_dwDefaultSelectedBkColor;
-        m_pGdiplusStartupInput = new Gdiplus::GdiplusStartupInput;
-        Gdiplus::GdiplusStartup(&m_gdiplusToken, m_pGdiplusStartupInput, NULL);  // 加载GDI接口
+        m_pGdiplusStartupInput = new GdiplusStartupInput;
+        GdiplusStartup(&m_gdiplusToken, m_pGdiplusStartupInput, NULL);  // 加载GDI接口
         m_pDPI = new CDPI;
     }
 
@@ -307,7 +308,7 @@ namespace DuiLib
         if(m_gdiplusToken != 0)
         {
             //卸载GDIPlus
-            Gdiplus::GdiplusShutdown(m_gdiplusToken);
+            GdiplusShutdown(m_gdiplusToken);
             m_gdiplusToken = 0;
         }
         DUI_FREE_POINT(m_pDPI);
@@ -318,12 +319,20 @@ namespace DuiLib
     void CDuiPaintManager::Init(HWND hWnd)
     {
         ASSERT(::IsWindow(hWnd));
+        m_mNameHash.Resize();
+        RemoveAllFonts();
+        RemoveAllImages();
+        RemoveAllStyle();
+        RemoveAllDefaultAttributeList();
+        RemoveAllTimers();
         if(m_hWndPaint != hWnd)
         {
             m_hWndPaint = hWnd;
             m_hDcPaint = ::GetDC(hWnd);
             m_aPreMessages.Add(this);
         }
+        SetTargetWnd(hWnd);
+        InitDragDrop();
     }
 
     void CDuiPaintManager::NeedUpdate()
@@ -382,7 +391,7 @@ namespace DuiLib
         LRESULT lResult = 0;
         if(m_hWndPaint == NULL)
         {
-            DUI_ERROR(_T("this[%x] m_hWndPaint[%x]"), this, m_hWndPaint);
+            DUI_ERROR("this[%x] m_hWndPaint[%x]", this, m_hWndPaint);
             return FALSE;
         }
         // Cycle through listeners
@@ -456,6 +465,18 @@ namespace DuiLib
     {
         ASSERT(m_aPreMessageFilters.Find(pFilter) < 0);
         return m_aPreMessageFilters.Add(pFilter);
+    }
+
+    BOOL CDuiPaintManager::RemovePreMessageFilter(IMessageFilterUI* pFilter)
+    {
+        for(int i = 0; i < m_aPreMessageFilters.GetSize(); i++)
+        {
+            if(static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i]) == pFilter)
+            {
+                return m_aPreMessageFilters.Remove(i);
+            }
+        }
+        return FALSE;
     }
 
     HWND CDuiPaintManager::GetPaintWindow() const
@@ -622,6 +643,10 @@ namespace DuiLib
 
     void CDuiPaintManager::SetLayeredOpacity(BYTE nOpacity)
     {
+        if(m_nOpacity == nOpacity)
+        {
+            return;
+        }
         m_nOpacity = nOpacity;
         m_bLayeredChanged = TRUE;
         Invalidate();
@@ -804,6 +829,206 @@ namespace DuiLib
             m_pFocus->Event(event);
             SendNotify(m_pFocus, DUI_MSGTYPE_SETFOCUS);
         }
+    }
+
+    BOOL CDuiPaintManager::InitDragDrop()
+    {
+        //AddRef();
+        if(FAILED(RegisterDragDrop(m_hWndPaint, this))) //calls addref
+        {
+            DUI_TRACE("this[%x] RegisterDragDrop[FALSE]", this);
+            return FALSE;
+        }
+        FORMATETC ftetc = {0};
+        ftetc.cfFormat = CF_BITMAP;
+        ftetc.dwAspect = DVASPECT_CONTENT;
+        ftetc.lindex = -1;
+        ftetc.tymed = TYMED_GDI;
+        AddSuportedFormat(ftetc);
+        ftetc.cfFormat = CF_DIB;
+        ftetc.tymed = TYMED_HGLOBAL;
+        AddSuportedFormat(ftetc);
+        ftetc.cfFormat = CF_HDROP;
+        ftetc.tymed = TYMED_HGLOBAL;
+        AddSuportedFormat(ftetc);
+        ftetc.cfFormat = CF_ENHMETAFILE;
+        ftetc.tymed = TYMED_ENHMF;
+        AddSuportedFormat(ftetc);
+        return TRUE;
+    }
+
+    WORD CDuiPaintManager::DIBNumColors(void* pv)
+    {
+        int bits;
+        LPBITMAPINFOHEADER  lpbi;
+        LPBITMAPCOREHEADER  lpbc;
+        lpbi = ((LPBITMAPINFOHEADER)pv);
+        lpbc = ((LPBITMAPCOREHEADER)pv);
+        /*  With the BITMAPINFO format headers, the size of the palette
+        *  is in biClrUsed, whereas in the BITMAPCORE - style headers, it
+        *  is dependent on the bits per pixel ( = 2 raised to the power of
+        *  bits/pixel).
+        */
+        if(lpbi->biSize != sizeof(BITMAPCOREHEADER))
+        {
+            if(lpbi->biClrUsed != 0)
+            {
+                return (WORD)lpbi->biClrUsed;
+            }
+            bits = lpbi->biBitCount;
+        }
+        else
+        {
+            bits = lpbc->bcBitCount;
+        }
+        switch(bits)
+        {
+            case 1:
+                return 2;
+            case 4:
+                return 16;
+            case 8:
+                return 256;
+            default:
+                /* A 24 bitcount DIB has no color table */
+                return 0;
+        }
+    }
+
+    WORD CDuiPaintManager::ColorTableSize(LPVOID lpv)
+    {
+        LPBITMAPINFOHEADER lpbih = (LPBITMAPINFOHEADER)lpv;
+
+        if(lpbih->biSize != sizeof(BITMAPCOREHEADER))
+        {
+            if(((LPBITMAPINFOHEADER)(lpbih))->biCompression == BI_BITFIELDS)
+                /* Remember that 16/32bpp dibs can still have a color table */
+            {
+                return (sizeof(DWORD) * 3) + (DIBNumColors(lpbih) * sizeof(RGBQUAD));
+            }
+            else
+            {
+                return (WORD)(DIBNumColors(lpbih) * sizeof(RGBQUAD));
+            }
+        }
+        else
+        {
+            return (WORD)(DIBNumColors(lpbih) * sizeof(RGBTRIPLE));
+        }
+    }
+
+    bool CDuiPaintManager::OnDrop(FORMATETC* pFmtEtc, STGMEDIUM& medium, DWORD* pdwEffect)
+    {
+        POINT ptMouse = {0};
+        GetCursorPos(&ptMouse);
+        ::SendMessage(m_hTargetWnd, WM_LBUTTONUP, NULL, MAKELPARAM(ptMouse.x, ptMouse.y));
+
+        if(pFmtEtc->cfFormat == CF_DIB && medium.tymed == TYMED_HGLOBAL)
+        {
+            if(medium.hGlobal != NULL)
+            {
+                LPBITMAPINFOHEADER  lpbi = (BITMAPINFOHEADER*)GlobalLock(medium.hGlobal);
+                if(lpbi != NULL)
+                {
+                    HBITMAP hbm;
+                    HDC hdc = GetDC(NULL);
+                    if(hdc != NULL)
+                    {
+                        int i = ((BITMAPFILEHEADER*)lpbi)->bfOffBits;
+                        hbm = CreateDIBitmap(hdc, (LPBITMAPINFOHEADER)lpbi,
+                                             (LONG)CBM_INIT,
+                                             (LPSTR)lpbi + lpbi->biSize + ColorTableSize(lpbi),
+                                             (LPBITMAPINFO)lpbi, DIB_RGB_COLORS);
+
+                        ::ReleaseDC(NULL, hdc);
+                    }
+                    GlobalUnlock(medium.hGlobal);
+                    if(hbm != NULL)
+                    {
+                        hbm = (HBITMAP)SendMessage(m_hTargetWnd, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hbm);
+                    }
+                    if(hbm != NULL)
+                    {
+                        DeleteObject(hbm);
+                    }
+                    return true; //release the medium
+                }
+            }
+        }
+        if(pFmtEtc->cfFormat == CF_BITMAP && medium.tymed == TYMED_GDI)
+        {
+            if(medium.hBitmap != NULL)
+            {
+                HBITMAP hBmp = (HBITMAP)SendMessage(m_hTargetWnd, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)medium.hBitmap);
+                if(hBmp != NULL)
+                {
+                    DeleteObject(hBmp);
+                }
+                return false; //don't free the bitmap
+            }
+        }
+        if(pFmtEtc->cfFormat == CF_ENHMETAFILE && medium.tymed == TYMED_ENHMF)
+        {
+            ENHMETAHEADER emh;
+            GetEnhMetaFileHeader(medium.hEnhMetaFile, sizeof(ENHMETAHEADER), &emh);
+            RECT rc;//={0,0,EnhMetaHdr.rclBounds.right-EnhMetaHdr.rclBounds.left, EnhMetaHdr.rclBounds.bottom-EnhMetaHdr.rclBounds.top};
+            HDC hDC = GetDC(m_hTargetWnd);
+            //start code: taken from ENHMETA.EXE MSDN Sample
+            //*ALSO NEED to GET the pallete (select and RealizePalette it, but i was too lazy*
+            // Get the characteristics of the output device
+            float PixelsX = (float)GetDeviceCaps(hDC, HORZRES);
+            float PixelsY = (float)GetDeviceCaps(hDC, VERTRES);
+            float MMX = (float)GetDeviceCaps(hDC, HORZSIZE);
+            float MMY = (float)GetDeviceCaps(hDC, VERTSIZE);
+            // Calculate the rect in which to draw the metafile based on the
+            // intended size and the current output device resolution
+            // Remember that the intended size is given in 0.01mm units, so
+            // convert those to device units on the target device
+            rc.top = (int)((float)(emh.rclFrame.top) * PixelsY / (MMY * 100.0f));
+            rc.left = (int)((float)(emh.rclFrame.left) * PixelsX / (MMX * 100.0f));
+            rc.right = (int)((float)(emh.rclFrame.right) * PixelsX / (MMX * 100.0f));
+            rc.bottom = (int)((float)(emh.rclFrame.bottom) * PixelsY / (MMY * 100.0f));
+            //end code: taken from ENHMETA.EXE MSDN Sample
+
+            HDC hdcMem = CreateCompatibleDC(hDC);
+            HGDIOBJ hBmpMem = CreateCompatibleBitmap(hDC, emh.rclBounds.right, emh.rclBounds.bottom);
+            HGDIOBJ hOldBmp = ::SelectObject(hdcMem, hBmpMem);
+            PlayEnhMetaFile(hdcMem, medium.hEnhMetaFile, &rc);
+            HBITMAP hBmp = (HBITMAP)::SelectObject(hdcMem, hOldBmp);
+            DeleteDC(hdcMem);
+            ReleaseDC(m_hTargetWnd, hDC);
+            hBmp = (HBITMAP)SendMessage(m_hTargetWnd, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBmp);
+            if(hBmp != NULL)
+            {
+                DeleteObject(hBmp);
+            }
+            return true;
+        }
+        if(pFmtEtc->cfFormat == CF_HDROP && medium.tymed == TYMED_HGLOBAL)
+        {
+            HDROP hDrop = (HDROP)GlobalLock(medium.hGlobal);
+            if(hDrop != NULL)
+            {
+                TCHAR szFileName[MAX_PATH];
+                UINT cFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
+                if(cFiles > 0)
+                {
+                    DragQueryFile(hDrop, 0, szFileName, sizeof(szFileName));
+                    HBITMAP hBitmap = (HBITMAP)LoadImage(NULL, szFileName, IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
+                    if(hBitmap)
+                    {
+                        HBITMAP hBmp = (HBITMAP)SendMessage(m_hTargetWnd, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBitmap);
+                        if(hBmp != NULL)
+                        {
+                            DeleteObject(hBmp);
+                        }
+                    }
+                }
+                //DragFinish(hDrop); // base class calls ReleaseStgMedium
+            }
+            GlobalUnlock(medium.hGlobal);
+        }
+        return true; //let base free the medium
     }
 
     void CDuiPaintManager::DrawCaret(HDC hDC, const RECT& rcPaint)
@@ -1165,9 +1390,9 @@ namespace DuiLib
         // focus calulation until the next repaint.
         if(m_bUpdateNeeded && bForward)
         {
-            m_bFocusNeeded = true;
+            m_bFocusNeeded = TRUE;
             ::InvalidateRect(m_hWndPaint, NULL, FALSE);
-            return true;
+            return TRUE;
         }
         // Find next/previous tabbable control
         FINDTABINFO info1 = { 0 };
@@ -1193,8 +1418,8 @@ namespace DuiLib
         {
             SetFocus(pControl);
         }
-        m_bFocusNeeded = false;
-        return true;
+        m_bFocusNeeded = FALSE;
+        return TRUE;
     }
 
     CDPI* CDuiPaintManager::GetDPIObj()
@@ -1262,6 +1487,18 @@ namespace DuiLib
         Msg.wParam = wParam;
         Msg.lParam = lParam;
         SendNotify(Msg, bAsync);
+    }
+
+    BOOL CDuiPaintManager::RemoveNotifier(INotifyUI* pNotifier)
+    {
+        for(int i = 0; i < m_aNotifiers.GetSize(); i++)
+        {
+            if(static_cast<INotifyUI*>(m_aNotifiers[i]) == pNotifier)
+            {
+                return m_aNotifiers.Remove(i);
+            }
+        }
+        return FALSE;
     }
 
     void CDuiPaintManager::AddDelayedCleanup(CDuiControl* pControl)
@@ -1365,6 +1602,49 @@ namespace DuiLib
         m_bFirstLayout = TRUE;
         m_pRoot = pControl;
         return InitControls(pControl);
+    }
+
+    void CDuiPaintManager::ReapObjects(CDuiControl* pControl)
+    {
+        if(pControl == m_pEventKey)
+        {
+            m_pEventKey = NULL;
+        }
+        if(pControl == m_pEventHover)
+        {
+            m_pEventHover = NULL;
+        }
+        if(pControl == m_pEventClick)
+        {
+            m_pEventClick = NULL;
+        }
+        if(pControl == m_pFocus)
+        {
+            m_pFocus = NULL;
+        }
+        KillTimer(pControl);
+        const CDuiString& sName = pControl->GetName();
+        if(!sName.IsEmpty())
+        {
+            if(pControl == FindControl(sName))
+            {
+                m_mNameHash.Remove(sName);
+            }
+        }
+        for(int i = 0; i < m_aAsyncNotify.GetSize(); i++)
+        {
+            TNotifyUI* pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
+            if(pMsg->pSender == pControl)
+            {
+                pMsg->pSender = NULL;
+            }
+        }
+    }
+
+    CDuiControl* CDuiPaintManager::GetRoot() const
+    {
+        ASSERT(m_pRoot);
+        return m_pRoot;
     }
 
     CDuiControl* CDuiPaintManager::FindControl(POINT pt) const
@@ -1603,49 +1883,86 @@ namespace DuiLib
                 return TRUE;
             }
         }
-        //switch( uMsg ) {
-        //case WM_KEYDOWN:
-        //	{
-        //		// Tabbing between controls
-        //		if( wParam == VK_TAB ) {
-        //			if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("RichEditUI")) != NULL ) {
-        //				if( static_cast<CRichEditUI*>(m_pFocus)->IsWantTab() ) return FALSE;
-        //			}
-        //			if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("WkeWebkitUI")) != NULL ) {
-        //				return FALSE;
-        //			}
-        //			SetNextTabControl(::GetKeyState(VK_SHIFT) >= 0);
-        //			return TRUE;
-        //		}
-        //	}
-        //	break;
-        //case WM_SYSCHAR:
-        //	{
-        //		// Handle ALT-shortcut key-combinations
-        //		FINDSHORTCUT fs = { 0 };
-        //		fs.ch = toupper((int)wParam);
-        //		CControlUI* pControl = m_pRoot->FindControl(__FindControlFromShortcut, &fs, UIFIND_ENABLED | UIFIND_ME_FIRST | UIFIND_TOP_FIRST);
-        //		if( pControl != NULL ) {
-        //			pControl->SetFocus();
-        //			pControl->Activate();
-        //			return TRUE;
-        //		}
-        //	}
-        //	break;
-        //case WM_SYSKEYDOWN:
-        //	{
-        //		if( m_pFocus != NULL ) {
-        //			TEventUI event = { 0 };
-        //			event.Type = UIEVENT_SYSKEY;
-        //			event.chKey = (TCHAR)wParam;
-        //			event.ptMouse = m_ptLastMousePos;
-        //			event.wKeyState = MapKeyState();
-        //			event.dwTimestamp = ::GetTickCount();
-        //			m_pFocus->Event(event);
-        //		}
-        //	}
-        //	break;
-        //}
+        switch(uMsg)
+        {
+            case WM_KEYDOWN:
+            {
+                DUI_TRACE("WM_KEYDOWN %c", (TCHAR)wParam);
+                //		// Tabbing between controls
+                //		if( wParam == VK_TAB ) {
+                //			if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("RichEditUI")) != NULL ) {
+                //				if( static_cast<CRichEditUI*>(m_pFocus)->IsWantTab() ) return FALSE;
+                //			}
+                //			if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("WkeWebkitUI")) != NULL ) {
+                //				return FALSE;
+                //			}
+                //			SetNextTabControl(::GetKeyState(VK_SHIFT) >= 0);
+                //			return TRUE;
+                //		}
+            }
+            break;
+            case WM_SYSCHAR:
+            {
+                DUI_TRACE("WM_SYSCHAR %c", (TCHAR)wParam);
+                // Handle ALT-shortcut key-combinations
+                /*SHORTCUT fs = { 0 };
+                fs.ch = toupper((int)wParam);
+                CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromShortcut, &fs, UIFIND_ENABLED | UIFIND_ME_FIRST | UIFIND_TOP_FIRST);
+                if(pControl != NULL)
+                {
+                pControl->SetFocus();
+                pControl->Activate();
+                return TRUE;
+                }*/
+            }
+            break;
+            case WM_SYSKEYDOWN:
+            {
+                DUI_TRACE("WM_SYSKEYDOWN %c", (TCHAR)wParam);
+                SHORTCUT fs = { 0 };
+                fs.ch = toupper((int)wParam);
+                CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromShortcut, &fs, UIFIND_ENABLED | UIFIND_ME_FIRST | UIFIND_TOP_FIRST);
+                if(pControl != NULL)
+                {
+                    pControl->SetFocus();
+                }
+                if(m_pFocus != NULL)
+                {
+                    TEventUI event = { 0 };
+                    event.Type = UIEVENT_SYSKEYDOWN;
+                    event.chKey = (TCHAR)wParam;
+                    event.ptMouse = m_ptLastMousePos;
+                    event.wKeyState = MapKeyState();
+                    event.dwTimestamp = ::GetTickCount();
+                    m_pFocus->Event(event);
+                }
+            }
+            break;
+            case WM_SYSKEYUP:
+            {
+                DUI_TRACE("WM_SYSKEYUP %c", (TCHAR)wParam);
+                SHORTCUT fs = { 0 };
+                fs.ch = toupper((int)wParam);
+                CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromShortcut, &fs, UIFIND_ENABLED | UIFIND_ME_FIRST | UIFIND_TOP_FIRST);
+                if(pControl != NULL)
+                {
+                    pControl->SetFocus();
+                }
+                if(m_pFocus != NULL)
+                {
+                    TEventUI event = { 0 };
+                    event.Type = UIEVENT_SYSKEYUP;
+                    event.chKey = (TCHAR)wParam;
+                    event.ptMouse = m_ptLastMousePos;
+                    event.wKeyState = MapKeyState();
+                    event.dwTimestamp = ::GetTickCount();
+                    m_pFocus->Event(event);
+                }
+            }
+            break;
+            default:
+                break;
+        }
         return FALSE;
     }
 
@@ -1711,6 +2028,25 @@ namespace DuiLib
             }
         }
         return FALSE;
+    }
+
+    void CDuiPaintManager::KillTimer(CDuiControl* pControl)
+    {
+        ASSERT(pControl != NULL);
+        for(int i = 0, j = 0; i < m_aTimers.GetSize(); i++)
+        {
+            TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i - j]);
+            if(pTimer->pSender == pControl && pTimer->hWnd == m_hWndPaint)
+            {
+                if(pTimer->bKilled == false)
+                {
+                    ::KillTimer(pTimer->hWnd, pTimer->uWinTimer);
+                }
+                DUI_FREE_POINT(pTimer);
+                m_aTimers.Remove(i - j);
+                j++;
+            }
+        }
     }
 
     void CDuiPaintManager::RemoveAllTimers()
@@ -1943,6 +2279,125 @@ namespace DuiLib
             uState |= MK_ALT;
         }
         return uState;
+    }
+
+    BOOL CDuiPaintManager::TranslateMessage(const LPMSG pMsg)
+    {
+        // Pretranslate Message takes care of system-wide messages, such as
+        // tabbing and shortcut key-combos. We'll look for all messages for
+        // each window and any child control attached.
+        UINT uStyle = GetWindowStyle(pMsg->hwnd);
+        UINT uChildRes = uStyle & WS_CHILD;
+        LRESULT lRes = 0;
+        if(uChildRes != 0)
+        {
+            HWND hWndParent = ::GetParent(pMsg->hwnd);
+            for(int i = 0; i < m_aPreMessages.GetSize(); i++)
+            {
+                CDuiPaintManager* pPaintManager = static_cast<CDuiPaintManager*>(m_aPreMessages[i]);
+                HWND hTempParent = hWndParent;
+                while(hTempParent)
+                {
+                    if(pMsg->hwnd == pPaintManager->GetPaintWindow() || hTempParent == pPaintManager->GetPaintWindow())
+                    {
+                        if(pPaintManager->TranslateAccelerator(pMsg))
+                        {
+                            return TRUE;
+                        }
+                        pPaintManager->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes);
+                    }
+                    hTempParent = GetParent(hTempParent);
+                }
+            }
+        }
+        else
+        {
+            for(int i = 0; i < m_aPreMessages.GetSize(); i++)
+            {
+                CDuiPaintManager* pPaintManager = static_cast<CDuiPaintManager*>(m_aPreMessages[i]);
+                if(pMsg->hwnd == pPaintManager->GetPaintWindow())
+                {
+                    if(pPaintManager->TranslateAccelerator(pMsg))
+                    {
+                        return TRUE;
+                    }
+                    if(pPaintManager->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes))
+                    {
+                        return TRUE;
+                    }
+                    return FALSE;
+                }
+            }
+        }
+        return FALSE;
+    }
+
+    void CDuiPaintManager::MessageLoop()
+    {
+        MSG msg = { 0 };
+        while(::GetMessage(&msg, NULL, 0, 0))
+        {
+            if(!CDuiPaintManager::TranslateMessage(&msg))
+            {
+                ::TranslateMessage(&msg);
+                try
+                {
+                    ::DispatchMessage(&msg);
+                }
+                catch(...)
+                {
+                    DUI_TRACE("EXCEPTION!");
+#ifdef _DEBUG
+                    throw "CDuiPaintManager::MessageLoop";
+#endif
+                }
+            }
+        }
+    }
+
+    void CDuiPaintManager::GetChildWndRect(HWND hWnd, HWND hChildWnd, RECT& rcChildWnd)
+    {
+        ::GetWindowRect(hChildWnd, &rcChildWnd);
+        POINT pt;
+        pt.x = rcChildWnd.left;
+        pt.y = rcChildWnd.top;
+        ::ScreenToClient(hWnd, &pt);
+        rcChildWnd.left = pt.x;
+        rcChildWnd.top = pt.y;
+        pt.x = rcChildWnd.right;
+        pt.y = rcChildWnd.bottom;
+        ::ScreenToClient(hWnd, &pt);
+        rcChildWnd.right = pt.x;
+        rcChildWnd.bottom = pt.y;
+    }
+
+    BOOL CDuiPaintManager::LoadPlugin(LPCTSTR pstrModuleName)
+    {
+        ASSERT(!::IsBadStringPtr(pstrModuleName, -1) || pstrModuleName == NULL);
+        if(pstrModuleName == NULL)
+        {
+            return FALSE;
+        }
+        HMODULE hModule = ::LoadLibrary(pstrModuleName);
+        if(hModule != NULL)
+        {
+            LPCREATECONTROL lpCreateControl = (LPCREATECONTROL)::GetProcAddress(hModule, "CreateControl");
+            if(lpCreateControl != NULL)
+            {
+                if(m_aPlugins.Find(lpCreateControl) >= 0)
+                {
+                    return TRUE;
+                }
+                m_aPlugins.Add(lpCreateControl);
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+
+    CStdPtrArray* CDuiPaintManager::GetPlugins()
+    {
+        return &m_aPlugins;
     }
 
     LRESULT CDuiPaintManager::OnDuiNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
@@ -2231,7 +2686,7 @@ namespace DuiLib
         CDuiControl* pControl = FindControl(pt);
         if(pControl == NULL)
         {
-            DUI_TRACE(_T("this[%x] CDuiControl::FindControl[NULL]"), this);
+            DUI_TRACE("this[%x] CDuiControl::FindControl[NULL]", this);
             return 0;
         }
         if(pControl->GetManager() != this)
@@ -2239,16 +2694,16 @@ namespace DuiLib
             return 0;
         }
         // 准备拖拽
-        //if(pControl->IsDragEnabled())
-        //{
-        //    m_bDragMode = true;
-        //    if(m_hDragBitmap != NULL)
-        //    {
-        //        ::DeleteObject(m_hDragBitmap);
-        //        m_hDragBitmap = NULL;
-        //    }
-        //    m_hDragBitmap = CRenderEngine::GenerateBitmap(this, pControl, pControl->GetPos());
-        //}
+        if(pControl->IsDragEnabled())
+        {
+            m_bDragMode = TRUE;
+            if(m_hDragBitmap != NULL)
+            {
+                ::DeleteObject(m_hDragBitmap);
+                m_hDragBitmap = NULL;
+            }
+            m_hDragBitmap = CRenderEngine::GenerateBitmap(this, pControl, pControl->GetPos());
+        }
         // 开启捕获
         SetCapture();
         // 事件处理
@@ -2419,7 +2874,10 @@ namespace DuiLib
             tme.dwFlags = TME_HOVER | TME_LEAVE;
             tme.hwndTrack = m_hWndPaint;
             tme.dwHoverTime = m_hwndTooltip == NULL ? 400UL : (DWORD) ::SendMessage(m_hwndTooltip, TTM_GETDELAYTIME, TTDT_INITIAL, 0L);
-            _TrackMouseEvent(&tme);
+            if(!_TrackMouseEvent(&tme))
+            {
+                DUI_TRACE("this[%x] _TrackMouseEvent[FALSE]", this);
+            }
             m_bMouseTracking = TRUE;
         }
         // Generate the appropriate mouse messages
@@ -2438,63 +2896,63 @@ namespace DuiLib
             return 0;
         }
 
-        //// 拖拽事件
-        //if(bNeedDrag && m_bDragMode && wParam == MK_LBUTTON)
-        //{
-        //    ::ReleaseCapture();
-        //    CIDropSource* pdsrc = new CIDropSource;
-        //    if(pdsrc == NULL)
-        //    {
-        //        return 0;
-        //    }
-        //    pdsrc->AddRef();
+        // 拖拽事件
+        if(bNeedDrag && m_bDragMode && wParam == MK_LBUTTON)
+        {
+            ::ReleaseCapture();
+            CIDropSource* pdsrc = new CIDropSource;
+            if(pdsrc == NULL)
+            {
+                return 0;
+            }
+            pdsrc->AddRef();
 
-        //    CIDataObject* pdobj = new CIDataObject(pdsrc);
-        //    if(pdobj == NULL)
-        //    {
-        //        return 0;
-        //    }
-        //    pdobj->AddRef();
+            CIDataObject* pdobj = new CIDataObject(pdsrc);
+            if(pdobj == NULL)
+            {
+                return 0;
+            }
+            pdobj->AddRef();
 
-        //    FORMATETC fmtetc = {0};
-        //    STGMEDIUM medium = {0};
-        //    fmtetc.dwAspect = DVASPECT_CONTENT;
-        //    fmtetc.lindex = -1;
-        //    //////////////////////////////////////
-        //    fmtetc.cfFormat = CF_BITMAP;
-        //    fmtetc.tymed = TYMED_GDI;
-        //    medium.tymed = TYMED_GDI;
-        //    HBITMAP hBitmap = (HBITMAP)OleDuplicateData(m_hDragBitmap, fmtetc.cfFormat, NULL);
-        //    medium.hBitmap = hBitmap;
-        //    pdobj->SetData(&fmtetc, &medium, FALSE);
-        //    //////////////////////////////////////
-        //    BITMAP bmap;
-        //    GetObject(hBitmap, sizeof(BITMAP), &bmap);
-        //    RECT rc = {0, 0, bmap.bmWidth, bmap.bmHeight};
-        //    fmtetc.cfFormat = CF_ENHMETAFILE;
-        //    fmtetc.tymed = TYMED_ENHMF;
-        //    HDC hMetaDC = CreateEnhMetaFile(m_hDcPaint, NULL, NULL, NULL);
-        //    HDC hdcMem = CreateCompatibleDC(m_hDcPaint);
-        //    HGDIOBJ hOldBmp = ::SelectObject(hdcMem, hBitmap);
-        //    ::BitBlt(hMetaDC, 0, 0, rc.right, rc.bottom, hdcMem, 0, 0, SRCCOPY);
-        //    ::SelectObject(hdcMem, hOldBmp);
-        //    medium.hEnhMetaFile = CloseEnhMetaFile(hMetaDC);
-        //    DeleteDC(hdcMem);
-        //    medium.tymed = TYMED_ENHMF;
-        //    pdobj->SetData(&fmtetc, &medium, TRUE);
-        //    //////////////////////////////////////
-        //    CDragSourceHelper dragSrcHelper;
-        //    POINT ptDrag = {0};
-        //    ptDrag.x = bmap.bmWidth / 2;
-        //    ptDrag.y = bmap.bmHeight / 2;
-        //    dragSrcHelper.InitializeFromBitmap(hBitmap, ptDrag, rc, pdobj); //will own the bmp
-        //    DWORD dwEffect;
-        //    HRESULT hr = ::DoDragDrop(pdobj, pdsrc, DROPEFFECT_COPY | DROPEFFECT_MOVE, &dwEffect);
-        //    pdsrc->Release();
-        //    pdobj->Release();
-        //    m_bDragMode = false;
-        //    return 0;
-        //}
+            FORMATETC fmtetc = {0};
+            STGMEDIUM medium = {0};
+            fmtetc.dwAspect = DVASPECT_CONTENT;
+            fmtetc.lindex = -1;
+            //////////////////////////////////////
+            fmtetc.cfFormat = CF_BITMAP;
+            fmtetc.tymed = TYMED_GDI;
+            medium.tymed = TYMED_GDI;
+            HBITMAP hBitmap = (HBITMAP)OleDuplicateData(m_hDragBitmap, fmtetc.cfFormat, NULL);
+            medium.hBitmap = hBitmap;
+            pdobj->SetData(&fmtetc, &medium, FALSE);
+            //////////////////////////////////////
+            BITMAP bmap;
+            GetObject(hBitmap, sizeof(BITMAP), &bmap);
+            RECT rc = {0, 0, bmap.bmWidth, bmap.bmHeight};
+            fmtetc.cfFormat = CF_ENHMETAFILE;
+            fmtetc.tymed = TYMED_ENHMF;
+            HDC hMetaDC = CreateEnhMetaFile(m_hDcPaint, NULL, NULL, NULL);
+            HDC hdcMem = CreateCompatibleDC(m_hDcPaint);
+            HGDIOBJ hOldBmp = ::SelectObject(hdcMem, hBitmap);
+            ::BitBlt(hMetaDC, 0, 0, rc.right, rc.bottom, hdcMem, 0, 0, SRCCOPY);
+            ::SelectObject(hdcMem, hOldBmp);
+            medium.hEnhMetaFile = CloseEnhMetaFile(hMetaDC);
+            DeleteDC(hdcMem);
+            medium.tymed = TYMED_ENHMF;
+            pdobj->SetData(&fmtetc, &medium, TRUE);
+            //////////////////////////////////////
+            CDragSourceHelper dragSrcHelper;
+            POINT ptDrag = {0};
+            ptDrag.x = bmap.bmWidth / 2;
+            ptDrag.y = bmap.bmHeight / 2;
+            dragSrcHelper.InitializeFromBitmap(hBitmap, ptDrag, rc, pdobj); //will own the bmp
+            DWORD dwEffect;
+            HRESULT hr = ::DoDragDrop(pdobj, pdsrc, DROPEFFECT_COPY | DROPEFFECT_MOVE, &dwEffect);
+            pdsrc->Release();
+            pdobj->Release();
+            m_bDragMode = false;
+            return 0;
+        }
         TEventUI event = { 0 };
         event.ptMouse = pt;
         event.wParam = wParam;
@@ -2701,123 +3159,22 @@ namespace DuiLib
         return ::PtInRect(&pThis->GetPos(), *pPoint) ? pThis : NULL;
     }
 
-    BOOL CDuiPaintManager::TranslateMessage(const LPMSG pMsg)
+    CDuiControl* CALLBACK CDuiPaintManager::__FindControlFromShortcut(CDuiControl* pThis, LPVOID pData)
     {
-        // Pretranslate Message takes care of system-wide messages, such as
-        // tabbing and shortcut key-combos. We'll look for all messages for
-        // each window and any child control attached.
-        UINT uStyle = GetWindowStyle(pMsg->hwnd);
-        UINT uChildRes = uStyle & WS_CHILD;
-        LRESULT lRes = 0;
-        if(uChildRes != 0)
+        if(!pThis->IsVisible())
         {
-            HWND hWndParent = ::GetParent(pMsg->hwnd);
-            for(int i = 0; i < m_aPreMessages.GetSize(); i++)
-            {
-                CDuiPaintManager* pPaintManager = static_cast<CDuiPaintManager*>(m_aPreMessages[i]);
-                HWND hTempParent = hWndParent;
-                while(hTempParent)
-                {
-                    if(pMsg->hwnd == pPaintManager->GetPaintWindow() || hTempParent == pPaintManager->GetPaintWindow())
-                    {
-                        if(pPaintManager->TranslateAccelerator(pMsg))
-                        {
-                            return TRUE;
-                        }
-                        pPaintManager->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes);
-                    }
-                    hTempParent = GetParent(hTempParent);
-                }
-            }
+            return NULL;
         }
-        else
+        SHORTCUT* pFS = static_cast<SHORTCUT*>(pData);
+        if(pFS->ch == toupper(pThis->GetShortcut()))
         {
-            for(int i = 0; i < m_aPreMessages.GetSize(); i++)
-            {
-                CDuiPaintManager* pPaintManager = static_cast<CDuiPaintManager*>(m_aPreMessages[i]);
-                if(pMsg->hwnd == pPaintManager->GetPaintWindow())
-                {
-                    if(pPaintManager->TranslateAccelerator(pMsg))
-                    {
-                        return TRUE;
-                    }
-                    if(pPaintManager->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes))
-                    {
-                        return TRUE;
-                    }
-                    return FALSE;
-                }
-            }
+            pFS->bPickNext = TRUE;
         }
-        return FALSE;
-    }
-
-    void CDuiPaintManager::MessageLoop()
-    {
-        MSG msg = { 0 };
-        while(::GetMessage(&msg, NULL, 0, 0))
+        if(_tcsstr(pThis->GetClass(), _T("LabelUI")) != NULL)
         {
-            if(!CDuiPaintManager::TranslateMessage(&msg))
-            {
-                ::TranslateMessage(&msg);
-                try
-                {
-                    ::DispatchMessage(&msg);
-                }
-                catch(...)
-                {
-                    DUI_TRACE(_T("EXCEPTION!"));
-#ifdef _DEBUG
-                    throw "CPaintManagerUI::MessageLoop";
-#endif
-                }
-            }
+            return NULL;    // Labels never get focus!
         }
-    }
-
-    void CDuiPaintManager::GetChildWndRect(HWND hWnd, HWND hChildWnd, RECT& rcChildWnd)
-    {
-        ::GetWindowRect(hChildWnd, &rcChildWnd);
-        POINT pt;
-        pt.x = rcChildWnd.left;
-        pt.y = rcChildWnd.top;
-        ::ScreenToClient(hWnd, &pt);
-        rcChildWnd.left = pt.x;
-        rcChildWnd.top = pt.y;
-        pt.x = rcChildWnd.right;
-        pt.y = rcChildWnd.bottom;
-        ::ScreenToClient(hWnd, &pt);
-        rcChildWnd.right = pt.x;
-        rcChildWnd.bottom = pt.y;
-    }
-
-    BOOL CDuiPaintManager::LoadPlugin(LPCTSTR pstrModuleName)
-    {
-        ASSERT(!::IsBadStringPtr(pstrModuleName, -1) || pstrModuleName == NULL);
-        if(pstrModuleName == NULL)
-        {
-            return FALSE;
-        }
-        HMODULE hModule = ::LoadLibrary(pstrModuleName);
-        if(hModule != NULL)
-        {
-            LPCREATECONTROL lpCreateControl = (LPCREATECONTROL)::GetProcAddress(hModule, "CreateControl");
-            if(lpCreateControl != NULL)
-            {
-                if(m_aPlugins.Find(lpCreateControl) >= 0)
-                {
-                    return TRUE;
-                }
-                m_aPlugins.Add(lpCreateControl);
-                return TRUE;
-            }
-        }
-        return FALSE;
-    }
-
-    CStdPtrArray* CDuiPaintManager::GetPlugins()
-    {
-        return &m_aPlugins;
+        return pFS->bPickNext ? pThis : NULL;
     }
 
 }

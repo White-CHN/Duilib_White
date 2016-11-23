@@ -20,7 +20,7 @@ namespace DuiLib
     {
         if(!IsWindow(m_hWnd))
         {
-            DUI_ERROR(_T("this[%x] m_hWnd[%x]"), this, m_hWnd);
+            DUI_ERROR("this[%x] m_hWnd[%x]", this, m_hWnd);
             return NULL;
         }
         return m_hWnd;
@@ -30,7 +30,7 @@ namespace DuiLib
     {
         if(!IsWindow(m_hWnd))
         {
-            DUI_ERROR(_T("this[%x] m_hWnd[%x]"), this, m_hWnd);
+            DUI_ERROR("this[%x] m_hWnd[%x]", this, m_hWnd);
             return NULL;
         }
         return m_hWnd;
@@ -45,16 +45,16 @@ namespace DuiLib
     {
         if(GetSuperClassName() != NULL && !RegisterSuperClass())
         {
-            DUI_ERROR(_T("this[%x] GetSuperClassName[%s] RegisterSuperClass[FALSE]"), this, GetSuperClassName());
+            DUI_ERROR("this[%x] GetSuperClassName[%s] RegisterSuperClass[FALSE]", this, GetSuperClassName());
             return NULL;
         }
         if(GetSuperClassName() == NULL && !RegisterWindowClass())
         {
-            DUI_ERROR(_T("this[%x] GetSuperClassName[NULL] RegisterWindowClass[FALSE]"), this);
+            DUI_ERROR("this[%x] GetSuperClassName[NULL] RegisterWindowClass[FALSE]", this);
             return NULL;
         }
         m_hWnd = ::CreateWindowEx(dwExStyle, GetWindowClassName(), lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, CDuiPaintManager::GetInstance(), this);
-        DUI_TRACE(_T("this[%x] dwExStyle[%x] ClassName[%s] WindowName[%s] dwStyle[%x] x[%d] y[%d] nWidth[%d] nHeight[%d] hWndParent[%x] hInstance[%x] m_hWnd[%x]"),
+        DUI_TRACE("this[%x] dwExStyle[%x] ClassName[%s] WindowName[%s] dwStyle[%x] x[%d] y[%d] nWidth[%d] nHeight[%d] hWndParent[%x] hInstance[%x] m_hWnd[%x]",
                   this, dwExStyle, GetWindowClassName(), lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, CDuiPaintManager::GetInstance(), m_hWnd);
         ASSERT(m_hWnd != NULL);
         return m_hWnd;
@@ -79,14 +79,14 @@ namespace DuiLib
         m_OldWndProc = SubclassWindow(hWnd, __WndProc);
         if(m_OldWndProc == NULL)
         {
-            DUI_ERROR(_T("this[%x] SubclassWindow[NULL]"), this);
+            DUI_ERROR("this[%x] SubclassWindow[NULL]", this);
             return NULL;
         }
         m_bSubclassed = TRUE;
         m_hWnd = hWnd;
         if(::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LPARAM>(this)) == NULL)
         {
-            DUI_ERROR(_T("this[%x] SetWindowLongPtr[NULL]"), this);
+            DUI_ERROR("this[%x] SetWindowLongPtr[NULL]", this);
         }
         return m_hWnd;
     }
@@ -164,7 +164,7 @@ namespace DuiLib
         }
         if(::SetWindowPos(m_hWnd, NULL, xLeft, yTop, -1, -1, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE) == NULL)
         {
-            DUI_ERROR(_T("this[%x] SetWindowPos[FALSE] m_hWnd[%x] xLeft[%d] yTop[%d] uFlag[%x]"), this, m_hWnd, xLeft, yTop, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+            DUI_ERROR("this[%x] SetWindowPos[FALSE] m_hWnd[%x] xLeft[%d] yTop[%d] uFlag[%x]", this, m_hWnd, xLeft, yTop, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
             return FALSE;
         }
         return TRUE;
@@ -247,12 +247,12 @@ namespace DuiLib
         }
         if(!::AdjustWindowRectEx(&rc, GetWindowStyle(m_hWnd), (!(GetWindowStyle(m_hWnd) & WS_CHILD) && (::GetMenu(m_hWnd) != NULL)), GetWindowExStyle(m_hWnd)))
         {
-            DUI_ERROR(_T("this[%x] AdjustWindowRectEx[FALSE] m_hWnd[%x]"), this, m_hWnd);
+            DUI_ERROR("this[%x] AdjustWindowRectEx[FALSE] m_hWnd[%x]", this, m_hWnd);
             return FALSE;
         }
         if(::SetWindowPos(m_hWnd, NULL, 0, 0, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE) == NULL)
         {
-            DUI_ERROR(_T("this[%x] SetWindowPos[FALSE] m_hWnd[%x] cx[%d] cy[%d] uFlag[%x]"), this, m_hWnd, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE);
+            DUI_ERROR("this[%x] SetWindowPos[FALSE] m_hWnd[%x] cx[%d] cy[%d] uFlag[%x]", this, m_hWnd, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE);
             return FALSE;
         }
         return TRUE;

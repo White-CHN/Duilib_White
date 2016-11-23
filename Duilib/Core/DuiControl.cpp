@@ -194,10 +194,6 @@ namespace DuiLib
 
     void CDuiControl::SetBkImage(LPCTSTR pStrImage)
     {
-        if(m_pManager)
-        {
-            m_pManager->RemoveImage(pStrImage);
-        }
         if(m_sBkImage == pStrImage)
         {
             return;
@@ -243,6 +239,10 @@ namespace DuiLib
 
     void CDuiControl::SetBorderRound(SIZE cxyRound)
     {
+        if(m_cxyBorderRound.cx == cxyRound.cx && m_cxyBorderRound.cy == cxyRound.cy)
+        {
+            return;
+        }
         m_cxyBorderRound = cxyRound;
         Invalidate();
     }
@@ -259,6 +259,13 @@ namespace DuiLib
 
     void CDuiControl::SetBorderSize(RECT rc)
     {
+        if(m_rcBorderSize.bottom == rc.bottom &&
+                m_rcBorderSize.top == rc.top &&
+                m_rcBorderSize.left == rc.left &&
+                m_rcBorderSize.right == rc.right)
+        {
+            return;
+        }
         m_rcBorderSize = rc;
         Invalidate();
     }
@@ -275,30 +282,50 @@ namespace DuiLib
 
     void CDuiControl::SetLeftBorderSize(int nSize)
     {
+        if(m_rcBorderSize.left == nSize)
+        {
+            return;
+        }
         m_rcBorderSize.left = nSize;
         Invalidate();
     }
 
     void CDuiControl::SetTopBorderSize(int nSize)
     {
+        if(m_rcBorderSize.top == nSize)
+        {
+            return;
+        }
         m_rcBorderSize.top = nSize;
         Invalidate();
     }
 
     void CDuiControl::SetRightBorderSize(int nSize)
     {
+        if(m_rcBorderSize.right == nSize)
+        {
+            return;
+        }
         m_rcBorderSize.right = nSize;
         Invalidate();
     }
 
     void CDuiControl::SetBottomBorderSize(int nSize)
     {
+        if(m_rcBorderSize.bottom == nSize)
+        {
+            return;
+        }
         m_rcBorderSize.bottom = nSize;
         Invalidate();
     }
 
     void CDuiControl::SetBorderStyle(int nStyle)
     {
+        if(m_nBorderStyle == nStyle)
+        {
+            return;
+        }
         m_nBorderStyle = nStyle;
         Invalidate();
     }
@@ -357,6 +384,11 @@ namespace DuiLib
         Invalidate();
     }
 
+    BOOL CDuiControl::IsDragEnabled() const
+    {
+        return m_bDragEnabled;
+    }
+
     void CDuiControl::SetDragEnable(BOOL bDrag)
     {
         m_bDragEnabled = bDrag;
@@ -409,8 +441,17 @@ namespace DuiLib
 
     void CDuiControl::SetCursor(WORD wCursor)
     {
+        if(m_wCursor == wCursor)
+        {
+            return;
+        }
         m_wCursor = wCursor;
         Invalidate();
+    }
+
+    TCHAR CDuiControl::GetShortcut() const
+    {
+        return m_chShortcut;
     }
 
     void CDuiControl::SetShortcut(TCHAR ch)
@@ -493,21 +534,22 @@ namespace DuiLib
 
     SIZE CDuiControl::GetFixedXY() const
     {
-        return GetManager()->GetDPIObj()->Scale(m_cXY);
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_cXY);
+        }
+        return m_cXY;
     }
 
     void CDuiControl::SetFixedXY(SIZE szXY)
     {
+        if(m_cXY.cx == szXY.cx && m_cXY.cy == szXY.cy)
+        {
+            return;
+        }
         m_cXY.cx = szXY.cx;
         m_cXY.cy = szXY.cy;
-        if(!m_bFloat)
-        {
-            NeedParentUpdate();
-        }
-        else
-        {
-            NeedUpdate();
-        }
+        NeedParentUpdate();
     }
 
     int CDuiControl::GetFixedWidth() const
@@ -521,45 +563,40 @@ namespace DuiLib
 
     void CDuiControl::SetFixedWidth(int cx)
     {
+        if(m_cxyFixed.cx == cx)
+        {
+            return;
+        }
         if(cx < 0)
         {
             return;
         }
         m_cxyFixed.cx = cx;
-        if(!m_bFloat)
-        {
-            NeedParentUpdate();
-        }
-        else
-        {
-            NeedUpdate();
-        }
+        NeedParentUpdate();
     }
 
     int CDuiControl::GetFixedHeight() const
     {
-        if(GetManager())
+        if(m_pManager != NULL)
         {
-            return GetManager()->GetDPIObj()->Scale(m_cxyFixed.cy);
+            return m_pManager->GetDPIObj()->Scale(m_cxyFixed.cy);
         }
+
         return m_cxyFixed.cy;
     }
 
     void CDuiControl::SetFixedHeight(int cy)
     {
+        if(m_cxyFixed.cy == cy)
+        {
+            return;
+        }
         if(cy < 0)
         {
             return;
         }
         m_cxyFixed.cy = cy;
-        if(!m_bFloat)
-        {
-            NeedParentUpdate();
-        }
-        else
-        {
-            NeedUpdate();
-        }
+        NeedParentUpdate();
     }
 
     RECT CDuiControl::GetPadding() const
@@ -569,13 +606,23 @@ namespace DuiLib
 
     void CDuiControl::SetPadding(RECT rcPadding)
     {
+        if(rcPadding.bottom == m_rcPadding.bottom &&
+                rcPadding.top == m_rcPadding.top &&
+                rcPadding.left == m_rcPadding.left &&
+                rcPadding.right == m_rcPadding.right)
+        {
+        }
         m_rcPadding = rcPadding;
         NeedParentUpdate();
     }
 
     int CDuiControl::GetMinWidth() const
     {
-        return GetManager()->GetDPIObj()->Scale(m_cxyMin.cx);
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_cxyMin.cx);
+        }
+        return m_cxyMin.cx;
     }
 
     void CDuiControl::SetMinWidth(int cx)
@@ -584,24 +631,22 @@ namespace DuiLib
         {
             return;
         }
+
         if(cx < 0)
         {
             return;
         }
         m_cxyMin.cx = cx;
-        if(!m_bFloat)
-        {
-            NeedParentUpdate();
-        }
-        else
-        {
-            NeedUpdate();
-        }
+        NeedParentUpdate();
     }
 
     int CDuiControl::GetMaxWidth() const
     {
-        return GetManager()->GetDPIObj()->Scale(m_cxyMax.cx);
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_cxyMax.cx);
+        }
+        return m_cxyMax.cx;
     }
 
     void CDuiControl::SetMaxWidth(int cx)
@@ -610,24 +655,23 @@ namespace DuiLib
         {
             return;
         }
+
         if(cx < 0)
         {
             return;
         }
         m_cxyMax.cx = cx;
-        if(!m_bFloat)
-        {
-            NeedParentUpdate();
-        }
-        else
-        {
-            NeedUpdate();
-        }
+        NeedParentUpdate();
     }
 
     int CDuiControl::GetMinHeight() const
     {
-        return GetManager()->GetDPIObj()->Scale(m_cxyMin.cy);
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_cxyMin.cy);
+        }
+
+        return m_cxyMin.cy;
     }
 
     void CDuiControl::SetMinHeight(int cy)
@@ -636,24 +680,23 @@ namespace DuiLib
         {
             return;
         }
+
         if(cy < 0)
         {
             return;
         }
         m_cxyMin.cy = cy;
-        if(!m_bFloat)
-        {
-            NeedParentUpdate();
-        }
-        else
-        {
-            NeedUpdate();
-        }
+        NeedParentUpdate();
     }
 
     int CDuiControl::GetMaxHeight() const
     {
-        return GetManager()->GetDPIObj()->Scale(m_cxyMax.cy);
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_cxyMax.cy);
+        }
+
+        return m_cxyMax.cy;
     }
 
     void CDuiControl::SetMaxHeight(int cy)
@@ -662,19 +705,13 @@ namespace DuiLib
         {
             return;
         }
+
         if(cy < 0)
         {
             return;
         }
         m_cxyMax.cy = cy;
-        if(!m_bFloat)
-        {
-            NeedParentUpdate();
-        }
-        else
-        {
-            NeedUpdate();
-        }
+        NeedParentUpdate();
     }
 
     TPercentInfo CDuiControl::GetFloatPercent() const
@@ -755,7 +792,7 @@ namespace DuiLib
         {
             return FALSE;
         }
-        return true;
+        return TRUE;
     }
 
     BOOL CDuiControl::IsMouseEnabled() const
@@ -823,6 +860,13 @@ namespace DuiLib
 
     void CDuiControl::SetFloatPercent(TPercentInfo piFloatPercent)
     {
+        if(piFloatPercent.bottom == m_piFloatPercent.bottom &&
+                piFloatPercent.top == m_piFloatPercent.top &&
+                piFloatPercent.right == m_piFloatPercent.right &&
+                piFloatPercent.left == m_piFloatPercent.left)
+        {
+            return;
+        }
         m_piFloatPercent = piFloatPercent;
         NeedParentUpdate();
     }
@@ -834,6 +878,10 @@ namespace DuiLib
 
     void CDuiControl::SetFloatAlign(UINT uAlign)
     {
+        if(uAlign == m_uFloatAlign)
+        {
+            return;
+        }
         m_uFloatAlign = uAlign;
         NeedParentUpdate();
     }

@@ -101,6 +101,7 @@
 		<Attribute name="resourcetext" default="false" type="BOOL" comment="是否支持多语言，为true文字绘制会走多语言接口"/>
 		<Attribute name="style" default="" type="string" comment="通过样式名称设置控件的样式"/>
 		<Attribute name="innerstyle" default="" type="string" comment="通过样式表设置控件的样式"/>
+    <Attribute name="trag" default="false" type="BOOL" comment="是否鼠标拖拽"/>
 	</Control>
 	<Container parent="Control" notifies="setfocus killfocus timer menu windowinit(root)">
 		<Attribute name="name" default="" type="STRING" comment="控件名字，同一窗口内必须唯一，如(testbtn)"/>
