@@ -118,6 +118,11 @@ namespace DuiLib
         }
         switch(uMsg)
         {
+            case WM_SETFOCUS:
+            {
+                return 0;
+            }
+            break;
             case WM_WINDOWPOSCHANGED:
                 RECT WndRect;
                 GetWindowRect(hwnd, &WndRect);

@@ -137,13 +137,13 @@ namespace DuiLib
         DWORD dwMask;
     } TImageInfo;
 
-    typedef struct tagFINDTABINFO
+    typedef struct tagTABINFO
     {
         CDuiControl* pFocus;
         CDuiControl* pLast;
         BOOL bForward;
         BOOL bNextIsIt;
-    } FINDTABINFO;
+    } TABINFO;
 
     typedef struct tagTIMERINFO
     {
@@ -244,6 +244,7 @@ namespace DuiLib
         //焦点相关
         CDuiControl* GetFocus() const;
         void SetFocus(CDuiControl* pControl);
+        void SetFocusNeeded(CDuiControl* pControl);
         // 拖拽
         BOOL InitDragDrop();
         static WORD DIBNumColors(void* pv);
@@ -298,6 +299,12 @@ namespace DuiLib
         BOOL AttachDialog(CDuiControl* pControl);
         void ReapObjects(CDuiControl* pControl);
 
+        BOOL AddPaintChildWnd(HWND hChildWnd);
+        BOOL RemovePaintChildWnd(HWND hChildWnd);
+
+        BOOL AddPostPaint(CDuiControl* pControl);
+        BOOL RemovePostPaint(CDuiControl* pControl);
+
         CDuiControl* GetRoot() const;
         CDuiControl* FindControl(POINT pt) const;
         CDuiControl* FindControl(LPCTSTR pstrName) const;
@@ -340,9 +347,6 @@ namespace DuiLib
         static void SetResourceZip(LPVOID pVoid, unsigned int len);
         static void SetResourceZip(LPCTSTR pstrZip, BOOL bCachedResourceZip = FALSE);
 
-
-
-
         static BOOL IsCachedResourceZip();
         static HANDLE GetResourceZipHandle();
 
@@ -371,7 +375,10 @@ namespace DuiLib
         LRESULT OnKeyUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         LRESULT OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         LRESULT OnSetCursor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-
+        LRESULT OnSetFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnCtlColor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         CStdPtrArray* GetFoundControls();
         static CDuiControl* CALLBACK __FindControlFromNameHash(CDuiControl* pThis, LPVOID pData);
         static CDuiControl* CALLBACK __FindControlsFromUpdate(CDuiControl* pThis, LPVOID pData);
@@ -456,7 +463,7 @@ namespace DuiLib
         static HINSTANCE m_hResourceInstance;	//资源实例
         static HMODULE m_hMsimg32Module;		//msimg32.dll
         static BOOL m_bCachedResourceZip;
-        static HANDLE m_hResourceZip;
+        static HANDLE m_hResourceZip;			//zip句柄
         static int m_iResourceType;				//资源加载的方式
         static CDuiString m_strResourcePath;	//资源目录路径
         static CDuiString m_strResourceZip;		//资源文件名

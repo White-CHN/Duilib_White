@@ -659,12 +659,12 @@ namespace DuiLib
             SetFocused(TRUE);
             return;
         }
-        else if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == UIEVENT_KILLFOCUS)
         {
             SetFocused(FALSE);
             return;
         }
-        else if(event.Type == UIEVENT_KEYDOWN)
+        if(event.Type == UIEVENT_KEYDOWN)
         {
             if(m_pVerticalScrollBar != NULL && m_pVerticalScrollBar->IsVisible() && m_pVerticalScrollBar->IsEnabled())
             {
@@ -715,7 +715,7 @@ namespace DuiLib
                 }
             }
         }
-        else if(event.Type == UIEVENT_SCROLLWHEEL)
+        if(event.Type == UIEVENT_SCROLLWHEEL)
         {
             if(m_pVerticalScrollBar != NULL && m_pVerticalScrollBar->IsVisible() && m_pVerticalScrollBar->IsEnabled())
             {

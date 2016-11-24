@@ -7,7 +7,12 @@ namespace DuiLib
     IMPLEMENT_DUICONTROL(CDuiVerticalLayout)
 
     CDuiVerticalLayout::CDuiVerticalLayout(void)
+        : m_bImmMode(FALSE)
+        , m_iSepHeight(0)
+        , m_uButtonState(0)
     {
+        ::ZeroMemory(&ptLastMouse, sizeof(ptLastMouse));
+        ::ZeroMemory(&m_rcNewPos, sizeof(m_rcNewPos));
     }
 
 
@@ -17,7 +22,63 @@ namespace DuiLib
 
     LPCTSTR CDuiVerticalLayout::GetClass() const
     {
-        return _T("VerticalLayout");
+        return DUI_CTR_VERTICALLAYOUT;
+    }
+
+    LPVOID CDuiVerticalLayout::GetInterface(LPCTSTR pstrName)
+    {
+        if(_tcsicmp(pstrName, DUI_CTR_VERTICALLAYOUT) == 0)
+        {
+            return static_cast<CDuiVerticalLayout*>(this);
+        }
+        return __super::GetInterface(pstrName);
+    }
+
+    UINT CDuiVerticalLayout::GetControlFlags() const
+    {
+        if(IsEnabled() && m_iSepHeight != 0)
+        {
+            return UIFLAG_SETCURSOR;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    void CDuiVerticalLayout::SetSepHeight(int iHeight)
+    {
+        m_iSepHeight = iHeight;
+    }
+
+    void CDuiVerticalLayout::SetSepImmMode(BOOL bImmediately)
+    {
+        if(m_bImmMode == bImmediately)
+        {
+            return;
+        }
+        if((m_uButtonState & UISTATE_CAPTURED) != 0 && !m_bImmMode && GetManager() != NULL)
+        {
+            GetManager()->RemovePostPaint(this);
+        }
+
+        m_bImmMode = bImmediately;
+    }
+
+    void CDuiVerticalLayout::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
+    {
+        if(_tcsicmp(pstrName, _T("sepheight")) == 0)
+        {
+            SetSepHeight(_ttoi(pstrValue));
+        }
+        else if(_tcsicmp(pstrName, _T("sepimm")) == 0)
+        {
+            SetSepImmMode(_tcsicmp(pstrValue, _T("true")) == 0);
+        }
+        else
+        {
+            __super::SetAttribute(pstrName, pstrValue);
+        }
     }
 
     void CDuiVerticalLayout::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)
@@ -277,6 +338,169 @@ namespace DuiLib
         cyNeeded += (nEstimateNum - 1) * GetChildPadding();
         // Process the scrollbar
         ProcessScrollBar(rc, cxNeeded, cyNeeded);
+    }
+
+    RECT CDuiVerticalLayout::GetThumbRect(BOOL bUseNew /*= FALSE*/) const
+    {
+        if((m_uButtonState & UISTATE_CAPTURED) != 0 && bUseNew)
+        {
+            if(m_iSepHeight >= 0)
+                return CDuiRect(m_rcNewPos.left, MAX(m_rcNewPos.bottom - m_iSepHeight, m_rcNewPos.top),
+                                m_rcNewPos.right, m_rcNewPos.bottom);
+            else
+                return CDuiRect(m_rcNewPos.left, m_rcNewPos.top, m_rcNewPos.right,
+                                MIN(m_rcNewPos.top - m_iSepHeight, m_rcNewPos.bottom));
+        }
+        else
+        {
+            if(m_iSepHeight >= 0)
+                return CDuiRect(GetPos().left, MAX(GetPos().bottom - m_iSepHeight, GetPos().top), GetPos().right,
+                                GetPos().bottom);
+            else
+                return CDuiRect(GetPos().left, GetPos().top, GetPos().right,
+                                MIN(GetPos().top - m_iSepHeight, GetPos().bottom));
+
+        }
+    }
+
+    void CDuiVerticalLayout::DoEvent(TEventUI& event)
+    {
+        if(m_iSepHeight != 0)
+        {
+            if(event.Type == UIEVENT_BUTTONDOWN && IsEnabled())
+            {
+                RECT rcSeparator = GetThumbRect(FALSE);
+                if(::PtInRect(&rcSeparator, event.ptMouse))
+                {
+                    m_uButtonState |= UISTATE_CAPTURED;
+                    ptLastMouse = event.ptMouse;
+                    m_rcNewPos = GetPos();
+                    if(!m_bImmMode && GetManager())
+                    {
+                        GetManager()->AddPostPaint(this);
+                    }
+                    return;
+                }
+            }
+            if(event.Type == UIEVENT_BUTTONUP)
+            {
+                if((m_uButtonState & UISTATE_CAPTURED) != 0)
+                {
+                    m_uButtonState &= ~UISTATE_CAPTURED;
+                    SetPos(m_rcNewPos, FALSE);
+                    if(!m_bImmMode && GetManager())
+                    {
+                        GetManager()->RemovePostPaint(this);
+                    }
+                    NeedParentUpdate();
+                    return;
+                }
+            }
+            if(event.Type == UIEVENT_MOUSEMOVE)
+            {
+                if((m_uButtonState & UISTATE_CAPTURED) != 0)
+                {
+                    LONG cy = event.ptMouse.y - ptLastMouse.y;
+                    ptLastMouse = event.ptMouse;
+                    RECT rc = m_rcNewPos;
+                    if(m_iSepHeight >= 0)
+                    {
+                        if(cy > 0 && event.ptMouse.y < m_rcNewPos.bottom + m_iSepHeight)
+                        {
+                            return;
+                        }
+                        if(cy < 0 && event.ptMouse.y > m_rcNewPos.bottom)
+                        {
+                            return;
+                        }
+                        rc.bottom += cy;
+                        if(rc.bottom - rc.top <= GetMinHeight())
+                        {
+                            if(m_rcNewPos.bottom - m_rcNewPos.top <= GetMinHeight())
+                            {
+                                return;
+                            }
+                            rc.bottom = rc.top + GetMinHeight();
+                        }
+                        if(rc.bottom - rc.top >= GetMaxHeight())
+                        {
+                            if(m_rcNewPos.bottom - m_rcNewPos.top >= GetMaxHeight())
+                            {
+                                return;
+                            }
+                            rc.bottom = rc.top + GetMaxHeight();
+                        }
+                    }
+                    else
+                    {
+                        if(cy > 0 && event.ptMouse.y < m_rcNewPos.top)
+                        {
+                            return;
+                        }
+                        if(cy < 0 && event.ptMouse.y > m_rcNewPos.top + m_iSepHeight)
+                        {
+                            return;
+                        }
+                        rc.top += cy;
+                        if(rc.bottom - rc.top <= GetMinHeight())
+                        {
+                            if(m_rcNewPos.bottom - m_rcNewPos.top <= GetMinHeight())
+                            {
+                                return;
+                            }
+                            rc.top = rc.bottom - GetMinHeight();
+                        }
+                        if(rc.bottom - rc.top >= GetMaxHeight())
+                        {
+                            if(m_rcNewPos.bottom - m_rcNewPos.top >= GetMaxHeight())
+                            {
+                                return;
+                            }
+                            rc.top = rc.bottom - GetMaxHeight();
+                        }
+                    }
+
+                    CDuiRect rcInvalidate = GetThumbRect(true);
+                    m_rcNewPos = rc;
+                    SetFixedWidth(m_rcNewPos.bottom - m_rcNewPos.top);
+
+                    if(m_bImmMode)
+                    {
+                        SetPos(m_rcNewPos, FALSE);
+                        NeedParentUpdate();
+                    }
+                    else
+                    {
+                        rcInvalidate.Join(GetThumbRect(true));
+                        rcInvalidate.Join(GetThumbRect(false));
+                        if(GetManager())
+                        {
+                            GetManager()->Invalidate(rcInvalidate);
+                        }
+                    }
+                    return;
+                }
+            }
+            if(event.Type == UIEVENT_SETCURSOR)
+            {
+                RECT rcSeparator = GetThumbRect(false);
+                if(IsEnabled() && ::PtInRect(&rcSeparator, event.ptMouse))
+                {
+                    ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_SIZENS)));
+                    return;
+                }
+            }
+        }
+        __super::DoEvent(event);
+    }
+
+    void CDuiVerticalLayout::DoPostPaint(HDC hDC, const RECT& rcPaint)
+    {
+        if((m_uButtonState & UISTATE_CAPTURED) != 0 && !m_bImmMode)
+        {
+            RECT rcSeparator = GetThumbRect(TRUE);
+            CRenderEngine::DrawColor(hDC, rcSeparator, 0xAA000000);
+        }
     }
 
 }

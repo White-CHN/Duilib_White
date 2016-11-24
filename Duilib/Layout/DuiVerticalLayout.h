@@ -12,7 +12,25 @@ namespace DuiLib
         virtual ~CDuiVerticalLayout(void);
     public:
         virtual LPCTSTR GetClass() const;
+        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        virtual UINT GetControlFlags() const;
+
+        void SetSepHeight(int iHeight);
+        void SetSepImmMode(BOOL bImmediately);
+        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+
         virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
+
+        RECT GetThumbRect(BOOL bUseNew = FALSE) const;
+        virtual void DoEvent(TEventUI& event);
+
+        virtual void DoPostPaint(HDC hDC, const RECT& rcPaint);
+    private:
+        BOOL m_bImmMode;
+        INT m_iSepHeight;
+        UINT m_uButtonState;
+        POINT ptLastMouse;
+        RECT m_rcNewPos;
     };
 
 

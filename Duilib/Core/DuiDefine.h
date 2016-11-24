@@ -156,6 +156,7 @@ namespace DuiLib
 #define  DUI_CTR_LABEL                           (_T("Label"))
 #define  DUI_CTR_SCROLLBAR                       (_T("ScrollBar"))
 #define  DUI_CTR_BUTTON                          (_T("Button"))
+#define  DUI_CTR_EDIT                            (_T("Edit"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
@@ -178,15 +179,25 @@ namespace DuiLib
         DUIMSG_USER = WM_USER + 100,
     };
 #ifdef _DEBUG
-    #ifndef DUI_TRACE
-        #define DUI_TRACE(...) _tprintf(_T("\r\n[TRACE][%s][Line:%d]:<"),__FUNCTIONW__,__LINE__);DuiTrace(_T(__VA_ARGS__));_tprintf(_T(">"));
-        #define DUI_ERROR(...) _tprintf(_T("\r\n[ERROR][%s][Line:%d]:<"),__FUNCTIONW__,__LINE__);DuiTrace(_T(__VA_ARGS__));_tprintf(_T(">"));
-    #endif
+
+#define DUI_TRACE(...)																	\
+	{																					\
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);		\
+		_tprintf(_T("\r\n[TRACE][%s][Line:%d]:<"), __FUNCTIONW__, __LINE__);			\
+		DuiTrace(_T(__VA_ARGS__));														\
+		_tprintf(_T(">"));																\
+	}
+#define DUI_ERROR(...)																	\
+	{																					\
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);		\
+		_tprintf(_T("\r\n[ERROR][%s][Line:%d]:<"), __FUNCTIONW__, __LINE__);			\
+		DuiTrace(_T(__VA_ARGS__));														\
+		_tprintf(_T(">"));																\
+	}
+
 #else
-    #ifndef DUI_TRACE
-        #define DUI_TRACE
-        #define DUI_ERROR
-    #endif
+#define DUI_TRACE
+#define DUI_ERROR
 #endif	// _DEBUG
 
     void DUILIB_API DuiTrace(LPCTSTR pstrFormat, ...);

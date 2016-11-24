@@ -65,13 +65,16 @@ namespace DuiLib
         //文本相关
         virtual CDuiString GetText() const;
         virtual void SetText(LPCTSTR pstrText);
+
+        virtual BOOL IsResourceText() const;
+        virtual void SetResourceText(BOOL bResource);
         //拖拽
         virtual BOOL IsDragEnabled() const;
         virtual void SetDragEnable(BOOL bDrag);
 
         virtual void SetDropEnable(BOOL bDrop);
 
-        virtual void SetResourceText(BOOL bResource);
+
 
         // 鼠标提示
         virtual CDuiString GetToolTip() const;
@@ -92,6 +95,8 @@ namespace DuiLib
         virtual void SetUserData(LPCTSTR pstrText); // 辅助函数，供用户使用
 
         //位置相关
+        virtual RECT GetClientPos() const; // 客户区域（除去scrollbar和inset）
+
         virtual const RECT& GetPos() const;
         virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
 

@@ -456,6 +456,19 @@ namespace DuiLib
             case WM_SETCURSOR:
                 lResult = OnSetCursor(uMsg, wParam, lParam, bHandled);
                 break;
+            case WM_SETFOCUS:
+                lResult = OnSetFocus(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_NOTIFY:
+                lResult = OnNotify(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_COMMAND:
+                lResult = OnCommand(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_CTLCOLOREDIT:
+            case WM_CTLCOLORSTATIC:
+                lResult = OnCtlColor(uMsg, wParam, lParam, bHandled);
+                break;
             default:
                 bHandled = FALSE;
                 break;
@@ -838,6 +851,34 @@ namespace DuiLib
         }
     }
 
+    void CDuiPaintManager::SetFocusNeeded(CDuiControl* pControl)
+    {
+        ::SetFocus(m_hWndPaint);
+        if(pControl == NULL)
+        {
+            return;
+        }
+        if(m_pFocus != NULL)
+        {
+            TEventUI event = { 0 };
+            event.Type = UIEVENT_KILLFOCUS;
+            event.pSender = pControl;
+            event.dwTimestamp = ::GetTickCount();
+            m_pFocus->Event(event);
+            SendNotify(m_pFocus, DUI_MSGTYPE_KILLFOCUS);
+            m_pFocus = NULL;
+        }
+        TABINFO info = { 0 };
+        info.pFocus = pControl;
+        info.bForward = FALSE;
+        m_pFocus = m_pRoot->FindControl(__FindControlFromTab, &info, UIFIND_VISIBLE | UIFIND_ENABLED | UIFIND_ME_FIRST);
+        m_bFocusNeeded = TRUE;
+        if(m_pRoot != NULL)
+        {
+            m_pRoot->NeedUpdate();
+        }
+    }
+
     BOOL CDuiPaintManager::InitDragDrop()
     {
         //AddRef();
@@ -1040,6 +1081,7 @@ namespace DuiLib
 
     void CDuiPaintManager::DrawCaret(HDC hDC, const RECT& rcPaint)
     {
+
     }
 
     TFontInfo* CDuiPaintManager::GetDefaultFontInfo()
@@ -1402,7 +1444,7 @@ namespace DuiLib
             return TRUE;
         }
         // Find next/previous tabbable control
-        FINDTABINFO info1 = { 0 };
+        TABINFO info1 = { 0 };
         info1.pFocus = m_pFocus;
         info1.bForward = bForward;
         CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromTab, &info1, UIFIND_VISIBLE | UIFIND_ENABLED | UIFIND_ME_FIRST);
@@ -1411,7 +1453,7 @@ namespace DuiLib
             if(bForward)
             {
                 // Wrap around
-                FINDTABINFO info2 = { 0 };
+                TABINFO info2 = { 0 };
                 info2.pFocus = bForward ? NULL : info1.pLast;
                 info2.bForward = bForward;
                 pControl = m_pRoot->FindControl(__FindControlFromTab, &info2, UIFIND_VISIBLE | UIFIND_ENABLED | UIFIND_ME_FIRST);
@@ -1646,6 +1688,49 @@ namespace DuiLib
                 pMsg->pSender = NULL;
             }
         }
+    }
+
+    BOOL CDuiPaintManager::AddPaintChildWnd(HWND hChildWnd)
+    {
+        RECT rcChildWnd;
+        GetChildWndRect(m_hWndPaint, hChildWnd, rcChildWnd);
+        Invalidate(rcChildWnd);
+
+        if(m_aChildWnds.Find(hChildWnd) >= 0)
+        {
+            return FALSE;
+        }
+        return m_aChildWnds.Add(hChildWnd);
+    }
+
+    BOOL CDuiPaintManager::RemovePaintChildWnd(HWND hChildWnd)
+    {
+        for(int i = 0; i < m_aChildWnds.GetSize(); i++)
+        {
+            if(static_cast<HWND>(m_aChildWnds[i]) == hChildWnd)
+            {
+                return m_aChildWnds.Remove(i);
+            }
+        }
+        return FALSE;
+    }
+
+    BOOL CDuiPaintManager::AddPostPaint(CDuiControl* pControl)
+    {
+        ASSERT(m_aPostPaintControls.Find(pControl) < 0);
+        return m_aPostPaintControls.Add(pControl);
+    }
+
+    BOOL CDuiPaintManager::RemovePostPaint(CDuiControl* pControl)
+    {
+        for(int i = 0; i < m_aPostPaintControls.GetSize(); i++)
+        {
+            if(static_cast<CDuiControl*>(m_aPostPaintControls[i]) == pControl)
+            {
+                return m_aPostPaintControls.Remove(i);
+            }
+        }
+        return FALSE;
     }
 
     CDuiControl* CDuiPaintManager::GetRoot() const
@@ -1894,7 +1979,6 @@ namespace DuiLib
         {
             case WM_KEYDOWN:
             {
-                DUI_TRACE("WM_KEYDOWN %c", (TCHAR)wParam);
                 //		// Tabbing between controls
                 //		if( wParam == VK_TAB ) {
                 //			if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("RichEditUI")) != NULL ) {
@@ -1910,7 +1994,6 @@ namespace DuiLib
             break;
             case WM_SYSCHAR:
             {
-                DUI_TRACE("WM_SYSCHAR %c", (TCHAR)wParam);
                 // Handle ALT-shortcut key-combinations
                 /*SHORTCUT fs = { 0 };
                 fs.ch = toupper((int)wParam);
@@ -1925,7 +2008,6 @@ namespace DuiLib
             break;
             case WM_SYSKEYDOWN:
             {
-                DUI_TRACE("WM_SYSKEYDOWN %c", (TCHAR)wParam);
                 SHORTCUT fs = { 0 };
                 fs.ch = toupper((int)wParam);
                 CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromShortcut, &fs, UIFIND_ENABLED | UIFIND_ME_FIRST | UIFIND_TOP_FIRST);
@@ -1947,7 +2029,6 @@ namespace DuiLib
             break;
             case WM_SYSKEYUP:
             {
-                DUI_TRACE("WM_SYSKEYUP %c", (TCHAR)wParam);
                 SHORTCUT fs = { 0 };
                 fs.ch = toupper((int)wParam);
                 CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromShortcut, &fs, UIFIND_ENABLED | UIFIND_ME_FIRST | UIFIND_TOP_FIRST);
@@ -2103,6 +2184,7 @@ namespace DuiLib
         ::ZeroMemory(&m_SharedResInfo.m_DefaultFontInfo.tm, sizeof(m_SharedResInfo.m_DefaultFontInfo.tm));
 
         CDuiShadow::Initialize(m_hInstance);
+        ::InitCommonControls();
         return TRUE;
     }
 
@@ -2171,11 +2253,16 @@ namespace DuiLib
         RemoveAllShared();
 
         CDuiControlFactory::GetInstance()->Release();
-
+        CDuiResourceManager::GetInstance()->Release();
         if(m_hMsimg32Module != NULL)
         {
             FreeModule(m_hMsimg32Module);
             m_hMsimg32Module = NULL;
+        }
+        if(m_bCachedResourceZip && m_hResourceZip != NULL)
+        {
+            CloseZip((HZIP)m_hResourceZip);
+            m_hResourceZip = NULL;
         }
     }
 
@@ -2261,7 +2348,7 @@ namespace DuiLib
             m_hResourceZip = (HANDLE)OpenZip(pVoid, len, 3);
             if(m_hResourceZip == NULL)
             {
-                DUI_ERROR("OpenZip[NULL] File[%s] ", sFile);
+                DUI_ERROR("OpenZip[NULL] pVoid[%x] ", pVoid);
             }
         }
     }
@@ -3091,7 +3178,6 @@ namespace DuiLib
 
     LRESULT CDuiPaintManager::OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
-        bHandled = FALSE;
         POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
         ::ScreenToClient(m_hWndPaint, &pt);
         m_ptLastMousePos = pt;
@@ -3117,6 +3203,7 @@ namespace DuiLib
 
         // Let's make sure that the scroll item below the cursor is the same as before...
         ::SendMessage(m_hWndPaint, WM_MOUSEMOVE, 0, (LPARAM) MAKELPARAM(m_ptLastMousePos.x, m_ptLastMousePos.y));
+        bHandled = FALSE;
         return 0;
     }
 
@@ -3158,6 +3245,74 @@ namespace DuiLib
         return 0;
     }
 
+    LRESULT CDuiPaintManager::OnSetFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        if(m_pFocus != NULL)
+        {
+            TEventUI event = { 0 };
+            event.Type = UIEVENT_SETFOCUS;
+            event.wParam = wParam;
+            event.lParam = lParam;
+            event.pSender = m_pFocus;
+            event.dwTimestamp = ::GetTickCount();
+            m_pFocus->Event(event);
+        }
+        bHandled = FALSE;
+        return 0;
+    }
+
+    LRESULT CDuiPaintManager::OnNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        LRESULT lRes = 0;
+        if(lParam == 0)
+        {
+            bHandled = FALSE;
+            return lRes;
+        }
+        LPNMHDR lpNMHDR = (LPNMHDR) lParam;
+        if(lpNMHDR != NULL)
+        {
+            lRes = ::SendMessage(lpNMHDR->hwndFrom, OCM__BASE + uMsg, wParam, lParam);
+        }
+        return lRes;
+    }
+
+    LRESULT CDuiPaintManager::OnCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        LRESULT lRes = 0;
+        if(lParam == 0)
+        {
+            bHandled = FALSE;
+            return lRes;
+        }
+        HWND hWndChild = (HWND) lParam;
+        lRes = ::SendMessage(hWndChild, OCM__BASE + uMsg, wParam, lParam);
+        if(lRes != 0)
+        {
+            return lRes;
+        }
+        bHandled = FALSE;
+        return lRes;
+    }
+
+    LRESULT CDuiPaintManager::OnCtlColor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        LRESULT lRes = 0;
+        if(lParam == 0)
+        {
+            bHandled = FALSE;
+            return lRes;
+        }
+        HWND hWndChild = (HWND) lParam;
+        lRes = ::SendMessage(hWndChild, OCM__BASE + uMsg, wParam, lParam);
+        if(lRes != 0)
+        {
+            return lRes;
+        }
+        bHandled = FALSE;
+        return lRes;
+    }
+
     CStdPtrArray* CDuiPaintManager::GetFoundControls()
     {
         return &m_aFoundControls;
@@ -3188,7 +3343,7 @@ namespace DuiLib
 
     CDuiControl* CALLBACK CDuiPaintManager::__FindControlFromTab(CDuiControl* pThis, LPVOID pData)
     {
-        FINDTABINFO* pInfo = static_cast<FINDTABINFO*>(pData);
+        TABINFO* pInfo = static_cast<TABINFO*>(pData);
         if(pInfo->pFocus == pThis)
         {
             if(pInfo->bForward)

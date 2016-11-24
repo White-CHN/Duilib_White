@@ -122,6 +122,12 @@
     <ClInclude Include="Utils\DragDropImpl.h">
       <Filter>头文件\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiEdit.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DuiResourceManager.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -204,6 +210,12 @@
     </ClCompile>
     <ClCompile Include="Utils\DragDropImpl.cpp">
       <Filter>源文件\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiEdit.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DuiResourceManager.cpp">
+      <Filter>源文件\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

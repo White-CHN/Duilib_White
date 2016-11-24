@@ -12,6 +12,7 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiScrollBar);
         INNER_REGISTER_DUICONTROL(CDuiLabel);
         INNER_REGISTER_DUICONTROL(CDuiButton);
+        INNER_REGISTER_DUICONTROL(CDuiEdit);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

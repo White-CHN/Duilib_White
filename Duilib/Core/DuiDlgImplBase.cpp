@@ -58,7 +58,7 @@ namespace DuiLib
                     break;
             }
         }
-        return FALSE;
+        return 0;
     }
 
     LRESULT CDuiDlgImplBase::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
@@ -449,16 +449,14 @@ namespace DuiLib
         {
             return bRet;
         }
-        CDuiString strClassName;
+        CDuiString strClassName = pControl->GetClass();
         std::vector<CDuiString> vctStaticName;
-        strClassName = pControl->GetClass();
-        strClassName.MakeLower();
-        vctStaticName.push_back(_T("control"));
+        vctStaticName.push_back(DUI_CTR_CONTROL);
         vctStaticName.push_back(_T("text"));
-        vctStaticName.push_back(_T("label"));
-        vctStaticName.push_back(_T("container"));
-        vctStaticName.push_back(_T("horizontallayout"));
-        vctStaticName.push_back(_T("verticallayout"));
+        vctStaticName.push_back(DUI_CTR_LABEL);
+        vctStaticName.push_back(DUI_CTR_CONTAINER);
+        vctStaticName.push_back(DUI_CTR_VERTICALLAYOUT);
+        vctStaticName.push_back(DUI_CTR_HORIZONTALLAYOUT);
         vctStaticName.push_back(_T("tablayout"));
         vctStaticName.push_back(_T("childlayout"));
         vctStaticName.push_back(_T("dialoglayout"));
@@ -470,7 +468,6 @@ namespace DuiLib
             while(pParent)
             {
                 strClassName = pParent->GetClass();
-                strClassName.MakeLower();
                 it = std::find(vctStaticName.begin(), vctStaticName.end(), strClassName);
                 if(vctStaticName.end() == it)
                 {

@@ -978,16 +978,16 @@ namespace DuiLib
         CDuiString sStrPath = pStrImage;
         if(type == NULL)
         {
-            //sStrPath = CResourceManager::GetInstance()->GetImagePath(pStrImage);
+            sStrPath = CDuiResourceManager::GetInstance()->GetImagePath(pStrImage);
             if(sStrPath.IsEmpty())
             {
                 sStrPath = pStrImage;
             }
             else
             {
-                /*if (CResourceManager::GetInstance()->GetScale() != 100) {
+                /*if (CDuiResourceManager::GetInstance()->GetScale() != 100) {
                 	CDuiString sScale;
-                	sScale.Format(_T("@%d."), CResourceManager::GetInstance()->GetScale());
+                	sScale.Format(_T("@%d."), CDuiResourceManager::GetInstance()->GetScale());
                 	sStrPath.Replace(_T("."), sScale);
                 }*/
             }

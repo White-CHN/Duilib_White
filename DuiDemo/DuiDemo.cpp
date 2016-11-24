@@ -21,7 +21,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
     CDuiPaintManager::Initialize(hInstance);
     // 资源类型
 #ifdef _DEBUG
-    CDuiPaintManager::SetResourceType(DUILIB_ZIP);
+    CDuiPaintManager::SetResourceType(DUILIB_FILE);
 #else
     CDuiPaintManager::SetResourceType(DUILIB_ZIPRESOURCE);
 #endif
@@ -35,7 +35,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
             strResourcePath += _T("DuiDemo\\");
             CDuiPaintManager::SetResourcePath(strResourcePath.GetData());
             // 加载资源管理器
-            //CResourceManager::GetInstance()->LoadResource(_T("res.xml"), NULL);
+            CDuiResourceManager::GetInstance()->LoadResource(_T("res.xml"), NULL);
             break;
         }
         case DUILIB_RESOURCE:

@@ -69,7 +69,7 @@ namespace DuiLib
     LRESULT CDuiWnd::PostMessage(UINT uMsg, WPARAM wParam /*= 0*/, LPARAM lParam /*= 0*/)
     {
         ASSERT(::IsWindow(m_hWnd));
-        return ::SendMessage(m_hWnd, uMsg, wParam, lParam);
+        return ::PostMessage(m_hWnd, uMsg, wParam, lParam);
     }
 
     HWND CDuiWnd::SubClass(HWND hWnd)

@@ -67,7 +67,7 @@ using namespace Gdiplus;
 #include "Core/DuiDlgBuilder.h"
 #include "Core/DuiDlgImplBase.h"
 #include "Core/DuiRender.h"
-
+#include "Core/DuiResourceManager.h"
 
 #include "Layout/DuiVerticalLayout.h"
 #include "Layout/DuiHorizontalLayout.h"
@@ -75,7 +75,7 @@ using namespace Gdiplus;
 #include "Control/DuiScrollBar.h"
 #include "Control/DuiLabel.h"
 #include "Control/DuiButton.h"
-
+#include "Control/DuiEdit.h"
 
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "comctl32.lib" )

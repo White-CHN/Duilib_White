@@ -549,6 +549,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Control\DuiButton.h" />
+    <ClInclude Include="Control\DuiEdit.h" />
     <ClInclude Include="Control\DuiLabel.h" />
     <ClInclude Include="Control\DuiScrollBar.h" />
     <ClInclude Include="Core\DuiControlFactory.h" />
@@ -561,6 +562,7 @@
     <ClInclude Include="Core\DuiMarkupNode.h" />
     <ClInclude Include="Core\DuiPaintManager.h" />
     <ClInclude Include="Core\DuiRender.h" />
+    <ClInclude Include="Core\DuiResourceManager.h" />
     <ClInclude Include="Core\DuiWnd.h" />
     <ClInclude Include="Duilib.h" />
     <ClInclude Include="Layout\DuiHorizontalLayout.h" />
@@ -579,6 +581,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Control\DuiButton.cpp" />
+    <ClCompile Include="Control\DuiEdit.cpp" />
     <ClCompile Include="Control\DuiLabel.cpp" />
     <ClCompile Include="Control\DuiScrollBar.cpp" />
     <ClCompile Include="Core\DuiControlFactory.cpp" />
@@ -591,6 +594,7 @@
     <ClCompile Include="Core\DuiMarkupNode.cpp" />
     <ClCompile Include="Core\DuiPaintManager.cpp" />
     <ClCompile Include="Core\DuiRender.cpp" />
+    <ClCompile Include="Core\DuiResourceManager.cpp" />
     <ClCompile Include="Core\DuiWnd.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>

@@ -1094,27 +1094,26 @@ namespace DuiLib
             }
             return;
         }
+
         if(event.Type == UIEVENT_SETFOCUS)
         {
             return;
         }
-        else if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == UIEVENT_KILLFOCUS)
         {
             return;
         }
-        else if(event.Type == UIEVENT_CONTEXTMENU)
-        {
-            return;
-        }
-        else if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
+        if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
         {
             if(!IsEnabled())
             {
                 return;
             }
+
             m_nLastScrollOffset = 0;
             m_nScrollRepeatDelay = 0;
-            GetManager()->SetTimer(this, TIMERID_SCROLLBAR, 50);
+            GetManager()->SetTimer(this, TIMERID_SCROLLBAR, 50U);
+
             if(::PtInRect(&m_rcButton1, event.ptMouse))
             {
                 m_uButton1State |= UISTATE_PUSHED;
@@ -1169,7 +1168,7 @@ namespace DuiLib
             }
             else if(::PtInRect(&m_rcThumb, event.ptMouse))
             {
-                m_uThumbState |= (UISTATE_CAPTURED | UISTATE_PUSHED);
+                m_uThumbState |= UISTATE_CAPTURED | UISTATE_PUSHED;
                 m_ptLastMouse = event.ptMouse;
                 m_nLastScrollPos = m_nScrollPos;
             }
@@ -1226,8 +1225,13 @@ namespace DuiLib
                     }
                 }
             }
+            if(GetManager() != NULL && m_pOwner == NULL)
+            {
+                GetManager()->SendNotify(this, DUI_MSGTYPE_SCROLL);
+            }
+            return;
         }
-        else if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == UIEVENT_BUTTONUP)
         {
             m_nScrollRepeatDelay = 0;
             m_nLastScrollOffset = 0;
@@ -1250,7 +1254,7 @@ namespace DuiLib
             }
             return;
         }
-        else if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == UIEVENT_MOUSEMOVE)
         {
             if((m_uThumbState & UISTATE_CAPTURED) != 0)
             {
@@ -1296,32 +1300,11 @@ namespace DuiLib
             }
             return;
         }
-        else if(event.Type == UIEVENT_MOUSEENTER)
+        if(event.Type == UIEVENT_CONTEXTMENU)
         {
-            if(IsEnabled())
-            {
-                m_uButton1State |= UISTATE_HOT;
-                m_uButton2State |= UISTATE_HOT;
-                if(::PtInRect(&m_rcThumb, event.ptMouse))
-                {
-                    m_uThumbState |= UISTATE_HOT;
-                }
-                Invalidate();
-            }
             return;
         }
-        else if(event.Type == UIEVENT_MOUSELEAVE)
-        {
-            if(IsEnabled())
-            {
-                m_uButton1State &= ~UISTATE_HOT;
-                m_uButton2State &= ~UISTATE_HOT;
-                m_uThumbState &= ~UISTATE_HOT;
-                Invalidate();
-            }
-            return;
-        }
-        else if(event.Type == UIEVENT_TIMER && event.wParam == TIMERID_SCROLLBAR)
+        if(event.Type == UIEVENT_TIMER && event.wParam == TIMERID_SCROLLBAR)
         {
             ++m_nScrollRepeatDelay;
             if((m_uThumbState & UISTATE_CAPTURED) != 0)
@@ -1470,6 +1453,32 @@ namespace DuiLib
             }
             return;
         }
+        if(event.Type == UIEVENT_MOUSEENTER)
+        {
+            if(IsEnabled())
+            {
+                m_uButton1State |= UISTATE_HOT;
+                m_uButton2State |= UISTATE_HOT;
+                if(::PtInRect(&m_rcThumb, event.ptMouse))
+                {
+                    m_uThumbState |= UISTATE_HOT;
+                }
+                Invalidate();
+            }
+            return;
+        }
+        if(event.Type == UIEVENT_MOUSELEAVE)
+        {
+            if(IsEnabled())
+            {
+                m_uButton1State &= ~UISTATE_HOT;
+                m_uButton2State &= ~UISTATE_HOT;
+                m_uThumbState &= ~UISTATE_HOT;
+                Invalidate();
+            }
+            return;
+        }
+
         if(m_pOwner != NULL)
         {
             m_pOwner->DoEvent(event);

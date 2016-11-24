@@ -371,7 +371,11 @@ namespace DuiLib
 
     CDuiString CDuiControl::GetText() const
     {
-        return m_sText;
+        if(!IsResourceText())
+        {
+            return m_sText;
+        }
+        return CDuiResourceManager::GetInstance()->GetText(m_sText);
     }
 
     void CDuiControl::SetText(LPCTSTR pstrText)
@@ -381,6 +385,21 @@ namespace DuiLib
             return;
         }
         m_sText = pstrText;
+        Invalidate();
+    }
+
+    BOOL CDuiControl::IsResourceText() const
+    {
+        return m_bResourceText;
+    }
+
+    void CDuiControl::SetResourceText(BOOL bResource)
+    {
+        if(m_bResourceText == bResource)
+        {
+            return;
+        }
+        m_bResourceText = bResource;
         Invalidate();
     }
 
@@ -399,23 +418,13 @@ namespace DuiLib
         m_bDropEnabled = bDrop;
     }
 
-    void CDuiControl::SetResourceText(BOOL bResource)
-    {
-        if(m_bResourceText == bResource)
-        {
-            return;
-        }
-        m_bResourceText = bResource;
-        Invalidate();
-    }
-
     CDuiString CDuiControl::GetToolTip() const
     {
-        //if(!IsResourceText())
+        if(!IsResourceText())
         {
             return m_sToolTip;
         }
-        //return CResourceManager::GetInstance()->GetText(m_sToolTip);
+        return CDuiResourceManager::GetInstance()->GetText(m_sToolTip);
     }
 
     void CDuiControl::SetToolTip(LPCTSTR pstrText)
@@ -472,6 +481,11 @@ namespace DuiLib
     void CDuiControl::SetUserData(LPCTSTR pstrText)
     {
         m_sUserData = pstrText;
+    }
+
+    RECT CDuiControl::GetClientPos() const
+    {
+        return m_rcItem;
     }
 
     const RECT& CDuiControl::GetPos() const

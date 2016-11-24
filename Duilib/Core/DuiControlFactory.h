@@ -8,16 +8,15 @@ namespace DuiLib
 
     class DUILIB_API CDuiControlFactory
     {
+    private:
+        CDuiControlFactory(void);
+        virtual ~CDuiControlFactory(void);
     public:
         CDuiControl* CreateControl(CDuiString strClassName);
         void RegistControl(CDuiString strClassName, CreateClass pFunc);
 
         static CDuiControlFactory* GetInstance();
         void Release();
-
-    private:
-        CDuiControlFactory();
-        virtual ~CDuiControlFactory();
 
     private:
         MAP_DUI_CTRATECLASS m_mapControl;

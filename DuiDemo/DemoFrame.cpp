@@ -24,7 +24,7 @@ void CDemoFrame::InitWindow()
 
 CDuiString CDemoFrame::GetSkinFile()
 {
-    return _T("DuiDemo.xml");
+    return _T("XML_Demo");
 }
 
 LPCTSTR CDemoFrame::GetWindowClassName() const
