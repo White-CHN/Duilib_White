@@ -168,6 +168,16 @@ namespace DuiLib
 
     }
 
+    UINT CDuiButton::GetButtonState()
+    {
+        return m_uButtonState;
+    }
+
+    void CDuiButton::SetButtonStste(UINT uButtonState)
+    {
+        m_uButtonState = uButtonState;
+    }
+
     DWORD CDuiButton::GetHotBkColor() const
     {
         return m_dwHotBkColor;
@@ -648,5 +658,7 @@ namespace DuiLib
         }
         __super::DoEvent(event);
     }
+
+
 
 }

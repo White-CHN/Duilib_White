@@ -287,6 +287,7 @@ namespace DuiLib
         RemoveAllDrawInfos();
         RemoveAllDefaultAttributeList();
         RemoveAllStyle();
+        RemoveAllOptionGroups();
         if(m_hwndTooltip != NULL)
         {
             ::DestroyWindow(m_hwndTooltip);
@@ -332,6 +333,7 @@ namespace DuiLib
         RemoveAllStyle();
         RemoveAllDefaultAttributeList();
         RemoveAllTimers();
+        RemoveAllOptionGroups();
         if(m_hWndPaint != hWnd)
         {
             m_hWndPaint = hWnd;
@@ -629,6 +631,11 @@ namespace DuiLib
             }
             fSetLayeredWindowAttributes(m_hWndPaint, 0, nOpacity, LWA_ALPHA);
         }
+    }
+
+    BOOL CDuiPaintManager::IsLayered()
+    {
+        return m_bLayered;
     }
 
     void CDuiPaintManager::SetLayered(BOOL bLayered)
@@ -1733,6 +1740,80 @@ namespace DuiLib
         return FALSE;
     }
 
+    CStdPtrArray* CDuiPaintManager::GetOptionGroup(LPCTSTR pStrGroupName)
+    {
+        LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
+        if(lp)
+        {
+            return static_cast<CStdPtrArray*>(lp);
+        }
+        return NULL;
+    }
+
+    BOOL CDuiPaintManager::AddOptionGroup(LPCTSTR pStrGroupName, CDuiControl* pControl)
+    {
+        LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
+        if(lp)
+        {
+            CStdPtrArray* aOptionGroup = static_cast<CStdPtrArray*>(lp);
+            for(int i = 0; i < aOptionGroup->GetSize(); i++)
+            {
+                if(static_cast<CDuiControl*>(aOptionGroup->GetAt(i)) == pControl)
+                {
+                    return FALSE;
+                }
+            }
+            aOptionGroup->Add(pControl);
+        }
+        else
+        {
+            CStdPtrArray* aOptionGroup = new CStdPtrArray(6);
+            aOptionGroup->Add(pControl);
+            m_mOptionGroup.Insert(pStrGroupName, aOptionGroup);
+        }
+        return TRUE;
+    }
+
+    void CDuiPaintManager::RemoveOptionGroup(LPCTSTR pStrGroupName, CDuiControl* pControl)
+    {
+        LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
+        if(lp)
+        {
+            CStdPtrArray* aOptionGroup = static_cast<CStdPtrArray*>(lp);
+            if(aOptionGroup == NULL)
+            {
+                return;
+            }
+            for(int i = 0; i < aOptionGroup->GetSize(); i++)
+            {
+                if(static_cast<CDuiControl*>(aOptionGroup->GetAt(i)) == pControl)
+                {
+                    aOptionGroup->Remove(i);
+                    break;
+                }
+            }
+            if(aOptionGroup->IsEmpty())
+            {
+                DUI_FREE_POINT(aOptionGroup);
+                m_mOptionGroup.Remove(pStrGroupName);
+            }
+        }
+    }
+
+    void CDuiPaintManager::RemoveAllOptionGroups()
+    {
+        CStdPtrArray* aOptionGroup;
+        for(int i = 0; i < m_mOptionGroup.GetSize(); i++)
+        {
+            if(LPCTSTR key = m_mOptionGroup.GetAt(i))
+            {
+                aOptionGroup = static_cast<CStdPtrArray*>(m_mOptionGroup.Find(key));
+                DUI_FREE_POINT(aOptionGroup);
+            }
+        }
+        m_mOptionGroup.RemoveAll();
+    }
+
     CDuiControl* CDuiPaintManager::GetRoot() const
     {
         ASSERT(m_pRoot);
@@ -1749,11 +1830,6 @@ namespace DuiLib
     {
         ASSERT(m_pRoot);
         return static_cast<CDuiControl*>(m_mNameHash.Find(pstrName));
-    }
-
-    BOOL CDuiPaintManager::IsLayered()
-    {
-        return m_bLayered;
     }
 
     const TImageInfo* CDuiPaintManager::GetImage(LPCTSTR bitmap)
@@ -1979,17 +2055,23 @@ namespace DuiLib
         {
             case WM_KEYDOWN:
             {
-                //		// Tabbing between controls
-                //		if( wParam == VK_TAB ) {
-                //			if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("RichEditUI")) != NULL ) {
-                //				if( static_cast<CRichEditUI*>(m_pFocus)->IsWantTab() ) return FALSE;
-                //			}
-                //			if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("WkeWebkitUI")) != NULL ) {
-                //				return FALSE;
-                //			}
-                //			SetNextTabControl(::GetKeyState(VK_SHIFT) >= 0);
-                //			return TRUE;
-                //		}
+                // Tabbing between controls
+                if(wParam == VK_TAB)
+                {
+                    /*if(m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("RichEditUI")) != NULL)
+                    {
+                    if(static_cast<CRichEditUI*>(m_pFocus)->IsWantTab())
+                    {
+                    return FALSE;
+                    }
+                    }*/
+                    /*if(m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("WkeWebkitUI")) != NULL)
+                    {
+                    return FALSE;
+                    }*/
+                    SetNextTabControl(::GetKeyState(VK_SHIFT) >= 0);
+                    return TRUE;
+                }
             }
             break;
             case WM_SYSCHAR:

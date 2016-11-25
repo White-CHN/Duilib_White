@@ -75,6 +75,8 @@ using namespace Gdiplus;
 #include "Control/DuiScrollBar.h"
 #include "Control/DuiLabel.h"
 #include "Control/DuiButton.h"
+#include "Control/DuiOption.h"
+#include "Control/DuiRadio.h"
 #include "Control/DuiEdit.h"
 
 #pragma comment( lib, "GdiPlus.lib" )

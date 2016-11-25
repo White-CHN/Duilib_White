@@ -551,6 +551,8 @@
     <ClInclude Include="Control\DuiButton.h" />
     <ClInclude Include="Control\DuiEdit.h" />
     <ClInclude Include="Control\DuiLabel.h" />
+    <ClInclude Include="Control\DuiOption.h" />
+    <ClInclude Include="Control\DuiRadio.h" />
     <ClInclude Include="Control\DuiScrollBar.h" />
     <ClInclude Include="Core\DuiControlFactory.h" />
     <ClInclude Include="Core\DuiContainer.h" />
@@ -583,6 +585,8 @@
     <ClCompile Include="Control\DuiButton.cpp" />
     <ClCompile Include="Control\DuiEdit.cpp" />
     <ClCompile Include="Control\DuiLabel.cpp" />
+    <ClCompile Include="Control\DuiOption.cpp" />
+    <ClCompile Include="Control\DuiRadio.cpp" />
     <ClCompile Include="Control\DuiScrollBar.cpp" />
     <ClCompile Include="Core\DuiControlFactory.cpp" />
     <ClCompile Include="Core\DuiContainer.cpp" />

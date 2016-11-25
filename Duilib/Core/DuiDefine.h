@@ -156,6 +156,8 @@ namespace DuiLib
 #define  DUI_CTR_LABEL                           (_T("Label"))
 #define  DUI_CTR_SCROLLBAR                       (_T("ScrollBar"))
 #define  DUI_CTR_BUTTON                          (_T("Button"))
+#define  DUI_CTR_OPTION                          (_T("Option"))
+#define  DUI_CTR_RADIO                           (_T("Radio"))
 #define  DUI_CTR_EDIT                            (_T("Edit"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))

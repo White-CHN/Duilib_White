@@ -20,6 +20,8 @@ void CDemoFrame::InitWindow()
     m_pRestoreBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("restorebtn")));
     m_pMinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("minbtn")));
     m_pSkinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("skinbtn")));
+
+
 }
 
 CDuiString CDemoFrame::GetSkinFile()
@@ -60,6 +62,10 @@ void CDemoFrame::Notify(TNotifyUI& msg)
     }
     else if(msg.sType == DUI_MSGTYPE_CLICK)
     {
+        if(msg.pSender->GetName() == _T("home"))
+        {
+            ShellExecute(NULL, _T("open"), _T("https://github.com/White-CHN/Duilib_White"), NULL, NULL, SW_SHOW);
+        }
         if(msg.pSender == m_pMinBtn)
         {
             SendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0);

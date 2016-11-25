@@ -49,6 +49,10 @@ namespace DuiLib
 
     void CDuiLabel::SetFont(int index)
     {
+        if(m_iFont == index)
+        {
+            return;
+        }
         m_iFont = index;
         Invalidate();
     }
@@ -65,6 +69,10 @@ namespace DuiLib
 
     void CDuiLabel::SetTextColor(DWORD dwTextColor)
     {
+        if(m_dwTextColor == dwTextColor)
+        {
+            return;
+        }
         m_dwTextColor = dwTextColor;
         Invalidate();
     }
@@ -76,6 +84,10 @@ namespace DuiLib
 
     void CDuiLabel::SetDisabledTextColor(DWORD dwTextColor)
     {
+        if(m_dwDisabledTextColor == dwTextColor)
+        {
+            return;
+        }
         m_dwDisabledTextColor = dwTextColor;
         Invalidate();
     }
@@ -87,6 +99,13 @@ namespace DuiLib
 
     void CDuiLabel::SetTextPadding(RECT rc)
     {
+        if(m_rcTextPadding.bottom == rc.bottom &&
+                m_rcTextPadding.top == rc.top &&
+                m_rcTextPadding.right == rc.right &&
+                m_rcTextPadding.left == rc.left)
+        {
+            return;
+        }
         m_rcTextPadding = rc;
         Invalidate();
     }

@@ -224,6 +224,7 @@ namespace DuiLib
 
         void SetOpacity(BYTE nOpacity);
 
+        BOOL IsLayered();
         void SetLayered(BOOL bLayered);
 
         void SetLayeredOpacity(BYTE nOpacity);
@@ -305,11 +306,16 @@ namespace DuiLib
         BOOL AddPostPaint(CDuiControl* pControl);
         BOOL RemovePostPaint(CDuiControl* pControl);
 
+        CStdPtrArray* GetOptionGroup(LPCTSTR pStrGroupName);
+        BOOL AddOptionGroup(LPCTSTR pStrGroupName, CDuiControl* pControl);
+        void RemoveOptionGroup(LPCTSTR pStrGroupName, CDuiControl* pControl);
+        void RemoveAllOptionGroups();
+
         CDuiControl* GetRoot() const;
         CDuiControl* FindControl(POINT pt) const;
         CDuiControl* FindControl(LPCTSTR pstrName) const;
 
-        BOOL IsLayered();
+
         const TImageInfo* GetImage(LPCTSTR bitmap);
         const TImageInfo* GetImageEx(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, HINSTANCE instance = NULL);
         const TImageInfo* AddImage(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, BOOL bShared = FALSE, HINSTANCE instance = NULL);
@@ -456,6 +462,7 @@ namespace DuiLib
         CStdPtrArray m_aChildWnds;
 
         CStdStringPtrMap m_mNameHash;
+        CStdStringPtrMap m_mOptionGroup;
 
         CDuiShadow m_shadow;					// ¥∞ø⁄“ı”∞
 

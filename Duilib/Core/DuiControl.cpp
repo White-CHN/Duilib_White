@@ -19,7 +19,7 @@ namespace DuiLib
         , m_bResourceText(FALSE)
         , m_bEnabled(TRUE)
         , m_bMouseEnabled(TRUE)
-        , m_bKeyboardEnabled(TRUE)
+        , m_bKeyboardEnabled(FALSE)
         , m_bFocused(FALSE)
         , m_bMenuUsed(FALSE)
         , m_wCursor(0)

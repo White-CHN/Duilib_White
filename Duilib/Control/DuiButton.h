@@ -34,6 +34,9 @@ namespace DuiLib
         void BindTriggerTabSel(int iSetSelectIndex = -1);
         void RemoveBindTabIndex();
 
+        UINT GetButtonState();
+        void SetButtonStste(UINT uButtonState);
+
         DWORD GetHotBkColor() const;
         void SetHotBkColor(DWORD dwColor);
         DWORD GetPushedBkColor() const;

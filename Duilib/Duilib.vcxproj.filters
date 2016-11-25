@@ -128,6 +128,12 @@
     <ClInclude Include="Core\DuiResourceManager.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiOption.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\DuiRadio.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -216,6 +222,12 @@
     </ClCompile>
     <ClCompile Include="Core\DuiResourceManager.cpp">
       <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiOption.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiRadio.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
