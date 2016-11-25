@@ -177,6 +177,11 @@ namespace DuiLib
         Invalidate();
     }
 
+    DWORD CDuiControl::GetForeColor()
+    {
+        return m_dwForeColor;
+    }
+
     void CDuiControl::SetForeColor(DWORD dwForeColor)
     {
         if(m_dwForeColor == dwForeColor)

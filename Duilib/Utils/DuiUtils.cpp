@@ -10,7 +10,11 @@ namespace DuiLib
 #ifdef _DEBUG
         AllocConsole();
         freopen("CONOUT$", "w+t", stdout);
+        freopen("CONIN$", "r+t", stdin);
         setlocale(LC_ALL, "chs");
+        TCHAR pszOldWindowTitle[1024];
+        GetConsoleTitle(pszOldWindowTitle, sizeof(pszOldWindowTitle));
+        SendMessage(FindWindow(NULL, pszOldWindowTitle), WM_SYSCOMMAND, SC_MINIMIZE, 0);
 #endif // _DEBUG
     }
 

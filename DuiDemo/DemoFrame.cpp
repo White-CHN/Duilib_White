@@ -21,7 +21,9 @@ void CDemoFrame::InitWindow()
     m_pMinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("minbtn")));
     m_pSkinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("skinbtn")));
 
-
+    m_pSlider = static_cast<CDuiSlider*>(GetPaintManager()->FindControl(_T("Slider")));
+    m_pProgress = static_cast<CDuiProgress*>(GetPaintManager()->FindControl(_T("Progress")));
+    m_pProgress->SetShowText(TRUE);
 }
 
 CDuiString CDemoFrame::GetSkinFile()
@@ -59,6 +61,13 @@ void CDemoFrame::Notify(TNotifyUI& msg)
 {
     if(msg.sType == DUI_MSGTYPE_WINDOWINIT)
     {
+    }
+    else if(msg.sType == DUI_MSGTYPE_VALUECHANGED)
+    {
+        if(msg.pSender == m_pSlider && m_pProgress != NULL)
+        {
+            m_pProgress->SetValue(m_pSlider->GetValue());
+        }
     }
     else if(msg.sType == DUI_MSGTYPE_CLICK)
     {

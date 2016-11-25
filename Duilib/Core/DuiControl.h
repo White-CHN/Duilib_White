@@ -37,7 +37,10 @@ namespace DuiLib
         void SetBkColor(DWORD dwBackColor);
         void SetBkColor2(DWORD dwBackColor);
         void SetBkColor3(DWORD dwBackColor);
+
+        DWORD GetForeColor();
         void SetForeColor(DWORD dwForeColor);
+
         CDuiString GetBkImage();
         void SetBkImage(LPCTSTR pStrImage);
         CDuiString GetForeImage() const;

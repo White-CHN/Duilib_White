@@ -22,6 +22,8 @@ private:
     CDuiButton* m_pRestoreBtn;
     CDuiButton* m_pMinBtn;
     CDuiButton* m_pSkinBtn;
+    CDuiSlider* m_pSlider;
+    CDuiProgress* m_pProgress;
     CDuiIcon m_Icon;
 };
 

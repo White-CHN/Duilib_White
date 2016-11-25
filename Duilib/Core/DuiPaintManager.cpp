@@ -431,8 +431,17 @@ namespace DuiLib
             case WM_LBUTTONDOWN:
                 lResult = OnLButtonDown(uMsg, wParam, lParam, bHandled);
                 break;
+            case WM_LBUTTONDBLCLK:
+                lResult = OnLButtonDblClk(uMsg, wParam, lParam, bHandled);
+                break;
             case WM_LBUTTONUP:
                 lResult = OnLButtonUp(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_RBUTTONDOWN:
+                lResult = OnRButtonDown(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_RBUTTONUP:
+                lResult = OnRButtonUp(uMsg, wParam, lParam, bHandled);
                 break;
             case WM_TIMER:
                 lResult = OnTimer(uMsg, wParam, lParam, bHandled);
@@ -2946,6 +2955,36 @@ namespace DuiLib
         return 0;
     }
 
+    LRESULT CDuiPaintManager::OnLButtonDblClk(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        bHandled = FALSE;
+        ::SetFocus(m_hWndPaint);
+        SetCapture();
+        POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+        m_ptLastMousePos = pt;
+        CDuiControl* pControl = FindControl(pt);
+        if(pControl == NULL)
+        {
+            return 0;
+        }
+        if(pControl->GetManager() != this)
+        {
+            return 0;
+        }
+
+        TEventUI event = { 0 };
+        event.Type = UIEVENT_DBLCLICK;
+        event.pSender = pControl;
+        event.ptMouse = pt;
+        event.wParam = wParam;
+        event.lParam = lParam;
+        event.wKeyState = (WORD)wParam;
+        event.dwTimestamp = ::GetTickCount();
+        pControl->Event(event);
+        m_pEventClick = pControl;
+        return 0;
+    }
+
     LRESULT CDuiPaintManager::OnLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         bHandled = FALSE;
@@ -2968,6 +3007,60 @@ namespace DuiLib
         CDuiControl* pClick = m_pEventClick;
         m_pEventClick = NULL;
         pClick->Event(event);
+        return 0;
+    }
+
+    LRESULT CDuiPaintManager::OnRButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        bHandled = FALSE;
+        ::SetFocus(m_hWndPaint);
+        POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+        m_ptLastMousePos = pt;
+        CDuiControl* pControl = FindControl(pt);
+        if(pControl == NULL)
+        {
+            return 0;
+        }
+        if(pControl->GetManager() != this)
+        {
+            return 0;
+        }
+        pControl->SetFocus();
+        SetCapture();
+        TEventUI event = { 0 };
+        event.Type = UIEVENT_RBUTTONDOWN;
+        event.pSender = pControl;
+        event.wParam = wParam;
+        event.lParam = lParam;
+        event.ptMouse = pt;
+        event.wKeyState = (WORD)wParam;
+        event.dwTimestamp = ::GetTickCount();
+        pControl->Event(event);
+        m_pEventClick = pControl;
+        return 0;
+    }
+
+    LRESULT CDuiPaintManager::OnRButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        bHandled = FALSE;
+        ReleaseCapture();
+
+        POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+        m_ptLastMousePos = pt;
+        m_pEventClick = FindControl(pt);
+        if(m_pEventClick == NULL)
+        {
+            return 0;
+        }
+        TEventUI event = { 0 };
+        event.Type = UIEVENT_RBUTTONUP;
+        event.pSender = m_pEventClick;
+        event.wParam = wParam;
+        event.lParam = lParam;
+        event.ptMouse = pt;
+        event.wKeyState = (WORD)wParam;
+        event.dwTimestamp = ::GetTickCount();
+        m_pEventClick->Event(event);
         return 0;
     }
 

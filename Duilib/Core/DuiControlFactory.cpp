@@ -15,7 +15,8 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiEdit);
         INNER_REGISTER_DUICONTROL(CDuiOption);
         INNER_REGISTER_DUICONTROL(CDuiRadio);
-
+        INNER_REGISTER_DUICONTROL(CDuiProgress);
+        INNER_REGISTER_DUICONTROL(CDuiSlider);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

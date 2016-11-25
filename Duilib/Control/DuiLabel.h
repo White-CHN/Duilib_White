@@ -19,6 +19,7 @@ namespace DuiLib
         void SetFont(int index);
 
         UINT GetTextStyle() const;
+        void SetTextStyle(UINT uStyle);
 
         DWORD GetTextColor() const;
         void SetTextColor(DWORD dwTextColor);

@@ -62,6 +62,16 @@ namespace DuiLib
         return m_uTextStyle;
     }
 
+    void CDuiLabel::SetTextStyle(UINT uStyle)
+    {
+        if(m_uTextStyle == uStyle)
+        {
+            return;
+        }
+        m_uTextStyle = uStyle;
+        Invalidate();
+    }
+
     DWORD CDuiLabel::GetTextColor() const
     {
         return m_dwTextColor;

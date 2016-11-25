@@ -78,6 +78,8 @@ using namespace Gdiplus;
 #include "Control/DuiOption.h"
 #include "Control/DuiRadio.h"
 #include "Control/DuiEdit.h"
+#include "Control/DuiProgress.h"
+#include "Control/DuiSlider.h"
 
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "comctl32.lib" )

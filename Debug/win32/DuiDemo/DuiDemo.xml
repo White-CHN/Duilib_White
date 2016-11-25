@@ -60,11 +60,21 @@
 			<HorizontalLayout  childpadding="6" childvalign="vcenter" >
 				<Label valign="center" cursor="hand" align="center" tooltip="Radio演示" text="Radio演示"  width="80" textcolor="#FFFFFFFF" />
 				<HorizontalLayout height="25" childpadding="12"  >
-				
-					<Radio text="Radio1" tooltip="Radio演示" cursor="hand" textcolor="#FFFFFFFF" selected="true" width="60" height="20" group="Radio" align="left" textpadding="18,6,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
-					<Radio text="Radio2" tooltip="Radio演示" cursor="hand" textcolor="#FFFFFFFF"  width="60" height="20" group="Radio" align="left" textpadding="18,6,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
-					<Radio text="Radio3" tooltip="Radio演示" cursor="hand" textcolor="#FFFFFFFF"  width="60" height="20" group="Radio" align="left" textpadding="18,6,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
-					
+
+					<Radio text="Radio1" tooltip="Radio演示" cursor="hand" textcolor="#FFFFFFFF" selected="true" width="60" height="20" group="Radio" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
+					<Radio text="Radio2" tooltip="Radio演示" cursor="hand" textcolor="#FFFFFFFF"  width="60" height="20" group="Radio" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
+					<Radio text="Radio3" tooltip="Radio演示" cursor="hand" textcolor="#FFFFFFFF"  width="60" height="20" group="Radio" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
+
+				</HorizontalLayout>
+
+			</HorizontalLayout>
+			<Label height="1"  bkimage="line/hor_line.bmp"/>
+			<HorizontalLayout  childpadding="6" childvalign="vcenter" >
+				<Label valign="center" cursor="hand" align="center" tooltip="进度条演示" text="进度条演示"  width="80" textcolor="#FFFFFFFF" />
+				<HorizontalLayout height="25" childpadding="12"  >
+
+					<Progress name="Progress"  text="Progress" textcolor="#FFCD00CD" bordercolor="#FFFFFFFF" bordersize="1" align="center" width="139"  valign="center"  foreimage="Progress/progress_fore.png"  value="30"   />
+					<Slider name="Slider" value="30"  width="139"  thumbsize="12,20" bkimage="file='Slider/slider_fore.bmp' mask='0xffff00ff'" thumbimage="file='Slider/SliderBar.png' mask='0xffffffff'"/>
 				</HorizontalLayout>
 
 			</HorizontalLayout>
