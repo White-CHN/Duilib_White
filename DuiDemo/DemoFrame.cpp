@@ -3,6 +3,7 @@
 
 
 CDemoFrame::CDemoFrame(void)
+    : bEnglish(FALSE)
 {
 }
 
@@ -13,6 +14,9 @@ CDemoFrame::~CDemoFrame(void)
 
 void CDemoFrame::InitWindow()
 {
+    CDuiResourceManager::GetInstance()->SetTextQueryInterface(this);
+    CDuiResourceManager::GetInstance()->SetLanguage(_T("cn_zh"));
+    CDuiResourceManager::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
     SetIcon(IDR_MAINFRAME);
     m_Icon.CreateIcon(GetHWND(), IDR_MAINFRAME, _T("Duilib开源项目\nDuilib开源项目"));
     m_pCloseBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("closebtn")));
@@ -57,8 +61,30 @@ CDuiControl* CDemoFrame::CreateControl(LPCTSTR pstrClass)
     return NULL;
 }
 
+LPCTSTR CDemoFrame::QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType)
+{
+    CDuiString sLanguage = CDuiResourceManager::GetInstance()->GetLanguage();
+    if(sLanguage == _T("en"))
+    {
+        if(lstrcmpi(lpstrId, _T("Join")) == 0)
+        {
+            return _T("Add White QQ:450756957");
+        }
+    }
+    else
+    {
+        if(lstrcmpi(lpstrId, _T("Join")) == 0)
+        {
+            return _T("骚扰White QQ:450756957");
+        }
+    }
+
+    return __super::QueryControlText(lpstrId, lpstrType);
+}
+
 void CDemoFrame::Notify(TNotifyUI& msg)
 {
+    CDuiString name = msg.pSender->GetName();
     if(msg.sType == DUI_MSGTYPE_WINDOWINIT)
     {
     }
@@ -69,13 +95,45 @@ void CDemoFrame::Notify(TNotifyUI& msg)
             m_pProgress->SetValue(m_pSlider->GetValue());
         }
     }
+    else if(msg.sType == DUI_MSGTYPE_SELECTCHANGED)
+    {
+        CDuiTabLayout* pTabSwitch = static_cast<CDuiTabLayout*>(GetPaintManager()->FindControl(_T("tab_switch")));
+        if(name.CompareNoCase(_T("basic_tab")) == 0)
+        {
+            pTabSwitch->SelectItem(0);
+        }
+        if(name.CompareNoCase(_T("rich_tab")) == 0)
+        {
+            pTabSwitch->SelectItem(1);
+        }
+        if(name.CompareNoCase(_T("ex_tab")) == 0)
+        {
+            pTabSwitch->SelectItem(2);
+        }
+        if(name.CompareNoCase(_T("ani_tab")) == 0)
+        {
+            pTabSwitch->SelectItem(3);
+        }
+        if(name.CompareNoCase(_T("split_tab")) == 0)
+        {
+            pTabSwitch->SelectItem(4);
+        }
+    }
     else if(msg.sType == DUI_MSGTYPE_CLICK)
     {
         if(msg.pSender->GetName() == _T("home"))
         {
             ShellExecute(NULL, _T("open"), _T("https://github.com/White-CHN/Duilib_White"), NULL, NULL, SW_SHOW);
         }
-        if(msg.pSender == m_pMinBtn)
+        else if(msg.pSender->GetName() == _T("join"))
+        {
+            ShellExecute(NULL, _T("open"), _T("tencent://Message/?Uin=450756957&Menu=yes"), NULL, NULL, SW_SHOW);
+        }
+        else if(msg.pSender->GetName() == _T("joingroup"))
+        {
+            ShellExecute(NULL, _T("open"), _T("http://qm.qq.com/cgi-bin/qm/qr?k=tGGUVkSEUP7-aAHtd8KSMulikqLyUcBZ#"), NULL, NULL, SW_SHOW);
+        }
+        else if(msg.pSender == m_pMinBtn)
         {
             SendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0);
             return;
@@ -93,6 +151,23 @@ void CDemoFrame::Notify(TNotifyUI& msg)
         else if(msg.pSender == m_pCloseBtn)
         {
             Close(0);
+            return;
+        }
+        else if(msg.pSender == m_pSkinBtn)
+        {
+            if(!bEnglish)
+            {
+                CDuiResourceManager::GetInstance()->SetLanguage(_T("en"));
+                CDuiResourceManager::GetInstance()->LoadLanguage(_T("lan_en.xml"));
+            }
+            else
+            {
+                CDuiResourceManager::GetInstance()->SetLanguage(_T("cn_zh"));
+                CDuiResourceManager::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
+            }
+            bEnglish = !bEnglish;
+            CDuiResourceManager::GetInstance()->ReloadText();
+            GetPaintManager()->GetRoot()->NeedUpdate();
             return;
         }
     }

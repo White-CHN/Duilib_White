@@ -140,6 +140,9 @@
     <ClInclude Include="Control\DuiSlider.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Layout\DuiTabLayout.h">
+      <Filter>头文件\Layout</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -240,6 +243,9 @@
     </ClCompile>
     <ClCompile Include="Control\DuiSlider.cpp">
       <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Layout\DuiTabLayout.cpp">
+      <Filter>源文件\Layout</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@ namespace DuiLib
         , public IMessageFilterUI
         , public IDialogBuilderCallback
         , public INotifyUI
+        , public IQueryControlText
     {
     public:
         CDuiDlgImplBase(void);
@@ -21,6 +22,8 @@ namespace DuiLib
         virtual CDuiString GetSkinFile() = 0;
 
         virtual void Notify(TNotifyUI& msg);
+
+        virtual LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType);
 
         virtual LRESULT ResponseDefaultKeyEvent(WPARAM wParam);
         virtual LRESULT MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);

@@ -15,8 +15,11 @@ public:
 
     virtual CDuiControl* CreateControl(LPCTSTR pstrClass);
 
+    virtual LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType);
+
     virtual void Notify(TNotifyUI& msg) ;
 private:
+    BOOL bEnglish;
     CDuiButton* m_pCloseBtn;
     CDuiButton* m_pMaxBtn;
     CDuiButton* m_pRestoreBtn;

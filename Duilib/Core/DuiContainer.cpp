@@ -338,6 +338,11 @@ namespace DuiLib
         return m_pHorizontalScrollBar;
     }
 
+    CStdPtrArray* CDuiContainer::GetItems()
+    {
+        return &m_items;
+    }
+
     CDuiControl* CDuiContainer::GetItemAt(int iIndex) const
     {
         if(iIndex < 0 || iIndex >= m_items.GetSize())
@@ -424,7 +429,7 @@ namespace DuiLib
     {
         if(pControl == NULL)
         {
-            return false;
+            return FALSE;
         }
         for(int it = 0; it < m_items.GetSize(); it++)
         {
@@ -445,7 +450,7 @@ namespace DuiLib
                 return m_items.Remove(it);
             }
         }
-        return false;
+        return FALSE;
     }
 
     BOOL CDuiContainer::RemoveAt(int iIndex)
@@ -484,10 +489,11 @@ namespace DuiLib
             return;
         }
         rc = GetPos();
-        rc.left += m_rcInset.left;
-        rc.top += m_rcInset.top;
-        rc.right -= m_rcInset.right;
-        rc.bottom -= m_rcInset.bottom;
+        RECT rcInset = GetInset();
+        rc.left += rcInset.left;
+        rc.top += rcInset.top;
+        rc.right -= rcInset.right;
+        rc.bottom -= rcInset.bottom;
         if(m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible())
         {
             rc.left -= m_pHorizontalScrollBar->GetScrollPos();

@@ -63,14 +63,15 @@ using namespace Gdiplus;
 #include "Core/DuiPaintManager.h"
 #include "Core/DuiControl.h"
 #include "Core/DuiContainer.h"
+#include "Core/DuiResourceManager.h"
 #include "Core/DuiWnd.h"
 #include "Core/DuiDlgBuilder.h"
 #include "Core/DuiDlgImplBase.h"
 #include "Core/DuiRender.h"
-#include "Core/DuiResourceManager.h"
 
 #include "Layout/DuiVerticalLayout.h"
 #include "Layout/DuiHorizontalLayout.h"
+#include "Layout/DuiTabLayout.h"
 
 #include "Control/DuiScrollBar.h"
 #include "Control/DuiLabel.h"

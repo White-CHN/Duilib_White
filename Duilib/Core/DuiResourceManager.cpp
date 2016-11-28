@@ -48,6 +48,93 @@ namespace DuiLib
         delete this;
     }
 
+    LPCTSTR CDuiResourceManager::GetLanguage()
+    {
+        return m_sLauguage;
+    }
+
+    void CDuiResourceManager::SetLanguage(LPCTSTR pstrLanguage)
+    {
+        m_sLauguage = pstrLanguage;
+    }
+
+    BOOL CDuiResourceManager::LoadLanguage(LPCTSTR pstrXml)
+    {
+        CDuiMarkup xml;
+        if(*(pstrXml) == _T('<'))
+        {
+            if(!xml.Load(pstrXml))
+            {
+                return FALSE;
+            }
+        }
+        else
+        {
+            if(!xml.LoadFromFile(pstrXml))
+            {
+                return FALSE;
+            }
+        }
+        CDuiMarkupNode Root = xml.GetRoot();
+        if(!Root.IsValid())
+        {
+            return FALSE;
+        }
+
+        LPCTSTR pstrClass = NULL;
+        int nAttributes = 0;
+        LPCTSTR pstrName = NULL;
+        LPCTSTR pstrValue = NULL;
+        LPTSTR pstr = NULL;
+
+        //加载图片资源
+        LPCTSTR pstrId = NULL;
+        LPCTSTR pstrText = NULL;
+        for(CDuiMarkupNode node = Root.GetChild() ; node.IsValid(); node = node.GetSibling())
+        {
+            pstrClass = node.GetName();
+            if((_tcsicmp(pstrClass, _T("Text")) == 0) && node.HasAttributes())
+            {
+                //加载图片资源
+                nAttributes = node.GetAttributeCount();
+                for(int i = 0; i < nAttributes; i++)
+                {
+                    pstrName = node.GetAttributeName(i);
+                    pstrValue = node.GetAttributeValue(i);
+
+                    if(_tcsicmp(pstrName, _T("id")) == 0)
+                    {
+                        pstrId = pstrValue;
+                    }
+                    else if(_tcsicmp(pstrName, _T("value")) == 0)
+                    {
+                        pstrText = pstrValue;
+                    }
+                }
+                if(pstrId == NULL ||  pstrText == NULL)
+                {
+                    continue;
+                }
+
+                CDuiString* lpstrFind = static_cast<CDuiString*>(m_mTextResourceHashMap.Find(pstrId));
+                if(lpstrFind != NULL)
+                {
+                    lpstrFind->Assign(pstrText);
+                }
+                else
+                {
+                    m_mTextResourceHashMap.Insert(pstrId, (LPVOID)new CDuiString(pstrText));
+                }
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        return TRUE;
+    }
+
     BOOL CDuiResourceManager::LoadResource(STRINGorID xml, LPCTSTR type /*= NULL*/)
     {
         if(HIWORD(xml.m_lpstr) != NULL)
@@ -182,6 +269,11 @@ namespace DuiLib
         return TRUE;
     }
 
+    void CDuiResourceManager::SetTextQueryInterface(IQueryControlText* pInterface)
+    {
+        m_pQuerypInterface = pInterface;
+    }
+
     CDuiString CDuiResourceManager::GetText(LPCTSTR lpstrId, LPCTSTR lpstrType /*= NULL*/)
     {
         if(lpstrId == NULL)
@@ -196,6 +288,29 @@ namespace DuiLib
             m_mTextResourceHashMap.Insert(lpstrId, (LPVOID)lpstrFind);
         }
         return lpstrFind == NULL ? lpstrId : *lpstrFind;
+    }
+
+    void CDuiResourceManager::ReloadText()
+    {
+        if(m_pQuerypInterface == NULL)
+        {
+            return;
+        }
+        //重载文字描述
+        for(int i = 0; i < m_mTextResourceHashMap.GetSize(); i++)
+        {
+            LPCTSTR lpstrId = m_mTextResourceHashMap.GetAt(i);
+            if(lpstrId == NULL)
+            {
+                continue;
+            }
+            LPCTSTR lpstrText = m_pQuerypInterface->QueryControlText(lpstrId, NULL);
+            if(lpstrText != NULL)
+            {
+                CDuiString* lpStr = static_cast<CDuiString*>(m_mTextResourceHashMap.Find(lpstrId));
+                lpStr->Assign(lpstrText);
+            }
+        }
     }
 
     LPCTSTR CDuiResourceManager::GetImagePath(LPCTSTR lpstrId)

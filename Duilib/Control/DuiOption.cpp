@@ -35,6 +35,24 @@ namespace DuiLib
         return __super::GetInterface(pstrName);
     }
 
+    BOOL CDuiOption::Activate()
+    {
+        if(!__super::Activate())
+        {
+            return FALSE;
+        }
+        if(!m_sGroupName.IsEmpty())
+        {
+            Selected(TRUE);
+        }
+        else
+        {
+            Selected(!m_bSelected);
+        }
+
+        return TRUE;
+    }
+
     void CDuiOption::SetGroup(LPCTSTR pStrGroupName /*= NULL*/)
     {
         if(pStrGroupName == NULL)
@@ -313,12 +331,6 @@ namespace DuiLib
     {
         if((GetButtonState() & UISTATE_SELECTED) != 0)
         {
-            DWORD oldTextColor = GetTextColor();
-            if(m_dwSelectedTextColor != 0)
-            {
-                SetTextColor(m_dwSelectedTextColor);
-            }
-
             if(GetTextColor() == 0)
             {
                 SetTextColor(GetManager()->GetDefaultFontColor());
@@ -347,15 +359,14 @@ namespace DuiLib
 
             if(IsShowHtml())
             {
-                CRenderEngine::DrawHtmlText(hDC, GetManager(), rc, sText, IsEnabled() ? GetTextColor() : GetDisabledTextColor(),
+                CRenderEngine::DrawHtmlText(hDC, GetManager(), rc, sText, IsEnabled() ? m_dwSelectedTextColor : GetDisabledTextColor(),
                                             NULL, NULL, nLinks, GetTextStyle());
             }
             else
             {
-                CRenderEngine::DrawText(hDC, GetManager(), rc, sText, IsEnabled() ? GetTextColor() : GetDisabledTextColor(),
+                CRenderEngine::DrawText(hDC, GetManager(), rc, sText, IsEnabled() ? m_dwSelectedTextColor : GetDisabledTextColor(),
                                         GetFont(), GetTextStyle());
             }
-            SetTextColor(oldTextColor);
         }
         else
         {

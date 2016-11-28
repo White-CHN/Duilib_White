@@ -12,6 +12,8 @@ namespace DuiLib
         virtual LPCTSTR GetClass() const;
         virtual LPVOID GetInterface(LPCTSTR pstrName);
 
+        virtual BOOL Activate();
+
         void SetGroup(LPCTSTR pStrGroupName = NULL);
 
         BOOL IsSelected() const;

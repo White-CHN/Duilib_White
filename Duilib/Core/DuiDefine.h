@@ -165,6 +165,7 @@ namespace DuiLib
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
 #define  DUI_CTR_HORIZONTALLAYOUT                (_T("HorizontalLayout"))
+#define  DUI_CTR_TABLAYOUT                       (_T("TabLayout"))
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 

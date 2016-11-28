@@ -398,12 +398,6 @@ namespace DuiLib
     {
         BOOL bHandled = FALSE;
         LRESULT lResult = 0;
-        if(m_hWndPaint == NULL)
-        {
-            DUI_ERROR("this[%x] m_hWndPaint[%x]", this, m_hWndPaint);
-            return FALSE;
-        }
-        // Cycle through listeners
         for(int i = 0; i < m_aMessageFilters.GetSize(); i++)
         {
             bHandled = FALSE;
@@ -414,7 +408,7 @@ namespace DuiLib
                 return TRUE;
             }
         }
-        // Custom handling of events
+
         bHandled = TRUE;
         lResult = 0;
         switch(uMsg)

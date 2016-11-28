@@ -32,6 +32,11 @@ namespace DuiLib
     {
     }
 
+    LPCTSTR CDuiDlgImplBase::QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType)
+    {
+        return NULL;
+    }
+
     LRESULT CDuiDlgImplBase::ResponseDefaultKeyEvent(WPARAM wParam)
     {
         if(wParam == VK_RETURN)
@@ -174,8 +179,6 @@ namespace DuiLib
         m_PaintManager.Init(hWnd);
         // 注册PreMessage回调
         m_PaintManager.AddPreMessageFilter(this);
-        // 注册Notify回调
-        m_PaintManager.AddNotifier(this);
         // 创建主窗口
         CDuiControl* pRoot = NULL;
         CDuiDlgBuilder builder;
@@ -198,6 +201,8 @@ namespace DuiLib
             return 0;
         }
         m_PaintManager.AttachDialog(pRoot);
+        // 注册Notify回调
+        m_PaintManager.AddNotifier(this);
         InitWindow();
         return 0;
     }

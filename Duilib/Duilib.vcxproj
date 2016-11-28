@@ -570,6 +570,7 @@
     <ClInclude Include="Core\DuiWnd.h" />
     <ClInclude Include="Duilib.h" />
     <ClInclude Include="Layout\DuiHorizontalLayout.h" />
+    <ClInclude Include="Layout\DuiTabLayout.h" />
     <ClInclude Include="Layout\DuiVerticalLayout.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -656,6 +657,7 @@
     </ClCompile>
     <ClCompile Include="Duilib.cpp" />
     <ClCompile Include="Layout\DuiHorizontalLayout.cpp" />
+    <ClCompile Include="Layout\DuiTabLayout.cpp" />
     <ClCompile Include="Layout\DuiVerticalLayout.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

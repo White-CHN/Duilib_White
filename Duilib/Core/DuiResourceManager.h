@@ -17,9 +17,16 @@ namespace DuiLib
         static CDuiResourceManager* GetInstance();
         void Release(void);
 
+        LPCTSTR GetLanguage();
+        void SetLanguage(LPCTSTR pstrLanguage);
+
+        BOOL LoadLanguage(LPCTSTR pstrXml);
+
         BOOL LoadResource(STRINGorID xml, LPCTSTR type = NULL);
 
+        void SetTextQueryInterface(IQueryControlText* pInterface);
         CDuiString GetText(LPCTSTR lpstrId, LPCTSTR lpstrType = NULL);
+        void ReloadText();
 
         LPCTSTR GetImagePath(LPCTSTR lpstrId);
 
@@ -33,6 +40,8 @@ namespace DuiLib
         CStdStringPtrMap m_mTextResourceHashMap;
         CStdStringPtrMap m_mImageHashMap;
         CStdStringPtrMap m_mXmlHashMap;
+
+        CDuiString m_sLauguage;
     };
 }
 

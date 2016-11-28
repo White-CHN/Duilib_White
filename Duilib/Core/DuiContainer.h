@@ -7,6 +7,7 @@ namespace DuiLib
     class IContainer
     {
     public:
+        virtual CStdPtrArray* GetItems() = 0;
         virtual CDuiControl* GetItemAt(int iIndex) const = 0;
         virtual int GetItemIndex(CDuiControl* pControl) const  = 0;
         virtual BOOL SetItemIndex(CDuiControl* pControl, int iIndex)  = 0;
@@ -64,6 +65,7 @@ namespace DuiLib
         virtual CDuiScrollBar* GetVerticalScrollBar() const;
         virtual CDuiScrollBar* GetHorizontalScrollBar() const;
 
+        virtual CStdPtrArray* GetItems();
         virtual CDuiControl* GetItemAt(int iIndex) const;
         virtual int GetItemIndex(CDuiControl* pControl) const ;
         virtual BOOL SetItemIndex(CDuiControl* pControl, int iIndex);
