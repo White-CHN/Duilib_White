@@ -1,15 +1,14 @@
 del *.sdf
 del *.suo
-del Debug\win32\*.ilk
-del Debug\win32\*.pdb
-del Debug\win32\*.lib
+del bin\*.ilk
+del bin\*.manifest
+del bin\*.pdb
+del bin\*.lib
 
 rd /s /q Lib
 rd /s /q Temp
-rd /s /q Release
 rd /s /q ipch
-rd /s /q Debug\x64
 
-rd /s /q DuiDemo\Debug
-rd /s /q DuiDemo\Release
-rd /s /q DuiDemo\x64
+rd /s /q Demos\DuiDemo\Debug
+rd /s /q Demos\DuiDemo\Release
+rd /s /q Demos\DuiDemo\x64

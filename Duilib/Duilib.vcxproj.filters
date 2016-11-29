@@ -9,29 +9,33 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
     <Filter Include="头文件\Control">
-      <UniqueIdentifier>{6ae2c6a7-f27e-4e64-ab29-a73a9d22af79}</UniqueIdentifier>
+      <UniqueIdentifier>{9d6b40b7-42c4-4134-bb65-79f64f460fbb}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\Control">
-      <UniqueIdentifier>{7531e56e-806e-4970-acda-a0078238f636}</UniqueIdentifier>
+      <UniqueIdentifier>{9b43119f-ff6c-42a5-9f65-e71317dcbd96}</UniqueIdentifier>
     </Filter>
     <Filter Include="头文件\Core">
-      <UniqueIdentifier>{ffe7d021-60b1-4363-9f9c-e45501ed7243}</UniqueIdentifier>
+      <UniqueIdentifier>{6f9da043-1a46-4cd8-be93-56405b412c2b}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\Core">
-      <UniqueIdentifier>{5128d26e-8bd0-4f18-a140-5aeb9e6098d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\Utils">
-      <UniqueIdentifier>{853931c1-b55e-47e8-a9c2-b7e64cbb84a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\Utils">
-      <UniqueIdentifier>{a8650d62-6513-48a5-b2d9-c70558c03ef2}</UniqueIdentifier>
+      <UniqueIdentifier>{9d4a03a0-6ebc-49ad-bc8f-241639e00746}</UniqueIdentifier>
     </Filter>
     <Filter Include="头文件\Layout">
-      <UniqueIdentifier>{24b80851-4bb8-4030-b684-60b75010061c}</UniqueIdentifier>
+      <UniqueIdentifier>{fdb30deb-62e9-4e77-be46-e3a9fa63aba2}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\Layout">
-      <UniqueIdentifier>{2fc0826d-127c-4ec7-8347-4503f8aa5356}</UniqueIdentifier>
+      <UniqueIdentifier>{3462958d-2a6f-494c-b2d1-8b6303efb5ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Utils">
+      <UniqueIdentifier>{7d10143f-4898-46ff-8f7c-0ecfb794bf8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Utils">
+      <UniqueIdentifier>{575a687d-e6ca-44b7-992f-bb19526915fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,25 +45,43 @@
     <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Duilib.h">
+    <ClInclude Include="DuiLib.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Core\DuiPaintManager.h">
-      <Filter>头文件\Core</Filter>
+    <ClInclude Include="Control\DuiButton.h">
+      <Filter>头文件\Control</Filter>
     </ClInclude>
-    <ClInclude Include="Core\DuiDefine.h">
-      <Filter>头文件\Core</Filter>
+    <ClInclude Include="Control\DuiEdit.h">
+      <Filter>头文件\Control</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\DuiUtils.h">
-      <Filter>头文件\Utils</Filter>
+    <ClInclude Include="Control\DuiLabel.h">
+      <Filter>头文件\Control</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\DuiString.h">
-      <Filter>头文件\Utils</Filter>
+    <ClInclude Include="Control\DuiOption.h">
+      <Filter>头文件\Control</Filter>
     </ClInclude>
-    <ClInclude Include="Core\DuiWnd.h">
+    <ClInclude Include="Control\DuiProgress.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\DuiRadio.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\DuiScrollBar.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\DuiSlider.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DuiContainer.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\DuiControl.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DuiControlFactory.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DuiDefine.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\DuiDlgBuilder.h">
@@ -74,102 +96,99 @@
     <ClInclude Include="Core\DuiMarkupNode.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\DuiDPI.h">
-      <Filter>头文件\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\VersionHelpers.h">
-      <Filter>头文件\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\DuiContainer.h">
+    <ClInclude Include="Core\DuiPaintManager.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\DuiControlFactory.h">
+    <ClInclude Include="Core\DuiResourceManager.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\DuiWnd.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\DuiRender.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\stb_image.h">
-      <Filter>头文件\Utils</Filter>
+    <ClInclude Include="Layout\DuiHorizontalLayout.h">
+      <Filter>头文件\Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="Layout\DuiTabLayout.h">
+      <Filter>头文件\Layout</Filter>
     </ClInclude>
     <ClInclude Include="Layout\DuiVerticalLayout.h">
       <Filter>头文件\Layout</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\DragDropImpl.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Utils\DuiDelegate.h">
       <Filter>头文件\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Layout\DuiHorizontalLayout.h">
-      <Filter>头文件\Layout</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\DuiShadow.h">
+    <ClInclude Include="Utils\DuiDPI.h">
       <Filter>头文件\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Control\DuiLabel.h">
-      <Filter>头文件\Control</Filter>
-    </ClInclude>
-    <ClInclude Include="Control\DuiScrollBar.h">
-      <Filter>头文件\Control</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Utils\DuiIcon.h">
       <Filter>头文件\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Control\DuiButton.h">
-      <Filter>头文件\Control</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\DragDropImpl.h">
+    <ClInclude Include="Utils\DuiShadow.h">
       <Filter>头文件\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Control\DuiEdit.h">
-      <Filter>头文件\Control</Filter>
+    <ClInclude Include="Utils\DuiString.h">
+      <Filter>头文件\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Core\DuiResourceManager.h">
-      <Filter>头文件\Core</Filter>
+    <ClInclude Include="Utils\DuiUtils.h">
+      <Filter>头文件\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Control\DuiOption.h">
-      <Filter>头文件\Control</Filter>
+    <ClInclude Include="Utils\stb_image.h">
+      <Filter>头文件\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Control\DuiRadio.h">
-      <Filter>头文件\Control</Filter>
-    </ClInclude>
-    <ClInclude Include="Control\DuiProgress.h">
-      <Filter>头文件\Control</Filter>
-    </ClInclude>
-    <ClInclude Include="Control\DuiSlider.h">
-      <Filter>头文件\Control</Filter>
-    </ClInclude>
-    <ClInclude Include="Layout\DuiTabLayout.h">
-      <Filter>头文件\Layout</Filter>
+    <ClInclude Include="Utils\VersionHelpers.h">
+      <Filter>头文件\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Duilib.cpp">
+    <ClCompile Include="DuiLib.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Core\DuiPaintManager.cpp">
-      <Filter>源文件\Core</Filter>
+    <ClCompile Include="Control\DuiButton.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Core\DuiDefine.cpp">
-      <Filter>源文件\Core</Filter>
+    <ClCompile Include="Control\DuiEdit.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\DuiUtils.cpp">
-      <Filter>源文件\Utils</Filter>
+    <ClCompile Include="Control\DuiLabel.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\DuiString.cpp">
-      <Filter>源文件\Utils</Filter>
+    <ClCompile Include="Control\DuiOption.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Core\DuiWnd.cpp">
+    <ClCompile Include="Control\DuiProgress.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiScrollBar.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiRadio.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiSlider.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DuiContainer.cpp">
       <Filter>源文件\Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\DuiControl.cpp">
+      <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DuiControlFactory.cpp">
+      <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DuiDefine.cpp">
       <Filter>源文件\Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\DuiDlgBuilder.cpp">
@@ -178,74 +197,56 @@
     <ClCompile Include="Core\DuiDlgImplBase.cpp">
       <Filter>源文件\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\XUnzip.cpp">
-      <Filter>源文件\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Core\DuiMarkup.cpp">
       <Filter>源文件\Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\DuiMarkupNode.cpp">
       <Filter>源文件\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\DuiDPI.cpp">
-      <Filter>源文件\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\DuiContainer.cpp">
-      <Filter>源文件\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\DuiControlFactory.cpp">
+    <ClCompile Include="Core\DuiPaintManager.cpp">
       <Filter>源文件\Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\DuiRender.cpp">
       <Filter>源文件\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Layout\DuiVerticalLayout.cpp">
-      <Filter>源文件\Layout</Filter>
+    <ClCompile Include="Core\DuiResourceManager.cpp">
+      <Filter>源文件\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\DuiDelegate.cpp">
-      <Filter>源文件\Utils</Filter>
+    <ClCompile Include="Core\DuiWnd.cpp">
+      <Filter>源文件\Core</Filter>
     </ClCompile>
     <ClCompile Include="Layout\DuiHorizontalLayout.cpp">
       <Filter>源文件\Layout</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\DuiShadow.cpp">
-      <Filter>源文件\Utils</Filter>
+    <ClCompile Include="Layout\DuiTabLayout.cpp">
+      <Filter>源文件\Layout</Filter>
     </ClCompile>
-    <ClCompile Include="Control\DuiLabel.cpp">
-      <Filter>源文件\Control</Filter>
-    </ClCompile>
-    <ClCompile Include="Control\DuiScrollBar.cpp">
-      <Filter>源文件\Control</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\DuiIcon.cpp">
-      <Filter>源文件\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Control\DuiButton.cpp">
-      <Filter>源文件\Control</Filter>
+    <ClCompile Include="Layout\DuiVerticalLayout.cpp">
+      <Filter>源文件\Layout</Filter>
     </ClCompile>
     <ClCompile Include="Utils\DragDropImpl.cpp">
       <Filter>源文件\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Control\DuiEdit.cpp">
-      <Filter>源文件\Control</Filter>
+    <ClCompile Include="Utils\DuiDelegate.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Core\DuiResourceManager.cpp">
-      <Filter>源文件\Core</Filter>
+    <ClCompile Include="Utils\DuiDPI.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Control\DuiOption.cpp">
-      <Filter>源文件\Control</Filter>
+    <ClCompile Include="Utils\DuiIcon.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Control\DuiRadio.cpp">
-      <Filter>源文件\Control</Filter>
+    <ClCompile Include="Utils\DuiShadow.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Control\DuiProgress.cpp">
-      <Filter>源文件\Control</Filter>
+    <ClCompile Include="Utils\DuiString.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Control\DuiSlider.cpp">
-      <Filter>源文件\Control</Filter>
+    <ClCompile Include="Utils\DuiUtils.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Layout\DuiTabLayout.cpp">
-      <Filter>源文件\Layout</Filter>
+    <ClCompile Include="Utils\XUnzip.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
