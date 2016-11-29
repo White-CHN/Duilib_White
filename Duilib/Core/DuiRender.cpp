@@ -976,22 +976,6 @@ namespace DuiLib
             return NULL;
         }
         CDuiString sStrPath = pStrImage;
-        if(type == NULL)
-        {
-            sStrPath = CDuiResourceManager::GetInstance()->GetImagePath(pStrImage);
-            if(sStrPath.IsEmpty())
-            {
-                sStrPath = pStrImage;
-            }
-            else
-            {
-                /*if (CDuiResourceManager::GetInstance()->GetScale() != 100) {
-                	CDuiString sScale;
-                	sScale.Format(_T("@%d."), CDuiResourceManager::GetInstance()->GetScale());
-                	sStrPath.Replace(_T("."), sScale);
-                }*/
-            }
-        }
         return LoadImage(STRINGorID(sStrPath.GetData()), type, mask, instance);
     }
 

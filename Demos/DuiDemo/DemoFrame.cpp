@@ -170,6 +170,11 @@ void CDemoFrame::Notify(TNotifyUI& msg)
             GetPaintManager()->GetRoot()->NeedUpdate();
             return;
         }
+        else if(msg.pSender->GetName().CompareNoCase(_T("dpi_btn")) == 0)
+        {
+            int nDPI = _ttoi(msg.pSender->GetUserData());
+            GetPaintManager()->SetDPI(nDPI);
+        }
     }
 }
 

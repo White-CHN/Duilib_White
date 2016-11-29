@@ -483,6 +483,11 @@ namespace DuiLib
         m_bMenuUsed = bMenuUsed;
     }
 
+    const CDuiString& CDuiControl::GetUserData()
+    {
+        return m_sUserData;
+    }
+
     void CDuiControl::SetUserData(LPCTSTR pstrText)
     {
         m_sUserData = pstrText;
@@ -740,7 +745,11 @@ namespace DuiLib
 
     SIZE CDuiControl::EstimateSize(SIZE szAvailable)
     {
-        return GetManager()->GetDPIObj()->Scale(m_cxyFixed);
+        if(GetManager() != NULL)
+        {
+            return GetManager()->GetDPIObj()->Scale(m_cxyFixed);
+        }
+        return m_cxyFixed;
     }
 
     RECT CDuiControl::GetRelativePos() const

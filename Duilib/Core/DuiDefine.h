@@ -169,6 +169,9 @@ namespace DuiLib
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 
+//自定义消息
+#define WM_USER_SET_DPI WM_USER + 200
+
 //Duilib所用到的定时器ID
     enum
     {

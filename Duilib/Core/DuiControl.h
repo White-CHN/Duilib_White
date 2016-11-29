@@ -95,6 +95,7 @@ namespace DuiLib
         virtual void SetContextMenuUsed(BOOL bMenuUsed);
 
         // 用户属性
+        virtual const CDuiString& GetUserData(); // 辅助函数，供用户使用
         virtual void SetUserData(LPCTSTR pstrText); // 辅助函数，供用户使用
 
         //位置相关

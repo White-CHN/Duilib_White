@@ -278,6 +278,9 @@ namespace DuiLib
         BOOL SetNextTabControl(BOOL bForward = TRUE);
 
         CDPI* GetDPIObj();
+        void RebuildFont(TFontInfo* pFontInfo);
+        void ResetDPIAssets();
+        void SetDPI(int iDPI);
 
         CDuiShadow* GetShadow();
 

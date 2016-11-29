@@ -173,7 +173,7 @@ namespace DuiLib
         }
         if(GetFixedHeight() == 0)
         {
-            return CDuiSize(GetManager()->GetDPIObj()->Scale(GetFixedWidth()), GetManager()->GetFontInfo(GetFont())->tm.tmHeight + 4);
+            return CDuiSize(GetFixedWidth(), GetManager()->GetFontInfo(GetFont())->tm.tmHeight + 4);
         }
         return __super::EstimateSize(szAvailable);
     }
