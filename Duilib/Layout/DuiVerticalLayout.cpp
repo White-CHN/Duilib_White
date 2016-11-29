@@ -87,10 +87,6 @@ namespace DuiLib
         rc = GetPos();
         // Adjust for inset
         RECT rcInset = GetInset();
-        if(GetManager())
-        {
-            GetManager()->GetDPIObj()->Scale(&rcInset);
-        }
         rc.left += rcInset.left;
         rc.top += rcInset.top;
         rc.right -= rcInset.right;

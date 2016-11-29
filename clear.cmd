@@ -1,4 +1,5 @@
 del *.sdf
+del *.suo
 del Debug\win32\*.ilk
 del Debug\win32\*.pdb
 del Debug\win32\*.lib
