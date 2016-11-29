@@ -75,9 +75,9 @@
 					<Label font="3" valign="center" cursor="hand" align="center" tooltip="Radio演示" text="Radio演示"  width="80" textcolor="#FFFFFFFF" />
 					<HorizontalLayout height="25" childpadding="12"  >
 
-						<Radio text="Radio1" tooltip="Radio演示" cursor="hand" textcolor="#FFFFFFFF" selected="true" width="60" height="20" group="Radio" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
-						<Radio text="Radio2" tooltip="Radio演示" cursor="hand" textcolor="#FFFFFFFF"  width="60" height="20" group="Radio" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
-						<Radio text="Radio3" tooltip="Radio演示" cursor="hand" textcolor="#FFFFFFFF"  width="60" height="20" group="Radio" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
+						<Radio text="Radio1" tooltip="Radio演示" cursor="hand" selectedtextcolor="#FFFF0000" textcolor="#FFFFFFFF" selected="true" width="60" height="20" group="Radio" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
+						<Radio text="Radio2" tooltip="Radio演示" cursor="hand" selectedtextcolor="#FFFF0000" textcolor="#FFFFFFFF"  width="60" height="20" group="Radio" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
+						<Radio text="Radio3" tooltip="Radio演示" cursor="hand" selectedtextcolor="#FFFF0000" textcolor="#FFFFFFFF"  width="60" height="20" group="Radio" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
 
 					</HorizontalLayout>
 

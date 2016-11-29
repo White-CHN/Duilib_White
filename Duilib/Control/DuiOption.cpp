@@ -335,6 +335,10 @@ namespace DuiLib
             {
                 SetTextColor(GetManager()->GetDefaultFontColor());
             }
+            if(m_dwSelectedTextColor == 0)
+            {
+                m_dwSelectedTextColor = GetTextColor();
+            }
             if(GetDisabledTextColor() == 0)
             {
                 SetDisabledTextColor(GetManager()->GetDefaultDisabledColor());
