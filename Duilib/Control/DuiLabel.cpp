@@ -169,6 +169,7 @@ namespace DuiLib
             {
                 CRenderEngine::DrawText(GetManager()->GetPaintDC(), GetManager(), rcText, sText, m_dwTextColor, m_iFont, DT_CALCRECT | m_uTextStyle);
             }
+            //设置fixwidth按比例缩小
             SetFixedWidth(MulDiv(rcText.right - rcText.left + GetManager()->GetDPIObj()->Scale(m_rcTextPadding.left) + GetManager()->GetDPIObj()->Scale(m_rcTextPadding.right), 100, GetManager()->GetDPIObj()->GetScale()));
         }
         if(GetFixedHeight() == 0)

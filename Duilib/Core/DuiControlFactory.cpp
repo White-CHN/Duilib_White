@@ -18,7 +18,9 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiProgress);
         INNER_REGISTER_DUICONTROL(CDuiSlider);
         INNER_REGISTER_DUICONTROL(CDuiTabLayout);
-
+        INNER_REGISTER_DUICONTROL(CDuiCombo);
+        INNER_REGISTER_DUICONTROL(CDuiListElement);
+        INNER_REGISTER_DUICONTROL(CDuiListLabelElement);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

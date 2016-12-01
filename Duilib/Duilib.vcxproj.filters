@@ -144,6 +144,9 @@
     <ClInclude Include="Utils\VersionHelpers.h">
       <Filter>头文件\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiCombo.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -247,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="Utils\XUnzip.cpp">
       <Filter>源文件\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiCombo.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

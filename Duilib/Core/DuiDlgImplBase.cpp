@@ -79,91 +79,6 @@ namespace DuiLib
         m_PaintManager.ReapObjects(m_PaintManager.GetRoot());
     }
 
-    LRESULT CDuiDlgImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
-    {
-        LRESULT lRes = 0;
-        BOOL bHandled = TRUE;
-        switch(uMsg)
-        {
-            case WM_CREATE:
-                lRes = OnCreate(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_CLOSE:
-                lRes = OnClose(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_DESTROY:
-                lRes = OnDestroy(uMsg, wParam, lParam, bHandled);
-                break;
-#if defined(WIN32) && !defined(UNDER_CE)
-            case WM_NCACTIVATE:
-                lRes = OnNcActivate(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_NCCALCSIZE:
-                lRes = OnNcCalcSize(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_NCPAINT:
-                lRes = OnNcPaint(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_NCHITTEST:
-                lRes = OnNcHitTest(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_GETMINMAXINFO:
-                lRes = OnGetMinMaxInfo(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_MOUSEWHEEL:
-                lRes = OnMouseWheel(uMsg, wParam, lParam, bHandled);
-                break;
-#endif
-            case WM_SIZE:
-                lRes = OnSize(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_CHAR:
-                lRes = OnChar(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_SYSCOMMAND:
-                lRes = OnSysCommand(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_KEYDOWN:
-                lRes = OnKeyDown(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_KILLFOCUS:
-                lRes = OnKillFocus(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_SETFOCUS:
-                lRes = OnSetFocus(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_LBUTTONUP:
-                lRes = OnLButtonUp(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_LBUTTONDOWN:
-                lRes = OnLButtonDown(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_MOUSEMOVE:
-                lRes = OnMouseMove(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_MOUSEHOVER:
-                lRes = OnMouseHover(uMsg, wParam, lParam, bHandled);
-                break;
-            default:
-                bHandled = FALSE;
-                break;
-        }
-        if(bHandled)
-        {
-            return lRes;
-        }
-        lRes = HandleCustomMessage(uMsg, wParam, lParam, bHandled);
-        if(bHandled)
-        {
-            return lRes;
-        }
-        if(m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes))
-        {
-            return lRes;
-        }
-        return __super::HandleMessage(uMsg, wParam, lParam);
-    }
-
     LRESULT CDuiDlgImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         // 去掉对话框标题栏
@@ -447,6 +362,91 @@ namespace DuiLib
         return 0;
     }
 
+    LRESULT CDuiDlgImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
+    {
+        LRESULT lRes = 0;
+        BOOL bHandled = TRUE;
+        switch(uMsg)
+        {
+            case WM_CREATE:
+                lRes = OnCreate(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_CLOSE:
+                lRes = OnClose(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_DESTROY:
+                lRes = OnDestroy(uMsg, wParam, lParam, bHandled);
+                break;
+#if defined(WIN32) && !defined(UNDER_CE)
+            case WM_NCACTIVATE:
+                lRes = OnNcActivate(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_NCCALCSIZE:
+                lRes = OnNcCalcSize(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_NCPAINT:
+                lRes = OnNcPaint(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_NCHITTEST:
+                lRes = OnNcHitTest(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_GETMINMAXINFO:
+                lRes = OnGetMinMaxInfo(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_MOUSEWHEEL:
+                lRes = OnMouseWheel(uMsg, wParam, lParam, bHandled);
+                break;
+#endif
+            case WM_SIZE:
+                lRes = OnSize(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_CHAR:
+                lRes = OnChar(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_SYSCOMMAND:
+                lRes = OnSysCommand(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_KEYDOWN:
+                lRes = OnKeyDown(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_KILLFOCUS:
+                lRes = OnKillFocus(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_SETFOCUS:
+                lRes = OnSetFocus(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_LBUTTONUP:
+                lRes = OnLButtonUp(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_LBUTTONDOWN:
+                lRes = OnLButtonDown(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_MOUSEMOVE:
+                lRes = OnMouseMove(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_MOUSEHOVER:
+                lRes = OnMouseHover(uMsg, wParam, lParam, bHandled);
+                break;
+            default:
+                bHandled = FALSE;
+                break;
+        }
+        if(bHandled)
+        {
+            return lRes;
+        }
+        lRes = HandleCustomMessage(uMsg, wParam, lParam, bHandled);
+        if(bHandled)
+        {
+            return lRes;
+        }
+        if(m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes))
+        {
+            return lRes;
+        }
+        return __super::HandleMessage(uMsg, wParam, lParam);
+    }
+
     BOOL CDuiDlgImplBase::IsInStaticControl(CDuiControl* pControl)
     {
         BOOL bRet = FALSE;
@@ -462,7 +462,7 @@ namespace DuiLib
         vctStaticName.push_back(DUI_CTR_CONTAINER);
         vctStaticName.push_back(DUI_CTR_VERTICALLAYOUT);
         vctStaticName.push_back(DUI_CTR_HORIZONTALLAYOUT);
-        vctStaticName.push_back(_T("tablayout"));
+        vctStaticName.push_back(DUI_CTR_TABLAYOUT);
         vctStaticName.push_back(_T("childlayout"));
         vctStaticName.push_back(_T("dialoglayout"));
         vctStaticName.push_back(_T("progresscontainer"));

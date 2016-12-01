@@ -27,7 +27,7 @@ namespace DuiLib
 
         virtual CDuiControl* GetParent() const;
 
-        RECT& GetPaintRect();
+        RECT GetPaintRect() const;
         // 刷新相关
         void Invalidate();
         BOOL IsUpdateNeeded() const;
@@ -38,10 +38,10 @@ namespace DuiLib
         void SetBkColor2(DWORD dwBackColor);
         void SetBkColor3(DWORD dwBackColor);
 
-        DWORD GetForeColor();
+        DWORD GetForeColor() const;
         void SetForeColor(DWORD dwForeColor);
 
-        CDuiString GetBkImage();
+        CDuiString GetBkImage() const;
         void SetBkImage(LPCTSTR pStrImage);
         CDuiString GetForeImage() const;
         void SetForeImage(LPCTSTR pStrImage);
@@ -63,72 +63,69 @@ namespace DuiLib
         void SetVirtualWnd(LPCTSTR pstrValue);
 
         //name属性
-        virtual CDuiString GetName() const;
-        virtual void SetName(LPCTSTR pstrName);
+        CDuiString GetName() const;
+        void SetName(LPCTSTR pstrName);
         //文本相关
         virtual CDuiString GetText() const;
         virtual void SetText(LPCTSTR pstrText);
 
-        virtual BOOL IsResourceText() const;
+        BOOL IsResourceText() const;
         virtual void SetResourceText(BOOL bResource);
         //拖拽
-        virtual BOOL IsDragEnabled() const;
+        BOOL IsDragEnabled() const;
         virtual void SetDragEnable(BOOL bDrag);
 
         virtual void SetDropEnable(BOOL bDrop);
 
-
-
         // 鼠标提示
-        virtual CDuiString GetToolTip() const;
+        CDuiString GetToolTip() const;
         virtual void SetToolTip(LPCTSTR pstrText);
-        virtual int GetToolTipWidth(void);	// 多行ToolTip单行最长宽度
+        int GetToolTipWidth() const;	// 多行ToolTip单行最长宽度
         // 光标
-        virtual WORD GetCursor();
+        WORD GetCursor() const;
         virtual void SetCursor(WORD wCursor);
 
         // 快捷键
-        virtual TCHAR GetShortcut() const;
+        TCHAR GetShortcut() const;
         virtual void SetShortcut(TCHAR ch);
         // 菜单
-        virtual BOOL IsContextMenuUsed() const;
+        BOOL IsContextMenuUsed() const;
         virtual void SetContextMenuUsed(BOOL bMenuUsed);
 
         // 用户属性
-        virtual const CDuiString& GetUserData(); // 辅助函数，供用户使用
+        const CDuiString& GetUserData() const; // 辅助函数，供用户使用
         virtual void SetUserData(LPCTSTR pstrText); // 辅助函数，供用户使用
 
         //位置相关
         virtual RECT GetClientPos() const; // 客户区域（除去scrollbar和inset）
-
-        virtual const RECT& GetPos() const;
+        const RECT& GetPos() const;
         virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
 
-        virtual SIZE GetFixedXY() const;         // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
+        SIZE GetFixedXY() const;         // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
         virtual void SetFixedXY(SIZE szXY);      // 仅float为true时有效
 
-        virtual int GetFixedWidth() const;       // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
+        int GetFixedWidth() const;       // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
         virtual void SetFixedWidth(int cx);      // 预设的参考值
 
-        virtual int GetFixedHeight() const;      // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
+        int GetFixedHeight() const;      // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
         virtual void SetFixedHeight(int cy);     // 预设的参考值
 
-        virtual RECT GetPadding() const;
+        RECT GetPadding() const;
         virtual void SetPadding(RECT rcPadding); // 设置外边距，由上层窗口绘制
 
-        virtual int GetMinWidth() const;
+        int GetMinWidth() const;
         virtual void SetMinWidth(int cx);
 
-        virtual int GetMaxWidth() const;
+        int GetMaxWidth() const;
         virtual void SetMaxWidth(int cx);
 
-        virtual int GetMinHeight() const;
+        int GetMinHeight() const;
         virtual void SetMinHeight(int cy);
 
-        virtual int GetMaxHeight() const;
+        int GetMaxHeight() const;
         virtual void SetMaxHeight(int cy);
 
-        virtual TPercentInfo GetFloatPercent() const;
+        TPercentInfo GetFloatPercent() const;
 
         virtual SIZE EstimateSize(SIZE szAvailable);
 
@@ -161,7 +158,7 @@ namespace DuiLib
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 
         //绘制相关
-        DWORD GetAdjustColor(DWORD dwColor);
+        DWORD GetAdjustColor(DWORD dwColor) const;
         BOOL DrawImage(HDC hDC, LPCTSTR pStrImage, LPCTSTR pStrModify = NULL);
         virtual void PaintBkColor(HDC hDC);
         virtual void PaintBkImage(HDC hDC);
@@ -223,8 +220,8 @@ namespace DuiLib
         CDuiControl* m_pParent;			//父控件指针
         CDuiPaintManager* m_pManager;
 
-        SIZE m_cXY;					//pos属性
-        SIZE m_cxyFixed;			//pos属性
+        SIZE m_cXY;					//pos左上角xy
+        SIZE m_cxyFixed;			//pos宽度高度
         SIZE m_cxyBorderRound;		//borderround属性
         SIZE m_cxyMin;				//minwidth minhegiht属性
         SIZE m_cxyMax;				//maxwidth maxhegiht属性
@@ -232,7 +229,7 @@ namespace DuiLib
         RECT m_rcItem;				//实际位置
         RECT m_rcPadding;			//padding属性
         RECT m_rcBorderSize;		//bordersize属性
-        RECT m_rcPaint;
+        RECT m_rcPaint;				//实际绘制区域
 
         TPercentInfo m_piFloatPercent;		//float 的数值
 

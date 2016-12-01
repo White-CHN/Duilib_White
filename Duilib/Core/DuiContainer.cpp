@@ -36,7 +36,7 @@ namespace DuiLib
 
     LPVOID CDuiContainer::GetInterface(LPCTSTR pstrName)
     {
-        if(_tcsicmp(pstrName, _T("IContainer")) == 0)
+        if(_tcsicmp(pstrName, GET_CLASS_NAME(IContainer)) == 0)
         {
             return static_cast<IContainer*>(this);
         }
@@ -83,6 +83,16 @@ namespace DuiLib
     UINT CDuiContainer::GetChildVAlign() const
     {
         return m_iChildVAlign;
+    }
+
+    BOOL CDuiContainer::IsAutoDestroy() const
+    {
+        return m_bAutoDestroy;
+    }
+
+    void CDuiContainer::SetAutoDestroy(BOOL bAuto)
+    {
+        m_bAutoDestroy = bAuto;
     }
 
     BOOL CDuiContainer::IsMouseChildEnabled() const
@@ -479,6 +489,68 @@ namespace DuiLib
         }
         m_items.Empty();
         NeedUpdate();
+    }
+
+    int CDuiContainer::FindSelectable(int iIndex, BOOL bForward /*= TRUE*/) const
+    {
+        // NOTE: This is actually a helper-function for the list/combo/ect controls
+        //       that allow them to find the next enabled/available selectable item
+        if(GetCount() == 0)
+        {
+            return -1;
+        }
+        iIndex = CLAMP(iIndex, 0, GetCount() - 1);
+        if(bForward)
+        {
+            for(int i = iIndex; i < GetCount(); i++)
+            {
+                if(GetItemAt(i)->GetInterface(GET_CLASS_NAME(IListItem)) != NULL
+                        && GetItemAt(i)->IsVisible()
+                        && GetItemAt(i)->IsEnabled())
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        else
+        {
+            for(int i = iIndex; i >= 0; --i)
+            {
+                if(GetItemAt(i)->GetInterface(GET_CLASS_NAME(IListItem)) != NULL
+                        && GetItemAt(i)->IsVisible()
+                        && GetItemAt(i)->IsEnabled())
+                {
+                    return i;
+                }
+            }
+            return FindSelectable(0, true);
+        }
+    }
+
+    RECT CDuiContainer::GetClientPos() const
+    {
+        RECT rc = GetPos();
+        rc.left += m_rcInset.left;
+        rc.top += m_rcInset.top;
+        rc.right -= m_rcInset.right;
+        rc.bottom -= m_rcInset.bottom;
+
+        if(m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible())
+        {
+            rc.top -= m_pVerticalScrollBar->GetScrollPos();
+            rc.bottom -= m_pVerticalScrollBar->GetScrollPos();
+            rc.bottom += m_pVerticalScrollBar->GetScrollRange();
+            rc.right -= m_pVerticalScrollBar->GetFixedWidth();
+        }
+        if(m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible())
+        {
+            rc.left -= m_pHorizontalScrollBar->GetScrollPos();
+            rc.right -= m_pHorizontalScrollBar->GetScrollPos();
+            rc.right += m_pHorizontalScrollBar->GetScrollRange();
+            rc.bottom -= m_pHorizontalScrollBar->GetFixedHeight();
+        }
+        return rc;
     }
 
     void CDuiContainer::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)

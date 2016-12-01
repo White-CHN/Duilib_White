@@ -40,6 +40,7 @@ namespace DuiLib
     #define ASSERT(expr)  _ASSERTE(expr)
 #endif
 
+#define GET_CLASS_NAME(x) _T(#x)
     // 鼠标光标定义
 #define DUI_ARROW           32512
 #define DUI_IBEAM           32513
@@ -161,11 +162,14 @@ namespace DuiLib
 #define  DUI_CTR_EDIT                            (_T("Edit"))
 #define  DUI_CTR_PROGRESS                        (_T("Progress"))
 #define  DUI_CTR_SLIDER                          (_T("Slider"))
+#define  DUI_CTR_LISTELEMENT                     (_T("ListElement"))
+#define  DUI_CTR_LISTLABELELEMENT                (_T("ListLabelElement"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
 #define  DUI_CTR_HORIZONTALLAYOUT                (_T("HorizontalLayout"))
 #define  DUI_CTR_TABLAYOUT                       (_T("TabLayout"))
+#define  DUI_CTR_COMBO                           (_T("Combo"))
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 
@@ -186,8 +190,19 @@ namespace DuiLib
         // 程序自定义消息
         DUIMSG_USER = WM_USER + 100,
     };
-#ifdef _DEBUG
 
+    // 列表类型
+    enum ListType
+    {
+        LT_LIST = 0,
+        LT_COMBO,
+        LT_TREE,
+    };
+
+
+
+
+#ifdef _DEBUG
 #define DUI_TRACE(...)																	\
 	{																					\
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);		\
@@ -209,7 +224,7 @@ namespace DuiLib
 #endif	// _DEBUG
 
     void DUILIB_API DuiTrace(LPCTSTR pstrFormat, ...);
-
+    LPCTSTR DUILIB_API DuiTraceMsg(UINT uMsg);
 
 
 // 核心控件

@@ -205,9 +205,9 @@ namespace DuiLib
         //属性设置与获取
         void SetInitSize(int cx, int cy);
 
-        RECT& GetSizeBox();
+        RECT GetSizeBox();
         void SetSizeBox(RECT& rcSizeBox);
-        RECT& GetCaptionRect();
+        RECT GetCaptionRect();
         void SetCaptionRect(RECT& rcCaption);
 
         SIZE GetRoundCorner() const;
@@ -335,6 +335,9 @@ namespace DuiLib
         BOOL KillTimer(CDuiControl* pControl, UINT nTimerID);
         void KillTimer(CDuiControl* pControl);
         void RemoveAllTimers();
+
+        BOOL IsForceUseSharedRes() const;
+        void SetForceUseSharedRes(BOOL bForce);
 
         static BOOL Initialize(HINSTANCE hInstance);
         static void RemoveAllShared();

@@ -547,7 +547,7 @@ namespace DuiLib
         }
     }
 
-    RECT& CDuiPaintManager::GetSizeBox()
+    RECT CDuiPaintManager::GetSizeBox()
     {
         return m_rcSizeBox;
     }
@@ -557,9 +557,9 @@ namespace DuiLib
         m_rcSizeBox = rcSizeBox;
     }
 
-    RECT& CDuiPaintManager::GetCaptionRect()
+    RECT CDuiPaintManager::GetCaptionRect()
     {
-        return m_rcCaption;
+        return GetDPIObj()->Scale(m_rcCaption);
     }
 
     void CDuiPaintManager::SetCaptionRect(RECT& rcCaption)
@@ -899,7 +899,7 @@ namespace DuiLib
         //AddRef();
         if(FAILED(RegisterDragDrop(m_hWndPaint, this))) //calls addref
         {
-            DUI_TRACE("this[%x] RegisterDragDrop[FALSE]", this);
+            DUI_TRACE("this[0x%x] RegisterDragDrop[FALSE]", this);
             return FALSE;
         }
         FORMATETC ftetc = {0};
@@ -2331,6 +2331,16 @@ namespace DuiLib
         m_aTimers.Empty();
     }
 
+    BOOL CDuiPaintManager::IsForceUseSharedRes() const
+    {
+        return m_bForceUseSharedRes;
+    }
+
+    void CDuiPaintManager::SetForceUseSharedRes(BOOL bForce)
+    {
+        m_bForceUseSharedRes = bForce;
+    }
+
     BOOL CDuiPaintManager::Initialize(HINSTANCE hInstance)
     {
         ASSERT(hInstance);
@@ -2521,7 +2531,7 @@ namespace DuiLib
             m_hResourceZip = (HANDLE)OpenZip(pVoid, len, 3);
             if(m_hResourceZip == NULL)
             {
-                DUI_ERROR("OpenZip[NULL] pVoid[%x] ", pVoid);
+                DUI_ERROR("OpenZip[NULL] pVoid[0x%x] ", pVoid);
             }
         }
     }
@@ -2653,6 +2663,7 @@ namespace DuiLib
         MSG msg = { 0 };
         while(::GetMessage(&msg, NULL, 0, 0))
         {
+            //DUI_TRACE("%s", DuiTraceMsg(msg.message));
             if(!CDuiPaintManager::TranslateMessage(&msg))
             {
                 ::TranslateMessage(&msg);
@@ -3002,7 +3013,7 @@ namespace DuiLib
         CDuiControl* pControl = FindControl(pt);
         if(pControl == NULL)
         {
-            DUI_TRACE("this[%x] CDuiControl::FindControl[NULL]", this);
+            DUI_TRACE("this[0x%x] CDuiControl::FindControl[NULL]", this);
             return 0;
         }
         if(pControl->GetManager() != this)
@@ -3276,7 +3287,7 @@ namespace DuiLib
             tme.dwHoverTime = m_hwndTooltip == NULL ? 400UL : (DWORD) ::SendMessage(m_hwndTooltip, TTM_GETDELAYTIME, TTDT_INITIAL, 0L);
             if(!_TrackMouseEvent(&tme))
             {
-                DUI_TRACE("this[%x] _TrackMouseEvent[FALSE]", this);
+                DUI_TRACE("this[0x%x] _TrackMouseEvent[FALSE]", this);
             }
             m_bMouseTracking = TRUE;
         }

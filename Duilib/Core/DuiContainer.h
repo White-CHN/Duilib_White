@@ -41,6 +41,9 @@ namespace DuiLib
 
         virtual UINT GetChildVAlign() const;
 
+        virtual BOOL IsAutoDestroy() const;
+        virtual void SetAutoDestroy(BOOL bAuto);
+
         virtual BOOL IsMouseChildEnabled() const;
         virtual void SetMouseChildEnabled(BOOL bEnable = TRUE);
 
@@ -76,6 +79,9 @@ namespace DuiLib
         virtual BOOL RemoveAt(int iIndex);
         virtual void RemoveAll();
 
+        virtual int FindSelectable(int iIndex, BOOL bForward = TRUE) const;
+
+        virtual RECT GetClientPos() const;
         virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
 
         virtual void DoPaint(HDC hDC, const RECT& rcPaint);

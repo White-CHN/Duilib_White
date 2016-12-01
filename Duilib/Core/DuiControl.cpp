@@ -80,7 +80,7 @@ namespace DuiLib
         return m_pParent;
     }
 
-    RECT& CDuiControl::GetPaintRect()
+    RECT CDuiControl::GetPaintRect() const
     {
         return m_rcPaint;
     }
@@ -177,7 +177,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    DWORD CDuiControl::GetForeColor()
+    DWORD CDuiControl::GetForeColor() const
     {
         return m_dwForeColor;
     }
@@ -192,7 +192,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    CDuiString CDuiControl::GetBkImage()
+    CDuiString CDuiControl::GetBkImage() const
     {
         return m_sBkImage;
     }
@@ -439,7 +439,7 @@ namespace DuiLib
         m_sToolTip = strTemp;
     }
 
-    int CDuiControl::GetToolTipWidth(void)
+    int CDuiControl::GetToolTipWidth() const
     {
         if(m_pManager != NULL)
         {
@@ -448,7 +448,7 @@ namespace DuiLib
         return m_nTooltipWidth;
     }
 
-    WORD CDuiControl::GetCursor()
+    WORD CDuiControl::GetCursor() const
     {
         return m_wCursor;
     }
@@ -483,7 +483,7 @@ namespace DuiLib
         m_bMenuUsed = bMenuUsed;
     }
 
-    const CDuiString& CDuiControl::GetUserData()
+    const CDuiString& CDuiControl::GetUserData() const
     {
         return m_sUserData;
     }
@@ -1435,13 +1435,13 @@ namespace DuiLib
         }
     }
 
-    DWORD CDuiControl::GetAdjustColor(DWORD dwColor)
+    DWORD CDuiControl::GetAdjustColor(DWORD dwColor) const
     {
         if(!m_bColorHSL)
         {
             return dwColor;
         }
-        short H, S, L;
+        short H = 0, S = 0, L = 0;
         CDuiPaintManager::GetHSL(&H, &S, &L);
         return CRenderEngine::AdjustColor(dwColor, H, S, L);
     }

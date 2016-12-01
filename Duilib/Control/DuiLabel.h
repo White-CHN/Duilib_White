@@ -35,7 +35,7 @@ namespace DuiLib
 
         virtual void SetText(LPCTSTR pstrText);
 
-        virtual BOOL GetAutoCalcWidth() const;
+        BOOL GetAutoCalcWidth() const;
         virtual void SetAutoCalcWidth(BOOL bAutoCalcWidth);
 
         virtual SIZE EstimateSize(SIZE szAvailable);

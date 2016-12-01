@@ -961,6 +961,7 @@ namespace DuiLib
         {
             return;
         }
+        CDuiControl::DoPaint(hDC, rcPaint);
         PaintBk(hDC);
         PaintButton1(hDC);
         PaintButton2(hDC);
