@@ -44,7 +44,7 @@ namespace DuiLib
         {
             return static_cast<CDuiScrollBar*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiControl::GetInterface(pstrName);
     }
 
     void CDuiScrollBar::SetOwner(CDuiContainer* pOwner)
@@ -752,7 +752,7 @@ namespace DuiLib
 
     void CDuiScrollBar::SetPos(RECT rc, bool bNeedInvalidate /*= TRUE*/)
     {
-        __super::SetPos(rc, bNeedInvalidate);
+        CDuiControl::SetPos(rc, bNeedInvalidate);
         rc = GetPos();
 
         if(m_bHorizontal)
@@ -1077,7 +1077,7 @@ namespace DuiLib
         }
         else
         {
-            __super::SetAttribute(pstrName, pstrValue);
+            CDuiControl::SetAttribute(pstrName, pstrValue);
         }
     }
 
@@ -1091,7 +1091,7 @@ namespace DuiLib
             }
             else
             {
-                __super::DoEvent(event);
+                CDuiControl::DoEvent(event);
             }
             return;
         }
@@ -1486,7 +1486,7 @@ namespace DuiLib
         }
         else
         {
-            __super::DoEvent(event);
+            CDuiControl::DoEvent(event);
         }
     }
 

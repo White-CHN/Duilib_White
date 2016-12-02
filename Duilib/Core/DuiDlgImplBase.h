@@ -59,6 +59,7 @@ namespace DuiLib
         BOOL IsInStaticControl(CDuiControl* pControl);
     private:
         CDuiPaintManager m_PaintManager;
+        vector<CDuiString> m_vtStaticName;
     };
 
 

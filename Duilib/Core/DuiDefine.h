@@ -24,9 +24,6 @@ namespace DuiLib
 	}
 
 
-#define MAX_FONT_ID		30000
-
-
 #define MAX max
 #define MIN min
 #define CLAMP(x,a,b) (MIN(b,MAX(a,x)))
@@ -79,6 +76,8 @@ namespace DuiLib
 #define UISTATE_READONLY     0x00000020
 #define UISTATE_CAPTURED     0x00000040
 
+    //窗口风格
+    //////////////////////////////////////////////////////////////////////////
 #define UI_WNDSTYLE_CONTAINER  (0)
 #define UI_WNDSTYLE_FRAME      (WS_VISIBLE | WS_OVERLAPPEDWINDOW)
 #define UI_WNDSTYLE_CHILD      (WS_VISIBLE | WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN)
@@ -164,17 +163,18 @@ namespace DuiLib
 #define  DUI_CTR_SLIDER                          (_T("Slider"))
 #define  DUI_CTR_LISTELEMENT                     (_T("ListElement"))
 #define  DUI_CTR_LISTLABELELEMENT                (_T("ListLabelElement"))
+#define  DUI_CTR_DATETIME                        (_T("DateTime"))
+#define  DUI_CTR_IPADDRESS                       (_T("IPAddress"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
 #define  DUI_CTR_HORIZONTALLAYOUT                (_T("HorizontalLayout"))
 #define  DUI_CTR_TABLAYOUT                       (_T("TabLayout"))
 #define  DUI_CTR_COMBO                           (_T("Combo"))
+#define  DUI_CTR_GROUPBOX                        (_T("GroupBox"))
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 
-//自定义消息
-#define WM_USER_SET_DPI WM_USER + 200
 
 //Duilib所用到的定时器ID
     enum
@@ -187,6 +187,7 @@ namespace DuiLib
     {
         // 内部保留消息
         DUIMSG_ICON = WM_USER + 1,
+        DUIMSG_SET_DPI = WM_USER + 2,
         // 程序自定义消息
         DUIMSG_USER = WM_USER + 100,
     };
@@ -225,7 +226,7 @@ namespace DuiLib
 
     void DUILIB_API DuiTrace(LPCTSTR pstrFormat, ...);
     LPCTSTR DUILIB_API DuiTraceMsg(UINT uMsg);
-
+    DWORD GetLocalIpAddress();
 
 // 核心控件
     class CDuiControl;

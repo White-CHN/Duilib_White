@@ -47,6 +47,7 @@
 					<HorizontalLayout height="60" childpadding="12"  >
 						<Label align="left"  text="Label标签Label标签自动换行测试" tooltip="Label演示" borderround="4,4" width="80" wordbreak="true" bkcolor="#FFFFFFFF" />
 						<Label align="left" valign="bottom" autocalcwidth="true" text="Label自动计算宽度"  tooltip="Label演示"  textcolor="#FFB23AEE" bkcolor="#FFFFFFFF" />
+						<GroupBox text="GroupBox控件" tooltip="GroupBox控件" width="200"  textcolor="#FFeeeeee" bordercolor="#FFFFFFFF" bordersize="1" borderround="6,6"/>
 					</HorizontalLayout>
 				</HorizontalLayout>
 				<Label height="1"  bkimage="line/hor_line.bmp"/>
@@ -119,6 +120,17 @@
 							<ListLabelElement  text="7"  height="25" bkimage="dest='4,7,20,23' res='icon/icon.png'"/>
 							<ListLabelElement  text="8"  height="25" bkimage="dest='4,7,20,23' res='icon/icon.png'"/>
 						</Combo>
+					</HorizontalLayout>
+
+				</HorizontalLayout>
+				<Label height="1"  bkimage="line/hor_line.bmp"/>
+				<HorizontalLayout  childpadding="6" childvalign="vcenter" >
+					<Label font="3" valign="center" cursor="hand" align="center" tooltip="系统控件" text="系统控件"  width="80" textcolor="#FFFFFFFF" />
+					<HorizontalLayout height="25" childpadding="12"  >
+						<Label textcolor="#FFFFFFFF" text="日期" autocalcwidth="true"/>
+						<DateTime  bkcolor="#FFFFFFFF" width="220" bordersize="1" bordercolor="#FF888888" textpadding="2,0,0,0"/>
+						<Label textcolor="#FFFFFFFF" text="IP地址" autocalcwidth="true"/>
+						<IPAddress bkcolor="#FFFFFFFF" width="120" bordersize="1" bordercolor="#FF888888" textpadding="5"/>
 					</HorizontalLayout>
 
 				</HorizontalLayout>

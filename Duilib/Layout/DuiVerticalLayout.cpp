@@ -31,7 +31,7 @@ namespace DuiLib
         {
             return static_cast<CDuiVerticalLayout*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(pstrName);
     }
 
     UINT CDuiVerticalLayout::GetControlFlags() const
@@ -77,7 +77,7 @@ namespace DuiLib
         }
         else
         {
-            __super::SetAttribute(pstrName, pstrValue);
+            CDuiContainer::SetAttribute(pstrName, pstrValue);
         }
     }
 
@@ -456,7 +456,7 @@ namespace DuiLib
                         }
                     }
 
-                    CDuiRect rcInvalidate = GetThumbRect(true);
+                    CDuiRect rcInvalidate = GetThumbRect(TRUE);
                     m_rcNewPos = rc;
                     SetFixedWidth(m_rcNewPos.bottom - m_rcNewPos.top);
 
@@ -467,8 +467,8 @@ namespace DuiLib
                     }
                     else
                     {
-                        rcInvalidate.Join(GetThumbRect(true));
-                        rcInvalidate.Join(GetThumbRect(false));
+                        rcInvalidate.Join(GetThumbRect(TRUE));
+                        rcInvalidate.Join(GetThumbRect(FALSE));
                         if(GetManager())
                         {
                             GetManager()->Invalidate(rcInvalidate);
@@ -479,7 +479,7 @@ namespace DuiLib
             }
             if(event.Type == UIEVENT_SETCURSOR)
             {
-                RECT rcSeparator = GetThumbRect(false);
+                RECT rcSeparator = GetThumbRect(FALSE);
                 if(IsEnabled() && ::PtInRect(&rcSeparator, event.ptMouse))
                 {
                     ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_SIZENS)));
@@ -487,7 +487,7 @@ namespace DuiLib
                 }
             }
         }
-        __super::DoEvent(event);
+        CDuiContainer::DoEvent(event);
     }
 
     void CDuiVerticalLayout::DoPostPaint(HDC hDC, const RECT& rcPaint)

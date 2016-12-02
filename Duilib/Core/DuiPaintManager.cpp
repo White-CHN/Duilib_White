@@ -280,11 +280,14 @@ namespace DuiLib
         {
             CDuiControl* pControl = static_cast<CDuiControl*>(m_aDelayedCleanup[i]);
             DUI_FREE_POINT(pControl);
+            m_aDelayedCleanup.Remove(i);
         }
+
         for(int i = 0; i < m_aAsyncNotify.GetSize(); i++)
         {
             TNotifyUI* pNotify = static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
             DUI_FREE_POINT(pNotify);
+            m_aAsyncNotify.Remove(i);
         }
         RemoveAllTimers();
         RemoveAllFonts();
@@ -899,7 +902,7 @@ namespace DuiLib
         //AddRef();
         if(FAILED(RegisterDragDrop(m_hWndPaint, this))) //calls addref
         {
-            DUI_TRACE("this[0x%x] RegisterDragDrop[FALSE]", this);
+            DUI_ERROR("this[0x%x] RegisterDragDrop[FALSE]", this);
             return FALSE;
         }
         FORMATETC ftetc = {0};
@@ -1123,7 +1126,7 @@ namespace DuiLib
         }
     }
 
-    void CDuiPaintManager::SetDefaultFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared /*= false*/)
+    void CDuiPaintManager::SetDefaultFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared /*= FALSE*/)
     {
         LOGFONT lf = { 0 };
         ::GetObject(::GetStockObject(DEFAULT_GUI_FONT), sizeof(LOGFONT), &lf);
@@ -1331,7 +1334,7 @@ namespace DuiLib
         {
             if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i))
             {
-                pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key, false));
+                pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key, FALSE));
                 if(pFontInfo)
                 {
                     ::DeleteObject(pFontInfo->hFont);
@@ -1575,7 +1578,7 @@ namespace DuiLib
         {
             GetRoot()->NeedUpdate();
         }
-        ::PostMessage(GetPaintWindow(), WM_USER_SET_DPI, 0, 0);
+        ::PostMessage(GetPaintWindow(), DUIMSG_SET_DPI, 0, 0);
     }
 
     CDuiShadow* CDuiPaintManager::GetShadow()
@@ -2299,7 +2302,7 @@ namespace DuiLib
             TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i - j]);
             if(pTimer->pSender == pControl && pTimer->hWnd == m_hWndPaint)
             {
-                if(pTimer->bKilled == false)
+                if(pTimer->bKilled == FALSE)
                 {
                     ::KillTimer(pTimer->hWnd, pTimer->uWinTimer);
                 }
@@ -2344,6 +2347,13 @@ namespace DuiLib
     BOOL CDuiPaintManager::Initialize(HINSTANCE hInstance)
     {
         ASSERT(hInstance);
+        OleInitialize(NULL);
+        InitCommonControls();
+
+        if(hInstance == NULL)
+        {
+            return FALSE;
+        }
         m_hInstance = hInstance;
         if(m_hMsimg32Module == NULL)
         {
@@ -2364,10 +2374,10 @@ namespace DuiLib
         m_SharedResInfo.m_DefaultFontInfo.bBold			= (lf.lfWeight >= FW_BOLD);
         m_SharedResInfo.m_DefaultFontInfo.bUnderline	= (lf.lfUnderline == TRUE);
         m_SharedResInfo.m_DefaultFontInfo.bItalic		= (lf.lfItalic == TRUE);
-        ::ZeroMemory(&m_SharedResInfo.m_DefaultFontInfo.tm, sizeof(m_SharedResInfo.m_DefaultFontInfo.tm));
+        ZeroMemory(&m_SharedResInfo.m_DefaultFontInfo.tm, sizeof(m_SharedResInfo.m_DefaultFontInfo.tm));
 
         CDuiShadow::Initialize(m_hInstance);
-        ::InitCommonControls();
+
         return TRUE;
     }
 
@@ -2409,7 +2419,7 @@ namespace DuiLib
         {
             if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i))
             {
-                pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key, false));
+                pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key, FALSE));
                 if(pFontInfo)
                 {
                     ::DeleteObject(pFontInfo->hFont);
@@ -2447,6 +2457,7 @@ namespace DuiLib
             CloseZip((HZIP)m_hResourceZip);
             m_hResourceZip = NULL;
         }
+        OleUninitialize();
     }
 
     HINSTANCE CDuiPaintManager::GetInstance()
@@ -3361,7 +3372,7 @@ namespace DuiLib
             HRESULT hr = ::DoDragDrop(pdobj, pdsrc, DROPEFFECT_COPY | DROPEFFECT_MOVE, &dwEffect);
             pdsrc->Release();
             pdobj->Release();
-            m_bDragMode = false;
+            m_bDragMode = FALSE;
             return 0;
         }
         TEventUI event = { 0 };

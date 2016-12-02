@@ -23,7 +23,7 @@ namespace DuiLib
 
     LPCTSTR CDuiEditWnd::GetWindowClassName() const
     {
-        return _T("CDuiEditWnd");
+        return GET_CLASS_NAME(CDuiEditWnd);
     }
 
     LPCTSTR CDuiEditWnd::GetSuperClassName() const
@@ -185,7 +185,7 @@ namespace DuiLib
         LRESULT lRes = 0;
         if(m_pOwner->GetManager()->IsLayered())
         {
-            lRes = __super::HandleMessage(uMsg, wParam, lParam);
+            lRes = CDuiWnd::HandleMessage(uMsg, wParam, lParam);
             if(m_pOwner->IsEnabled() && m_bDrawCaret)
             {
                 RECT rcClient;
@@ -337,7 +337,7 @@ namespace DuiLib
         {
             return lRes;
         }
-        return __super::HandleMessage(uMsg, wParam, lParam);
+        return CDuiWnd::HandleMessage(uMsg, wParam, lParam);
     }
 
     /////////////////////////////////////////////
@@ -376,7 +376,7 @@ namespace DuiLib
         {
             return static_cast<CDuiEdit*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(pstrName);
     }
 
     UINT CDuiEdit::GetControlFlags() const
@@ -649,13 +649,13 @@ namespace DuiLib
         }
         else
         {
-            __super::SetAttribute(pstrName, pstrValue);
+            CDuiLabel::SetAttribute(pstrName, pstrValue);
         }
     }
 
     void CDuiEdit::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)
     {
-        __super::SetPos(rc, bNeedInvalidate);
+        CDuiLabel::SetPos(rc, bNeedInvalidate);
         if(m_pEditWnd != NULL)
         {
             RECT rcPos = m_pEditWnd->CalPos();
@@ -790,7 +790,7 @@ namespace DuiLib
             }
             else
             {
-                __super::DoEvent(event);
+                CDuiLabel::DoEvent(event);
             }
             return;
         }
@@ -903,7 +903,7 @@ namespace DuiLib
             }
             return;
         }
-        __super::DoEvent(event);
+        CDuiLabel::DoEvent(event);
     }
 
 }

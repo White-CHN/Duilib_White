@@ -10,6 +10,15 @@ namespace DuiLib
         ~CDuiConsole();
     };
 
+    class DUILIB_API CDuiTimeInterval
+    {
+    public:
+        CDuiTimeInterval();
+        ~CDuiTimeInterval();
+    private:
+        DWORD m_dwMesc;
+    };
+
     class DUILIB_API STRINGorID
     {
     public:

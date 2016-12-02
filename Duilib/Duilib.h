@@ -36,6 +36,7 @@
 
 #include <windows.h>
 #include <windowsx.h>
+#include <winsock.h>
 #include <comdef.h>
 #include <commctrl.h>
 #include <gdiplus.h>
@@ -82,6 +83,18 @@ using namespace Gdiplus;
 #include "Control/DuiProgress.h"
 #include "Control/DuiSlider.h"
 #include "Control/DuiCombo.h"
+#include "Control/DuiGroupBox.h"
+#include "Control/DuiDateTime.h"
+#include "Control/DuiIPAddress.h"
+
+
+
+
+
+
+
+
 
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "comctl32.lib" )
+#pragma comment( lib, "ws2_32.lib" )

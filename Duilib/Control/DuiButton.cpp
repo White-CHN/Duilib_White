@@ -34,7 +34,7 @@ namespace DuiLib
         {
             return static_cast<CDuiButton*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(pstrName);
     }
 
     UINT CDuiButton::GetControlFlags() const
@@ -314,7 +314,7 @@ namespace DuiLib
         }
         else
         {
-            __super::SetAttribute(pstrName, pstrValue);
+            CDuiLabel::SetAttribute(pstrName, pstrValue);
         }
     }
 
@@ -409,7 +409,7 @@ namespace DuiLib
                 return;
             }
         }
-        __super::PaintBkColor(hDC);
+        CDuiLabel::PaintBkColor(hDC);
     }
 
     void CDuiButton::PaintStatusImage(HDC hDC)
@@ -536,7 +536,7 @@ namespace DuiLib
 
     BOOL CDuiButton::Activate()
     {
-        if(!__super::Activate())
+        if(!CDuiLabel::Activate())
         {
             return FALSE;
         }
@@ -558,7 +558,7 @@ namespace DuiLib
             }
             else
             {
-                __super::DoEvent(event);
+                CDuiLabel::DoEvent(event);
             }
             return;
         }
@@ -656,7 +656,7 @@ namespace DuiLib
             Invalidate();
             return;
         }
-        __super::DoEvent(event);
+        CDuiLabel::DoEvent(event);
     }
 
 

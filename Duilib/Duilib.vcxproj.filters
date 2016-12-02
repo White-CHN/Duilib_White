@@ -147,6 +147,15 @@
     <ClInclude Include="Control\DuiCombo.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiGroupBox.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\DuiDateTime.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\DuiIPAddress.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -252,6 +261,15 @@
       <Filter>源文件\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Control\DuiCombo.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiGroupBox.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiDateTime.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiIPAddress.cpp">
       <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>

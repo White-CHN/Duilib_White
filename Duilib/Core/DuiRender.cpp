@@ -67,9 +67,15 @@ namespace DuiLib
 {
     static int g_iFontID = MAX_FONT_ID;
 
+
     /////////////////////////////////////////////////////////////////////////////////////
     //
     //
+
+    CRenderClip::CRenderClip()
+    {
+
+    }
 
     CRenderClip::~CRenderClip()
     {

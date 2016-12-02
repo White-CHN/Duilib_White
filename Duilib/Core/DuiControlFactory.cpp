@@ -21,6 +21,9 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiCombo);
         INNER_REGISTER_DUICONTROL(CDuiListElement);
         INNER_REGISTER_DUICONTROL(CDuiListLabelElement);
+        INNER_REGISTER_DUICONTROL(CDuiGroupBox);
+        INNER_REGISTER_DUICONTROL(CDuiDateTime);
+        INNER_REGISTER_DUICONTROL(CDuiIPAddress);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

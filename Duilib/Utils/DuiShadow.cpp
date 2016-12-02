@@ -6,7 +6,7 @@ namespace DuiLib
 {
 
     const TCHAR* strWndClassName = _T("PerryShadowWnd");
-    bool CDuiShadow::s_bHasInit = FALSE;
+    BOOL CDuiShadow::s_bHasInit = FALSE;
 
     CDuiShadow::CDuiShadow(void)
         : m_hWnd((HWND)NULL)
@@ -19,10 +19,10 @@ namespace DuiLib
         , m_nyOffset(0)
         , m_Color(RGB(0, 0, 0))
         , m_WndSize(0)
-        , m_bUpdate(false)
-        , m_bIsImageMode(false)
-        , m_bIsShowShadow(false)
-        , m_bIsDisableShadow(false)
+        , m_bUpdate(FALSE)
+        , m_bIsImageMode(FALSE)
+        , m_bIsShowShadow(FALSE)
+        , m_bIsDisableShadow(FALSE)
     {
         ::ZeroMemory(&m_rcShadowCorner, sizeof(RECT));
     }
@@ -31,11 +31,11 @@ namespace DuiLib
     {
     }
 
-    bool CDuiShadow::Initialize(HINSTANCE hInstance)
+    BOOL CDuiShadow::Initialize(HINSTANCE hInstance)
     {
         if(s_bHasInit)
         {
-            return false;
+            return FALSE;
         }
         // Register window class for shadow window
         WNDCLASSEX wcex;
@@ -53,8 +53,8 @@ namespace DuiLib
         wcex.lpszClassName	= strWndClassName;
         wcex.hIconSm		= NULL;
         RegisterClassEx(&wcex);
-        s_bHasInit = true;
-        return true;
+        s_bHasInit = TRUE;
+        return TRUE;
     }
 
     void CDuiShadow::Create(CDuiPaintManager* pPaintManager)
@@ -165,7 +165,7 @@ namespace DuiLib
                         // So do not Update() until next WM_PAINT is received in this case
                         if(LOWORD(lParam) > LOWORD(pThis->m_WndSize) || HIWORD(lParam) > HIWORD(pThis->m_WndSize))
                         {
-                            pThis->m_bUpdate = true;
+                            pThis->m_bUpdate = TRUE;
                         }
                         else
                         {
@@ -185,7 +185,7 @@ namespace DuiLib
                 if(pThis->m_bUpdate)
                 {
                     pThis->Update(hwnd);
-                    pThis->m_bUpdate = false;
+                    pThis->m_bUpdate = FALSE;
                 }
                 //return hr;
                 break;
@@ -209,7 +209,7 @@ namespace DuiLib
                     else if(!(pThis->m_Status & SS_PARENTVISIBLE))
                     {
                         //pThis->Update(hwnd);
-                        pThis->m_bUpdate = true;
+                        pThis->m_bUpdate = TRUE;
                         ::ShowWindow(pThis->m_hWnd, SW_SHOWNOACTIVATE);
                         pThis->m_Status |= SS_VISABLE | SS_PARENTVISIBLE;
                     }
@@ -307,7 +307,7 @@ namespace DuiLib
             rcBmpPart.right = data->nX;
             rcBmpPart.bottom = data->nY;
             RECT corner = m_rcShadowCorner;
-            CRenderEngine::DrawImage(hMemDC, data->hBitmap, rcPaint, rcPaint, rcBmpPart, corner, data->bAlpha, 0xFF, true, false, false);
+            CRenderEngine::DrawImage(hMemDC, data->hBitmap, rcPaint, rcPaint, rcBmpPart, corner, data->bAlpha, 0xFF, TRUE, FALSE, FALSE);
         }
         else
         {
@@ -557,18 +557,18 @@ namespace DuiLib
         DeleteObject(hParentRgn);
     }
 
-    void CDuiShadow::ShowShadow(bool bShow)
+    void CDuiShadow::ShowShadow(BOOL bShow)
     {
         m_bIsShowShadow = bShow;
     }
 
-    bool CDuiShadow::IsShowShadow() const
+    BOOL CDuiShadow::IsShowShadow() const
     {
         return m_bIsShowShadow;
     }
 
 
-    void CDuiShadow::DisableShadow(bool bDisable)
+    void CDuiShadow::DisableShadow(BOOL bDisable)
     {
         m_bIsDisableShadow = bDisable;
         if(m_hWnd != NULL)
@@ -602,59 +602,59 @@ namespace DuiLib
         }
     }
     ////TODO shadow disnable fix////
-    bool CDuiShadow::IsDisableShadow() const
+    BOOL CDuiShadow::IsDisableShadow() const
     {
         return m_bIsDisableShadow;
     }
 
-    bool CDuiShadow::SetSize(int NewSize)
+    BOOL CDuiShadow::SetSize(int NewSize)
     {
         if(NewSize > 20 || NewSize < -20)
         {
-            return false;
+            return FALSE;
         }
         m_nSize = (signed char)NewSize;
         if(m_hWnd != NULL && (SS_VISABLE & m_Status))
         {
             Update(GetParent(m_hWnd));
         }
-        return true;
+        return TRUE;
     }
 
-    bool CDuiShadow::SetSharpness(unsigned int NewSharpness)
+    BOOL CDuiShadow::SetSharpness(unsigned int NewSharpness)
     {
         if(NewSharpness > 20)
         {
-            return false;
+            return FALSE;
         }
         m_nSharpness = (unsigned char)NewSharpness;
         if(m_hWnd != NULL && (SS_VISABLE & m_Status))
         {
             Update(GetParent(m_hWnd));
         }
-        return true;
+        return TRUE;
     }
 
-    bool CDuiShadow::SetDarkness(unsigned int NewDarkness)
+    BOOL CDuiShadow::SetDarkness(unsigned int NewDarkness)
     {
         if(NewDarkness > 255)
         {
-            return false;
+            return FALSE;
         }
         m_nDarkness = (unsigned char)NewDarkness;
         if(m_hWnd != NULL && (SS_VISABLE & m_Status))
         {
             Update(GetParent(m_hWnd));
         }
-        return true;
+        return TRUE;
     }
 
-    bool CDuiShadow::SetPosition(int NewXOffset, int NewYOffset)
+    BOOL CDuiShadow::SetPosition(int NewXOffset, int NewYOffset)
     {
         if(NewXOffset > 20 || NewXOffset < -20 ||
                 NewYOffset > 20 || NewYOffset < -20)
         {
-            return false;
+            return FALSE;
         }
         m_nxOffset = (signed char)NewXOffset;
         m_nyOffset = (signed char)NewYOffset;
@@ -662,49 +662,49 @@ namespace DuiLib
         {
             Update(GetParent(m_hWnd));
         }
-        return true;
+        return TRUE;
     }
 
-    bool CDuiShadow::SetColor(COLORREF NewColor)
+    BOOL CDuiShadow::SetColor(COLORREF NewColor)
     {
         m_Color = NewColor;
         if(m_hWnd != NULL && (SS_VISABLE & m_Status))
         {
             Update(GetParent(m_hWnd));
         }
-        return true;
+        return TRUE;
     }
 
-    bool CDuiShadow::SetImage(LPCTSTR szImage)
+    BOOL CDuiShadow::SetImage(LPCTSTR szImage)
     {
         if(szImage == NULL)
         {
-            return false;
+            return FALSE;
         }
-        m_bIsImageMode = true;
+        m_bIsImageMode = TRUE;
         m_sShadowImage = szImage;
         if(m_hWnd != NULL && (SS_VISABLE & m_Status))
         {
             Update(GetParent(m_hWnd));
         }
-        return true;
+        return TRUE;
     }
 
-    bool CDuiShadow::SetShadowCorner(RECT rcCorner)
+    BOOL CDuiShadow::SetShadowCorner(RECT rcCorner)
     {
         if(rcCorner.left < 0 || rcCorner.top < 0 || rcCorner.right < 0 || rcCorner.bottom < 0)
         {
-            return false;
+            return FALSE;
         }
         m_rcShadowCorner = rcCorner;
         if(m_hWnd != NULL && (SS_VISABLE & m_Status))
         {
             Update(GetParent(m_hWnd));
         }
-        return true;
+        return TRUE;
     }
 
-    bool CDuiShadow::CopyShadow(CDuiShadow* pShadow)
+    BOOL CDuiShadow::CopyShadow(CDuiShadow* pShadow)
     {
         if(m_bIsImageMode)
         {
@@ -720,7 +720,7 @@ namespace DuiLib
             pShadow->SetPosition((int)m_nxOffset, (int)m_nyOffset);
         }
         pShadow->ShowShadow(m_bIsShowShadow);
-        return true;
+        return TRUE;
     }
 
 

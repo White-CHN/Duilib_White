@@ -25,6 +25,24 @@ namespace DuiLib
 #endif // _DEBUG
     }
 
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    //
+    //
+
+
+    CDuiTimeInterval::CDuiTimeInterval()
+    {
+        m_dwMesc = GetTickCount();
+    }
+
+
+    CDuiTimeInterval::~CDuiTimeInterval()
+    {
+        DWORD dwRes = GetTickCount() - m_dwMesc;
+        DUI_TRACE("[%d]ms", dwRes);
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////
     //
     //

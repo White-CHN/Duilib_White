@@ -7,6 +7,17 @@ namespace DuiLib
 
     CDuiDlgImplBase::CDuiDlgImplBase(void)
     {
+        m_vtStaticName.push_back(DUI_CTR_CONTROL);
+        m_vtStaticName.push_back(_T("text"));
+        m_vtStaticName.push_back(DUI_CTR_LABEL);
+        m_vtStaticName.push_back(DUI_CTR_CONTAINER);
+        m_vtStaticName.push_back(DUI_CTR_VERTICALLAYOUT);
+        m_vtStaticName.push_back(DUI_CTR_HORIZONTALLAYOUT);
+        m_vtStaticName.push_back(DUI_CTR_TABLAYOUT);
+        m_vtStaticName.push_back(DUI_CTR_GROUPBOX);
+        m_vtStaticName.push_back(_T("childlayout"));
+        m_vtStaticName.push_back(_T("dialoglayout"));
+        m_vtStaticName.push_back(_T("progresscontainer"));
     }
 
 
@@ -290,7 +301,7 @@ namespace DuiLib
         }
 #if defined(WIN32) && !defined(UNDER_CE)
         BOOL bZoomed = ::IsZoomed(GetHWND());
-        LRESULT lRes = __super::HandleMessage(uMsg, wParam, lParam);
+        LRESULT lRes = CDuiWnd::HandleMessage(uMsg, wParam, lParam);
         if(::IsZoomed(GetHWND()) != bZoomed)
         {
             if(!bZoomed)
@@ -321,7 +332,7 @@ namespace DuiLib
             }
         }
 #else
-        LRESULT lRes = __super::HandleMessage(uMsg, wParam, lParam);
+        LRESULT lRes = CDuiWnd::HandleMessage(uMsg, wParam, lParam);
 #endif
         return lRes;
     }
@@ -444,7 +455,7 @@ namespace DuiLib
         {
             return lRes;
         }
-        return __super::HandleMessage(uMsg, wParam, lParam);
+        return CDuiWnd::HandleMessage(uMsg, wParam, lParam);
     }
 
     BOOL CDuiDlgImplBase::IsInStaticControl(CDuiControl* pControl)
@@ -455,26 +466,16 @@ namespace DuiLib
             return bRet;
         }
         CDuiString strClassName = pControl->GetClass();
-        std::vector<CDuiString> vctStaticName;
-        vctStaticName.push_back(DUI_CTR_CONTROL);
-        vctStaticName.push_back(_T("text"));
-        vctStaticName.push_back(DUI_CTR_LABEL);
-        vctStaticName.push_back(DUI_CTR_CONTAINER);
-        vctStaticName.push_back(DUI_CTR_VERTICALLAYOUT);
-        vctStaticName.push_back(DUI_CTR_HORIZONTALLAYOUT);
-        vctStaticName.push_back(DUI_CTR_TABLAYOUT);
-        vctStaticName.push_back(_T("childlayout"));
-        vctStaticName.push_back(_T("dialoglayout"));
-        vctStaticName.push_back(_T("progresscontainer"));
-        std::vector<CDuiString>::iterator it = std::find(vctStaticName.begin(), vctStaticName.end(), strClassName);
-        if(vctStaticName.end() != it)
+
+        vector<CDuiString>::iterator it = find(m_vtStaticName.begin(), m_vtStaticName.end(), strClassName);
+        if(m_vtStaticName.end() != it)
         {
             CDuiControl* pParent = pControl->GetParent();
             while(pParent)
             {
                 strClassName = pParent->GetClass();
-                it = std::find(vctStaticName.begin(), vctStaticName.end(), strClassName);
-                if(vctStaticName.end() == it)
+                it = std::find(m_vtStaticName.begin(), m_vtStaticName.end(), strClassName);
+                if(m_vtStaticName.end() == it)
                 {
                     return bRet;
                 }

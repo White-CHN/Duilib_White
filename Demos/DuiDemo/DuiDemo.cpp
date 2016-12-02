@@ -6,16 +6,6 @@
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
 {
-    /*HRESULT hRes = ::CoInitialize(NULL);
-    if(FAILED(hRes))
-    {
-    return 0;
-    }
-    hRes = ::OleInitialize(NULL);
-    if(FAILED(hRes))
-    {
-    return 0;
-    }*/
     CDuiConsole Console ;// 调试信息控制台
 
     // 初始化UI管理器
@@ -80,8 +70,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
     CDuiPaintManager::MessageLoop();
     DUI_FREE_POINT(pDemoFrame);
     CDuiPaintManager::Uninitialize();
-    //OleUninitialize();
-    //::CoUninitialize();
+    OleUninitialize();
     return 0;
 }
 

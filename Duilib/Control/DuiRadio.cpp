@@ -26,7 +26,7 @@ namespace DuiLib
         {
             return static_cast<CDuiRadio*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiOption::GetInterface(pstrName);
     }
 
     void CDuiRadio::DoEvent(TEventUI& event)
@@ -39,7 +39,7 @@ namespace DuiLib
             }
             else
             {
-                __super::DoEvent(event);
+                CDuiOption::DoEvent(event);
             }
             return;
         }
@@ -48,7 +48,7 @@ namespace DuiLib
             Selected(TRUE);
             return;
         }
-        __super::DoEvent(event);
+        CDuiOption::DoEvent(event);
     }
 
 }

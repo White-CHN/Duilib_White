@@ -26,12 +26,12 @@ namespace DuiLib
         {
             return static_cast<CDuiTabLayout*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(pstrName);
     }
 
     BOOL CDuiTabLayout::Add(CDuiControl* pControl)
     {
-        BOOL ret = __super::Add(pControl);
+        BOOL ret = CDuiContainer::Add(pControl);
         if(!ret)
         {
             return ret;
@@ -51,7 +51,7 @@ namespace DuiLib
 
     BOOL CDuiTabLayout::AddAt(CDuiControl* pControl, int iIndex)
     {
-        BOOL ret = __super::AddAt(pControl, iIndex);
+        BOOL ret = CDuiContainer::AddAt(pControl, iIndex);
         if(!ret)
         {
             return ret;
@@ -81,7 +81,7 @@ namespace DuiLib
         }
 
         int index = GetItemIndex(pControl);
-        BOOL ret = __super::Remove(pControl);
+        BOOL ret = CDuiContainer::Remove(pControl);
         if(!ret)
         {
             return FALSE;
@@ -111,7 +111,7 @@ namespace DuiLib
     void CDuiTabLayout::RemoveAll()
     {
         m_iCurSel = -1;
-        __super::RemoveAll();
+        CDuiContainer::RemoveAll();
         NeedParentUpdate();
     }
 
@@ -132,13 +132,13 @@ namespace DuiLib
         {
             if(it == iIndex)
             {
-                GetItemAt(it)->SetVisible(true);
+                GetItemAt(it)->SetVisible(TRUE);
                 GetItemAt(it)->SetFocus();
                 SetPos(GetPos());
             }
             else
             {
-                GetItemAt(it)->SetVisible(false);
+                GetItemAt(it)->SetVisible(FALSE);
             }
         }
         NeedParentUpdate();
@@ -170,7 +170,7 @@ namespace DuiLib
         {
             SelectItem(_ttoi(pstrValue));
         }
-        return __super::SetAttribute(pstrName, pstrValue);
+        return CDuiContainer::SetAttribute(pstrName, pstrValue);
     }
 
     void CDuiTabLayout::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)

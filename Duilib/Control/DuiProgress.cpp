@@ -32,7 +32,7 @@ namespace DuiLib
         {
             return static_cast<CDuiProgress*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(pstrName);
     }
 
     BOOL CDuiProgress::IsShowText()
@@ -163,7 +163,7 @@ namespace DuiLib
         }
         else
         {
-            __super::SetAttribute(pstrName, pstrValue);
+            CDuiLabel::SetAttribute(pstrName, pstrValue);
         }
     }
 

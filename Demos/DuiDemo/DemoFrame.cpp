@@ -42,18 +42,18 @@ LPCTSTR CDemoFrame::GetWindowClassName() const
 
 LRESULT CDemoFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    return __super::HandleMessage(uMsg, wParam, lParam);
+    return CDuiDlgImplBase::HandleMessage(uMsg, wParam, lParam);
 }
 
 void CDemoFrame::OnFinalMessage(HWND hWnd)
 {
-    __super::OnFinalMessage(hWnd);
+    CDuiDlgImplBase::OnFinalMessage(hWnd);
 }
 
 LRESULT CDemoFrame::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
 
-    return __super::MessageHandler(uMsg, wParam, lParam, bHandled);
+    return CDuiDlgImplBase::MessageHandler(uMsg, wParam, lParam, bHandled);
 }
 
 CDuiControl* CDemoFrame::CreateControl(LPCTSTR pstrClass)
@@ -79,7 +79,7 @@ LPCTSTR CDemoFrame::QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType)
         }
     }
 
-    return __super::QueryControlText(lpstrId, lpstrType);
+    return CDuiDlgImplBase::QueryControlText(lpstrId, lpstrType);
 }
 
 void CDemoFrame::Notify(TNotifyUI& msg)

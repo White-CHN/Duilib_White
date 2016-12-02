@@ -34,7 +34,7 @@ namespace DuiLib
         {
             return static_cast<CDuiLabel*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiControl::GetInterface(pstrName);
     }
 
     UINT CDuiLabel::GetControlFlags() const
@@ -137,7 +137,7 @@ namespace DuiLib
 
     void CDuiLabel::SetText(LPCTSTR pstrText)
     {
-        __super::SetText(pstrText);
+        CDuiControl::SetText(pstrText);
         if(GetAutoCalcWidth())
         {
             NeedParentUpdate();
@@ -176,7 +176,7 @@ namespace DuiLib
         {
             return CDuiSize(GetFixedWidth(), GetManager()->GetFontInfo(GetFont())->tm.tmHeight + 4);
         }
-        return __super::EstimateSize(szAvailable);
+        return CDuiControl::EstimateSize(szAvailable);
     }
 
     void CDuiLabel::DoEvent(TEventUI& event)
@@ -191,7 +191,7 @@ namespace DuiLib
             SetFocused(FALSE);
             return;
         }
-        __super::DoEvent(event);
+        CDuiControl::DoEvent(event);
     }
 
     void CDuiLabel::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
@@ -315,12 +315,17 @@ namespace DuiLib
         }
         else
         {
-            __super::SetAttribute(pstrName, pstrValue);
+            CDuiControl::SetAttribute(pstrName, pstrValue);
         }
     }
 
     void CDuiLabel::PaintText(HDC hDC)
     {
+        CDuiString sText = GetText();
+        if(sText.IsEmpty())
+        {
+            return;
+        }
         if(m_dwTextColor == 0)
         {
             m_dwTextColor = GetManager()->GetDefaultFontColor();
@@ -336,11 +341,7 @@ namespace DuiLib
         rc.right -= rcTextPadding.right;
         rc.top += rcTextPadding.top;
         rc.bottom -= rcTextPadding.bottom;
-        CDuiString sText = GetText();
-        if(sText.IsEmpty())
-        {
-            return;
-        }
+
         int nLinks = 0;
         if(IsEnabled())
         {

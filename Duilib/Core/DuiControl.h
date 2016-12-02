@@ -34,8 +34,13 @@ namespace DuiLib
         void NeedParentUpdate();
         void NeedUpdate();
         // 图形相关
+        DWORD GetBkColor();
         void SetBkColor(DWORD dwBackColor);
+
+        DWORD GetBkColor2();
         void SetBkColor2(DWORD dwBackColor);
+
+        DWORD GetBkColor3();
         void SetBkColor3(DWORD dwBackColor);
 
         DWORD GetForeColor() const;
@@ -46,12 +51,19 @@ namespace DuiLib
         CDuiString GetForeImage() const;
         void SetForeImage(LPCTSTR pStrImage);
 
+        DWORD GetFocusBorderColor();
         void SetFocusBorderColor(DWORD dwBorderColor);
+
         void SetColorHSL(BOOL bColorHSL);
+
+        SIZE GetBorderRound();
         void SetBorderRound(SIZE cxyRound);
         //边框相关
+        int GetBorderSize();
         void SetBorderSize(int nSize);
         void SetBorderSize(RECT rc);
+
+        DWORD GetBorderColor();
         void SetBorderColor(DWORD dwBorderColor);
         void SetLeftBorderSize(int nSize);
         void SetTopBorderSize(int nSize);
@@ -232,7 +244,7 @@ namespace DuiLib
         RECT m_rcPaint;				//实际绘制区域
 
         TPercentInfo m_piFloatPercent;		//float 的数值
-
+    public:
         CDuiString m_sBkImage;		//bkimage属性
         CDuiString m_sForeImage;	//foreimage属性
         CDuiString m_sName;			//name属性

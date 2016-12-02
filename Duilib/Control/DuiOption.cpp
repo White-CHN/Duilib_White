@@ -32,12 +32,12 @@ namespace DuiLib
         {
             return static_cast<CDuiOption*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiButton::GetInterface(pstrName);
     }
 
     BOOL CDuiOption::Activate()
     {
-        if(!__super::Activate())
+        if(!CDuiButton::Activate())
         {
             return FALSE;
         }
@@ -260,7 +260,7 @@ namespace DuiLib
         }
         else
         {
-            __super::SetAttribute(pstrName, pstrValue);
+            CDuiButton::SetAttribute(pstrName, pstrValue);
         }
     }
 
@@ -275,7 +275,7 @@ namespace DuiLib
         }
         else
         {
-            return __super::PaintBkColor(hDC);
+            return CDuiButton::PaintBkColor(hDC);
         }
     }
 
@@ -307,7 +307,7 @@ namespace DuiLib
         }
         else
         {
-            __super::PaintStatusImage(hDC);
+            CDuiButton::PaintStatusImage(hDC);
         }
     }
 
@@ -324,7 +324,7 @@ namespace DuiLib
                 }
             }
         }
-        __super::PaintForeImage(hDC);
+        CDuiButton::PaintForeImage(hDC);
     }
 
     void CDuiOption::PaintText(HDC hDC)
@@ -374,7 +374,7 @@ namespace DuiLib
         }
         else
         {
-            __super::PaintText(hDC);
+            CDuiButton::PaintText(hDC);
         }
     }
 }

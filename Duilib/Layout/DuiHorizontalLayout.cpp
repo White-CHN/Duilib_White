@@ -29,7 +29,7 @@ namespace DuiLib
         {
             return static_cast<CDuiHorizontalLayout*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(pstrName);
     }
 
     UINT CDuiHorizontalLayout::GetControlFlags() const
@@ -75,7 +75,7 @@ namespace DuiLib
         }
         else
         {
-            __super::SetAttribute(pstrName, pstrValue);
+            CDuiContainer::SetAttribute(pstrName, pstrValue);
         }
     }
 
@@ -479,8 +479,8 @@ namespace DuiLib
                     }
                     else
                     {
-                        rcInvalidate.Join(GetThumbRect(true));
-                        rcInvalidate.Join(GetThumbRect(false));
+                        rcInvalidate.Join(GetThumbRect(TRUE));
+                        rcInvalidate.Join(GetThumbRect(FALSE));
                         if(GetManager())
                         {
                             GetManager()->Invalidate(rcInvalidate);
@@ -491,7 +491,7 @@ namespace DuiLib
             }
             if(event.Type == UIEVENT_SETCURSOR)
             {
-                RECT rcSeparator = GetThumbRect(false);
+                RECT rcSeparator = GetThumbRect(FALSE);
                 if(IsEnabled() && ::PtInRect(&rcSeparator, event.ptMouse))
                 {
                     ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_SIZEWE)));
@@ -499,7 +499,7 @@ namespace DuiLib
                 }
             }
         }
-        __super::DoEvent(event);
+        CDuiContainer::DoEvent(event);
     }
 
     void CDuiHorizontalLayout::DoPostPaint(HDC hDC, const RECT& rcPaint)

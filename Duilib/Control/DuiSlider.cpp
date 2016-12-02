@@ -29,7 +29,7 @@ namespace DuiLib
         {
             return static_cast<CDuiSlider*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiProgress::GetInterface(pstrName);
     }
 
     LPCTSTR CDuiSlider::GetThumbImage() const
@@ -119,7 +119,7 @@ namespace DuiLib
         }
         else
         {
-            __super::SetAttribute(pstrName, pstrValue);
+            CDuiProgress::SetAttribute(pstrName, pstrValue);
         }
     }
 
@@ -141,7 +141,7 @@ namespace DuiLib
 
     void CDuiSlider::PaintForeImage(HDC hDC)
     {
-        __super::PaintForeImage(hDC);
+        CDuiProgress::PaintForeImage(hDC);
 
         RECT rcThumb = GetThumbRect();
         rcThumb.left -= GetPos().left;
@@ -197,7 +197,7 @@ namespace DuiLib
             }
             else
             {
-                __super::DoEvent(event);
+                CDuiProgress::DoEvent(event);
             }
             return;
         }
@@ -381,7 +381,7 @@ namespace DuiLib
             }
             return;
         }
-        __super::DoEvent(event);
+        CDuiProgress::DoEvent(event);
     }
 
 }

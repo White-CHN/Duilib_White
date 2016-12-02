@@ -44,7 +44,7 @@ namespace DuiLib
         {
             return static_cast<CDuiContainer*>(this);
         }
-        return __super::GetInterface(pstrName);
+        return CDuiControl::GetInterface(pstrName);
     }
 
 
@@ -418,7 +418,7 @@ namespace DuiLib
     {
         if(pControl == NULL)
         {
-            return false;
+            return FALSE;
         }
         if(GetManager() != NULL)
         {
@@ -430,7 +430,7 @@ namespace DuiLib
         }
         else
         {
-            pControl->SetInternVisible(false);
+            pControl->SetInternVisible(FALSE);
         }
         return m_items.InsertAt(iIndex, pControl);
     }
@@ -524,7 +524,7 @@ namespace DuiLib
                     return i;
                 }
             }
-            return FindSelectable(0, true);
+            return FindSelectable(0, TRUE);
         }
     }
 
@@ -555,7 +555,7 @@ namespace DuiLib
 
     void CDuiContainer::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)
     {
-        __super::SetPos(rc, bNeedInvalidate);
+        CDuiControl::SetPos(rc, bNeedInvalidate);
         if(m_items.IsEmpty())
         {
             return;
@@ -625,7 +625,7 @@ namespace DuiLib
         }
         CRenderClip clip;
         CRenderClip::GenerateClip(hDC, rcTemp, clip);
-        __super::DoPaint(hDC, rcPaint);
+        CDuiControl::DoPaint(hDC, rcPaint);
         if(m_items.GetSize() > 0)
         {
             RECT rcInset = GetInset();
@@ -1161,7 +1161,7 @@ namespace DuiLib
             }
 
             ::OffsetRect(&rcCtrl, GetPos().left, GetPos().top);
-            pControl->SetPos(rcCtrl, false);
+            pControl->SetPos(rcCtrl, FALSE);
         }
         else
         {
@@ -1173,7 +1173,7 @@ namespace DuiLib
             rcCtrl.top = (LONG)(height * rcPercent.top) + szXY.cy + GetPos().top;
             rcCtrl.right = (LONG)(width * rcPercent.right) + szXY.cx + sz.cx + GetPos().left;
             rcCtrl.bottom = (LONG)(height * rcPercent.bottom) + szXY.cy + sz.cy + GetPos().top;
-            pControl->SetPos(rcCtrl, false);
+            pControl->SetPos(rcCtrl, FALSE);
         }
     }
 

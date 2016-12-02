@@ -54,6 +54,10 @@ namespace DuiLib
 
     CDuiControl::~CDuiControl(void)
     {
+        if(m_pManager != NULL)
+        {
+            m_pManager->ReapObjects(this);
+        }
     }
 
     LPCTSTR CDuiControl::GetClass() const
@@ -147,6 +151,11 @@ namespace DuiLib
     }
 
 
+    DWORD CDuiControl::GetBkColor()
+    {
+        return m_dwBackColor;
+    }
+
     void CDuiControl::SetBkColor(DWORD dwBackColor)
     {
         if(m_dwBackColor == dwBackColor)
@@ -157,6 +166,11 @@ namespace DuiLib
         Invalidate();
     }
 
+    DWORD CDuiControl::GetBkColor2()
+    {
+        return m_dwBackColor2;
+    }
+
     void CDuiControl::SetBkColor2(DWORD dwBackColor)
     {
         if(m_dwBackColor2 == dwBackColor)
@@ -165,6 +179,11 @@ namespace DuiLib
         }
         m_dwBackColor2 = dwBackColor;
         Invalidate();
+    }
+
+    DWORD CDuiControl::GetBkColor3()
+    {
+        return m_dwBackColor3;
     }
 
     void CDuiControl::SetBkColor3(DWORD dwBackColor)
@@ -222,6 +241,11 @@ namespace DuiLib
         Invalidate();
     }
 
+    DWORD CDuiControl::GetFocusBorderColor()
+    {
+        return m_dwFocusBorderColor;
+    }
+
     void CDuiControl::SetFocusBorderColor(DWORD dwBorderColor)
     {
         if(m_dwFocusBorderColor == dwBorderColor)
@@ -242,6 +266,11 @@ namespace DuiLib
         Invalidate();
     }
 
+    SIZE CDuiControl::GetBorderRound()
+    {
+        return m_cxyBorderRound;
+    }
+
     void CDuiControl::SetBorderRound(SIZE cxyRound)
     {
         if(m_cxyBorderRound.cx == cxyRound.cx && m_cxyBorderRound.cy == cxyRound.cy)
@@ -250,6 +279,11 @@ namespace DuiLib
         }
         m_cxyBorderRound = cxyRound;
         Invalidate();
+    }
+
+    int CDuiControl::GetBorderSize()
+    {
+        return m_nBorderSize;
     }
 
     void CDuiControl::SetBorderSize(int nSize)
@@ -273,6 +307,11 @@ namespace DuiLib
         }
         m_rcBorderSize = rc;
         Invalidate();
+    }
+
+    DWORD CDuiControl::GetBorderColor()
+    {
+        return m_dwBorderColor;
     }
 
     void CDuiControl::SetBorderColor(DWORD dwBorderColor)
