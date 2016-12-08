@@ -6,8 +6,7 @@
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
 {
-    CDuiConsole Console ;// 调试信息控制台
-
+    //CDuiConsole Console ;// 调试信息控制台
     // 初始化UI管理器
     CDuiPaintManager::Initialize(hInstance);
     // 资源类型
@@ -39,7 +38,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
             CDuiPaintManager::SetResourcePath(strResourcePath.GetData());
             CDuiPaintManager::SetResourceZip(_T("DuiDemo.zip"), TRUE);
             // 加载资源管理器
-            //CResourceManager::GetInstance()->LoadResource(_T("res.xml"), NULL);
+            CDuiResourceManager::GetInstance()->LoadResource(_T("res.xml"), NULL);
             break;
         }
         case DUILIB_ZIPRESOURCE:
@@ -68,7 +67,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
     pDemoFrame->Create(NULL, _T("Duilib开源项目展示(By White)"), UI_WNDSTYLE_FRAME, 0L, 0, 0, 800, 572);
     pDemoFrame->CenterWindow();
     CDuiPaintManager::MessageLoop();
-    DUI_FREE_POINT(pDemoFrame);
+    //DUI_FREE_POINT(pDemoFrame);
     CDuiPaintManager::Uninitialize();
     OleUninitialize();
     return 0;

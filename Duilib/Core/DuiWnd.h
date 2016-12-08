@@ -11,7 +11,7 @@ namespace DuiLib
         HWND GetHWND() const;
         operator HWND() const;
 
-        HWND Create(HWND hWndParent, LPCTSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle, const RECT rc, HMENU hMenu = NULL);
+        HWND Create(HWND hWndParent, LPCTSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle, const CDuiRect rc, HMENU hMenu = NULL);
         HWND Create(HWND hWndParent, LPCTSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle, int x = CW_USEDEFAULT, int y = CW_USEDEFAULT, int nWidth = CW_USEDEFAULT, int nHeight = CW_USEDEFAULT, HMENU hMenu = NULL);
 
         LRESULT SendMessage(UINT uMsg, WPARAM wParam = 0, LPARAM lParam = 0);

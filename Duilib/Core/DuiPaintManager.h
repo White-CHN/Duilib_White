@@ -103,26 +103,29 @@ namespace DuiLib
 
     class CDuiPaintManager;
 
-    typedef struct tagTDrawInfo
+    class TDrawInfo
     {
-        tagTDrawInfo();
+    public:
+        TDrawInfo();
+        ~TDrawInfo();
+    public:
         void Parse(LPCTSTR pStrImage, LPCTSTR pStrModify, CDuiPaintManager* paintManager);
-        void Clear();
-
-        CDuiString sDrawString;
-        CDuiString sDrawModify;
-        CDuiString sImageName;
-        CDuiString sResType;
-        RECT rcDest;
-        RECT rcSource;
-        RECT rcCorner;
-        DWORD dwMask;
+    public:
         BYTE uFade;
         BOOL bHole;
         BOOL bTiledX;
         BOOL bTiledY;
         BOOL bHSL;
-    } TDrawInfo;
+        DWORD dwMask;
+
+        CDuiRect rcDest;
+        CDuiRect rcSource;
+        CDuiRect rcCorner;
+        CDuiString sDrawString;
+        CDuiString sDrawModify;
+        CDuiString sImageName;
+        CDuiString sResType;
+    };
 
     typedef struct tagTImageInfo
     {
@@ -443,21 +446,21 @@ namespace DuiLib
         CDuiControl* m_pEventKey;				//键盘键值
         GdiplusStartupInput* m_pGdiplusStartupInput;
 
-        POINT m_ptLastMousePos;					//鼠标坐标
-
-        RECT m_rtCaret;							//光标相关
-        RECT m_rcLayeredUpdate;
-        RECT m_rcSizeBox;						//sizebox属性
-        RECT m_rcCaption;						//caption属性
-
-        SIZE m_szInitWindowSize;				//size属性
-        SIZE m_szRoundCorner;					//roundcorner属性
-        SIZE m_szMinWindow;						//mininfo属性
-        SIZE m_szMaxWindow;						//maxinfo属性
-
         TOOLINFO m_ToolTip;
 
         TResInfo m_ResInfo;
+
+        CDuiPoint m_ptLastMousePos;					//鼠标坐标
+
+        CDuiRect m_rtCaret;							//光标相关
+        CDuiRect m_rcLayeredUpdate;
+        CDuiRect m_rcSizeBox;						//sizebox属性
+        CDuiRect m_rcCaption;						//caption属性
+
+        CDuiSize m_szInitWindowSize;				//size属性
+        CDuiSize m_szRoundCorner;					//roundcorner属性
+        CDuiSize m_szMinWindow;						//mininfo属性
+        CDuiSize m_szMaxWindow;						//maxinfo属性
 
         CStdPtrArray m_aTimers;					//定时器
         CStdPtrArray m_aMessageFilters;

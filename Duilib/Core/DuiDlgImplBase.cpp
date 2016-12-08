@@ -88,6 +88,7 @@ namespace DuiLib
         m_PaintManager.RemovePreMessageFilter(this);
         m_PaintManager.RemoveNotifier(this);
         m_PaintManager.ReapObjects(m_PaintManager.GetRoot());
+        CDuiWnd::OnFinalMessage(hWnd);
     }
 
     LRESULT CDuiDlgImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
@@ -141,7 +142,7 @@ namespace DuiLib
 
     LRESULT CDuiDlgImplBase::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
-        PostQuitMessage(0);
+        bHandled = FALSE;
         return 0;
     }
 

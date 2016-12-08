@@ -144,7 +144,7 @@ namespace DuiLib
     void CDuiIPAddressWnd::OnFinalMessage(HWND hWnd)
     {
         m_pOwner->EmptyIPAddressWnd();
-        delete this;
+        CDuiWnd::OnFinalMessage(hWnd);
     }
 
     ////////////////////////////////////////////////

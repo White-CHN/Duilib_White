@@ -134,6 +134,16 @@
 					</HorizontalLayout>
 
 				</HorizontalLayout>
+				<Label height="1"  bkimage="line/hor_line.bmp"/>
+				<HorizontalLayout  childpadding="6" childvalign="vcenter" >
+					<Label font="3" valign="center" cursor="hand" align="center" tooltip="窗口演示" text="窗口演示"  width="80" textcolor="#FFFFFFFF" />
+					<HorizontalLayout height="30" childpadding="12"  >
+						<Button name="popwnd_btn" text="普通弹出窗口" width="120" style="btn_style"/>
+						<Button name="modal_popwnd_btn" text="模态弹出窗口" width="120" style="btn_style"/>
+
+					</HorizontalLayout>
+
+				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true">
 			</VerticalLayout>

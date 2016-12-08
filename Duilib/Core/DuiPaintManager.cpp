@@ -11,12 +11,24 @@ extern ZRESULT CloseZipU(HZIP hz);
 namespace DuiLib
 {
 
-    tagTDrawInfo::tagTDrawInfo()
+
+    TDrawInfo::TDrawInfo()
+        : uFade(255)
+        , bHole(FALSE)
+        , bTiledX(FALSE)
+        , bTiledY(FALSE)
+        , bHSL(FALSE)
+        , dwMask(0)
     {
-        Clear();
+
     }
 
-    void tagTDrawInfo::Parse(LPCTSTR pStrImage, LPCTSTR pStrModify, CDuiPaintManager* paintManager)
+    TDrawInfo::~TDrawInfo()
+    {
+
+    }
+
+    void TDrawInfo::Parse(LPCTSTR pStrImage, LPCTSTR pStrModify, CDuiPaintManager* paintManager)
     {
         // 1¡¢aaa.jpg
         // 2¡¢file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0'
@@ -178,22 +190,8 @@ namespace DuiLib
             sImageName.Replace(_T("."), sScale);
         }
     }
-    void tagTDrawInfo::Clear()
-    {
-        sDrawString.SetEmpty();
-        sDrawModify.SetEmpty();
-        sImageName.SetEmpty();
-        memset(&rcDest, 0, sizeof(RECT));
-        memset(&rcSource, 0, sizeof(RECT));
-        memset(&rcCorner, 0, sizeof(RECT));
-        dwMask = 0;
-        uFade = 255;
-        bHole = FALSE;
-        bTiledX = FALSE;
-        bTiledY = FALSE;
-        bHSL = FALSE;
-    }
 
+    ////////////////////////////////////////////////////////////////////////////////////////
     typedef BOOL (__stdcall* PFUNCUPDATELAYEREDWINDOW)(HWND, HDC, POINT*, SIZE*, HDC, POINT*, COLORREF, BLENDFUNCTION*, DWORD);
     PFUNCUPDATELAYEREDWINDOW g_fUpdateLayeredWindow = NULL;
 
@@ -222,6 +220,7 @@ namespace DuiLib
         , m_hDcPaint(NULL)
         , m_hDcOffscreen(NULL)
         , m_hDragBitmap(NULL)
+        , m_hbmpOffscreen(NULL)
         , m_nOpacity(0xFF)
         , m_bUpdateNeeded(TRUE)
         , m_bLayered(FALSE)
@@ -250,16 +249,6 @@ namespace DuiLib
         , m_pEventKey(NULL)
         , m_pGdiplusStartupInput(NULL)
     {
-        ZeroMemory(&m_hbmpOffscreen, sizeof(m_hbmpOffscreen));
-        ZeroMemory(&m_ptLastMousePos, sizeof(m_ptLastMousePos));
-        ZeroMemory(&m_szInitWindowSize, sizeof(m_szInitWindowSize));
-        ZeroMemory(&m_rcSizeBox, sizeof(m_rcSizeBox));
-        ZeroMemory(&m_rcCaption, sizeof(m_rcCaption));
-        ZeroMemory(&m_szRoundCorner, sizeof(m_szRoundCorner));
-        ZeroMemory(&m_szMinWindow, sizeof(m_szMinWindow));
-        ZeroMemory(&m_szMaxWindow, sizeof(m_szMaxWindow));
-        ZeroMemory(&m_rcLayeredUpdate, sizeof(m_rcLayeredUpdate));
-        ZeroMemory(&m_rtCaret, sizeof(m_rtCaret));
         ZeroMemory(&m_ToolTip, sizeof(m_ToolTip));
 
         m_ResInfo.m_dwDefaultDisabledColor		= m_SharedResInfo.m_dwDefaultDisabledColor;
@@ -267,6 +256,8 @@ namespace DuiLib
         m_ResInfo.m_dwDefaultLinkFontColor		= m_SharedResInfo.m_dwDefaultLinkFontColor;
         m_ResInfo.m_dwDefaultLinkHoverFontColor = m_SharedResInfo.m_dwDefaultLinkHoverFontColor;
         m_ResInfo.m_dwDefaultSelectedBkColor	= m_SharedResInfo.m_dwDefaultSelectedBkColor;
+        ZeroMemory(&m_SharedResInfo.m_DefaultFontInfo.tm, sizeof(m_SharedResInfo.m_DefaultFontInfo.tm));
+
         m_pGdiplusStartupInput = new GdiplusStartupInput;
         GdiplusStartup(&m_gdiplusToken, m_pGdiplusStartupInput, NULL);  // ¼ÓÔØGDI½Ó¿Ú
         m_pDPI = new CDPI;

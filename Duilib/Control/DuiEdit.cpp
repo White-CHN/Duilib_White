@@ -163,7 +163,7 @@ namespace DuiLib
             m_pOwner->GetManager()->RemovePaintChildWnd(hWnd);
         }
         m_pOwner->EmptyEditWnd();
-        delete this;
+        CDuiWnd::OnFinalMessage(hWnd);
     }
 
     LRESULT CDuiEditWnd::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)

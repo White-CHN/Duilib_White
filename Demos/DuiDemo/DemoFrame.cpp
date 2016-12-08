@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "DemoFrame.h"
-
+#include "PopDlg.h"
 
 CDemoFrame::CDemoFrame(void)
     : bEnglish(FALSE)
@@ -37,23 +37,14 @@ CDuiString CDemoFrame::GetSkinFile()
 
 LPCTSTR CDemoFrame::GetWindowClassName() const
 {
-    return _T("CDemoFrame");
+    return GET_CLASS_NAME(CDemoFrame);
 }
 
-LRESULT CDemoFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CDemoFrame::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
-    return CDuiDlgImplBase::HandleMessage(uMsg, wParam, lParam);
-}
-
-void CDemoFrame::OnFinalMessage(HWND hWnd)
-{
-    CDuiDlgImplBase::OnFinalMessage(hWnd);
-}
-
-LRESULT CDemoFrame::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
-{
-
-    return CDuiDlgImplBase::MessageHandler(uMsg, wParam, lParam, bHandled);
+    bHandled = TRUE;
+    PostQuitMessage(0);
+    return 0;
 }
 
 CDuiControl* CDemoFrame::CreateControl(LPCTSTR pstrClass)
@@ -174,6 +165,19 @@ void CDemoFrame::Notify(TNotifyUI& msg)
         {
             int nDPI = _ttoi(msg.pSender->GetUserData());
             GetPaintManager()->SetDPI(nDPI);
+        }
+        else if(msg.pSender->GetName().CompareNoCase(_T("popwnd_btn")) == 0)
+        {
+            CPopDlg* pPopDlg = new CPopDlg();
+            pPopDlg->Create(GetHWND(), _T("普通窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
+            pPopDlg->CenterWindow();
+        }
+        else if(msg.pSender->GetName().CompareNoCase(_T("modal_popwnd_btn")) == 0)
+        {
+            CPopDlg* pPopDlg = new CPopDlg();
+            pPopDlg->Create(GetHWND(), _T("模式窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
+            pPopDlg->CenterWindow();
+            pPopDlg->ShowModal();
         }
     }
 }

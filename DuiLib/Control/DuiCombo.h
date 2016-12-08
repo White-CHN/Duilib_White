@@ -23,8 +23,8 @@ namespace DuiLib
         int nColumns;
         int nFont;
         UINT uTextStyle;
-        RECT rcTextPadding;
-        RECT rcColumn[UILIST_MAX_COLUMNS];
+        CDuiRect rcTextPadding;
+        CDuiRect rcColumn[UILIST_MAX_COLUMNS];
         CDuiString sBkImage;
         CDuiString sSelectedImage;
         CDuiString sHotImage;
@@ -197,8 +197,8 @@ namespace DuiLib
         DWORD GetDisabledTextColor() const;
         void SetDisabledTextColor(DWORD dwTextColor);
 
-        RECT GetTextPadding() const;
-        void SetTextPadding(RECT rc);
+        CDuiRect GetTextPadding() const;
+        void SetTextPadding(CDuiRect rc);
 
         BOOL IsShowHtml() const;
         void SetShowHtml(BOOL bShowHtml = TRUE);
@@ -297,10 +297,11 @@ namespace DuiLib
         DWORD m_dwTextColor;
         DWORD m_dwDisabledTextColor;
 
-        SIZE m_szDropBox;
-
-        RECT m_rcTextPadding;
         TListInfo m_ListInfo;
+
+        CDuiSize m_szDropBox;
+
+        CDuiRect m_rcTextPadding;
 
         CDuiString m_sNormalImage;
         CDuiString m_sHotImage;

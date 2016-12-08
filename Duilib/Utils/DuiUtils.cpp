@@ -58,16 +58,53 @@ namespace DuiLib
     {
     }
 
-    CStdPtrArray::CStdPtrArray(int iPreallocSize)
-        : m_ppData(NULL)
-        , m_iCount(0)
-        , m_iAllocated(iPreallocSize)
+    /////////////////////////////////////////////////////////////////////////////////////
+    //
+    //
+
+    CDuiPoint::CDuiPoint()
     {
-        ASSERT(iPreallocSize >= 0);
-        if(iPreallocSize > 0)
-        {
-            m_ppData = static_cast<LPVOID*>(malloc(iPreallocSize * sizeof(LPVOID)));
-        }
+        x = y = 0;
+    }
+
+    CDuiPoint::CDuiPoint(const POINT& src)
+    {
+        x = src.x;
+        y = src.y;
+    }
+
+    CDuiPoint::CDuiPoint(int _x, int _y)
+    {
+        x = _x;
+        y = _y;
+    }
+
+    CDuiPoint::CDuiPoint(LPARAM lParam)
+    {
+        x = GET_X_LPARAM(lParam);
+        y = GET_Y_LPARAM(lParam);
+    }
+
+    BOOL CDuiPoint::operator==(const POINT& point) const
+    {
+        return (x == point.x && y == point.y);
+    }
+
+    BOOL CDuiPoint::operator!=(const POINT& point) const
+    {
+        return (x != point.x || y != point.y);
+    }
+
+    void CDuiPoint::operator+=(const POINT& point)
+    {
+        x += point.x;
+        y += point.y;
+    }
+
+    void CDuiPoint::operator-=(const POINT& point)
+    {
+        x -= point.x;
+        y -= point.y;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -91,13 +128,49 @@ namespace DuiLib
         cy = rc.bottom - rc.top;
     }
 
-    CDuiSize::CDuiSize(int _cx, int _cy)
+    CDuiSize::CDuiSize(const int _cx, const int _cy)
     {
         cx = _cx;
         cy = _cy;
     }
 
+    BOOL CDuiSize::operator==(const SIZE& size) const
+    {
+        return (cx == size.cx && cy == size.cy);
+    }
 
+    BOOL CDuiSize::operator!=(const SIZE& size) const
+    {
+        return (cx != size.cx || cy != size.cy);
+    }
+
+    void CDuiSize::operator+=(const SIZE& size)
+    {
+        cx += size.cx;
+        cy += size.cy;
+    }
+
+    void CDuiSize::operator-=(const SIZE& size)
+    {
+        cx -= size.cx;
+        cy -= size.cy;
+    }
+
+    CDuiSize CDuiSize::operator+(const SIZE& size) const
+    {
+        return CDuiSize(cx + size.cx, cy + size.cy);
+    }
+
+    CDuiSize CDuiSize::operator-(const SIZE& size) const
+    {
+        return CDuiSize(cx - size.cx, cy - size.cy);
+    }
+
+    void CDuiSize::SetSize(const int CX, const int CY)
+    {
+        cx = CX;
+        cy = CY;
+    }
     /////////////////////////////////////////////////////////////////////////////////////
     //
     //
@@ -109,10 +182,12 @@ namespace DuiLib
 
     CDuiRect::CDuiRect(const RECT& src)
     {
-        left = src.left;
-        top = src.top;
-        right = src.right;
-        bottom = src.bottom;
+        ::CopyRect(this, &src);
+    }
+
+    CDuiRect::CDuiRect(const LPCRECT lpSrcRect)
+    {
+        ::CopyRect(this, lpSrcRect);
     }
 
     CDuiRect::CDuiRect(int iLeft, int iTop, int iRight, int iBottom)
@@ -121,6 +196,32 @@ namespace DuiLib
         top = iTop;
         right = iRight;
         bottom = iBottom;
+    }
+
+    BOOL CDuiRect::operator==(const RECT& rect) const
+    {
+        return ::EqualRect(this, &rect);
+    }
+
+    BOOL CDuiRect::operator!=(const RECT& rect) const
+    {
+        return !::EqualRect(this, &rect);
+    }
+
+    void CDuiRect::operator+=(const RECT& rect)
+    {
+        left -= rect.left;
+        top -= rect.top;
+        right += rect.right;
+        bottom += rect.bottom;
+    }
+
+    void CDuiRect::operator-=(const RECT& rect)
+    {
+        left += rect.left;
+        top += rect.top;
+        right -= rect.right;
+        bottom -= rect.bottom;
     }
 
     int CDuiRect::GetWidth() const
@@ -204,10 +305,26 @@ namespace DuiLib
         ::UnionRect(this, this, &rc);
     }
 
+    CDuiRect CDuiRect::MulDiv(int nMultiplier, int nDivisor) const
+    {
+        return CDuiRect(::MulDiv(left, nMultiplier, nDivisor),
+                        ::MulDiv(top, nMultiplier, nDivisor),
+                        ::MulDiv(right, nMultiplier, nDivisor),
+                        ::MulDiv(bottom, nMultiplier, nDivisor));
+    }
 
-    /////////////////////////////////////////////////////////////////////////////////////
-    //
-    //
+    //////////////////////////////////////////////////////////////////////
+    CStdPtrArray::CStdPtrArray(int iPreallocSize)
+        : m_ppData(NULL)
+        , m_iCount(0)
+        , m_iAllocated(iPreallocSize)
+    {
+        ASSERT(iPreallocSize >= 0);
+        if(iPreallocSize > 0)
+        {
+            m_ppData = static_cast<LPVOID*>(malloc(iPreallocSize * sizeof(LPVOID)));
+        }
+    }
 
     CStdPtrArray::CStdPtrArray(const CStdPtrArray& src)
         : m_ppData(NULL)

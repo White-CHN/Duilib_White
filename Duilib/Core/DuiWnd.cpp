@@ -36,9 +36,9 @@ namespace DuiLib
         return m_hWnd;
     }
 
-    HWND CDuiWnd::Create(HWND hWndParent, LPCTSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle, const RECT rc, HMENU hMenu /*= NULL*/)
+    HWND CDuiWnd::Create(HWND hWndParent, LPCTSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle, const CDuiRect rc, HMENU hMenu /*= NULL*/)
     {
-        return Create(hWndParent, lpWindowName, dwStyle, dwExStyle, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, hMenu);
+        return Create(hWndParent, lpWindowName, dwStyle, dwExStyle, rc.left, rc.top, rc.GetWidth(), rc.GetHeight(), hMenu);
     }
 
     HWND CDuiWnd::Create(HWND hWndParent, LPCTSTR lpWindowName, DWORD dwStyle, DWORD dwExStyle, int x /*= CW_USEDEFAULT*/, int y /*= CW_USEDEFAULT*/, int nWidth /*= CW_USEDEFAULT*/, int nHeight /*= CW_USEDEFAULT*/, HMENU hMenu /*= NULL*/)
@@ -275,6 +275,7 @@ namespace DuiLib
 
     void CDuiWnd::OnFinalMessage(HWND hWnd)
     {
+        delete this;
     }
 
     BOOL CDuiWnd::RegisterWindowClass()

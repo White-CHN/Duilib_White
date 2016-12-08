@@ -178,7 +178,7 @@ namespace DuiLib
             m_pOwner->GetManager()->RemovePaintChildWnd(hWnd);
         }
         m_pOwner->EmptyDateTimeWnd();
-        delete this;
+        CDuiWnd::OnFinalMessage(hWnd);
     }
 
     ////////////////////////////////////////////////

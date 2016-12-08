@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DemoFrame.h" />
+    <ClInclude Include="PopDlg.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="DemoFrame.cpp" />
     <ClCompile Include="DuiDemo.cpp" />
+    <ClCompile Include="PopDlg.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

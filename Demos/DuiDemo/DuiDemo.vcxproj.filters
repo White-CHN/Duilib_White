@@ -24,6 +24,9 @@
     <ClInclude Include="DemoFrame.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="PopDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DuiDemo.rc">
@@ -47,6 +50,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DuiDemo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PopDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

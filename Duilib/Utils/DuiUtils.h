@@ -28,13 +28,38 @@ namespace DuiLib
         LPCTSTR m_lpstr;
     };
 
+    class DUILIB_API CDuiPoint : public tagPOINT
+    {
+    public:
+        CDuiPoint();
+        CDuiPoint(const POINT& src);
+        CDuiPoint(int x, int y);
+        CDuiPoint(LPARAM lParam);
+        // Operations
+        BOOL operator==(const POINT& point) const;
+        BOOL operator!=(const POINT& point) const;
+        void operator+=(const POINT& point);
+        void operator-=(const POINT& point);
+    };
+
     class DUILIB_API CDuiSize : public tagSIZE
     {
     public:
         CDuiSize();
         CDuiSize(const SIZE& src);
         CDuiSize(const RECT rc);
-        CDuiSize(int cx, int cy);
+        CDuiSize(const int cx, const int cy);
+        // Operations
+        BOOL operator==(const SIZE& size) const;
+        BOOL operator!=(const SIZE& size) const;
+        void operator+=(const SIZE& size);
+        void operator-=(const SIZE& size);
+
+        // Operators returning CSize values
+        CDuiSize operator+(const SIZE& size) const;
+        CDuiSize operator-(const SIZE& size) const;
+
+        void SetSize(const int CX, const int CY);
     };
 
     class DUILIB_API CDuiRect : public tagRECT
@@ -42,7 +67,14 @@ namespace DuiLib
     public:
         CDuiRect();
         CDuiRect(const RECT& src);
+        CDuiRect(const LPCRECT lpSrcRect);
         CDuiRect(int iLeft, int iTop, int iRight, int iBottom);
+        // Operations
+        BOOL operator==(const RECT& rect) const;
+        BOOL operator!=(const RECT& rect) const;
+        void operator+=(const RECT& rect);
+        void operator-=(const RECT& rect);
+
 
         int GetWidth() const;
         int GetHeight() const;
@@ -55,6 +87,8 @@ namespace DuiLib
         void Inflate(int cx, int cy);
         void Deflate(int cx, int cy);
         void Union(CDuiRect& rc);
+
+        CDuiRect MulDiv(int nMultiplier, int nDivisor) const;
     };
 
     class DUILIB_API CStdPtrArray

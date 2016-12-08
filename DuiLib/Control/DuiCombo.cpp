@@ -639,7 +639,7 @@ namespace DuiLib
         uButtonState &= ~ UISTATE_PUSHED;
         m_pOwner->SetButtonState(uButtonState);
         m_pOwner->Invalidate();
-        delete this;
+        CDuiWnd::OnFinalMessage(hWnd);
     }
 
 #if(_WIN32_WINNT >= 0x0501)
@@ -901,7 +901,6 @@ namespace DuiLib
         , m_dwDisabledTextColor(0)
     {
         m_szDropBox = CDuiSize(0, 150);
-        ZeroMemory(&m_rcTextPadding, sizeof(m_rcTextPadding));
 
         m_ListInfo.bShowHtml = FALSE;
         m_ListInfo.bMultiExpandable = FALSE;
@@ -920,8 +919,6 @@ namespace DuiLib
         m_ListInfo.dwDisabledTextColor = 0xFFCCCCCC;
         m_ListInfo.dwDisabledBkColor = 0xFFFFFFFF;
         m_ListInfo.dwLineColor = 0;
-        ZeroMemory(&m_ListInfo.rcTextPadding, sizeof(m_ListInfo.rcTextPadding));
-        ZeroMemory(m_ListInfo.rcColumn, sizeof(m_ListInfo.rcColumn));
     }
 
 
@@ -1256,17 +1253,14 @@ namespace DuiLib
         Invalidate();
     }
 
-    RECT CDuiCombo::GetTextPadding() const
+    CDuiRect CDuiCombo::GetTextPadding() const
     {
         return m_rcTextPadding;
     }
 
-    void CDuiCombo::SetTextPadding(RECT rc)
+    void CDuiCombo::SetTextPadding(CDuiRect rc)
     {
-        if(m_rcTextPadding.bottom == rc.bottom &&
-                m_rcTextPadding.top == rc.top &&
-                m_rcTextPadding.left == rc.left &&
-                m_rcTextPadding.right == rc.right)
+        if(m_rcTextPadding == rc)
         {
             return;
         }
@@ -1642,7 +1636,7 @@ namespace DuiLib
         }
         else if(_tcsicmp(pstrName, _T("textpadding")) == 0)
         {
-            RECT rcTextPadding = { 0 };
+            CDuiRect rcTextPadding;
             LPTSTR pstr = NULL;
             rcTextPadding.left = _tcstol(pstrValue, &pstr, 10);
             ASSERT(pstr);

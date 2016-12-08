@@ -5,4 +5,5 @@
   <Image id="sysbtn_menu_pushed" path="sysbtn/btn_menu_down.png" />
 
   <Xml id="XML_Demo" path="DuiDemo.xml"/>
+  <Xml id="XML_Pop" path="PopDlg.xml"/>
 </Res>
