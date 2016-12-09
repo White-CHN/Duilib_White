@@ -9,8 +9,7 @@ namespace DuiLib
         , m_iSepWidth(0)
         , m_uButtonState(0)
     {
-        ::ZeroMemory(&ptLastMouse, sizeof(ptLastMouse));
-        ::ZeroMemory(&m_rcNewPos, sizeof(m_rcNewPos));
+
     }
 
 

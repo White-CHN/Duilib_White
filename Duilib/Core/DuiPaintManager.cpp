@@ -2335,6 +2335,12 @@ namespace DuiLib
         m_bForceUseSharedRes = bForce;
     }
 
+
+    CStdPtrArray* CDuiPaintManager::GetFoundControls()
+    {
+        return &m_aFoundControls;
+    }
+
     BOOL CDuiPaintManager::Initialize(HINSTANCE hInstance)
     {
         ASSERT(hInstance);
@@ -3162,31 +3168,23 @@ namespace DuiLib
     LRESULT CDuiPaintManager::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         bHandled = FALSE;
-        if(TIMERID_CARET == LOWORD(wParam))
+        for(int i = 0; i < m_aTimers.GetSize(); i++)
         {
-            Invalidate(m_rtCaret);
-            m_bCaretActive = !m_bCaretActive;
-        }
-        else
-        {
-            for(int i = 0; i < m_aTimers.GetSize(); i++)
+            const TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
+            if(pTimer->hWnd == m_hWndPaint &&
+                    pTimer->uWinTimer == LOWORD(wParam) &&
+                    pTimer->bKilled == FALSE)
             {
-                const TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
-                if(pTimer->hWnd == m_hWndPaint &&
-                        pTimer->uWinTimer == LOWORD(wParam) &&
-                        pTimer->bKilled == FALSE)
-                {
-                    TEventUI event = { 0 };
-                    event.Type = UIEVENT_TIMER;
-                    event.pSender = pTimer->pSender;
-                    event.dwTimestamp = ::GetTickCount();
-                    event.ptMouse = m_ptLastMousePos;
-                    event.wKeyState = MapKeyState();
-                    event.wParam = pTimer->nLocalID;
-                    event.lParam = lParam;
-                    pTimer->pSender->Event(event);
-                    break;
-                }
+                TEventUI event = { 0 };
+                event.Type = UIEVENT_TIMER;
+                event.pSender = pTimer->pSender;
+                event.dwTimestamp = ::GetTickCount();
+                event.ptMouse = m_ptLastMousePos;
+                event.wKeyState = MapKeyState();
+                event.wParam = pTimer->nLocalID;
+                event.lParam = lParam;
+                pTimer->pSender->Event(event);
+                break;
             }
         }
         return 0;
@@ -3583,10 +3581,6 @@ namespace DuiLib
         return lRes;
     }
 
-    CStdPtrArray* CDuiPaintManager::GetFoundControls()
-    {
-        return &m_aFoundControls;
-    }
 
     CDuiControl* CALLBACK CDuiPaintManager::__FindControlFromNameHash(CDuiControl* pThis, LPVOID pData)
     {

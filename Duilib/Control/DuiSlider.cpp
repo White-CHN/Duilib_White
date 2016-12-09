@@ -10,7 +10,7 @@ namespace DuiLib
         , m_nStep(1)
         , m_uButtonState(0)
     {
-        m_szThumb.cx = m_szThumb.cy = 10;
+        m_szThumb = CDuiSize(10, 10);
     }
 
 

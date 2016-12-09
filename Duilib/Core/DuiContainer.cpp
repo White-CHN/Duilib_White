@@ -17,7 +17,6 @@ namespace DuiLib
         , m_pVerticalScrollBar(NULL)
         , m_pHorizontalScrollBar(NULL)
     {
-        ZeroMemory(&m_rcInset, sizeof(m_rcInset));
     }
 
 
@@ -49,13 +48,21 @@ namespace DuiLib
 
 
 
-    RECT CDuiContainer::GetInset() const
+    CDuiRect CDuiContainer::GetInset() const
     {
-        return GetManager()->GetDPIObj()->Scale(m_rcInset);
+        if(GetManager())
+        {
+            return GetManager()->GetDPIObj()->Scale(m_rcInset);
+        }
+        return m_rcInset;
     }
 
-    void CDuiContainer::SetInset(RECT rcInset)
+    void CDuiContainer::SetInset(CDuiRect rcInset)
     {
+        if(m_rcInset == rcInset)
+        {
+            return;
+        }
         m_rcInset = rcInset;
         NeedUpdate();
     }
@@ -71,6 +78,10 @@ namespace DuiLib
 
     void CDuiContainer::SetChildPadding(int iPadding)
     {
+        if(m_iChildPadding == iPadding)
+        {
+            return;
+        }
         m_iChildPadding = iPadding;
         NeedUpdate();
     }
@@ -80,9 +91,29 @@ namespace DuiLib
         return m_iChildAlign;
     }
 
+    void CDuiContainer::SetChildAlign(UINT iAlign)
+    {
+        if(m_iChildAlign == iAlign)
+        {
+            return;
+        }
+        m_iChildAlign = iAlign;
+        NeedUpdate();
+    }
+
     UINT CDuiContainer::GetChildVAlign() const
     {
         return m_iChildVAlign;
+    }
+
+    void CDuiContainer::SetChildVAlign(UINT iVAlign)
+    {
+        if(m_iChildVAlign == iVAlign)
+        {
+            return;
+        }
+        m_iChildVAlign = iVAlign;
+        NeedUpdate();
     }
 
     BOOL CDuiContainer::IsAutoDestroy() const

@@ -286,6 +286,10 @@ namespace DuiLib
 
     LRESULT CDuiEditWnd::OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
+        if(m_pOwner->GetManager()->IsLayered())
+        {
+            ::KillTimer(GetHWND(), TIMERID_CARET);
+        }
         PostMessage(WM_CLOSE);
         return ::DefWindowProc(GetHWND(), uMsg, wParam, lParam);
     }

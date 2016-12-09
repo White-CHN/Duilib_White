@@ -29,8 +29,8 @@ namespace DuiLib
         BOOL m_bImmMode;
         INT m_iSepHeight;
         UINT m_uButtonState;
-        POINT ptLastMouse;
-        RECT m_rcNewPos;
+        CDuiPoint ptLastMouse;
+        CDuiRect m_rcNewPos;
     };
 
 

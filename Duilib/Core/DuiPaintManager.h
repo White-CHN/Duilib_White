@@ -342,6 +342,8 @@ namespace DuiLib
         BOOL IsForceUseSharedRes() const;
         void SetForceUseSharedRes(BOOL bForce);
 
+        CStdPtrArray* GetFoundControls();
+
         static BOOL Initialize(HINSTANCE hInstance);
         static void RemoveAllShared();
         static void Uninitialize();
@@ -397,7 +399,7 @@ namespace DuiLib
         LRESULT OnNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         LRESULT OnCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         LRESULT OnCtlColor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        CStdPtrArray* GetFoundControls();
+
         static CDuiControl* CALLBACK __FindControlFromNameHash(CDuiControl* pThis, LPVOID pData);
         static CDuiControl* CALLBACK __FindControlsFromUpdate(CDuiControl* pThis, LPVOID pData);
         static CDuiControl* CALLBACK __FindControlFromTab(CDuiControl* pThis, LPVOID pData);

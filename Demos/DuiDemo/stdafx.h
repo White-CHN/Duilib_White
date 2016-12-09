@@ -45,5 +45,5 @@ using namespace DuiLib;
     #endif
 #endif
 // TODO: 在此处引用程序需要的其他头文件
-
+#pragma comment(lib, "winmm.lib")
 #include "DemoFrame.h"

@@ -21,11 +21,6 @@ namespace DuiLib
         , m_pOwner(NULL)
     {
         SetFixedWidth(DEFAULT_SCROLLBAR_SIZE);
-
-        ZeroMemory(&m_ptLastMouse, sizeof(m_ptLastMouse));
-        ZeroMemory(&m_rcThumb, sizeof(m_rcThumb));
-        ZeroMemory(&m_rcButton1, sizeof(m_rcButton1));
-        ZeroMemory(&m_rcButton2, sizeof(m_rcButton2));
     }
 
 

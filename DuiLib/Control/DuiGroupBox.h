@@ -34,7 +34,7 @@ namespace DuiLib
         DWORD m_dwTextColor;
         DWORD m_dwDisabledTextColor;
         UINT m_uTextStyle;
-        RECT m_rcTextPadding;
+        CDuiRect m_rcTextPadding;
     };
 
 }

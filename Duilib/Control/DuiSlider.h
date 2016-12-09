@@ -37,7 +37,7 @@ namespace DuiLib
         BOOL m_bSendMove;
         int m_nStep;
         UINT m_uButtonState;
-        SIZE m_szThumb;
+        CDuiSize m_szThumb;
         CDuiString m_sThumbImage;
         CDuiString m_sThumbHotImage;
         CDuiString m_sThumbPushedImage;

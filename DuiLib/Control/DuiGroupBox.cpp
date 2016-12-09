@@ -12,7 +12,6 @@ namespace DuiLib
         , m_uTextStyle(DT_SINGLELINE | DT_VCENTER | DT_CENTER)
     {
         SetInset(CDuiRect(20, 25, 20, 20));
-        ZeroMemory(&m_rcTextPadding, sizeof(m_rcTextPadding));
     }
 
 

@@ -37,16 +37,7 @@ namespace DuiLib
         , m_pParent(NULL)
         , m_pManager(NULL)
     {
-        ZeroMemory(&m_cXY, sizeof(m_cXY));
-        ZeroMemory(&m_cxyFixed, sizeof(m_cxyFixed));
-        ZeroMemory(&m_cxyBorderRound, sizeof(m_cxyBorderRound));
-        ZeroMemory(&m_cxyMin, sizeof(m_cxyMin));
-        m_cxyMax.cx = m_cxyMax.cy = 9999;
-
-        ZeroMemory(&m_rcItem, sizeof(m_rcItem));
-        ZeroMemory(&m_rcPaint, sizeof(m_rcPaint));
-        ZeroMemory(&m_rcPadding, sizeof(m_rcPadding));
-        ZeroMemory(&m_rcBorderSize, sizeof(m_rcBorderSize));
+        m_cxyMax = CDuiSize(9999, 9999);
 
         ZeroMemory(&m_piFloatPercent, sizeof(m_piFloatPercent));
     }
@@ -84,9 +75,28 @@ namespace DuiLib
         return m_pParent;
     }
 
+    CDuiPaintManager* CDuiControl::GetManager() const
+    {
+        return m_pManager;
+    }
+
     RECT CDuiControl::GetPaintRect() const
     {
         return m_rcPaint;
+    }
+
+    void CDuiControl::Init()
+    {
+    }
+
+    void CDuiControl::SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit /*= TRUE*/)
+    {
+        m_pManager = pManager;
+        m_pParent = pParent;
+        if(bInit && m_pParent)
+        {
+            Init();
+        }
     }
 
     void CDuiControl::Invalidate()
@@ -266,14 +276,14 @@ namespace DuiLib
         Invalidate();
     }
 
-    SIZE CDuiControl::GetBorderRound()
+    CDuiSize CDuiControl::GetBorderRound()
     {
         return m_cxyBorderRound;
     }
 
-    void CDuiControl::SetBorderRound(SIZE cxyRound)
+    void CDuiControl::SetBorderRound(CDuiSize cxyRound)
     {
-        if(m_cxyBorderRound.cx == cxyRound.cx && m_cxyBorderRound.cy == cxyRound.cy)
+        if(m_cxyBorderRound == cxyRound)
         {
             return;
         }
@@ -296,12 +306,9 @@ namespace DuiLib
         Invalidate();
     }
 
-    void CDuiControl::SetBorderSize(RECT rc)
+    void CDuiControl::SetBorderSize(CDuiRect rc)
     {
-        if(m_rcBorderSize.bottom == rc.bottom &&
-                m_rcBorderSize.top == rc.top &&
-                m_rcBorderSize.left == rc.left &&
-                m_rcBorderSize.right == rc.right)
+        if(m_rcBorderSize == rc)
         {
             return;
         }
@@ -324,6 +331,15 @@ namespace DuiLib
         Invalidate();
     }
 
+    int CDuiControl::GetLeftBorderSize() const
+    {
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_rcBorderSize.left);
+        }
+        return m_rcBorderSize.left;
+    }
+
     void CDuiControl::SetLeftBorderSize(int nSize)
     {
         if(m_rcBorderSize.left == nSize)
@@ -332,6 +348,15 @@ namespace DuiLib
         }
         m_rcBorderSize.left = nSize;
         Invalidate();
+    }
+
+    int CDuiControl::GetTopBorderSize() const
+    {
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_rcBorderSize.top);
+        }
+        return m_rcBorderSize.top;
     }
 
     void CDuiControl::SetTopBorderSize(int nSize)
@@ -344,6 +369,15 @@ namespace DuiLib
         Invalidate();
     }
 
+    int CDuiControl::GetRightBorderSize() const
+    {
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_rcBorderSize.right);
+        }
+        return m_rcBorderSize.right;
+    }
+
     void CDuiControl::SetRightBorderSize(int nSize)
     {
         if(m_rcBorderSize.right == nSize)
@@ -354,6 +388,15 @@ namespace DuiLib
         Invalidate();
     }
 
+    int CDuiControl::GetBottomBorderSize() const
+    {
+        if(m_pManager != NULL)
+        {
+            return m_pManager->GetDPIObj()->Scale(m_rcBorderSize.bottom);
+        }
+        return m_rcBorderSize.bottom;
+    }
+
     void CDuiControl::SetBottomBorderSize(int nSize)
     {
         if(m_rcBorderSize.bottom == nSize)
@@ -362,6 +405,11 @@ namespace DuiLib
         }
         m_rcBorderSize.bottom = nSize;
         Invalidate();
+    }
+
+    int CDuiControl::GetBorderStyle() const
+    {
+        return m_nBorderStyle;
     }
 
     void CDuiControl::SetBorderStyle(int nStyle)
@@ -487,6 +535,11 @@ namespace DuiLib
         return m_nTooltipWidth;
     }
 
+    void CDuiControl::SetToolTipWidth(int nWidth)
+    {
+        m_nTooltipWidth = nWidth;
+    }
+
     WORD CDuiControl::GetCursor() const
     {
         return m_wCursor;
@@ -530,6 +583,22 @@ namespace DuiLib
     void CDuiControl::SetUserData(LPCTSTR pstrText)
     {
         m_sUserData = pstrText;
+    }
+
+    CDuiRect CDuiControl::GetRelativePos() const
+    {
+        CDuiControl* pParent = GetParent();
+        if(pParent != NULL)
+        {
+            RECT rcParentPos = pParent->GetPos();
+            CDuiRect rcRelativePos(m_rcItem);
+            rcRelativePos.Offset(-rcParentPos.left, -rcParentPos.top);
+            return rcRelativePos;
+        }
+        else
+        {
+            return CDuiRect(0, 0, 0, 0);
+        }
     }
 
     RECT CDuiControl::GetClientPos() const
@@ -604,14 +673,14 @@ namespace DuiLib
         return m_cXY;
     }
 
-    void CDuiControl::SetFixedXY(SIZE szXY)
+    void CDuiControl::SetFixedXY(CDuiSize szXY)
     {
-        if(m_cXY.cx == szXY.cx && m_cXY.cy == szXY.cy)
+        if(m_cXY == szXY)
         {
             return;
         }
-        m_cXY.cx = szXY.cx;
-        m_cXY.cy = szXY.cy;
+        m_cXY = szXY;
+
         NeedParentUpdate();
     }
 
@@ -662,18 +731,16 @@ namespace DuiLib
         NeedParentUpdate();
     }
 
-    RECT CDuiControl::GetPadding() const
+    CDuiRect CDuiControl::GetPadding() const
     {
         return m_rcPadding;
     }
 
-    void CDuiControl::SetPadding(RECT rcPadding)
+    void CDuiControl::SetPadding(CDuiRect rcPadding)
     {
-        if(rcPadding.bottom == m_rcPadding.bottom &&
-                rcPadding.top == m_rcPadding.top &&
-                rcPadding.left == m_rcPadding.left &&
-                rcPadding.right == m_rcPadding.right)
+        if(m_rcPadding == rcPadding)
         {
+            return;
         }
         m_rcPadding = rcPadding;
         NeedParentUpdate();
@@ -782,29 +849,32 @@ namespace DuiLib
         return m_piFloatPercent;
     }
 
-    SIZE CDuiControl::EstimateSize(SIZE szAvailable)
+    void CDuiControl::SetFloatPercent(TPercentInfo piFloatPercent)
     {
-        if(GetManager() != NULL)
+        if(piFloatPercent.bottom == m_piFloatPercent.bottom &&
+                piFloatPercent.top == m_piFloatPercent.top &&
+                piFloatPercent.right == m_piFloatPercent.right &&
+                piFloatPercent.left == m_piFloatPercent.left)
         {
-            return GetManager()->GetDPIObj()->Scale(m_cxyFixed);
+            return;
         }
-        return m_cxyFixed;
+        m_piFloatPercent = piFloatPercent;
+        NeedParentUpdate();
     }
 
-    RECT CDuiControl::GetRelativePos() const
+    UINT CDuiControl::GetFloatAlign() const
     {
-        CDuiControl* pParent = GetParent();
-        if(pParent != NULL)
+        return m_uFloatAlign;
+    }
+
+    void CDuiControl::SetFloatAlign(UINT uAlign)
+    {
+        if(uAlign == m_uFloatAlign)
         {
-            RECT rcParentPos = pParent->GetPos();
-            CDuiRect rcRelativePos(m_rcItem);
-            rcRelativePos.Offset(-rcParentPos.left, -rcParentPos.top);
-            return rcRelativePos;
+            return;
         }
-        else
-        {
-            return CDuiRect(0, 0, 0, 0);
-        }
+        m_uFloatAlign = uAlign;
+        NeedParentUpdate();
     }
 
     BOOL CDuiControl::IsVisible() const
@@ -834,6 +904,20 @@ namespace DuiLib
         }
     }
 
+    void CDuiControl::SetInternVisible(BOOL bVisible /*= TRUE*/)
+    {
+        m_bInternVisible = bVisible;
+        if(!bVisible && m_pManager && m_pManager->GetFocus() == this)
+        {
+            m_pManager->SetFocus(NULL) ;
+        }
+    }
+
+    BOOL CDuiControl::IsEnabled() const
+    {
+        return m_bEnabled;
+    }
+
     void CDuiControl::SetEnabled(BOOL bEnable /*= TRUE*/)
     {
         if(m_bEnabled == bEnable)
@@ -844,10 +928,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    BOOL CDuiControl::IsEnabled() const
-    {
-        return m_bEnabled;
-    }
+
 
     BOOL CDuiControl::Activate()
     {
@@ -882,14 +963,7 @@ namespace DuiLib
         m_bKeyboardEnabled = bEnable ;
     }
 
-    void CDuiControl::SetInternVisible(BOOL bVisible /*= TRUE*/)
-    {
-        m_bInternVisible = bVisible;
-        if(!bVisible && m_pManager && m_pManager->GetFocus() == this)
-        {
-            m_pManager->SetFocus(NULL) ;
-        }
-    }
+
 
 
     BOOL CDuiControl::IsFocused() const
@@ -922,34 +996,6 @@ namespace DuiLib
             return;
         }
         m_bFloat = bFloat;
-        NeedParentUpdate();
-    }
-
-    void CDuiControl::SetFloatPercent(TPercentInfo piFloatPercent)
-    {
-        if(piFloatPercent.bottom == m_piFloatPercent.bottom &&
-                piFloatPercent.top == m_piFloatPercent.top &&
-                piFloatPercent.right == m_piFloatPercent.right &&
-                piFloatPercent.left == m_piFloatPercent.left)
-        {
-            return;
-        }
-        m_piFloatPercent = piFloatPercent;
-        NeedParentUpdate();
-    }
-
-    UINT CDuiControl::GetFloatAlign() const
-    {
-        return m_uFloatAlign;
-    }
-
-    void CDuiControl::SetFloatAlign(UINT uAlign)
-    {
-        if(uAlign == m_uFloatAlign)
-        {
-            return;
-        }
-        m_uFloatAlign = uAlign;
         NeedParentUpdate();
     }
 
@@ -1490,6 +1536,15 @@ namespace DuiLib
         return CRenderEngine::DrawImageString(hDC, m_pManager, m_rcItem, m_rcPaint, pStrImage, pStrModify, m_hInstance);
     }
 
+    SIZE CDuiControl::EstimateSize(SIZE szAvailable)
+    {
+        if(GetManager() != NULL)
+        {
+            return GetManager()->GetDPIObj()->Scale(m_cxyFixed);
+        }
+        return m_cxyFixed;
+    }
+
     void CDuiControl::PaintBkColor(HDC hDC)
     {
         if(m_dwBackColor != 0)
@@ -1656,25 +1711,7 @@ namespace DuiLib
     {
     }
 
-    void CDuiControl::Init()
-    {
-    }
 
-
-    CDuiPaintManager* CDuiControl::GetManager() const
-    {
-        return m_pManager;
-    }
-
-    void CDuiControl::SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit /*= TRUE*/)
-    {
-        m_pManager = pManager;
-        m_pParent = pParent;
-        if(bInit && m_pParent)
-        {
-            Init();
-        }
-    }
 
     void CDuiControl::Event(TEventUI& event)
     {

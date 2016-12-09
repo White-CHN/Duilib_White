@@ -27,8 +27,8 @@ namespace DuiLib
         DWORD GetDisabledTextColor() const;
         void SetDisabledTextColor(DWORD dwTextColor);
 
-        RECT GetTextPadding() const;
-        void SetTextPadding(RECT rc);
+        CDuiRect GetTextPadding() const;
+        void SetTextPadding(CDuiRect rc);
 
         BOOL IsShowHtml();
         void SetShowHtml(BOOL bShowHtml = TRUE);
@@ -44,13 +44,13 @@ namespace DuiLib
 
         virtual void PaintText(HDC hDC);
     private:
-        BOOL	m_bShowHtml;
-        BOOL	m_bAutoCalcWidth;
-        int		m_iFont;
-        DWORD	m_dwTextColor;
-        DWORD	m_dwDisabledTextColor;
-        UINT	m_uTextStyle;
-        RECT	m_rcTextPadding;
+        BOOL m_bShowHtml;
+        BOOL m_bAutoCalcWidth;
+        int	m_iFont;
+        DWORD m_dwTextColor;
+        DWORD m_dwDisabledTextColor;
+        UINT m_uTextStyle;
+        CDuiRect	m_rcTextPadding;
     };
 
 

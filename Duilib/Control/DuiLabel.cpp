@@ -15,7 +15,7 @@ namespace DuiLib
         , m_dwDisabledTextColor(0)
         , m_uTextStyle(DT_VCENTER | DT_SINGLELINE)
     {
-        ZeroMemory(&m_rcTextPadding, sizeof(m_rcTextPadding));
+
     }
 
 
@@ -102,17 +102,14 @@ namespace DuiLib
         Invalidate();
     }
 
-    RECT CDuiLabel::GetTextPadding() const
+    CDuiRect CDuiLabel::GetTextPadding() const
     {
         return m_rcTextPadding;
     }
 
-    void CDuiLabel::SetTextPadding(RECT rc)
+    void CDuiLabel::SetTextPadding(CDuiRect rc)
     {
-        if(m_rcTextPadding.bottom == rc.bottom &&
-                m_rcTextPadding.top == rc.top &&
-                m_rcTextPadding.right == rc.right &&
-                m_rcTextPadding.left == rc.left)
+        if(m_rcTextPadding == rc)
         {
             return;
         }

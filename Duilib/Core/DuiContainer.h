@@ -27,19 +27,21 @@ namespace DuiLib
     public:
         CDuiContainer(void);
         virtual ~CDuiContainer(void);
-
+    public:
         virtual LPCTSTR GetClass() const;
         virtual LPVOID GetInterface(LPCTSTR pstrName);
 
-        virtual RECT GetInset() const;
-        virtual void SetInset(RECT rcInset); // 设置内边距，相当于设置客户区
+        virtual CDuiRect GetInset() const;
+        virtual void SetInset(CDuiRect rcInset); // 设置内边距，相当于设置客户区
 
         virtual int GetChildPadding() const;
         virtual void SetChildPadding(int iPadding);
 
         virtual UINT GetChildAlign() const;
+        virtual void SetChildAlign(UINT iAlign);
 
         virtual UINT GetChildVAlign() const;
+        virtual void SetChildVAlign(UINT iVAlign);
 
         virtual BOOL IsAutoDestroy() const;
         virtual void SetAutoDestroy(BOOL bAuto);
@@ -112,7 +114,7 @@ namespace DuiLib
         CDuiScrollBar* m_pVerticalScrollBar;
         CDuiScrollBar* m_pHorizontalScrollBar;
 
-        RECT m_rcInset;
+        CDuiRect m_rcInset;
 
         CDuiString	m_sVerticalScrollBarStyle;
         CDuiString	m_sHorizontalScrollBarStyle;

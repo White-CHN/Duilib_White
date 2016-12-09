@@ -10,10 +10,10 @@
 	<Font id="1" name="华文彩云" size="35" />
 	<Font id="2" name="微软雅黑" size="12" underline="true" />
 	<Font id="3"  size="15"  />
-	<VerticalLayout bkcolor="#FF000000"  bkimage="bkimage/12.jpg">
+	<VerticalLayout bkcolor="#FF000000"  bkimage="bkimage/12.png">
 		<HorizontalLayout  height="64" >
 			<HorizontalLayout  >
-				<Control width="64" height="64" bkimage="bkimage/logo.jpg" />
+				<Control width="64" height="64" bkimage="bkimage/logo.png" />
 				<Label  text="Duilib开源项目展示" valign="vcenter" align="left" textpadding="10,0,0,0" textcolor="#FFFFFFFF" font="1" tooltip="duilib开源项目圈"/>
 				<VerticalLayout childvalign="vcenter" childpadding="2" >
 					<Button name="home" font="2" resourcetext="true" text="HomePage" cursor="hand" tooltip="HomePage"  hottextcolor="#FFFF00FF" autocalcwidth="true" textcolor="#FFFFFFFF"  />

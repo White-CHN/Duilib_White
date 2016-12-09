@@ -91,11 +91,11 @@ namespace DuiLib
 
         CDuiContainer* m_pOwner;
 
-        POINT m_ptLastMouse;
+        CDuiPoint m_ptLastMouse;
 
-        RECT m_rcThumb;
-        RECT m_rcButton1;
-        RECT m_rcButton2;
+        CDuiRect m_rcThumb;
+        CDuiRect m_rcButton1;
+        CDuiRect m_rcButton2;
 
         CDuiString m_sBkDisabledImage;
         CDuiString m_sBkPushedImage;

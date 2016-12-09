@@ -1,6 +1,8 @@
 #pragma once
 namespace DuiLib
 {
+
+
     class CDuiEdit;
     class CDuiEditWnd : public CDuiWnd
     {
@@ -25,6 +27,11 @@ namespace DuiLib
         virtual LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    private:
+        enum
+        {
+            TIMERID_CARET			=	0x1999
+        };
     private:
         BOOL m_bInit;
         BOOL m_bDrawCaret;

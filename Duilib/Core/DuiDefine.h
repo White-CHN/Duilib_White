@@ -176,14 +176,13 @@ namespace DuiLib
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 
 
-//Duilib所用到的定时器ID
-    enum
+    //PaintManager所用到的定时器ID
+    enum DuiPaintManagerTimerID
     {
-        TIMERID_SCROLLBAR		 =	 10,
-        TIMERID_CARET			=	0x1999
+        TIMERID_SCROLLBAR		 =	 100,
     };
 
-    enum
+    enum DuiMsg
     {
         // 内部保留消息
         DUIMSG_ICON = WM_USER + 1,
