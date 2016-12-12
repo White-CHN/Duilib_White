@@ -650,6 +650,7 @@
     <ClInclude Include="Control\DuiRadio.h" />
     <ClInclude Include="Control\DuiScrollBar.h" />
     <ClInclude Include="Control\DuiSlider.h" />
+    <ClInclude Include="Core\DuiAnimation.h" />
     <ClInclude Include="Core\DuiContainer.h" />
     <ClInclude Include="Core\DuiControl.h" />
     <ClInclude Include="Core\DuiControlFactory.h" />
@@ -663,6 +664,7 @@
     <ClInclude Include="Core\DuiResourceManager.h" />
     <ClInclude Include="Core\DuiWnd.h" />
     <ClInclude Include="DuiLib.h" />
+    <ClInclude Include="Layout\DuiAnimationTabLayout.h" />
     <ClInclude Include="Layout\DuiHorizontalLayout.h" />
     <ClInclude Include="Layout\DuiTabLayout.h" />
     <ClInclude Include="Layout\DuiVerticalLayout.h" />
@@ -690,6 +692,7 @@
     <ClCompile Include="Control\DuiRadio.cpp" />
     <ClCompile Include="Control\DuiScrollBar.cpp" />
     <ClCompile Include="Control\DuiSlider.cpp" />
+    <ClCompile Include="Core\DuiAnimation.cpp" />
     <ClCompile Include="Core\DuiContainer.cpp" />
     <ClCompile Include="Core\DuiControl.cpp" />
     <ClCompile Include="Core\DuiControlFactory.cpp" />
@@ -753,6 +756,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="DuiLib.cpp" />
+    <ClCompile Include="Layout\DuiAnimationTabLayout.cpp" />
     <ClCompile Include="Layout\DuiHorizontalLayout.cpp" />
     <ClCompile Include="Layout\DuiTabLayout.cpp" />
     <ClCompile Include="Layout\DuiVerticalLayout.cpp" />

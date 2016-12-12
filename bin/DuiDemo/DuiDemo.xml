@@ -40,7 +40,7 @@
 			<Option width="98" text="分割窗口" name="split_tab" style="colortab_style" />
 			<Control />
 		</HorizontalLayout>
-		<TabLayout  name="tab_switch">
+		<AnimationTabLayout  name="tab_switch">
 			<VerticalLayout inset="2,1,1,1" vscrollbar="true">
 				<HorizontalLayout  childvalign="vcenter" >
 					<Label font="3" valign="center" cursor="hand" align="center"  text="Label演示" tooltip="Label演示" width="80" textcolor="#FFFFFFFF" />
@@ -147,7 +147,7 @@
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true">
 			</VerticalLayout>
-		</TabLayout>
+		</AnimationTabLayout>
 		<Label height="1"  bkimage="line/hor_line.bmp"/>
 		<HorizontalLayout height="40" childvalign="vcenter" childpadding="2" inset="5,5,5,5">
 			<Label font="3" text="DPI调整" cursor="hand" textcolor="#FFFFFFFF" font="font13" width="80"/>

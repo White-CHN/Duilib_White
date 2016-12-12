@@ -69,10 +69,12 @@ using namespace Gdiplus;
 #include "Core/DuiDlgBuilder.h"
 #include "Core/DuiDlgImplBase.h"
 #include "Core/DuiRender.h"
+#include "Core/DuiAnimation.h"
 
 #include "Layout/DuiVerticalLayout.h"
 #include "Layout/DuiHorizontalLayout.h"
 #include "Layout/DuiTabLayout.h"
+#include "Layout/DuiAnimationTabLayout.h"
 
 #include "Control/DuiScrollBar.h"
 #include "Control/DuiLabel.h"
@@ -86,13 +88,6 @@ using namespace Gdiplus;
 #include "Control/DuiGroupBox.h"
 #include "Control/DuiDateTime.h"
 #include "Control/DuiIPAddress.h"
-
-
-
-
-
-
-
 
 
 #pragma comment( lib, "GdiPlus.lib" )

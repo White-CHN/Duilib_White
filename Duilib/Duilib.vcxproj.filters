@@ -156,6 +156,12 @@
     <ClInclude Include="Control\DuiIPAddress.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Core\DuiAnimation.h">
+      <Filter>头文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Layout\DuiAnimationTabLayout.h">
+      <Filter>头文件\Layout</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -271,6 +277,12 @@
     </ClCompile>
     <ClCompile Include="Control\DuiIPAddress.cpp">
       <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DuiAnimation.cpp">
+      <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Layout\DuiAnimationTabLayout.cpp">
+      <Filter>源文件\Layout</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

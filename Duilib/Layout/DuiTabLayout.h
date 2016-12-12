@@ -20,6 +20,9 @@ namespace DuiLib
         virtual BOOL SelectItem(int iIndex);
         virtual BOOL SelectItem(CDuiControl* pControl);
 
+        int GetCurSel() const;
+        void SetCurSel(int iCurSel);
+
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
         virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
     private:

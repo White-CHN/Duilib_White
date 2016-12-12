@@ -6,8 +6,10 @@ namespace DuiLib
     class DUILIB_API CDuiConsole
     {
     public:
-        CDuiConsole();
+        CDuiConsole(BOOL bOpen = TRUE);
         ~CDuiConsole();
+    private:
+        BOOL m_bOpen;
     };
 
     class DUILIB_API CDuiTimeInterval

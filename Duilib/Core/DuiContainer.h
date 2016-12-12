@@ -4,7 +4,7 @@ namespace DuiLib
 {
     class CDuiScrollBar;
 
-    class IContainer
+    class DUILIB_API IContainer
     {
     public:
         virtual CStdPtrArray* GetItems() = 0;

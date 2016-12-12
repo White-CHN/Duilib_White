@@ -170,6 +170,7 @@ namespace DuiLib
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
 #define  DUI_CTR_HORIZONTALLAYOUT                (_T("HorizontalLayout"))
 #define  DUI_CTR_TABLAYOUT                       (_T("TabLayout"))
+#define  DUI_CTR_ANIMATION_TABLAYOUT             (_T("AnimationTabLayout"))
 #define  DUI_CTR_COMBO                           (_T("Combo"))
 #define  DUI_CTR_GROUPBOX                        (_T("GroupBox"))
 ///
@@ -179,7 +180,8 @@ namespace DuiLib
     //PaintManager所用到的定时器ID
     enum DuiPaintManagerTimerID
     {
-        TIMERID_SCROLLBAR		 =	 100,
+        TIMERID_SCROLLBAR	=	100,
+        TIMERID_ANIMATION_TABLAYOUT
     };
 
     enum DuiMsg

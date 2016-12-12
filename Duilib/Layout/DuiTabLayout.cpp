@@ -164,6 +164,16 @@ namespace DuiLib
         }
     }
 
+    int CDuiTabLayout::GetCurSel() const
+    {
+        return m_iCurSel;
+    }
+
+    void CDuiTabLayout::SetCurSel(int iCurSel)
+    {
+        m_iCurSel = iCurSel;
+    }
+
     void CDuiTabLayout::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
     {
         if(_tcsicmp(pstrName, _T("selectedid")) == 0)
@@ -184,7 +194,7 @@ namespace DuiLib
         rc.right -= rcInset.right;
         rc.bottom -= rcInset.bottom;
 
-        for(int it = 0; it <  GetItems()->GetSize(); it++)
+        for(int it = 0; it <  GetCount(); it++)
         {
             CDuiControl* pControl = static_cast<CDuiControl*>(GetItemAt(it));
             if(!pControl->IsVisible())
@@ -238,7 +248,7 @@ namespace DuiLib
             }
 
             RECT rcCtrl = { rc.left, rc.top, rc.left + sz.cx, rc.top + sz.cy};
-            pControl->SetPos(rcCtrl);
+            pControl->SetPos(rcCtrl, FALSE);
         }
     }
 

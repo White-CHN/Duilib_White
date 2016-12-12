@@ -23,6 +23,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
                      NULL,       // 存放用户提供的回调数据
                      TIME_PERIODIC | TIME_CALLBACK_FUNCTION | TIME_KILL_SYNCHRONOUS);
     timeKillEvent(m);
+
     // 全局初始化
     CDuiPaintManager::Initialize(hInstance);
     // 资源类型

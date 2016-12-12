@@ -24,6 +24,8 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiGroupBox);
         INNER_REGISTER_DUICONTROL(CDuiDateTime);
         INNER_REGISTER_DUICONTROL(CDuiIPAddress);
+        INNER_REGISTER_DUICONTROL(CDuiAnimationTabLayout);
+
     }
 
     CDuiControlFactory::~CDuiControlFactory()
