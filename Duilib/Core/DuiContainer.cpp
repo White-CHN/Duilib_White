@@ -1152,14 +1152,6 @@ namespace DuiLib
 
         int nParentWidth = GetPos().right - GetPos().left;
         int nParentHeight = GetPos().bottom - GetPos().top;
-        if(sz.cx <= 0)
-        {
-            sz.cx = nParentWidth;
-        }
-        if(sz.cy <= 0)
-        {
-            sz.cy = nParentHeight;
-        }
 
         UINT uAlign = pControl->GetFloatAlign();
         if(uAlign != 0)

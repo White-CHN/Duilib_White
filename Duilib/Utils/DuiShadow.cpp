@@ -94,9 +94,7 @@ namespace DuiLib
         }
         // Replace the original WndProc of parent window to steal messages
         m_OriParentProc = GetWindowLongPtr(hParentWnd, GWLP_WNDPROC);
-#pragma warning(disable: 4311)	// temporrarily disable the type_cast warning in Win32
         SetWindowLongPtr(hParentWnd, GWLP_WNDPROC, (LONG_PTR)ParentProc);
-#pragma warning(default: 4311)
     }
 
     std::map<HWND, CDuiShadow*>& CDuiShadow::GetShadowMap()
@@ -111,18 +109,11 @@ namespace DuiLib
         CDuiShadow* pThis = GetShadowMap()[hwnd];
         if(pThis->m_bIsDisableShadow)
         {
-#pragma warning(disable: 4312)	// temporrarily disable the type_cast warning in Win32
             // Call the default(original) window procedure for other messages or messages processed but not returned
             return ((WNDPROC)pThis->m_OriParentProc)(hwnd, uMsg, wParam, lParam);
-#pragma warning(default: 4312)
         }
         switch(uMsg)
         {
-            case WM_SETFOCUS:
-            {
-                return 0;
-            }
-            break;
             case WM_WINDOWPOSCHANGED:
                 RECT WndRect;
                 GetWindowRect(hwnd, &WndRect);
@@ -149,6 +140,9 @@ namespace DuiLib
                         SetWindowPos(pThis->m_hWnd, 0, WndRect.left + pThis->m_nxOffset - pThis->m_nSize, WndRect.top + pThis->m_nyOffset - pThis->m_nSize, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
                     }
                 }
+                break;
+            case WM_NCACTIVATE:
+                SetWindowPos(pThis->m_hWnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
                 break;
             case WM_SIZE:
                 if(pThis->m_Status & SS_ENABLED)
@@ -222,11 +216,10 @@ namespace DuiLib
                 GetShadowMap().erase(hwnd);	// Remove this window and shadow from the map
                 break;
         }
-#pragma warning(disable: 4312)	// temporrarily disable the type_cast warning in Win32
         // Call the default(original) window procedure for other messages or messages processed but not returned
         return ((WNDPROC)pThis->m_OriParentProc)(hwnd, uMsg, wParam, lParam);
-#pragma warning(default: 4312)
     }
+
     void GetLastErrorMessage()            //Formats GetLastError() value.
     {
         LPVOID lpMsgBuf;

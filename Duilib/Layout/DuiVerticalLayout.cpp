@@ -272,26 +272,24 @@ namespace DuiLib
                 }
                 cyFixedRemaining -= sz.cy;
             }
-            if(pControl->GetFixedWidth() <= 0)
+            sz.cx = pControl->GetMaxWidth();
+            if(sz.cx == 0)
             {
-                sz.cx = pControl->GetMaxWidth();
-                if(sz.cx == 0)
-                {
-                    sz.cx = szAvailable.cx - rcPadding.left - rcPadding.right;
-                }
-                if(sz.cx < 0)
-                {
-                    sz.cx = 0;
-                }
-                if(sz.cx > szControlAvailable.cx)
-                {
-                    sz.cx = szControlAvailable.cx;
-                }
-                if(sz.cx < pControl->GetMinWidth())
-                {
-                    sz.cx = pControl->GetMinWidth();
-                }
+                sz.cx = szAvailable.cx - rcPadding.left - rcPadding.right;
             }
+            if(sz.cx < 0)
+            {
+                sz.cx = 0;
+            }
+            if(sz.cx > szControlAvailable.cx)
+            {
+                sz.cx = szControlAvailable.cx;
+            }
+            if(sz.cx < pControl->GetMinWidth())
+            {
+                sz.cx = pControl->GetMinWidth();
+            }
+
             UINT iChildAlign = GetChildAlign();
             if(iChildAlign == DT_CENTER)
             {

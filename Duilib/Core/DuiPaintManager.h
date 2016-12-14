@@ -197,14 +197,7 @@ namespace DuiLib
 
         void SetPainting(BOOL bIsPainting);
 
-        BOOL MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
-        BOOL AddPreMessageFilter(IMessageFilterUI* pFilter);
-        BOOL RemovePreMessageFilter(IMessageFilterUI* pFilter);
-
         HWND GetPaintWindow() const;
-
-        void RemoveImage(LPCTSTR bitmap, BOOL bShared = FALSE);
-
         //属性设置与获取
         void SetInitSize(int cx, int cy);
 
@@ -222,14 +215,16 @@ namespace DuiLib
         SIZE GetMaxInfo() const;
         void SetMaxInfo(int cx, int cy);
 
+        BOOL IsShowUpdateRect() const;
         void SetShowUpdateRect(BOOL bShow);
 
-
+        BYTE GetOpacity() const;
         void SetOpacity(BYTE nOpacity);
 
-        BOOL IsLayered();
+        BOOL IsLayered() const;
         void SetLayered(BOOL bLayered);
 
+        BYTE GetLayeredOpacity() const ;
         void SetLayeredOpacity(BYTE nOpacity);
 
         DWORD GetDefaultDisabledColor() const;
@@ -238,8 +233,13 @@ namespace DuiLib
         DWORD GetDefaultFontColor() const;
         void SetDefaultFontColor(DWORD dwColor, BOOL bShared = FALSE);
 
+        DWORD GetDefaultLinkFontColor() const;
         void SetDefaultLinkFontColor(DWORD dwColor, BOOL bShared = FALSE);
+
+        DWORD GetDefaultLinkHoverFontColor() const;
         void SetDefaultLinkHoverFontColor(DWORD dwColor, BOOL bShared = FALSE);
+
+        DWORD GetDefaultSelectedBkColor() const;
         void SetDefaultSelectedBkColor(DWORD dwColor, BOOL bShared = FALSE);
         // 样式管理
         void AddStyle(LPCTSTR pName, LPCTSTR pstrStyle, BOOL bShared = FALSE);
@@ -294,10 +294,6 @@ namespace DuiLib
 
         void AddDelayedCleanup(CDuiControl* pControl);
 
-        DWORD GetDefaultLinkFontColor() const;
-        DWORD GetDefaultLinkHoverFontColor() const;
-        DWORD GetDefaultSelectedBkColor() const;
-
         void AddDefaultAttributeList(LPCTSTR pStrControlName, LPCTSTR pStrControlAttrList, BOOL bShared = FALSE);
         LPCTSTR GetDefaultAttributeList(LPCTSTR pStrControlName) const;
         void RemoveAllDefaultAttributeList();
@@ -321,17 +317,19 @@ namespace DuiLib
         CDuiControl* FindControl(POINT pt) const;
         CDuiControl* FindControl(LPCTSTR pstrName) const;
 
-
         const TImageInfo* GetImage(LPCTSTR bitmap);
         const TImageInfo* GetImageEx(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, HINSTANCE instance = NULL);
         const TImageInfo* AddImage(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, BOOL bShared = FALSE, HINSTANCE instance = NULL);
         const TImageInfo* AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int iWidth, int iHeight, BOOL bAlpha, BOOL bShared = FALSE);
+        void RemoveImage(LPCTSTR bitmap, BOOL bShared = FALSE);
         void RemoveAllImages();
 
         const TDrawInfo* GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify);
         void RemoveAllDrawInfos();
 
         BOOL TranslateAccelerator(LPMSG pMsg);
+        BOOL AddPreMessageFilter(IMessageFilterUI* pFilter);
+        BOOL RemovePreMessageFilter(IMessageFilterUI* pFilter);
         BOOL PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
 
         BOOL SetTimer(CDuiControl* pControl, UINT nTimerID, UINT uElapse);
@@ -343,6 +341,28 @@ namespace DuiLib
         void SetForceUseSharedRes(BOOL bForce);
 
         CStdPtrArray* GetFoundControls();
+
+        LRESULT OnDuiNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnLButtonDblClk(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnRButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnRButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnMouseHover(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnMouseLeave(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnKeyUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnSetCursor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnSetFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        LRESULT OnCtlColor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+        BOOL MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
 
         static BOOL Initialize(HINSTANCE hInstance);
         static void RemoveAllShared();
@@ -377,29 +397,7 @@ namespace DuiLib
         //插件
         static BOOL LoadPlugin(LPCTSTR pstrModuleName);
         static CStdPtrArray* GetPlugins();
-    private:
-
-        LRESULT OnDuiNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnLButtonDblClk(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnLButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnRButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnRButtonUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnMouseHover(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnMouseLeave(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnKeyUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnSetCursor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnSetFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT OnCtlColor(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-
+    protected:
         static CDuiControl* CALLBACK __FindControlFromNameHash(CDuiControl* pThis, LPVOID pData);
         static CDuiControl* CALLBACK __FindControlsFromUpdate(CDuiControl* pThis, LPVOID pData);
         static CDuiControl* CALLBACK __FindControlFromTab(CDuiControl* pThis, LPVOID pData);
@@ -492,9 +490,9 @@ namespace DuiLib
         static CStdPtrArray m_aPlugins;			//插件
         static TResInfo m_SharedResInfo;		//共享的所有属性
 
-        static short m_H;
-        static short m_S;
-        static short m_L;
+        static short m_Hue;
+        static short m_Saturation;
+        static short m_Lightness;
         static BOOL m_bUseHSL;
     };
 

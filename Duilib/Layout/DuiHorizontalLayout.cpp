@@ -279,25 +279,22 @@ namespace DuiLib
                 cxFixedRemaining -= sz.cx;
             }
 
-            if(pControl->GetFixedHeight() <= 0)
+            sz.cy = pControl->GetMaxHeight();
+            if(sz.cy == 0)
             {
-                sz.cy = pControl->GetMaxHeight();
-                if(sz.cy == 0)
-                {
-                    sz.cy = szAvailable.cy - rcPadding.top - rcPadding.bottom;
-                }
-                if(sz.cy < 0)
-                {
-                    sz.cy = 0;
-                }
-                if(sz.cy > szControlAvailable.cy)
-                {
-                    sz.cy = szControlAvailable.cy;
-                }
-                if(sz.cy < pControl->GetMinHeight())
-                {
-                    sz.cy = pControl->GetMinHeight();
-                }
+                sz.cy = szAvailable.cy - rcPadding.top - rcPadding.bottom;
+            }
+            if(sz.cy < 0)
+            {
+                sz.cy = 0;
+            }
+            if(sz.cy > szControlAvailable.cy)
+            {
+                sz.cy = szControlAvailable.cy;
+            }
+            if(sz.cy < pControl->GetMinHeight())
+            {
+                sz.cy = pControl->GetMinHeight();
             }
 
             UINT iChildAlign = GetChildVAlign();

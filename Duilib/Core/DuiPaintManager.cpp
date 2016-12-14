@@ -192,8 +192,6 @@ namespace DuiLib
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
-    typedef BOOL (__stdcall* PFUNCUPDATELAYEREDWINDOW)(HWND, HDC, POINT*, SIZE*, HDC, POINT*, COLORREF, BLENDFUNCTION*, DWORD);
-    PFUNCUPDATELAYEREDWINDOW g_fUpdateLayeredWindow = NULL;
 
     HINSTANCE CDuiPaintManager::m_hInstance = NULL;
     HINSTANCE CDuiPaintManager::m_hResourceInstance = NULL;
@@ -207,9 +205,9 @@ namespace DuiLib
     CStdPtrArray CDuiPaintManager::m_aPreMessages;
     CStdPtrArray CDuiPaintManager::m_aPlugins;
 
-    short CDuiPaintManager::m_H = 180;
-    short CDuiPaintManager::m_S = 100;
-    short CDuiPaintManager::m_L = 100;
+    short CDuiPaintManager::m_Hue = 180;
+    short CDuiPaintManager::m_Saturation = 100;
+    short CDuiPaintManager::m_Lightness = 100;
     BOOL CDuiPaintManager::m_bUseHSL = FALSE;
 
     TResInfo CDuiPaintManager::m_SharedResInfo = {0};
@@ -302,6 +300,11 @@ namespace DuiLib
             ::DeleteObject(m_hbmpOffscreen);
             m_hbmpOffscreen = NULL;
         }
+        if(m_hDragBitmap != NULL)
+        {
+            ::DeleteObject(m_hDragBitmap);
+            m_hDragBitmap = NULL;
+        }
         if(m_ResInfo.m_DefaultFontInfo.hFont != NULL)
         {
             ::DeleteObject(m_ResInfo.m_DefaultFontInfo.hFont);
@@ -393,143 +396,12 @@ namespace DuiLib
         m_bIsPainting = bIsPainting;
     }
 
-    BOOL CDuiPaintManager::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes)
-    {
-        BOOL bHandled = FALSE;
-        LRESULT lResult = 0;
-        for(int i = 0; i < m_aMessageFilters.GetSize(); i++)
-        {
-            bHandled = FALSE;
-            lResult = static_cast<IMessageFilterUI*>(m_aMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
-            if(bHandled)
-            {
-                lRes = lResult;
-                return TRUE;
-            }
-        }
-
-        bHandled = TRUE;
-        lResult = 0;
-        switch(uMsg)
-        {
-            case WM_APP + 1:
-                lResult = OnDuiNotify(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_PAINT:
-                lResult = OnPaint(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_SIZE:
-                lResult = OnSize(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_LBUTTONDOWN:
-                lResult = OnLButtonDown(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_LBUTTONDBLCLK:
-                lResult = OnLButtonDblClk(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_LBUTTONUP:
-                lResult = OnLButtonUp(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_RBUTTONDOWN:
-                lResult = OnRButtonDown(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_RBUTTONUP:
-                lResult = OnRButtonUp(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_TIMER:
-                lResult = OnTimer(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_MOUSEHOVER:
-                lResult = OnMouseHover(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_MOUSELEAVE:
-                lResult = OnMouseLeave(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_MOUSEMOVE:
-                lResult = OnMouseMove(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_KEYDOWN:
-                lResult = OnKeyDown(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_KEYUP:
-                lResult = OnKeyUp(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_MOUSEWHEEL:
-                lResult = OnMouseWheel(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_SETCURSOR:
-                lResult = OnSetCursor(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_SETFOCUS:
-                lResult = OnSetFocus(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_NOTIFY:
-                lResult = OnNotify(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_COMMAND:
-                lResult = OnCommand(uMsg, wParam, lParam, bHandled);
-                break;
-            case WM_CTLCOLOREDIT:
-            case WM_CTLCOLORSTATIC:
-                lResult = OnCtlColor(uMsg, wParam, lParam, bHandled);
-                break;
-            default:
-                bHandled = FALSE;
-                break;
-        }
-        if(bHandled)
-        {
-            lRes = lResult;
-            return TRUE;
-        }
-        return FALSE;
-    }
-
-    BOOL CDuiPaintManager::AddPreMessageFilter(IMessageFilterUI* pFilter)
-    {
-        ASSERT(m_aPreMessageFilters.Find(pFilter) < 0);
-        return m_aPreMessageFilters.Add(pFilter);
-    }
-
-    BOOL CDuiPaintManager::RemovePreMessageFilter(IMessageFilterUI* pFilter)
-    {
-        for(int i = 0; i < m_aPreMessageFilters.GetSize(); i++)
-        {
-            if(static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i]) == pFilter)
-            {
-                return m_aPreMessageFilters.Remove(i);
-            }
-        }
-        return FALSE;
-    }
-
     HWND CDuiPaintManager::GetPaintWindow() const
     {
         return m_hWndPaint;
     }
 
-    void CDuiPaintManager::RemoveImage(LPCTSTR bitmap, BOOL bShared /*= FALSE*/)
-    {
-        TImageInfo* data = NULL;
-        if(bShared)
-        {
-            data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
-            if(data)
-            {
-                CRenderEngine::FreeImage(data) ;
-                m_SharedResInfo.m_ImageHash.Remove(bitmap);
-            }
-        }
-        else
-        {
-            data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
-            if(data)
-            {
-                CRenderEngine::FreeImage(data) ;
-                m_ResInfo.m_ImageHash.Remove(bitmap);
-            }
-        }
-    }
+
 
     void CDuiPaintManager::SetInitSize(int cx, int cy)
     {
@@ -596,9 +468,19 @@ namespace DuiLib
         m_szMaxWindow.cy = cy;
     }
 
+    BOOL CDuiPaintManager::IsShowUpdateRect() const
+    {
+        return m_bShowUpdateRect;
+    }
+
     void CDuiPaintManager::SetShowUpdateRect(BOOL bShow)
     {
         m_bShowUpdateRect = bShow;
+    }
+
+    BYTE CDuiPaintManager::GetOpacity() const
+    {
+        return m_nOpacity;
     }
 
     void CDuiPaintManager::SetOpacity(BYTE nOpacity)
@@ -606,17 +488,6 @@ namespace DuiLib
         m_nOpacity = nOpacity;
         if(m_hWndPaint != NULL)
         {
-            typedef BOOL (__stdcall * PFUNCSETLAYEREDWINDOWATTR)(HWND, COLORREF, BYTE, DWORD);
-            PFUNCSETLAYEREDWINDOWATTR fSetLayeredWindowAttributes;
-            HMODULE hUser32 = ::GetModuleHandle(_T("User32.dll"));
-            if(hUser32)
-            {
-                fSetLayeredWindowAttributes = (PFUNCSETLAYEREDWINDOWATTR)::GetProcAddress(hUser32, "SetLayeredWindowAttributes");
-                if(fSetLayeredWindowAttributes == NULL)
-                {
-                    return;
-                }
-            }
             DWORD dwStyle = ::GetWindowLong(m_hWndPaint, GWL_EXSTYLE);
             DWORD dwNewStyle = dwStyle;
             if(nOpacity >= 0 && nOpacity < 256)
@@ -631,11 +502,11 @@ namespace DuiLib
             {
                 ::SetWindowLong(m_hWndPaint, GWL_EXSTYLE, dwNewStyle);
             }
-            fSetLayeredWindowAttributes(m_hWndPaint, 0, nOpacity, LWA_ALPHA);
+            SetLayeredWindowAttributes(m_hWndPaint, 0, nOpacity, LWA_ALPHA);
         }
     }
 
-    BOOL CDuiPaintManager::IsLayered()
+    BOOL CDuiPaintManager::IsLayered() const
     {
         return m_bLayered;
     }
@@ -649,18 +520,6 @@ namespace DuiLib
             {
                 return;
             }
-            if(g_fUpdateLayeredWindow == NULL)
-            {
-                HMODULE hUser32 = ::GetModuleHandle(_T("User32.dll"));
-                if(hUser32)
-                {
-                    g_fUpdateLayeredWindow = (PFUNCUPDATELAYEREDWINDOW)::GetProcAddress(hUser32, "UpdateLayeredWindow");
-                    if(g_fUpdateLayeredWindow == NULL)
-                    {
-                        return;
-                    }
-                }
-            }
             m_bLayered = bLayered;
             if(m_pRoot != NULL)
             {
@@ -668,6 +527,11 @@ namespace DuiLib
             }
             Invalidate();
         }
+    }
+
+    BYTE CDuiPaintManager::GetLayeredOpacity() const
+    {
+        return m_nOpacity;
     }
 
     void CDuiPaintManager::SetLayeredOpacity(BYTE nOpacity)
@@ -724,6 +588,11 @@ namespace DuiLib
         }
     }
 
+    DWORD CDuiPaintManager::GetDefaultLinkFontColor() const
+    {
+        return m_ResInfo.m_dwDefaultLinkFontColor;
+    }
+
     void CDuiPaintManager::SetDefaultLinkFontColor(DWORD dwColor, BOOL bShared /*= FALSE*/)
     {
         if(bShared)
@@ -738,6 +607,11 @@ namespace DuiLib
         {
             m_ResInfo.m_dwDefaultLinkFontColor = dwColor;
         }
+    }
+
+    DWORD CDuiPaintManager::GetDefaultLinkHoverFontColor() const
+    {
+        return m_ResInfo.m_dwDefaultLinkHoverFontColor;
     }
 
     void CDuiPaintManager::SetDefaultLinkHoverFontColor(DWORD dwColor, BOOL bShared /*= FALSE*/)
@@ -756,6 +630,11 @@ namespace DuiLib
         }
     }
 
+    DWORD CDuiPaintManager::GetDefaultSelectedBkColor() const
+    {
+        return m_ResInfo.m_dwDefaultSelectedBkColor;
+
+    }
     void CDuiPaintManager::SetDefaultSelectedBkColor(DWORD dwColor, BOOL bShared /*= FALSE*/)
     {
         if(bShared)
@@ -890,11 +769,15 @@ namespace DuiLib
 
     BOOL CDuiPaintManager::InitDragDrop()
     {
-        //AddRef();
+        AddRef();
         if(FAILED(RegisterDragDrop(m_hWndPaint, this))) //calls addref
         {
             DUI_ERROR("this[0x%x] RegisterDragDrop[FALSE]", this);
             return FALSE;
+        }
+        else
+        {
+            Release();
         }
         FORMATETC ftetc = {0};
         ftetc.cfFormat = CF_BITMAP;
@@ -1649,21 +1532,6 @@ namespace DuiLib
         ::PostMessage(m_hWndPaint, WM_APP + 1, 0, 0L);
     }
 
-    DWORD CDuiPaintManager::GetDefaultLinkFontColor() const
-    {
-        return m_ResInfo.m_dwDefaultLinkFontColor;
-    }
-
-    DWORD CDuiPaintManager::GetDefaultLinkHoverFontColor() const
-    {
-        return m_ResInfo.m_dwDefaultLinkHoverFontColor;
-    }
-
-    DWORD CDuiPaintManager::GetDefaultSelectedBkColor() const
-    {
-        return m_ResInfo.m_dwDefaultSelectedBkColor;
-    }
-
     void CDuiPaintManager::AddDefaultAttributeList(LPCTSTR pStrControlName, LPCTSTR pStrControlAttrList, BOOL bShared /*= FALSE*/)
     {
         if(bShared || m_bForceUseSharedRes)
@@ -1988,7 +1856,7 @@ namespace DuiLib
         }
         if(m_bUseHSL)
         {
-            CRenderEngine::AdjustImage(TRUE, data, m_H, m_S, m_L);
+            CRenderEngine::AdjustImage(TRUE, data, m_Hue, m_Saturation, m_Lightness);
         }
         if(data)
         {
@@ -2065,6 +1933,29 @@ namespace DuiLib
         return data;
     }
 
+    void CDuiPaintManager::RemoveImage(LPCTSTR bitmap, BOOL bShared /*= FALSE*/)
+    {
+        TImageInfo* data = NULL;
+        if(bShared)
+        {
+            data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
+            if(data)
+            {
+                CRenderEngine::FreeImage(data) ;
+                m_SharedResInfo.m_ImageHash.Remove(bitmap);
+            }
+        }
+        else
+        {
+            data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
+            if(data)
+            {
+                CRenderEngine::FreeImage(data) ;
+                m_ResInfo.m_ImageHash.Remove(bitmap);
+            }
+        }
+    }
+
     void CDuiPaintManager::RemoveAllImages()
     {
         TImageInfo* data = NULL;
@@ -2120,6 +2011,24 @@ namespace DuiLib
             if(lResult == S_OK)
             {
                 return TRUE;
+            }
+        }
+        return FALSE;
+    }
+
+    BOOL CDuiPaintManager::AddPreMessageFilter(IMessageFilterUI* pFilter)
+    {
+        ASSERT(m_aPreMessageFilters.Find(pFilter) < 0);
+        return m_aPreMessageFilters.Add(pFilter);
+    }
+
+    BOOL CDuiPaintManager::RemovePreMessageFilter(IMessageFilterUI* pFilter)
+    {
+        for(int i = 0; i < m_aPreMessageFilters.GetSize(); i++)
+        {
+            if(static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i]) == pFilter)
+            {
+                return m_aPreMessageFilters.Remove(i);
             }
         }
         return FALSE;
@@ -2341,399 +2250,6 @@ namespace DuiLib
         return &m_aFoundControls;
     }
 
-    BOOL CDuiPaintManager::Initialize(HINSTANCE hInstance)
-    {
-        ASSERT(hInstance);
-        OleInitialize(NULL);
-        InitCommonControls();
-
-        if(hInstance == NULL)
-        {
-            return FALSE;
-        }
-        m_hInstance = hInstance;
-        if(m_hMsimg32Module == NULL)
-        {
-            m_hMsimg32Module = ::LoadLibrary(_T("msimg32.dll"));
-        }
-
-        m_SharedResInfo.m_dwDefaultDisabledColor			= 0xFFA7A6AA;
-        m_SharedResInfo.m_dwDefaultFontColor				= 0xFF000000;
-        m_SharedResInfo.m_dwDefaultLinkFontColor			= 0xFF0000FF;
-        m_SharedResInfo.m_dwDefaultLinkHoverFontColor		= 0xFFD3215F;
-        m_SharedResInfo.m_dwDefaultSelectedBkColor			= 0xFFBAE4FF;
-        LOGFONT lf = { 0 };
-        ::GetObject(::GetStockObject(DEFAULT_GUI_FONT), sizeof(LOGFONT), &lf);
-        lf.lfCharSet = DEFAULT_CHARSET;
-        m_SharedResInfo.m_DefaultFontInfo.hFont			= ::CreateFontIndirect(&lf);
-        m_SharedResInfo.m_DefaultFontInfo.sFontName		= lf.lfFaceName;
-        m_SharedResInfo.m_DefaultFontInfo.iSize			= -lf.lfHeight;
-        m_SharedResInfo.m_DefaultFontInfo.bBold			= (lf.lfWeight >= FW_BOLD);
-        m_SharedResInfo.m_DefaultFontInfo.bUnderline	= (lf.lfUnderline == TRUE);
-        m_SharedResInfo.m_DefaultFontInfo.bItalic		= (lf.lfItalic == TRUE);
-        ZeroMemory(&m_SharedResInfo.m_DefaultFontInfo.tm, sizeof(m_SharedResInfo.m_DefaultFontInfo.tm));
-
-        CDuiShadow::Initialize(m_hInstance);
-
-        return TRUE;
-    }
-
-    void CDuiPaintManager::RemoveAllShared()
-    {
-        if(m_SharedResInfo.m_DefaultFontInfo.hFont != NULL)
-        {
-            ::DeleteObject(m_SharedResInfo.m_DefaultFontInfo.hFont);
-            m_SharedResInfo.m_DefaultFontInfo.hFont = NULL;
-        }
-
-        CDuiString* pDefaultAttr = NULL;
-        for(int i = 0; i < m_SharedResInfo.m_AttrHash.GetSize(); i++)
-        {
-            if(LPCTSTR key = m_SharedResInfo.m_AttrHash.GetAt(i))
-            {
-                pDefaultAttr = static_cast<CDuiString*>(m_SharedResInfo.m_AttrHash.Find(key));
-                DUI_FREE_POINT(pDefaultAttr);
-            }
-        }
-        m_SharedResInfo.m_AttrHash.RemoveAll();
-
-        TImageInfo* data = NULL;
-        for(int i = 0; i < m_SharedResInfo.m_ImageHash.GetSize(); i++)
-        {
-            if(LPCTSTR key = m_SharedResInfo.m_ImageHash.GetAt(i))
-            {
-                data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(key, FALSE));
-                if(data)
-                {
-                    CRenderEngine::FreeImage(data);
-                }
-            }
-        }
-        m_SharedResInfo.m_ImageHash.RemoveAll();
-
-        TFontInfo* pFontInfo = NULL;
-        for(int i = 0; i < m_SharedResInfo.m_CustomFonts.GetSize(); i++)
-        {
-            if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i))
-            {
-                pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key, FALSE));
-                if(pFontInfo)
-                {
-                    ::DeleteObject(pFontInfo->hFont);
-                    DUI_FREE_POINT(pFontInfo);
-                }
-            }
-        }
-        m_SharedResInfo.m_CustomFonts.RemoveAll();
-
-        CDuiString* pStyle = NULL;
-        for(int i = 0; i < m_SharedResInfo.m_StyleHash.GetSize(); i++)
-        {
-            if(LPCTSTR key = m_SharedResInfo.m_StyleHash.GetAt(i))
-            {
-                pStyle = static_cast<CDuiString*>(m_SharedResInfo.m_StyleHash.Find(key));
-                DUI_FREE_POINT(pStyle);
-            }
-        }
-        m_SharedResInfo.m_StyleHash.RemoveAll();
-    }
-
-    void CDuiPaintManager::Uninitialize()
-    {
-        RemoveAllShared();
-
-        CDuiControlFactory::GetInstance()->Release();
-        CDuiResourceManager::GetInstance()->Release();
-        if(m_hMsimg32Module != NULL)
-        {
-            FreeModule(m_hMsimg32Module);
-            m_hMsimg32Module = NULL;
-        }
-        if(m_bCachedResourceZip && m_hResourceZip != NULL)
-        {
-            CloseZip((HZIP)m_hResourceZip);
-            m_hResourceZip = NULL;
-        }
-        OleUninitialize();
-    }
-
-    HINSTANCE CDuiPaintManager::GetInstance()
-    {
-        return m_hInstance;
-    }
-
-    CDuiString CDuiPaintManager::GetInstancePath()
-    {
-        if(m_hInstance == NULL)
-        {
-            return _T('\0');
-        }
-        TCHAR tszModule[MAX_PATH + 1] = { 0 };
-        ::GetModuleFileName(m_hInstance, tszModule, MAX_PATH);
-        CDuiString strInstancePath = tszModule;
-        int pos = strInstancePath.ReverseFind(_T('\\'));
-        if(pos >= 0)
-        {
-            strInstancePath = strInstancePath.Left(pos + 1);
-        }
-        return strInstancePath;
-    }
-
-    HINSTANCE CDuiPaintManager::GetResourceDll()
-    {
-        if(m_hResourceInstance == NULL)
-        {
-            return m_hInstance;
-        }
-        return m_hResourceInstance;
-    }
-
-    int CDuiPaintManager::GetResourceType()
-    {
-        return m_iResourceType;
-    }
-
-    void CDuiPaintManager::SetResourceType(int iResourceType)
-    {
-        m_iResourceType = iResourceType;
-    }
-
-    const CDuiString& CDuiPaintManager::GetResourcePath()
-    {
-        return m_strResourcePath;
-    }
-
-    void CDuiPaintManager::SetResourcePath(LPCTSTR pStrPath)
-    {
-        m_strResourcePath = pStrPath;
-        if(m_strResourcePath.IsEmpty())
-        {
-            return;
-        }
-        TCHAR cEnd = m_strResourcePath.GetAt(m_strResourcePath.GetLength() - 1);
-        if(cEnd != _T('\\') && cEnd != _T('/'))
-        {
-            m_strResourcePath += _T('\\');
-        }
-    }
-
-    const CDuiString& CDuiPaintManager::GetResourceZip()
-    {
-        return m_strResourceZip;
-    }
-
-    void CDuiPaintManager::SetResourceZip(LPVOID pVoid, unsigned int len)
-    {
-        if(m_strResourceZip == _T("membuffer"))
-        {
-            return;
-        }
-        if(m_bCachedResourceZip && m_hResourceZip != NULL)
-        {
-            CloseZip((HZIP)m_hResourceZip);
-            m_hResourceZip = NULL;
-        }
-        m_strResourceZip = _T("membuffer");
-        if(m_bCachedResourceZip)
-        {
-            m_hResourceZip = (HANDLE)OpenZip(pVoid, len, 3);
-            if(m_hResourceZip == NULL)
-            {
-                DUI_ERROR("OpenZip[NULL] pVoid[0x%x] ", pVoid);
-            }
-        }
-    }
-
-    void CDuiPaintManager::SetResourceZip(LPCTSTR pstrZip, BOOL bCachedResourceZip /*= FALSE*/)
-    {
-        if(m_strResourceZip == pstrZip && m_bCachedResourceZip == bCachedResourceZip)
-        {
-            return;
-        }
-        if(m_bCachedResourceZip && m_hResourceZip != NULL)
-        {
-            CloseZip((HZIP)m_hResourceZip);
-            m_hResourceZip = NULL;
-        }
-        m_strResourceZip = pstrZip;
-        m_bCachedResourceZip = bCachedResourceZip;
-        if(m_bCachedResourceZip)
-        {
-            CDuiString sFile = CDuiPaintManager::GetResourcePath();
-            sFile += CDuiPaintManager::GetResourceZip();
-            m_hResourceZip = (HANDLE)OpenZip((void*)sFile.GetData(), 0, 2);
-            if(m_hResourceZip == NULL)
-            {
-                DUI_ERROR("OpenZip[NULL] File[%s] ", sFile);
-            }
-        }
-    }
-
-
-
-    BOOL CDuiPaintManager::IsCachedResourceZip()
-    {
-        return m_bCachedResourceZip;
-    }
-
-    HANDLE CDuiPaintManager::GetResourceZipHandle()
-    {
-        return m_hResourceZip;
-    }
-
-    BOOL CDuiPaintManager::GetHSL(short* H, short* S, short* L)
-    {
-        *H = m_H;
-        *S = m_S;
-        *L = m_L;
-        return m_bUseHSL;
-    }
-
-    UINT CDuiPaintManager::MapKeyState()
-    {
-        UINT uState = 0;
-        if(::GetKeyState(VK_CONTROL) < 0)
-        {
-            uState |= MK_CONTROL;
-        }
-        if(::GetKeyState(VK_RBUTTON) < 0)
-        {
-            uState |= MK_LBUTTON;
-        }
-        if(::GetKeyState(VK_LBUTTON) < 0)
-        {
-            uState |= MK_RBUTTON;
-        }
-        if(::GetKeyState(VK_SHIFT) < 0)
-        {
-            uState |= MK_SHIFT;
-        }
-        if(::GetKeyState(VK_MENU) < 0)
-        {
-            uState |= MK_ALT;
-        }
-        return uState;
-    }
-
-    BOOL CDuiPaintManager::TranslateMessage(const LPMSG pMsg)
-    {
-        // Pretranslate Message takes care of system-wide messages, such as
-        // tabbing and shortcut key-combos. We'll look for all messages for
-        // each window and any child control attached.
-        UINT uStyle = GetWindowStyle(pMsg->hwnd);
-        UINT uChildRes = uStyle & WS_CHILD;
-        LRESULT lRes = 0;
-        if(uChildRes != 0)
-        {
-            HWND hWndParent = ::GetParent(pMsg->hwnd);
-            for(int i = 0; i < m_aPreMessages.GetSize(); i++)
-            {
-                CDuiPaintManager* pPaintManager = static_cast<CDuiPaintManager*>(m_aPreMessages[i]);
-                HWND hTempParent = hWndParent;
-                while(hTempParent)
-                {
-                    if(pMsg->hwnd == pPaintManager->GetPaintWindow() || hTempParent == pPaintManager->GetPaintWindow())
-                    {
-                        if(pPaintManager->TranslateAccelerator(pMsg))
-                        {
-                            return TRUE;
-                        }
-                        pPaintManager->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes);
-                    }
-                    hTempParent = GetParent(hTempParent);
-                }
-            }
-        }
-        else
-        {
-            for(int i = 0; i < m_aPreMessages.GetSize(); i++)
-            {
-                CDuiPaintManager* pPaintManager = static_cast<CDuiPaintManager*>(m_aPreMessages[i]);
-                if(pMsg->hwnd == pPaintManager->GetPaintWindow())
-                {
-                    if(pPaintManager->TranslateAccelerator(pMsg))
-                    {
-                        return TRUE;
-                    }
-                    if(pPaintManager->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes))
-                    {
-                        return TRUE;
-                    }
-                    return FALSE;
-                }
-            }
-        }
-        return FALSE;
-    }
-
-    void CDuiPaintManager::MessageLoop()
-    {
-        MSG msg = { 0 };
-        while(::GetMessage(&msg, NULL, 0, 0))
-        {
-            //DUI_TRACE("%s", DuiTraceMsg(msg.message));
-            if(!CDuiPaintManager::TranslateMessage(&msg))
-            {
-                ::TranslateMessage(&msg);
-                try
-                {
-                    ::DispatchMessage(&msg);
-                }
-                catch(...)
-                {
-                    DUI_TRACE("EXCEPTION!");
-#ifdef _DEBUG
-                    throw "CDuiPaintManager::MessageLoop";
-#endif
-                }
-            }
-        }
-    }
-
-    void CDuiPaintManager::GetChildWndRect(HWND hWnd, HWND hChildWnd, RECT& rcChildWnd)
-    {
-        ::GetWindowRect(hChildWnd, &rcChildWnd);
-        POINT pt;
-        pt.x = rcChildWnd.left;
-        pt.y = rcChildWnd.top;
-        ::ScreenToClient(hWnd, &pt);
-        rcChildWnd.left = pt.x;
-        rcChildWnd.top = pt.y;
-        pt.x = rcChildWnd.right;
-        pt.y = rcChildWnd.bottom;
-        ::ScreenToClient(hWnd, &pt);
-        rcChildWnd.right = pt.x;
-        rcChildWnd.bottom = pt.y;
-    }
-
-    BOOL CDuiPaintManager::LoadPlugin(LPCTSTR pstrModuleName)
-    {
-        ASSERT(!::IsBadStringPtr(pstrModuleName, -1) || pstrModuleName == NULL);
-        if(pstrModuleName == NULL)
-        {
-            return FALSE;
-        }
-        HMODULE hModule = ::LoadLibrary(pstrModuleName);
-        if(hModule != NULL)
-        {
-            LPCREATECONTROL lpCreateControl = (LPCREATECONTROL)::GetProcAddress(hModule, "CreateControl");
-            if(lpCreateControl != NULL)
-            {
-                if(m_aPlugins.Find(lpCreateControl) >= 0)
-                {
-                    return TRUE;
-                }
-                m_aPlugins.Add(lpCreateControl);
-                return TRUE;
-            }
-        }
-        return FALSE;
-    }
-
-    CStdPtrArray* CDuiPaintManager::GetPlugins()
-    {
-        return &m_aPlugins;
-    }
 
     LRESULT CDuiPaintManager::OnDuiNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
@@ -2956,7 +2472,10 @@ namespace DuiLib
                 POINT ptPos   = { rcWnd.left, rcWnd.top };
                 SIZE sizeWnd  = { dwWidth, dwHeight };
                 POINT ptSrc   = { 0, 0 };
-                g_fUpdateLayeredWindow(m_hWndPaint, m_hDcPaint, &ptPos, &sizeWnd, m_hDcOffscreen, &ptSrc, 0, &bf, ULW_ALPHA);
+                if(UpdateLayeredWindow(m_hWndPaint, m_hDcPaint, &ptPos, &sizeWnd, m_hDcOffscreen, &ptSrc, 0, &bf, ULW_ALPHA) == FALSE)
+                {
+                    DUI_ERROR("UpdateLayeredWindow FALSE");
+                }
             }
             else
             {
@@ -3579,6 +3098,492 @@ namespace DuiLib
         }
         bHandled = FALSE;
         return lRes;
+    }
+
+    BOOL CDuiPaintManager::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes)
+    {
+        BOOL bHandled = FALSE;
+        LRESULT lResult = 0;
+        for(int i = 0; i < m_aMessageFilters.GetSize(); i++)
+        {
+            bHandled = FALSE;
+            lResult = static_cast<IMessageFilterUI*>(m_aMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
+            if(bHandled)
+            {
+                lRes = lResult;
+                return TRUE;
+            }
+        }
+
+        bHandled = TRUE;
+        lResult = 0;
+        switch(uMsg)
+        {
+            case WM_APP + 1:
+                lResult = OnDuiNotify(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_PAINT:
+                lResult = OnPaint(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_SIZE:
+                lResult = OnSize(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_LBUTTONDOWN:
+                lResult = OnLButtonDown(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_LBUTTONDBLCLK:
+                lResult = OnLButtonDblClk(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_LBUTTONUP:
+                lResult = OnLButtonUp(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_RBUTTONDOWN:
+                lResult = OnRButtonDown(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_RBUTTONUP:
+                lResult = OnRButtonUp(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_TIMER:
+                lResult = OnTimer(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_MOUSEHOVER:
+                lResult = OnMouseHover(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_MOUSELEAVE:
+                lResult = OnMouseLeave(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_MOUSEMOVE:
+                lResult = OnMouseMove(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_KEYDOWN:
+                lResult = OnKeyDown(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_KEYUP:
+                lResult = OnKeyUp(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_MOUSEWHEEL:
+                lResult = OnMouseWheel(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_SETCURSOR:
+                lResult = OnSetCursor(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_SETFOCUS:
+                lResult = OnSetFocus(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_NOTIFY:
+                lResult = OnNotify(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_COMMAND:
+                lResult = OnCommand(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_CTLCOLOREDIT:
+            case WM_CTLCOLORSTATIC:
+                lResult = OnCtlColor(uMsg, wParam, lParam, bHandled);
+                break;
+            default:
+                bHandled = FALSE;
+                break;
+        }
+        if(bHandled)
+        {
+            lRes = lResult;
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    BOOL CDuiPaintManager::Initialize(HINSTANCE hInstance)
+    {
+        ASSERT(hInstance);
+        OleInitialize(NULL);
+        InitCommonControls();
+
+        if(hInstance == NULL)
+        {
+            return FALSE;
+        }
+        m_hInstance = hInstance;
+        if(m_hMsimg32Module == NULL)
+        {
+            m_hMsimg32Module = ::LoadLibrary(_T("msimg32.dll"));
+        }
+
+        m_SharedResInfo.m_dwDefaultDisabledColor			= 0xFFA7A6AA;
+        m_SharedResInfo.m_dwDefaultFontColor				= 0xFF000000;
+        m_SharedResInfo.m_dwDefaultLinkFontColor			= 0xFF0000FF;
+        m_SharedResInfo.m_dwDefaultLinkHoverFontColor		= 0xFFD3215F;
+        m_SharedResInfo.m_dwDefaultSelectedBkColor			= 0xFFBAE4FF;
+        LOGFONT lf = { 0 };
+        ::GetObject(::GetStockObject(DEFAULT_GUI_FONT), sizeof(LOGFONT), &lf);
+        lf.lfCharSet = DEFAULT_CHARSET;
+        m_SharedResInfo.m_DefaultFontInfo.hFont			= ::CreateFontIndirect(&lf);
+        m_SharedResInfo.m_DefaultFontInfo.sFontName		= lf.lfFaceName;
+        m_SharedResInfo.m_DefaultFontInfo.iSize			= -lf.lfHeight;
+        m_SharedResInfo.m_DefaultFontInfo.bBold			= (lf.lfWeight >= FW_BOLD);
+        m_SharedResInfo.m_DefaultFontInfo.bUnderline	= (lf.lfUnderline == TRUE);
+        m_SharedResInfo.m_DefaultFontInfo.bItalic		= (lf.lfItalic == TRUE);
+        ZeroMemory(&m_SharedResInfo.m_DefaultFontInfo.tm, sizeof(m_SharedResInfo.m_DefaultFontInfo.tm));
+
+        CDuiShadow::Initialize(m_hInstance);
+
+        return TRUE;
+    }
+
+    void CDuiPaintManager::RemoveAllShared()
+    {
+        if(m_SharedResInfo.m_DefaultFontInfo.hFont != NULL)
+        {
+            ::DeleteObject(m_SharedResInfo.m_DefaultFontInfo.hFont);
+            m_SharedResInfo.m_DefaultFontInfo.hFont = NULL;
+        }
+
+        CDuiString* pDefaultAttr = NULL;
+        for(int i = 0; i < m_SharedResInfo.m_AttrHash.GetSize(); i++)
+        {
+            if(LPCTSTR key = m_SharedResInfo.m_AttrHash.GetAt(i))
+            {
+                pDefaultAttr = static_cast<CDuiString*>(m_SharedResInfo.m_AttrHash.Find(key));
+                DUI_FREE_POINT(pDefaultAttr);
+            }
+        }
+        m_SharedResInfo.m_AttrHash.RemoveAll();
+
+        TImageInfo* data = NULL;
+        for(int i = 0; i < m_SharedResInfo.m_ImageHash.GetSize(); i++)
+        {
+            if(LPCTSTR key = m_SharedResInfo.m_ImageHash.GetAt(i))
+            {
+                data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(key, FALSE));
+                if(data)
+                {
+                    CRenderEngine::FreeImage(data);
+                }
+            }
+        }
+        m_SharedResInfo.m_ImageHash.RemoveAll();
+
+        TFontInfo* pFontInfo = NULL;
+        for(int i = 0; i < m_SharedResInfo.m_CustomFonts.GetSize(); i++)
+        {
+            if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i))
+            {
+                pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key, FALSE));
+                if(pFontInfo)
+                {
+                    ::DeleteObject(pFontInfo->hFont);
+                    DUI_FREE_POINT(pFontInfo);
+                }
+            }
+        }
+        m_SharedResInfo.m_CustomFonts.RemoveAll();
+
+        CDuiString* pStyle = NULL;
+        for(int i = 0; i < m_SharedResInfo.m_StyleHash.GetSize(); i++)
+        {
+            if(LPCTSTR key = m_SharedResInfo.m_StyleHash.GetAt(i))
+            {
+                pStyle = static_cast<CDuiString*>(m_SharedResInfo.m_StyleHash.Find(key));
+                DUI_FREE_POINT(pStyle);
+            }
+        }
+        m_SharedResInfo.m_StyleHash.RemoveAll();
+    }
+
+    void CDuiPaintManager::Uninitialize()
+    {
+        RemoveAllShared();
+
+        CDuiControlFactory::GetInstance()->Release();
+        CDuiResourceManager::GetInstance()->Release();
+        if(m_hMsimg32Module != NULL)
+        {
+            FreeModule(m_hMsimg32Module);
+            m_hMsimg32Module = NULL;
+        }
+        if(m_bCachedResourceZip && m_hResourceZip != NULL)
+        {
+            CloseZip((HZIP)m_hResourceZip);
+            m_hResourceZip = NULL;
+        }
+        OleUninitialize();
+    }
+
+    HINSTANCE CDuiPaintManager::GetInstance()
+    {
+        return m_hInstance;
+    }
+
+    CDuiString CDuiPaintManager::GetInstancePath()
+    {
+        if(m_hInstance == NULL)
+        {
+            return _T('\0');
+        }
+        TCHAR tszModule[MAX_PATH + 1] = { 0 };
+        ::GetModuleFileName(m_hInstance, tszModule, MAX_PATH);
+        CDuiString strInstancePath = tszModule;
+        int pos = strInstancePath.ReverseFind(_T('\\'));
+        if(pos >= 0)
+        {
+            strInstancePath = strInstancePath.Left(pos + 1);
+        }
+        return strInstancePath;
+    }
+
+    HINSTANCE CDuiPaintManager::GetResourceDll()
+    {
+        if(m_hResourceInstance == NULL)
+        {
+            return m_hInstance;
+        }
+        return m_hResourceInstance;
+    }
+
+    int CDuiPaintManager::GetResourceType()
+    {
+        return m_iResourceType;
+    }
+
+    void CDuiPaintManager::SetResourceType(int iResourceType)
+    {
+        m_iResourceType = iResourceType;
+    }
+
+    const CDuiString& CDuiPaintManager::GetResourcePath()
+    {
+        return m_strResourcePath;
+    }
+
+    void CDuiPaintManager::SetResourcePath(LPCTSTR pStrPath)
+    {
+        m_strResourcePath = pStrPath;
+        if(m_strResourcePath.IsEmpty())
+        {
+            return;
+        }
+        TCHAR cEnd = m_strResourcePath.GetAt(m_strResourcePath.GetLength() - 1);
+        if(cEnd != _T('\\') && cEnd != _T('/'))
+        {
+            m_strResourcePath += _T('\\');
+        }
+    }
+
+    const CDuiString& CDuiPaintManager::GetResourceZip()
+    {
+        return m_strResourceZip;
+    }
+
+    void CDuiPaintManager::SetResourceZip(LPVOID pVoid, unsigned int len)
+    {
+        if(m_strResourceZip == _T("membuffer"))
+        {
+            return;
+        }
+        if(m_bCachedResourceZip && m_hResourceZip != NULL)
+        {
+            CloseZip((HZIP)m_hResourceZip);
+            m_hResourceZip = NULL;
+        }
+        m_strResourceZip = _T("membuffer");
+        if(m_bCachedResourceZip)
+        {
+            m_hResourceZip = (HANDLE)OpenZip(pVoid, len, 3);
+            if(m_hResourceZip == NULL)
+            {
+                DUI_ERROR("OpenZip[NULL] pVoid[0x%x] ", pVoid);
+            }
+        }
+    }
+
+    void CDuiPaintManager::SetResourceZip(LPCTSTR pstrZip, BOOL bCachedResourceZip /*= FALSE*/)
+    {
+        if(m_strResourceZip == pstrZip && m_bCachedResourceZip == bCachedResourceZip)
+        {
+            return;
+        }
+        if(m_bCachedResourceZip && m_hResourceZip != NULL)
+        {
+            CloseZip((HZIP)m_hResourceZip);
+            m_hResourceZip = NULL;
+        }
+        m_strResourceZip = pstrZip;
+        m_bCachedResourceZip = bCachedResourceZip;
+        if(m_bCachedResourceZip)
+        {
+            CDuiString sFile = CDuiPaintManager::GetResourcePath();
+            sFile += CDuiPaintManager::GetResourceZip();
+            m_hResourceZip = (HANDLE)OpenZip((void*)sFile.GetData(), 0, 2);
+            if(m_hResourceZip == NULL)
+            {
+                DUI_ERROR("OpenZip[NULL] File[%s] ", sFile);
+            }
+        }
+    }
+
+
+
+    BOOL CDuiPaintManager::IsCachedResourceZip()
+    {
+        return m_bCachedResourceZip;
+    }
+
+    HANDLE CDuiPaintManager::GetResourceZipHandle()
+    {
+        return m_hResourceZip;
+    }
+
+    BOOL CDuiPaintManager::GetHSL(short* H, short* S, short* L)
+    {
+        *H = m_Hue;
+        *S = m_Saturation;
+        *L = m_Lightness;
+        return m_bUseHSL;
+    }
+
+    UINT CDuiPaintManager::MapKeyState()
+    {
+        UINT uKeyState = 0;
+        if(::GetKeyState(VK_CONTROL) < 0)
+        {
+            uKeyState |= MK_CONTROL;
+        }
+        if(::GetKeyState(VK_RBUTTON) < 0)
+        {
+            uKeyState |= MK_LBUTTON;
+        }
+        if(::GetKeyState(VK_LBUTTON) < 0)
+        {
+            uKeyState |= MK_RBUTTON;
+        }
+        if(::GetKeyState(VK_SHIFT) < 0)
+        {
+            uKeyState |= MK_SHIFT;
+        }
+        if(::GetKeyState(VK_MENU) < 0)
+        {
+            uKeyState |= MK_ALT;
+        }
+        return uKeyState;
+    }
+
+    BOOL CDuiPaintManager::TranslateMessage(const LPMSG pMsg)
+    {
+        // Pretranslate Message takes care of system-wide messages, such as
+        // tabbing and shortcut key-combos. We'll look for all messages for
+        // each window and any child control attached.
+        UINT uStyle = GetWindowStyle(pMsg->hwnd);
+        UINT uChildRes = uStyle & WS_CHILD;
+        LRESULT lRes = 0;
+        if(uChildRes != 0)
+        {
+            HWND hWndParent = ::GetParent(pMsg->hwnd);
+            for(int i = 0; i < m_aPreMessages.GetSize(); i++)
+            {
+                CDuiPaintManager* pPaintManager = static_cast<CDuiPaintManager*>(m_aPreMessages[i]);
+                HWND hTempParent = hWndParent;
+                while(hTempParent)
+                {
+                    if(pMsg->hwnd == pPaintManager->GetPaintWindow() || hTempParent == pPaintManager->GetPaintWindow())
+                    {
+                        if(pPaintManager->TranslateAccelerator(pMsg))
+                        {
+                            return TRUE;
+                        }
+                        pPaintManager->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes);
+                    }
+                    hTempParent = GetParent(hTempParent);
+                }
+            }
+        }
+        else
+        {
+            for(int i = 0; i < m_aPreMessages.GetSize(); i++)
+            {
+                CDuiPaintManager* pPaintManager = static_cast<CDuiPaintManager*>(m_aPreMessages[i]);
+                if(pMsg->hwnd == pPaintManager->GetPaintWindow())
+                {
+                    if(pPaintManager->TranslateAccelerator(pMsg))
+                    {
+                        return TRUE;
+                    }
+                    if(pPaintManager->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes))
+                    {
+                        return TRUE;
+                    }
+                    return FALSE;
+                }
+            }
+        }
+        return FALSE;
+    }
+
+    void CDuiPaintManager::MessageLoop()
+    {
+        MSG msg = { 0 };
+        while(::GetMessage(&msg, NULL, 0, 0))
+        {
+            //DUI_TRACE("%s", DuiTraceMsg(msg.message));
+            if(!CDuiPaintManager::TranslateMessage(&msg))
+            {
+                ::TranslateMessage(&msg);
+                try
+                {
+                    ::DispatchMessage(&msg);
+                }
+                catch(...)
+                {
+                    DUI_TRACE("EXCEPTION!");
+#ifdef _DEBUG
+                    throw "CDuiPaintManager::MessageLoop";
+#endif
+                }
+            }
+        }
+    }
+
+    void CDuiPaintManager::GetChildWndRect(HWND hWnd, HWND hChildWnd, RECT& rcChildWnd)
+    {
+        ::GetWindowRect(hChildWnd, &rcChildWnd);
+        POINT pt;
+        pt.x = rcChildWnd.left;
+        pt.y = rcChildWnd.top;
+        ::ScreenToClient(hWnd, &pt);
+        rcChildWnd.left = pt.x;
+        rcChildWnd.top = pt.y;
+        pt.x = rcChildWnd.right;
+        pt.y = rcChildWnd.bottom;
+        ::ScreenToClient(hWnd, &pt);
+        rcChildWnd.right = pt.x;
+        rcChildWnd.bottom = pt.y;
+    }
+
+    BOOL CDuiPaintManager::LoadPlugin(LPCTSTR pstrModuleName)
+    {
+        ASSERT(!::IsBadStringPtr(pstrModuleName, -1) || pstrModuleName == NULL);
+        if(pstrModuleName == NULL)
+        {
+            return FALSE;
+        }
+        HMODULE hModule = ::LoadLibrary(pstrModuleName);
+        if(hModule != NULL)
+        {
+            LPCREATECONTROL lpCreateControl = (LPCREATECONTROL)::GetProcAddress(hModule, "CreateControl");
+            if(lpCreateControl != NULL)
+            {
+                if(m_aPlugins.Find(lpCreateControl) >= 0)
+                {
+                    return TRUE;
+                }
+                m_aPlugins.Add(lpCreateControl);
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+
+    CStdPtrArray* CDuiPaintManager::GetPlugins()
+    {
+        return &m_aPlugins;
     }
 
 
