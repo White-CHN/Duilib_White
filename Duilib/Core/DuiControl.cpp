@@ -316,6 +316,11 @@ namespace DuiLib
         Invalidate();
     }
 
+    CDuiRect CDuiControl::GetBorderSizeV2()
+    {
+        return m_rcBorderSize;
+    }
+
     DWORD CDuiControl::GetBorderColor()
     {
         return m_dwBorderColor;

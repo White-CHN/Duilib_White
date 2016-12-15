@@ -315,15 +315,15 @@ namespace DuiLib
             ::ReleaseDC(m_hWndPaint, m_hDcPaint);
             m_hDcPaint = NULL;
         }
+        DUI_FREE_POINT(m_pRoot);
+        DUI_FREE_POINT(m_pDPI);
+        DUI_FREE_POINT(m_pGdiplusStartupInput);
         if(m_gdiplusToken != 0)
         {
-            //卸载GDIPlus
+            //卸载GDIPlus,GdiplusShutdown必须要在delete 之后调用，如果在之前调用，delete 就会出错。
             GdiplusShutdown(m_gdiplusToken);
             m_gdiplusToken = 0;
         }
-        DUI_FREE_POINT(m_pDPI);
-        DUI_FREE_POINT(m_pGdiplusStartupInput);
-        DUI_FREE_POINT(m_pRoot);
     }
 
     void CDuiPaintManager::Init(HWND hWnd)
@@ -3102,6 +3102,10 @@ namespace DuiLib
 
     BOOL CDuiPaintManager::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes)
     {
+        if(m_hWndPaint == NULL)
+        {
+            return FALSE;
+        }
         BOOL bHandled = FALSE;
         LRESULT lResult = 0;
         for(int i = 0; i < m_aMessageFilters.GetSize(); i++)

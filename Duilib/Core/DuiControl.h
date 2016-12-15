@@ -51,7 +51,7 @@ namespace DuiLib
         void SetForeColor(DWORD dwForeColor);
 
         CDuiString GetBkImage() const;
-        void SetBkImage(LPCTSTR pStrImage);
+        virtual void SetBkImage(LPCTSTR pStrImage);
 
         CDuiString GetForeImage() const;
         void SetForeImage(LPCTSTR pStrImage);
@@ -66,6 +66,8 @@ namespace DuiLib
         //±ß¿òÏà¹Ø
         int GetBorderSize();
         void SetBorderSize(int nSize);
+
+        CDuiRect GetBorderSizeV2();
         void SetBorderSize(CDuiRect rc);
 
         DWORD GetBorderColor();

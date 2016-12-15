@@ -165,6 +165,7 @@ namespace DuiLib
 #define  DUI_CTR_LISTLABELELEMENT                (_T("ListLabelElement"))
 #define  DUI_CTR_DATETIME                        (_T("DateTime"))
 #define  DUI_CTR_IPADDRESS                       (_T("IPAddress"))
+#define  DUI_CTR_RING						     (_T("Ring"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
@@ -181,7 +182,8 @@ namespace DuiLib
     enum DuiPaintManagerTimerID
     {
         TIMERID_SCROLLBAR	=	100,
-        TIMERID_ANIMATION_TABLAYOUT
+        TIMERID_ANIMATION_TABLAYOUT,
+        TIMERID_RING
     };
 
     enum DuiMsg

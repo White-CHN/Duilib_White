@@ -88,6 +88,7 @@ using namespace Gdiplus;
 #include "Control/DuiGroupBox.h"
 #include "Control/DuiDateTime.h"
 #include "Control/DuiIPAddress.h"
+#include "Control/DuiRing.h"
 
 
 #pragma comment( lib, "GdiPlus.lib" )

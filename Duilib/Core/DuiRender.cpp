@@ -747,6 +747,143 @@ namespace DuiLib
     }
 
 
+    Gdiplus::Image* CRenderEngine::GdiplusLoadImage(LPCTSTR pstrPath)
+    {
+        LPBYTE pData = NULL;
+        DWORD dwSize = 0;
+
+        do
+        {
+            CDuiString sFile = CDuiPaintManager::GetResourcePath();
+            if(CDuiPaintManager::GetResourceZip().IsEmpty())
+            {
+                sFile += pstrPath;
+                HANDLE hFile = ::CreateFile(sFile.GetData(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, \
+                                            FILE_ATTRIBUTE_NORMAL, NULL);
+                if(hFile == INVALID_HANDLE_VALUE)
+                {
+                    break;
+                }
+                dwSize = ::GetFileSize(hFile, NULL);
+                if(dwSize == 0)
+                {
+                    break;
+                }
+
+                DWORD dwRead = 0;
+                pData = new BYTE[ dwSize ];
+                ::ReadFile(hFile, pData, dwSize, &dwRead, NULL);
+                ::CloseHandle(hFile);
+
+                if(dwRead != dwSize)
+                {
+                    delete[] pData;
+                    pData = NULL;
+                    break;
+                }
+            }
+            else
+            {
+                sFile += CDuiPaintManager::GetResourceZip();
+                HZIP hz = NULL;
+                if(CDuiPaintManager::IsCachedResourceZip())
+                {
+                    hz = (HZIP)CDuiPaintManager::GetResourceZipHandle();
+                }
+                else
+                {
+                    hz = OpenZip((void*)sFile.GetData(), 0, 2);
+                }
+                if(hz == NULL)
+                {
+                    break;
+                }
+                ZIPENTRY ze;
+                int i;
+                if(FindZipItem(hz, pstrPath, true, &i, &ze) != 0)
+                {
+                    break;
+                }
+                dwSize = ze.unc_size;
+                if(dwSize == 0)
+                {
+                    break;
+                }
+                pData = new BYTE[ dwSize ];
+                int res = UnzipItem(hz, i, pData, dwSize, 3);
+                if(res != 0x00000000 && res != 0x00000600)
+                {
+                    delete[] pData;
+                    pData = NULL;
+                    if(!CDuiPaintManager::IsCachedResourceZip())
+                    {
+                        CloseZip(hz);
+                    }
+                    break;
+                }
+                if(!CDuiPaintManager::IsCachedResourceZip())
+                {
+                    CloseZip(hz);
+                }
+            }
+
+        }
+        while(0);
+
+        while(!pData)
+        {
+            //读不到图片, 则直接去读取bitmap.m_lpstr指向的路径
+            HANDLE hFile = ::CreateFile(pstrPath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+            if(hFile == INVALID_HANDLE_VALUE)
+            {
+                break;
+            }
+            dwSize = ::GetFileSize(hFile, NULL);
+            if(dwSize == 0)
+            {
+                break;
+            }
+
+            DWORD dwRead = 0;
+            pData = new BYTE[ dwSize ];
+            ::ReadFile(hFile, pData, dwSize, &dwRead, NULL);
+            ::CloseHandle(hFile);
+
+            if(dwRead != dwSize)
+            {
+                delete[] pData;
+                pData = NULL;
+            }
+            break;
+        }
+
+        Gdiplus::Image* pImage = NULL;
+        if(pData != NULL)
+        {
+            pImage = GdiplusLoadImage(pData, dwSize);
+            delete pData;
+            pData = NULL;
+        }
+        return pImage;
+    }
+
+    Gdiplus::Image* CRenderEngine::GdiplusLoadImage(LPVOID pBuf, size_t dwSize)
+    {
+        HGLOBAL hMem = ::GlobalAlloc(GMEM_FIXED, dwSize);
+        BYTE* pMem = (BYTE*)::GlobalLock(hMem);
+        memcpy(pMem, pBuf, dwSize);
+        IStream* pStm = NULL;
+        ::CreateStreamOnHGlobal(hMem, TRUE, &pStm);
+        Gdiplus::Image* pImg = Gdiplus::Image::FromStream(pStm);
+        if(!pImg || pImg->GetLastStatus() != Gdiplus::Ok)
+        {
+            pStm->Release();
+            ::GlobalUnlock(hMem);
+            return 0;
+        }
+        return pImg;
+    }
+
     BOOL CRenderEngine::DrawIconImageString(HDC hDC, CDuiPaintManager* pManager, const RECT& rc, const RECT& rcPaint, LPCTSTR pStrImage, LPCTSTR pStrModify)
     {
         if((pManager == NULL) || (hDC == NULL))
@@ -991,25 +1128,15 @@ namespace DuiLib
     }
 
     void CRenderEngine::DrawText(HDC hDC, CDuiPaintManager* pManager, RECT& rc, LPCTSTR pstrText, DWORD dwTextColor, \
-                                 int iFont, UINT uStyle, DWORD dwTextBKColor, BOOL bTransparent)
+                                 int iFont, UINT uStyle, DWORD dwTextBKColor)
     {
+        ASSERT(::GetObjectType(hDC) == OBJ_DC || ::GetObjectType(hDC) == OBJ_MEMDC);
         if(pstrText == NULL || pManager == NULL)
         {
             return;
         }
-        if(bTransparent)
-        {
-            ::SetBkMode(hDC, TRANSPARENT);
-        }
-        else
-        {
-            ::SetBkMode(hDC, OPAQUE);
-        }
-        ::SetBkColor(hDC, RGB(GetBValue(dwTextBKColor), GetGValue(dwTextBKColor), GetRValue(dwTextBKColor)));
-        ::SetTextColor(hDC, RGB(GetBValue(dwTextColor), GetGValue(dwTextColor), GetRValue(dwTextColor)));
-        HFONT hOldFont = (HFONT)::SelectObject(hDC, pManager->GetFont(iFont));
-        ::DrawText(hDC, pstrText, -1, &rc, uStyle | DT_NOPREFIX);
-        ::SelectObject(hDC, hOldFont);
+        DrawColor(hDC, rc, dwTextBKColor);
+        DrawText(hDC, pManager, rc, pstrText, dwTextColor, iFont, uStyle);
     }
 
     void CRenderEngine::DrawImage(HDC hDC, HBITMAP hBitmap, const RECT& rc, const RECT& rcPaint,

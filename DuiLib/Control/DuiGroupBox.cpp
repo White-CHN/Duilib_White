@@ -124,6 +124,10 @@ namespace DuiLib
         {
             m_dwDisabledTextColor = GetManager()->GetDefaultDisabledColor();
         }
+        if(sText.IsEmpty())
+        {
+            return;
+        }
 
         CDuiRect rcText = GetPos();
         rcText.Deflate(5, 5);
@@ -132,66 +136,77 @@ namespace DuiLib
 
         //¼ÆËãÎÄ×ÖÇøÓò
         rcText.left = rcText.left + GROUPBOX_TEXT_OFFSET;
-        rcText.top = rcText.top - 7;
+        rcText.top = rcText.top - 6;
         rcText.right = rcText.left + sz.cx;
         rcText.bottom = rcText.top + sz.cy;
-        if(IsEnabled())
+
+        DWORD dwTextColor = m_dwTextColor;
+        if(!IsEnabled())
         {
-            CRenderEngine::DrawText(hDC, GetManager(), rcText, sText, m_dwTextColor, m_iFont, m_uTextStyle,
-                                    GetAdjustColor(GetBkColor()), FALSE);
+            dwTextColor = m_dwDisabledTextColor;
         }
-        else
-        {
-            CRenderEngine::DrawText(hDC, GetManager(), rcText, sText, m_dwDisabledTextColor, m_iFont, m_uTextStyle,
-                                    GetAdjustColor(GetBkColor()), FALSE);
-        }
+        CRenderEngine::DrawText(hDC, GetManager(), rcText, sText, dwTextColor, m_iFont, m_uTextStyle, GetAdjustColor(GetBkColor()));
     }
 
     void CDuiGroupBox::PaintBorder(HDC hDC)
     {
-        if(GetBorderSize() > 0)
+        int nBorderSize;
+        CDuiSize cxyBorderRound;
+        CDuiRect rcBorderSize;
+        if(GetManager())
+        {
+            nBorderSize = GetManager()->GetDPIObj()->Scale(GetBorderSize());
+            cxyBorderRound = GetManager()->GetDPIObj()->Scale(GetBorderRound());
+            rcBorderSize = GetManager()->GetDPIObj()->Scale(GetBorderSizeV2());
+        }
+        else
+        {
+            nBorderSize = GetBorderSize();
+            cxyBorderRound = GetBorderRound();
+            rcBorderSize = GetBorderSizeV2();
+        }
+
+        if(nBorderSize > 0)
         {
             CDuiRect rcItem = GetPos();
             rcItem.Deflate(5, 5);
-            if(GetBorderRound().cx > 0 || GetBorderRound().cy > 0)  //»­Ô²½Ç±ß¿ò
+
+            if(cxyBorderRound.cx > 0 || cxyBorderRound.cy > 0)  //»­Ô²½Ç±ß¿ò
             {
                 if(IsFocused() && GetFocusBorderColor() != 0)
                 {
-                    CRenderEngine::DrawRoundRect(hDC, rcItem, GetBorderSize(), GetBorderRound().cx, GetBorderRound().cy, GetAdjustColor(GetFocusBorderColor()));
+                    CRenderEngine::DrawRoundRect(hDC, rcItem, nBorderSize, cxyBorderRound.cx, cxyBorderRound.cy, GetAdjustColor(GetFocusBorderColor()));
                 }
                 else
                 {
-                    CRenderEngine::DrawRoundRect(hDC, rcItem, GetBorderSize(), GetBorderRound().cx, GetBorderRound().cy, GetAdjustColor(GetBorderColor()));
+                    CRenderEngine::DrawRoundRect(hDC, rcItem, nBorderSize, cxyBorderRound.cx, cxyBorderRound.cy, GetAdjustColor(GetBorderColor()));
                 }
             }
             else
             {
                 if(IsFocused() && GetFocusBorderColor() != 0)
                 {
-                    CRenderEngine::DrawRect(hDC, rcItem, GetBorderSize(), GetAdjustColor(GetFocusBorderColor()));
+                    CRenderEngine::DrawRect(hDC, rcItem, nBorderSize, GetAdjustColor(GetFocusBorderColor()));
                 }
                 else
                 {
-                    CRenderEngine::DrawRect(hDC, rcItem, GetBorderSize(), GetAdjustColor(GetBorderColor()));
+                    CRenderEngine::DrawRect(hDC, rcItem, nBorderSize, GetAdjustColor(GetBorderColor()));
                 }
             }
         }
+
         PaintText(hDC);
     }
 
     SIZE CDuiGroupBox::CalcrectSize(SIZE szAvailable)
     {
-        RECT rcText = { 0, 0, MAX(szAvailable.cx, GetFixedWidth()), 20 };
-        rcText.left += m_rcTextPadding.left;
-        rcText.right -= m_rcTextPadding.right;
+        SIZE cxyFixed = GetFixedXY();
+        RECT rcText = { 0, 0, MAX(szAvailable.cx, cxyFixed.cx), 20 };
 
         CDuiString sText = GetText();
 
         CRenderEngine::DrawText(GetManager()->GetPaintDC(), GetManager(), rcText, sText, m_dwTextColor, m_iFont, DT_CALCRECT | m_uTextStyle);
-        SIZE cXY = {rcText.right - rcText.left + m_rcTextPadding.left + m_rcTextPadding.right,
-                    rcText.bottom - rcText.top + m_rcTextPadding.top + m_rcTextPadding.bottom
-                   };
-
+        SIZE cXY = {rcText.right - rcText.left, rcText.bottom - rcText.top};
         return cXY;
     }
 

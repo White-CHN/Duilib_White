@@ -162,6 +162,9 @@
     <ClInclude Include="Layout\DuiAnimationTabLayout.h">
       <Filter>头文件\Layout</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiRing.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -283,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="Layout\DuiAnimationTabLayout.cpp">
       <Filter>源文件\Layout</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiRing.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

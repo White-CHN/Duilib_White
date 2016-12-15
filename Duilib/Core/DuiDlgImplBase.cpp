@@ -8,8 +8,8 @@ namespace DuiLib
     CDuiDlgImplBase::CDuiDlgImplBase(void)
     {
         m_vtStaticName.push_back(DUI_CTR_CONTROL);
-        m_vtStaticName.push_back(_T("text"));
         m_vtStaticName.push_back(DUI_CTR_LABEL);
+        m_vtStaticName.push_back(DUI_CTR_RING);
         m_vtStaticName.push_back(DUI_CTR_CONTAINER);
         m_vtStaticName.push_back(DUI_CTR_VERTICALLAYOUT);
         m_vtStaticName.push_back(DUI_CTR_HORIZONTALLAYOUT);

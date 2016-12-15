@@ -125,18 +125,24 @@ namespace DuiLib
 
     RECT CDuiSlider::GetThumbRect() const
     {
+        CDuiRect rcThumb;
         if(IsHorizontal())
         {
             int left = GetPos().left + (GetPos().right - GetPos().left - m_szThumb.cx) * (GetValue() - GetMinValue()) / (GetMaxValue() - GetMinValue());
             int top = (GetPos().bottom + GetPos().top - m_szThumb.cy) / 2;
-            return CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy);
+            rcThumb = CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy);
         }
         else
         {
             int left = (GetPos().right + GetPos().left - m_szThumb.cx) / 2;
             int top = GetPos().bottom - m_szThumb.cy - (GetPos().bottom - GetPos().top - m_szThumb.cy) * (GetValue() - GetMinValue()) / (GetMaxValue() - GetMinValue());
-            return CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy);
+            rcThumb = CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy);
         }
+        if(GetManager() != NULL)
+        {
+            GetManager()->GetDPIObj()->Scale(&rcThumb);
+        }
+        return rcThumb;
     }
 
     void CDuiSlider::PaintForeImage(HDC hDC)
