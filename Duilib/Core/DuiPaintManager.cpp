@@ -2372,7 +2372,7 @@ namespace DuiLib
             {
                 rcPaint.bottom = rcClient.bottom;
             }
-            ::ZeroMemory(&m_rcLayeredUpdate, sizeof(m_rcLayeredUpdate));
+            m_rcLayeredUpdate.Empty();
         }
         if(m_bOffscreenPaint && m_hbmpOffscreen == NULL)
         {

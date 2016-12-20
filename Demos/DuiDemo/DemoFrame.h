@@ -5,17 +5,17 @@ public:
     CDemoFrame(void);
     virtual ~CDemoFrame(void);
 public:
-    virtual void InitWindow();
-    virtual CDuiString GetSkinFile();
-    virtual LPCTSTR GetWindowClassName() const;
+    void InitWindow() override;
+    CDuiString GetSkinFile() override;
+    LPCTSTR GetWindowClassName() const override;
 
-    virtual LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+    LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
 
-    virtual CDuiControl* CreateControl(LPCTSTR pstrClass);
+    CDuiControl* CreateControl(LPCTSTR pstrClass) override;
 
-    virtual LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType);
+    LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType) override;
 
-    virtual void Notify(TNotifyUI& msg) ;
+    void Notify(TNotifyUI& msg)  override;
 private:
     BOOL bEnglish;
     CDuiButton* m_pCloseBtn;

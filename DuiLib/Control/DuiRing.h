@@ -9,14 +9,14 @@ namespace DuiLib
         CDuiRing(void);
         virtual ~CDuiRing(void);
     public:
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        LPCTSTR GetClass() const override;
+        LPVOID GetInterface(LPCTSTR pstrName) override;
 
-        virtual void SetBkImage(LPCTSTR pStrImage);
+        void SetBkImage(LPCTSTR pStrImage) override;
 
-        virtual void PaintBkImage(HDC hDC);
+        void PaintBkImage(HDC hDC) override;
 
-        virtual void DoEvent(TEventUI& event);
+        void DoEvent(TEventUI& event) override;
     private:
         void InitImage();
         void DeleteImage();

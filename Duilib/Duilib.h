@@ -89,7 +89,7 @@ using namespace Gdiplus;
 #include "Control/DuiDateTime.h"
 #include "Control/DuiIPAddress.h"
 #include "Control/DuiRing.h"
-
+#include "Control/DuiGif.h"
 
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "comctl32.lib" )

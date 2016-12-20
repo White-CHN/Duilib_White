@@ -4,16 +4,16 @@
 #include "..\Utils\stb_image.h"
 
 #ifdef USE_XIMAGE_EFFECT
-    #include "../../3rd/CxImage/ximage.h"
-    #include "../../3rd/CxImage/ximage.cpp"
-    #include "../../3rd/CxImage/ximaenc.cpp"
-    #include "../../3rd/CxImage/ximagif.cpp"
-    #include "../../3rd/CxImage/ximainfo.cpp"
-    #include "../../3rd/CxImage/ximalpha.cpp"
-    #include "../../3rd/CxImage/ximapal.cpp"
-    #include "../../3rd/CxImage/ximatran.cpp"
-    #include "../../3rd/CxImage/ximawnd.cpp"
-    #include "../../3rd/CxImage/xmemfile.cpp"
+    #include "../3rd/CxImage/ximage.h"
+    #include "../3rd/CxImage/ximage.cpp"
+    #include "../3rd/CxImage/ximaenc.cpp"
+    #include "../3rd/CxImage/ximagif.cpp"
+    #include "../3rd/CxImage/ximainfo.cpp"
+    #include "../3rd/CxImage/ximalpha.cpp"
+    #include "../3rd/CxImage/ximapal.cpp"
+    #include "../3rd/CxImage/ximatran.cpp"
+    #include "../3rd/CxImage/ximawnd.cpp"
+    #include "../3rd/CxImage/xmemfile.cpp"
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////////

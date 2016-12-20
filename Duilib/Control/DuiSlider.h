@@ -10,8 +10,8 @@ namespace DuiLib
         CDuiSlider(void);
         virtual ~CDuiSlider(void);
     public:
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        LPCTSTR GetClass() const override;
+        LPVOID GetInterface(LPCTSTR pstrName) override;
 
         LPCTSTR GetThumbImage() const;
         void SetThumbImage(LPCTSTR pStrImage);
@@ -27,12 +27,12 @@ namespace DuiLib
 
         void SetCanSendMove(BOOL bCanSend);
 
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
 
         RECT GetThumbRect() const;
-        virtual void PaintForeImage(HDC hDC);
+        void PaintForeImage(HDC hDC) override;
 
-        virtual void DoEvent(TEventUI& event);
+        void DoEvent(TEventUI& event) override;
     private:
         BOOL m_bSendMove;
         int m_nStep;

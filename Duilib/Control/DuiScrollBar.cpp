@@ -745,7 +745,7 @@ namespace DuiLib
         }
     }
 
-    void CDuiScrollBar::SetPos(RECT rc, bool bNeedInvalidate /*= TRUE*/)
+    void CDuiScrollBar::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)
     {
         CDuiControl::SetPos(rc, bNeedInvalidate);
         rc = GetPos();
@@ -845,8 +845,7 @@ namespace DuiLib
                     m_rcButton2.left = m_rcButton2.right;
                     m_rcButton2.bottom = m_rcButton2.top;
                 }
-
-                ::ZeroMemory(&m_rcThumb, sizeof(m_rcThumb));
+                m_rcThumb.Empty();
             }
         }
         else
@@ -944,8 +943,7 @@ namespace DuiLib
                     m_rcButton2.top = m_rcButton2.bottom;
                     m_rcButton2.right = m_rcButton2.left;
                 }
-
-                ::ZeroMemory(&m_rcThumb, sizeof(m_rcThumb));
+                m_rcThumb.Empty();
             }
         }
     }

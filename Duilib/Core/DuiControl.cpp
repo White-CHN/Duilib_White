@@ -80,6 +80,11 @@ namespace DuiLib
         return m_pManager;
     }
 
+    void CDuiControl::DoInit()
+    {
+
+    }
+
     RECT CDuiControl::GetPaintRect() const
     {
         return m_rcPaint;
@@ -87,6 +92,11 @@ namespace DuiLib
 
     void CDuiControl::Init()
     {
+        DoInit();
+        if(OnInit)
+        {
+            OnInit(this);
+        }
     }
 
     void CDuiControl::SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit /*= TRUE*/)

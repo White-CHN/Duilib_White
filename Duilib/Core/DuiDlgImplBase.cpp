@@ -16,6 +16,7 @@ namespace DuiLib
         m_vtStaticName.push_back(DUI_CTR_TABLAYOUT);
         m_vtStaticName.push_back(DUI_CTR_ANIMATION_TABLAYOUT);
         m_vtStaticName.push_back(DUI_CTR_GROUPBOX);
+        m_vtStaticName.push_back(DUI_CTR_GIF);
         m_vtStaticName.push_back(_T("childlayout"));
         m_vtStaticName.push_back(_T("dialoglayout"));
         m_vtStaticName.push_back(_T("progresscontainer"));
@@ -42,6 +43,11 @@ namespace DuiLib
 
     void CDuiDlgImplBase::Notify(TNotifyUI& msg)
     {
+    }
+
+    CDuiControl* CDuiDlgImplBase::CreateControl(LPCTSTR pstrClass)
+    {
+        return NULL;
     }
 
     LPCTSTR CDuiDlgImplBase::QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType)
@@ -468,7 +474,6 @@ namespace DuiLib
             return bRet;
         }
         CDuiString strClassName = pControl->GetClass();
-
         vector<CDuiString>::iterator it = find(m_vtStaticName.begin(), m_vtStaticName.end(), strClassName);
         if(m_vtStaticName.end() != it)
         {

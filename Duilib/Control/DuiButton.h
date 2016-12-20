@@ -10,9 +10,9 @@ namespace DuiLib
         CDuiButton(void);
         virtual ~CDuiButton(void);
     public:
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
-        virtual UINT GetControlFlags() const;
+        LPCTSTR GetClass() const override;
+        LPVOID GetInterface(LPCTSTR pstrName) override;
+        UINT GetControlFlags() const override;
 
         virtual LPCTSTR GetNormalImage();
         virtual void SetNormalImage(LPCTSTR pStrImage);
@@ -48,15 +48,15 @@ namespace DuiLib
         DWORD GetFocusedTextColor() const;
         void SetFocusedTextColor(DWORD dwColor);
 
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
 
-        virtual void PaintText(HDC hDC);
-        virtual void PaintBkColor(HDC hDC);
-        virtual void PaintStatusImage(HDC hDC);
-        virtual void PaintForeImage(HDC hDC);
+        void PaintText(HDC hDC) override;
+        void PaintBkColor(HDC hDC) override;
+        void PaintStatusImage(HDC hDC) override;
+        void PaintForeImage(HDC hDC) override;
 
-        BOOL Activate();
-        virtual void DoEvent(TEventUI& event);
+        BOOL Activate() override;
+        void DoEvent(TEventUI& event) override;
     private:
         int	m_iBindTabIndex;
         UINT m_uButtonState;

@@ -642,6 +642,7 @@
     <ClInclude Include="Control\DuiCombo.h" />
     <ClInclude Include="Control\DuiDateTime.h" />
     <ClInclude Include="Control\DuiEdit.h" />
+    <ClInclude Include="Control\DuiGif.h" />
     <ClInclude Include="Control\DuiGroupBox.h" />
     <ClInclude Include="Control\DuiIPAddress.h" />
     <ClInclude Include="Control\DuiLabel.h" />
@@ -685,6 +686,7 @@
     <ClCompile Include="Control\DuiCombo.cpp" />
     <ClCompile Include="Control\DuiDateTime.cpp" />
     <ClCompile Include="Control\DuiEdit.cpp" />
+    <ClCompile Include="Control\DuiGif.cpp" />
     <ClCompile Include="Control\DuiGroupBox.cpp" />
     <ClCompile Include="Control\DuiIPAddress.cpp" />
     <ClCompile Include="Control\DuiLabel.cpp" />

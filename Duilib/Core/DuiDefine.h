@@ -166,6 +166,7 @@ namespace DuiLib
 #define  DUI_CTR_DATETIME                        (_T("DateTime"))
 #define  DUI_CTR_IPADDRESS                       (_T("IPAddress"))
 #define  DUI_CTR_RING						     (_T("Ring"))
+#define  DUI_CTR_GIF	                         (_T("Gif"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
@@ -183,7 +184,8 @@ namespace DuiLib
     {
         TIMERID_SCROLLBAR	=	100,
         TIMERID_ANIMATION_TABLAYOUT,
-        TIMERID_RING
+        TIMERID_RING,
+        TIMERID_GIF
     };
 
     enum DuiMsg

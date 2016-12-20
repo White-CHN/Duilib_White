@@ -9,9 +9,9 @@ namespace DuiLib
     public:
         CDuiScrollBar(void);
         virtual ~CDuiScrollBar(void);
-
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+    public:
+        LPCTSTR GetClass() const override;
+        LPVOID GetInterface(LPCTSTR pstrName) override;
 
         void SetOwner(CDuiContainer* pOwner);
 
@@ -63,10 +63,10 @@ namespace DuiLib
         void PaintThumb(HDC hDC);
         void PaintRail(HDC hDC);
 
-        virtual void SetPos(RECT rc, bool bNeedInvalidate = TRUE);
-        virtual void DoPaint(HDC hDC, const RECT& rcPaint);
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
-        virtual void DoEvent(TEventUI& event);
+        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) override;
+        void DoPaint(HDC hDC, const RECT& rcPaint) override;
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
+        void DoEvent(TEventUI& event) override;
     private:
         enum
         {

@@ -165,6 +165,9 @@
     <ClInclude Include="Control\DuiRing.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiGif.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -288,6 +291,9 @@
       <Filter>源文件\Layout</Filter>
     </ClCompile>
     <ClCompile Include="Control\DuiRing.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiGif.cpp">
       <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>

@@ -9,10 +9,10 @@ namespace DuiLib
         CDuiOption(void);
         virtual ~CDuiOption(void);
     public:
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        LPCTSTR GetClass() const override;
+        LPVOID GetInterface(LPCTSTR pstrName) override;
 
-        virtual BOOL Activate();
+        BOOL Activate() override;
 
         void SetGroup(LPCTSTR pStrGroupName = NULL);
 
@@ -37,12 +37,12 @@ namespace DuiLib
         LPCTSTR GetSelectedForedImage();
         void SetSelectedForedImage(LPCTSTR pStrImage);
 
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
 
-        virtual void PaintBkColor(HDC hDC);
-        virtual void PaintStatusImage(HDC hDC);
-        virtual void PaintForeImage(HDC hDC);
-        virtual void PaintText(HDC hDC);
+        void PaintBkColor(HDC hDC) override;
+        void PaintStatusImage(HDC hDC) override;
+        void PaintForeImage(HDC hDC) override;
+        void PaintText(HDC hDC) override;
     private:
         BOOL m_bSelected;
 

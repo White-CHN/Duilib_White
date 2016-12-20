@@ -11,8 +11,8 @@ namespace DuiLib
         CDuiGroupBox(void);
         virtual ~CDuiGroupBox(void);
     public:
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        LPCTSTR GetClass() const override;
+        LPVOID GetInterface(LPCTSTR pstrName) override;
 
         DWORD GetTextColor() const;
         void SetTextColor(DWORD dwTextColor);
@@ -23,10 +23,10 @@ namespace DuiLib
         int GetFont() const;
         void SetFont(int index);
 
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
 
-        virtual void PaintText(HDC hDC);
-        virtual void PaintBorder(HDC hDC);
+        void PaintText(HDC hDC) override;
+        void PaintBorder(HDC hDC) override;
     private:
         SIZE CalcrectSize(SIZE szAvailable);
     private:

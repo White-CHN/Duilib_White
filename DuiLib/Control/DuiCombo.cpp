@@ -294,7 +294,7 @@ namespace DuiLib
         }
         CDuiString sText = GetText();
 
-        TListInfo* pInfo = GetOwner()->GetListInfo();
+        ListInfo* pInfo = GetOwner()->GetListInfo();
         SIZE cXY = CDuiControl::EstimateSize(szAvailable);
         //按原比例缩小，因为DPI变化后，会产生空白区域，所以还是原来高度
         cXY.cy = MulDiv(cXY.cy + pInfo->rcTextPadding.top + pInfo->rcTextPadding.bottom, 100, GetManager()->GetDPIObj()->GetScale());
@@ -329,7 +329,7 @@ namespace DuiLib
         {
             return;
         }
-        TListInfo* pInfo = GetOwner()->GetListInfo();
+        ListInfo* pInfo = GetOwner()->GetListInfo();
         DWORD iBackColor = 0;
         if(!pInfo->bAlternateBk || GetIndex() % 2 == 0)
         {
@@ -444,7 +444,7 @@ namespace DuiLib
         {
             return;
         }
-        TListInfo* pInfo = GetOwner()->GetListInfo();
+        ListInfo* pInfo = GetOwner()->GetListInfo();
         DWORD iTextColor = pInfo->dwTextColor;
         if((m_uButtonState & UISTATE_HOT) != 0)
         {
@@ -979,7 +979,7 @@ namespace DuiLib
         return LT_COMBO;
     }
 
-    TListInfo* CDuiCombo::GetListInfo()
+    ListInfo* CDuiCombo::GetListInfo()
     {
         return &m_ListInfo;
     }

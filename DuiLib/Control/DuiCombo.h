@@ -4,7 +4,7 @@ namespace DuiLib
 
 #define UILIST_MAX_COLUMNS 32
 
-    typedef struct tagTListInfo
+    typedef struct tagListInfo
     {
         BOOL bAlternateBk;
         BOOL bShowRowLine;
@@ -29,13 +29,13 @@ namespace DuiLib
         CDuiString sSelectedImage;
         CDuiString sHotImage;
         CDuiString sDisabledImage;
-    } TListInfo;
+    } ListInfo;
 
     class IListOwner
     {
     public:
         virtual UINT GetListType() = 0;
-        virtual TListInfo* GetListInfo() = 0;
+        virtual ListInfo* GetListInfo() = 0;
         virtual int GetCurSel() const = 0;
         virtual BOOL SelectItem(int iIndex, BOOL bTakeFocus = FALSE) = 0;
         virtual BOOL SelectMultiItem(int iIndex, BOOL bTakeFocus = FALSE) = 0;
@@ -66,26 +66,26 @@ namespace DuiLib
         CDuiListElement(void);
         virtual ~CDuiListElement(void);
     public:
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
-        virtual UINT GetControlFlags() const;
+        LPCTSTR GetClass() const override;
+        LPVOID GetInterface(LPCTSTR pstrName) override;
+        UINT GetControlFlags() const override;
 
-        virtual void Invalidate(); // 直接CControl::Invalidate会导致滚动条刷新，重写减少刷新区域
-        virtual BOOL Activate();
+        void Invalidate(); // 直接CControl::Invalidate会导致滚动条刷新，重写减少刷新区域
+        BOOL Activate() override;
 
-        virtual int GetIndex() const;
-        virtual void SetIndex(int iIndex);
-        virtual IListOwner* GetOwner();
-        virtual void SetOwner(CDuiControl* pOwner);
-        virtual BOOL IsSelected() const;
-        virtual BOOL Select(BOOL bSelect = TRUE);
-        virtual BOOL SelectMulti(BOOL bSelect = TRUE);
-        virtual BOOL IsExpanded() const;
-        virtual BOOL Expand(BOOL bExpand = TRUE);
+        int GetIndex() const override;
+        void SetIndex(int iIndex) override;
+        IListOwner* GetOwner();
+        void SetOwner(CDuiControl* pOwner) override;
+        BOOL IsSelected() const override;
+        BOOL Select(BOOL bSelect = TRUE) override;
+        BOOL SelectMulti(BOOL bSelect = TRUE) override;
+        BOOL IsExpanded() const override;
+        BOOL Expand(BOOL bExpand = TRUE) override;
 
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
 
-        virtual void DoEvent(TEventUI& event);
+        void DoEvent(TEventUI& event) override;
     private:
         BOOL m_bSelected;
         int m_iIndex;
@@ -99,16 +99,16 @@ namespace DuiLib
         CDuiListLabelElement(void);
         virtual ~CDuiListLabelElement(void);
     public:
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        LPCTSTR GetClass() const override ;
+        LPVOID GetInterface(LPCTSTR pstrName) override ;
 
-        virtual SIZE EstimateSize(SIZE szAvailable);
+        SIZE EstimateSize(SIZE szAvailable) override;
 
-        virtual void DrawItemBk(HDC hDC, const RECT& rcItem);
-        virtual void DrawItemText(HDC hDC, const RECT& rcItem);
-        virtual void DoPaint(HDC hDC, const RECT& rcPaint);
+        virtual void DrawItemBk(HDC hDC, const RECT& rcItem) ;
+        virtual void DrawItemText(HDC hDC, const RECT& rcItem) ;
+        void DoPaint(HDC hDC, const RECT& rcPaint) override;
 
-        virtual void DoEvent(TEventUI& event);
+        void DoEvent(TEventUI& event) override;
     private:
         UINT m_uButtonState;
     };
@@ -126,10 +126,10 @@ namespace DuiLib
     public:
         void Init(CDuiCombo* pOwner);
 
-        virtual LPCTSTR GetWindowClassName() const;
-        virtual void OnFinalMessage(HWND hWnd);
+        LPCTSTR GetWindowClassName() const override;
+        void OnFinalMessage(HWND hWnd) override;
 #if(_WIN32_WINNT >= 0x0501)
-        virtual UINT GetClassStyle() const;
+        UINT GetClassStyle() const override;
 #endif
         BOOL IsHitItem(POINT ptMouse);
 
@@ -143,9 +143,9 @@ namespace DuiLib
         virtual LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;
 
-        virtual void Notify(TNotifyUI& msg) override;
+        void Notify(TNotifyUI& msg) override;
     private:
         BOOL m_bHitItem;
         int m_iOldSel;
@@ -165,28 +165,28 @@ namespace DuiLib
         CDuiCombo(void);
         virtual ~CDuiCombo(void);
     public:
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        LPCTSTR GetClass() const override;
+        LPVOID GetInterface(LPCTSTR pstrName) override;
 
-        virtual CDuiString GetText() const;
+        CDuiString GetText() const override;
         void EmptyComboWnd();
 
         UINT GetButtonState() const;
         void SetButtonState(UINT uButtonState);
 
-        virtual UINT GetListType();
-        virtual TListInfo* GetListInfo();
-        virtual int GetCurSel() const;
-        virtual BOOL SelectItem(int iIndex, BOOL bTakeFocus = FALSE);
-        virtual BOOL SelectMultiItem(int iIndex, BOOL bTakeFocus = FALSE);
-        virtual BOOL UnSelectItem(int iIndex, BOOL bOthers = FALSE);
+        UINT GetListType() override;
+        ListInfo* GetListInfo() override;
+        int GetCurSel() const override;
+        BOOL SelectItem(int iIndex, BOOL bTakeFocus = FALSE) override;
+        BOOL SelectMultiItem(int iIndex, BOOL bTakeFocus = FALSE) override;
+        BOOL UnSelectItem(int iIndex, BOOL bOthers = FALSE) override;
 
-        virtual BOOL SetItemIndex(CDuiControl* pControl, int iIndex);
-        virtual BOOL Add(CDuiControl* pControl);
-        virtual BOOL AddAt(CDuiControl* pControl, int iIndex);
-        virtual BOOL Remove(CDuiControl* pControl);
-        virtual BOOL RemoveAt(int iIndex);
-        virtual void RemoveAll();
+        BOOL SetItemIndex(CDuiControl* pControl, int iIndex) override;
+        BOOL Add(CDuiControl* pControl) override;
+        BOOL AddAt(CDuiControl* pControl, int iIndex) override;
+        BOOL Remove(CDuiControl* pControl) override;
+        BOOL RemoveAt(int iIndex) override;
+        void RemoveAll() override;
 
         int GetFont() const;
         void SetFont(int index);
@@ -275,17 +275,17 @@ namespace DuiLib
         BOOL IsItemShowHtml();
         void SetItemShowHtml(BOOL bShowHtml = TRUE);
 
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
 
-        virtual SIZE EstimateSize(SIZE szAvailable);
-        virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
+        SIZE EstimateSize(SIZE szAvailable) override;
+        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) override;
 
-        virtual void DoPaint(HDC hDC, const RECT& rcPaint);
-        virtual void PaintText(HDC hDC);
-        virtual void PaintStatusImage(HDC hDC);
+        void DoPaint(HDC hDC, const RECT& rcPaint) override;
+        void PaintText(HDC hDC) override;
+        void PaintStatusImage(HDC hDC) override;
 
-        virtual BOOL Activate();
-        virtual void DoEvent(TEventUI& event);
+        BOOL Activate() override;
+        void DoEvent(TEventUI& event) override;
     private:
         CDuiComboWnd* m_pComboWnd;
         BOOL m_bShowHtml;
@@ -297,7 +297,7 @@ namespace DuiLib
         DWORD m_dwTextColor;
         DWORD m_dwDisabledTextColor;
 
-        TListInfo m_ListInfo;
+        ListInfo m_ListInfo;
 
         CDuiSize m_szDropBox;
 

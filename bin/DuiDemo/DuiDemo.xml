@@ -14,9 +14,9 @@
 		<HorizontalLayout  height="64" >
 			<HorizontalLayout  >
 				<Control width="64" height="64" bkimage="res='bkimage/logo.png' fade='255'"/>
-
 				<Label  text="Duilib开源项目展示" valign="vcenter" align="left" textpadding="10,0,0,0" textcolor="#FFFFFFFF" font="1" tooltip="duilib开源项目圈"/>
 				<VerticalLayout childvalign="vcenter" childpadding="2" >
+				
 					<Button name="home" font="2" resourcetext="true" text="HomePage" cursor="hand" tooltip="HomePage"  hottextcolor="#FFFF00FF" autocalcwidth="true" textcolor="#FFFFFFFF"  />
 					<Button name="join" font="2" resourcetext="true" text="Join" cursor="hand" tooltip="Join"  hottextcolor="#FFFF00FF" autocalcwidth="true" textcolor="#FFFFFFFF"  />
 					<Button name="joingroup" font="2"  text="Duilib-White项目QQ群" cursor="hand" tooltip="Duilib-White项目QQ群"  hottextcolor="#FFFF00FF" autocalcwidth="true" textcolor="#FFFFFFFF"  />
@@ -151,6 +151,12 @@
 			<VerticalLayout vscrollbar="true"><!-- 拓展控件 -->
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true"><!-- 动画控件 -->
+				<HorizontalLayout  childvalign="vcenter" >
+					<Label font="3" valign="center" cursor="hand" align="center"  text="Gif演示" tooltip="Gif演示" width="80" textcolor="#FFFFFFFF" />
+					<HorizontalLayout height="25" childpadding="12"  >
+						<Gif bkimage="gif/checking.gif" width="100"/>
+					</HorizontalLayout>
+				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true"><!-- 分割窗口 -->
 			</VerticalLayout>

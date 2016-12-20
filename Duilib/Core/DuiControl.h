@@ -28,6 +28,7 @@ namespace DuiLib
         CDuiControl* GetParent() const;
         CDuiPaintManager* GetManager() const;
 
+        virtual void DoInit();
         virtual void Init();
         virtual void SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit = TRUE);
 
@@ -208,6 +209,7 @@ namespace DuiLib
 
         virtual CDuiControl* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags);
     public:
+        CEventSource OnInit;
         CEventSource OnSize;
         CEventSource OnEvent;
         CEventSource OnNotify;
