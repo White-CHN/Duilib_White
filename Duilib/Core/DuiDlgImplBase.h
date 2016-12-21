@@ -21,16 +21,16 @@ namespace DuiLib
         virtual CDuiString GetSkinType();		//FindResource第三个参数，资源类型，自定义资源类型的名称
         virtual CDuiString GetSkinFile() = 0;
 
-        void Notify(TNotifyUI& msg) override;
-        CDuiControl* CreateControl(LPCTSTR pstrClass) override;
-        LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType) override;
+        void Notify(TNotifyUI& msg) OVERRIDE;
+        CDuiControl* CreateControl(LPCTSTR pstrClass) OVERRIDE;
+        LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType) OVERRIDE;
 
         virtual LRESULT ResponseDefaultKeyEvent(WPARAM wParam);
-        LRESULT MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) override;
+        LRESULT MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
 
         virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
-        void OnFinalMessage(HWND hWnd) override;
+        void OnFinalMessage(HWND hWnd) OVERRIDE;
 
         virtual LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
@@ -54,7 +54,7 @@ namespace DuiLib
         virtual LRESULT OnLButtonDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnMouseMove(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
-        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;
+        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) OVERRIDE;
     private:
         BOOL IsInStaticControl(CDuiControl* pControl);
     private:

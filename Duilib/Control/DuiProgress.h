@@ -9,8 +9,8 @@ namespace DuiLib
         CDuiProgress(void);
         virtual ~CDuiProgress(void);
     public:
-        LPCTSTR GetClass() const override;
-        LPVOID GetInterface(LPCTSTR pstrName) override;
+        LPCTSTR GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         BOOL IsShowText();
         void SetShowText(BOOL bShowText = TRUE);
@@ -30,10 +30,10 @@ namespace DuiLib
 
         void SetStretchForeImage(BOOL bStretchForeImage = TRUE);
 
-        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        void PaintForeColor(HDC hDC) override;
-        void PaintForeImage(HDC hDC) override;
+        void PaintForeColor(HDC hDC) OVERRIDE;
+        void PaintForeImage(HDC hDC) OVERRIDE;
     private:
         BOOL m_bShowText;
         BOOL m_bHorizontal;

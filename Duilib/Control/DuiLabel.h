@@ -11,9 +11,9 @@ namespace DuiLib
         CDuiLabel(void);
         virtual ~CDuiLabel(void);
     public:
-        LPCTSTR GetClass() const override;
-        LPVOID GetInterface(LPCTSTR pstrName) override;
-        UINT GetControlFlags() const override;
+        LPCTSTR GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        UINT GetControlFlags() const OVERRIDE;
 
         int GetFont() const;
         void SetFont(int index);
@@ -33,16 +33,16 @@ namespace DuiLib
         BOOL IsShowHtml() ;
         void SetShowHtml(BOOL bShowHtml = TRUE) ;
 
-        void SetText(LPCTSTR pstrText) override;
+        void SetText(LPCTSTR pstrText) OVERRIDE;
 
         BOOL GetAutoCalcWidth() const;
         virtual void SetAutoCalcWidth(BOOL bAutoCalcWidth);
 
-        SIZE EstimateSize(SIZE szAvailable) override;
-        void DoEvent(TEventUI& event) override;
-        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
+        SIZE EstimateSize(SIZE szAvailable) OVERRIDE;
+        void DoEvent(TEventUI& event) OVERRIDE;
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        void PaintText(HDC hDC) override;
+        void PaintText(HDC hDC) OVERRIDE;
     private:
         BOOL m_bShowHtml;
         BOOL m_bAutoCalcWidth;

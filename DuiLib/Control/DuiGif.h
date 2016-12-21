@@ -10,8 +10,8 @@ namespace DuiLib
         CDuiGif(void);
         virtual ~CDuiGif(void);
     public:
-        LPCTSTR	GetClass() const override;
-        LPVOID GetInterface(LPCTSTR pstrName) override;
+        LPCTSTR	GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         void PlayGif();
         void PauseGif();
@@ -23,12 +23,12 @@ namespace DuiLib
         BOOL IsAutoSize() const;
         void SetAutoSize(BOOL bIsAuto = TRUE);
 
-        void SetBkImage(LPCTSTR pStrImage) override;
-        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
+        void SetBkImage(LPCTSTR pStrImage) OVERRIDE;
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        void DoPaint(HDC hDC, const RECT& rcPaint) override;
+        void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
 
-        void DoEvent(TEventUI& event) override;
+        void DoEvent(TEventUI& event) OVERRIDE;
     private:
         void DrawFrame(HDC hDC);		// ªÊ÷∆GIF√ø÷°
         void InitGifImage();

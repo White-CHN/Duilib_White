@@ -6,13 +6,13 @@ public:
     CPopDlg(void);
     virtual ~CPopDlg(void);
 public:
-    CDuiString GetSkinFile() override;
-    LPCTSTR GetWindowClassName() const override;
+    CDuiString GetSkinFile() OVERRIDE;
+    LPCTSTR GetWindowClassName() const OVERRIDE;
 
-    void InitWindow() override;
+    void InitWindow() OVERRIDE;
 
-    CDuiControl* CreateControl(LPCTSTR pstrClass) override;
-    void Notify(TNotifyUI& msg) override;
+    CDuiControl* CreateControl(LPCTSTR pstrClass) OVERRIDE;
+    void Notify(TNotifyUI& msg) OVERRIDE;
 private:
     CDuiButton* m_pCloseBtn;
     CDuiButton* m_pMaxBtn;

@@ -22,15 +22,15 @@ namespace DuiLib
 
         BOOL GetDropOpen();
 
-        LPCTSTR GetWindowClassName() const override;
-        LPCTSTR GetSuperClassName() const override;
+        LPCTSTR GetWindowClassName() const OVERRIDE;
+        LPCTSTR GetSuperClassName() const OVERRIDE;
 
         virtual LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnNotify(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;
-        void OnFinalMessage(HWND hWnd) override;
+        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) OVERRIDE;
+        void OnFinalMessage(HWND hWnd) OVERRIDE;
     private:
         BOOL m_bInit;
         BOOL m_bDropOpen;
@@ -46,8 +46,8 @@ namespace DuiLib
         CDuiDateTime(void);
         virtual ~CDuiDateTime(void);
     public:
-        LPCTSTR GetClass() const override;
-        LPVOID GetInterface(LPCTSTR pstrName) override;
+        LPCTSTR GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         void SetUpdateFlag(int nDTUpdateFlag);
         void EmptyDateTimeWnd();
@@ -56,7 +56,7 @@ namespace DuiLib
         SYSTEMTIME& GetTime();
         void SetTime(SYSTEMTIME* pst);
 
-        void DoEvent(TEventUI& event) override;
+        void DoEvent(TEventUI& event) OVERRIDE;
     private:
         int m_nDTUpdateFlag;
         CDuiDateTimeWnd* m_pDateTimeWnd;

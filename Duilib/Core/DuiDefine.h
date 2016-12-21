@@ -38,6 +38,10 @@ namespace DuiLib
 #endif
 
 #define GET_CLASS_NAME(x) _T(#x)
+
+#ifndef OVERRIDE
+    #define OVERRIDE override
+#endif
     // 鼠标光标定义
 #define DUI_ARROW           32512
 #define DUI_IBEAM           32513

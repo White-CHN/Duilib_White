@@ -18,14 +18,14 @@ namespace DuiLib
     public:
         void Init(CDuiIPAddress* pOwner);
 
-        LPCTSTR GetWindowClassName() const override;
-        LPCTSTR GetSuperClassName() const override;
+        LPCTSTR GetWindowClassName() const OVERRIDE;
+        LPCTSTR GetSuperClassName() const OVERRIDE;
 
         virtual LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnKeyUp(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;
-        void OnFinalMessage(HWND hWnd) override;
+        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) OVERRIDE;
+        void OnFinalMessage(HWND hWnd) OVERRIDE;
 
     private:
         BOOL m_bInit;
@@ -40,8 +40,8 @@ namespace DuiLib
         CDuiIPAddress(void);
         virtual ~CDuiIPAddress(void);
     public:
-        LPCTSTR GetClass() const override;
-        LPVOID GetInterface(LPCTSTR pstrName) override;
+        LPCTSTR GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         void EmptyIPAddressWnd();
 
@@ -53,7 +53,7 @@ namespace DuiLib
         DWORD GetIP();
         void SetIP(DWORD dwIP);
 
-        void DoEvent(TEventUI& event) override;
+        void DoEvent(TEventUI& event) OVERRIDE;
     private:
         DWORD m_dwIP;
         int	m_nIPUpdateFlag;

@@ -66,26 +66,26 @@ namespace DuiLib
         CDuiListElement(void);
         virtual ~CDuiListElement(void);
     public:
-        LPCTSTR GetClass() const override;
-        LPVOID GetInterface(LPCTSTR pstrName) override;
-        UINT GetControlFlags() const override;
+        LPCTSTR GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        UINT GetControlFlags() const OVERRIDE;
 
         void Invalidate(); // 直接CControl::Invalidate会导致滚动条刷新，重写减少刷新区域
-        BOOL Activate() override;
+        BOOL Activate() OVERRIDE;
 
-        int GetIndex() const override;
-        void SetIndex(int iIndex) override;
+        int GetIndex() const OVERRIDE;
+        void SetIndex(int iIndex) OVERRIDE;
         IListOwner* GetOwner();
-        void SetOwner(CDuiControl* pOwner) override;
-        BOOL IsSelected() const override;
-        BOOL Select(BOOL bSelect = TRUE) override;
-        BOOL SelectMulti(BOOL bSelect = TRUE) override;
-        BOOL IsExpanded() const override;
-        BOOL Expand(BOOL bExpand = TRUE) override;
+        void SetOwner(CDuiControl* pOwner) OVERRIDE;
+        BOOL IsSelected() const OVERRIDE;
+        BOOL Select(BOOL bSelect = TRUE) OVERRIDE;
+        BOOL SelectMulti(BOOL bSelect = TRUE) OVERRIDE;
+        BOOL IsExpanded() const OVERRIDE;
+        BOOL Expand(BOOL bExpand = TRUE) OVERRIDE;
 
-        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        void DoEvent(TEventUI& event) override;
+        void DoEvent(TEventUI& event) OVERRIDE;
     private:
         BOOL m_bSelected;
         int m_iIndex;
@@ -99,16 +99,16 @@ namespace DuiLib
         CDuiListLabelElement(void);
         virtual ~CDuiListLabelElement(void);
     public:
-        LPCTSTR GetClass() const override ;
-        LPVOID GetInterface(LPCTSTR pstrName) override ;
+        LPCTSTR GetClass() const OVERRIDE ;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE ;
 
-        SIZE EstimateSize(SIZE szAvailable) override;
+        SIZE EstimateSize(SIZE szAvailable) OVERRIDE;
 
         virtual void DrawItemBk(HDC hDC, const RECT& rcItem) ;
         virtual void DrawItemText(HDC hDC, const RECT& rcItem) ;
-        void DoPaint(HDC hDC, const RECT& rcPaint) override;
+        void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
 
-        void DoEvent(TEventUI& event) override;
+        void DoEvent(TEventUI& event) OVERRIDE;
     private:
         UINT m_uButtonState;
     };
@@ -126,10 +126,10 @@ namespace DuiLib
     public:
         void Init(CDuiCombo* pOwner);
 
-        LPCTSTR GetWindowClassName() const override;
-        void OnFinalMessage(HWND hWnd) override;
+        LPCTSTR GetWindowClassName() const OVERRIDE;
+        void OnFinalMessage(HWND hWnd) OVERRIDE;
 #if(_WIN32_WINNT >= 0x0501)
-        UINT GetClassStyle() const override;
+        UINT GetClassStyle() const OVERRIDE;
 #endif
         BOOL IsHitItem(POINT ptMouse);
 
@@ -143,9 +143,9 @@ namespace DuiLib
         virtual LRESULT OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;
+        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) OVERRIDE;
 
-        void Notify(TNotifyUI& msg) override;
+        void Notify(TNotifyUI& msg) OVERRIDE;
     private:
         BOOL m_bHitItem;
         int m_iOldSel;
@@ -165,28 +165,28 @@ namespace DuiLib
         CDuiCombo(void);
         virtual ~CDuiCombo(void);
     public:
-        LPCTSTR GetClass() const override;
-        LPVOID GetInterface(LPCTSTR pstrName) override;
+        LPCTSTR GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
-        CDuiString GetText() const override;
+        CDuiString GetText() const OVERRIDE;
         void EmptyComboWnd();
 
         UINT GetButtonState() const;
         void SetButtonState(UINT uButtonState);
 
-        UINT GetListType() override;
-        ListInfo* GetListInfo() override;
-        int GetCurSel() const override;
-        BOOL SelectItem(int iIndex, BOOL bTakeFocus = FALSE) override;
-        BOOL SelectMultiItem(int iIndex, BOOL bTakeFocus = FALSE) override;
-        BOOL UnSelectItem(int iIndex, BOOL bOthers = FALSE) override;
+        UINT GetListType() OVERRIDE;
+        ListInfo* GetListInfo() OVERRIDE;
+        int GetCurSel() const OVERRIDE;
+        BOOL SelectItem(int iIndex, BOOL bTakeFocus = FALSE) OVERRIDE;
+        BOOL SelectMultiItem(int iIndex, BOOL bTakeFocus = FALSE) OVERRIDE;
+        BOOL UnSelectItem(int iIndex, BOOL bOthers = FALSE) OVERRIDE;
 
-        BOOL SetItemIndex(CDuiControl* pControl, int iIndex) override;
-        BOOL Add(CDuiControl* pControl) override;
-        BOOL AddAt(CDuiControl* pControl, int iIndex) override;
-        BOOL Remove(CDuiControl* pControl) override;
-        BOOL RemoveAt(int iIndex) override;
-        void RemoveAll() override;
+        BOOL SetItemIndex(CDuiControl* pControl, int iIndex) OVERRIDE;
+        BOOL Add(CDuiControl* pControl) OVERRIDE;
+        BOOL AddAt(CDuiControl* pControl, int iIndex) OVERRIDE;
+        BOOL Remove(CDuiControl* pControl) OVERRIDE;
+        BOOL RemoveAt(int iIndex) OVERRIDE;
+        void RemoveAll() OVERRIDE;
 
         int GetFont() const;
         void SetFont(int index);
@@ -275,17 +275,17 @@ namespace DuiLib
         BOOL IsItemShowHtml();
         void SetItemShowHtml(BOOL bShowHtml = TRUE);
 
-        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        SIZE EstimateSize(SIZE szAvailable) override;
-        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) override;
+        SIZE EstimateSize(SIZE szAvailable) OVERRIDE;
+        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
 
-        void DoPaint(HDC hDC, const RECT& rcPaint) override;
-        void PaintText(HDC hDC) override;
-        void PaintStatusImage(HDC hDC) override;
+        void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
+        void PaintText(HDC hDC) OVERRIDE;
+        void PaintStatusImage(HDC hDC) OVERRIDE;
 
-        BOOL Activate() override;
-        void DoEvent(TEventUI& event) override;
+        BOOL Activate() OVERRIDE;
+        void DoEvent(TEventUI& event) OVERRIDE;
     private:
         CDuiComboWnd* m_pComboWnd;
         BOOL m_bShowHtml;

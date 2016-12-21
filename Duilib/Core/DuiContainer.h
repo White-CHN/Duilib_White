@@ -28,8 +28,8 @@ namespace DuiLib
         CDuiContainer(void);
         virtual ~CDuiContainer(void);
     public:
-        LPCTSTR GetClass() const override;
-        LPVOID GetInterface(LPCTSTR pstrName) override;
+        LPCTSTR GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         virtual CDuiRect GetInset() const;
         virtual void SetInset(CDuiRect rcInset); // 设置内边距，相当于设置客户区
@@ -70,33 +70,33 @@ namespace DuiLib
         virtual CDuiScrollBar* GetVerticalScrollBar() const;
         virtual CDuiScrollBar* GetHorizontalScrollBar() const;
 
-        CStdPtrArray* GetItems() override;
-        CDuiControl* GetItemAt(int iIndex) const override;
-        int GetItemIndex(CDuiControl* pControl) const override;
-        BOOL SetItemIndex(CDuiControl* pControl, int iIndex) override;
-        int GetCount() const override;
-        BOOL Add(CDuiControl* pControl) override;
-        BOOL AddAt(CDuiControl* pControl, int iIndex) override;
-        BOOL Remove(CDuiControl* pControl) override;
-        BOOL RemoveAt(int iIndex) override;
+        CStdPtrArray* GetItems() OVERRIDE;
+        CDuiControl* GetItemAt(int iIndex) const OVERRIDE;
+        int GetItemIndex(CDuiControl* pControl) const OVERRIDE;
+        BOOL SetItemIndex(CDuiControl* pControl, int iIndex) OVERRIDE;
+        int GetCount() const OVERRIDE;
+        BOOL Add(CDuiControl* pControl) OVERRIDE;
+        BOOL AddAt(CDuiControl* pControl, int iIndex) OVERRIDE;
+        BOOL Remove(CDuiControl* pControl) OVERRIDE;
+        BOOL RemoveAt(int iIndex) OVERRIDE;
         void RemoveAll();
 
         virtual int FindSelectable(int iIndex, BOOL bForward = TRUE) const;
 
-        RECT GetClientPos() const override;
-        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) override;
+        RECT GetClientPos() const OVERRIDE;
+        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
 
-        void DoPaint(HDC hDC, const RECT& rcPaint) override;
+        void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
 
-        void DoEvent(TEventUI& event) override;
+        void DoEvent(TEventUI& event) OVERRIDE;
 
         void EnableScrollBar(BOOL bEnableVertical = TRUE, bool bEnableHorizontal = FALSE) ;
 
-        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        void SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit = TRUE) override;
+        void SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit = TRUE) OVERRIDE;
 
-        CDuiControl* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags) override;
+        CDuiControl* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags) OVERRIDE;
     protected:
         virtual void SetFloatPos(int iIndex);
         virtual void ProcessScrollBar(RECT rc, int cxRequired, int cyRequired);

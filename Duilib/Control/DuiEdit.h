@@ -10,13 +10,13 @@ namespace DuiLib
         CDuiEditWnd(void);
         virtual ~CDuiEditWnd(void);
     public:
-        LPCTSTR GetWindowClassName() const override;
-        LPCTSTR GetSuperClassName() const override;
+        LPCTSTR GetWindowClassName() const OVERRIDE;
+        LPCTSTR GetSuperClassName() const OVERRIDE;
 
         RECT CalPos();
         BOOL Init(CDuiEdit* pOwner);
 
-        void OnFinalMessage(HWND hWnd) override;
+        void OnFinalMessage(HWND hWnd) OVERRIDE;
 
         virtual LRESULT OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnPrint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
@@ -26,7 +26,7 @@ namespace DuiLib
         virtual LRESULT OnCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) override;
+        LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) OVERRIDE;
     private:
         enum
         {
@@ -46,9 +46,9 @@ namespace DuiLib
         CDuiEdit(void);
         virtual ~CDuiEdit(void);
     public:
-        LPCTSTR GetClass() const  override;
-        LPVOID GetInterface(LPCTSTR pstrName)  override;
-        UINT GetControlFlags() const  override;
+        LPCTSTR GetClass() const  OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName)  OVERRIDE;
+        UINT GetControlFlags() const  OVERRIDE;
 
         void EmptyEditWnd();
 
@@ -86,11 +86,11 @@ namespace DuiLib
         DWORD GetTipValueColor() const;
         void SetTipValueColor(LPCTSTR pStrColor);
 
-        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) override;
-        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) override;
-        void PaintStatusImage(HDC hDC) override;
-        void PaintText(HDC hDC) override;
-        void DoEvent(TEventUI& event) override;
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
+        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
+        void PaintStatusImage(HDC hDC) OVERRIDE;
+        void PaintText(HDC hDC) OVERRIDE;
+        void DoEvent(TEventUI& event) OVERRIDE;
     private:
         TCHAR m_cPasswordChar;
         DWORD m_dwEditbkColor;
