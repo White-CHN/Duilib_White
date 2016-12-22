@@ -13,7 +13,7 @@
 *********************************************************************/
 namespace DuiLib
 {
-    class CDuiColorPalette
+    class DUILIB_API CDuiColorPalette
         : public CDuiControl
     {
         DECLARE_DUICONTROL(CDuiColorPalette)
@@ -23,6 +23,10 @@ namespace DuiLib
     public:
         LPCTSTR GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+
+        //获取最终被选择的颜色，可以直接用于设置duilib背景色
+        DWORD GetSelectColor();
+        void SetSelectColor(DWORD dwColor);
 
         //设置/获取 Pallet（调色板主界面）的高度
         void SetPalletHeight(int nHeight);
@@ -36,9 +40,30 @@ namespace DuiLib
         CDuiString GetThumbImage() const;
 
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
+        void DoInit() OVERRIDE;
+        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
+        virtual void PaintPallet(HDC hDC);
+        void PaintBkColor(HDC hDC) OVERRIDE;
+        void DoEvent(TEventUI& event) OVERRIDE;
+    protected:
+        //更新数据
+        void UpdatePalletData();
+        void UpdateBarData();
     private:
+        HDC	m_MemDc;
+        HBITMAP	m_hMemBitmap;
+        BOOL m_bIsInBar;
+        BOOL m_bIsInPallet;
         int	m_nPalletHeight;
         int	m_nBarHeight;
+        int	m_nCurH;
+        int	m_nCurS;
+        int	m_nCurB;
+        UINT m_uButtonState;
+
+        BYTE* m_pBits;
+
+        BITMAP m_bmInfo;
 
         CDuiPoint m_ptLastPalletMouse;
         CDuiPoint m_ptLastBarMouse;

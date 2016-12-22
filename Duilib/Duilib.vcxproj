@@ -640,6 +640,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Control\DuiButton.h" />
+    <ClInclude Include="Control\DuiChart.h" />
     <ClInclude Include="Control\DuiColorPalette.h" />
     <ClInclude Include="Control\DuiCombo.h" />
     <ClInclude Include="Control\DuiDateTime.h" />
@@ -685,6 +686,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Control\DuiButton.cpp" />
+    <ClCompile Include="Control\DuiChart.cpp" />
     <ClCompile Include="Control\DuiColorPalette.cpp" />
     <ClCompile Include="Control\DuiCombo.cpp" />
     <ClCompile Include="Control\DuiDateTime.cpp" />

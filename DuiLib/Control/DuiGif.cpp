@@ -130,6 +130,19 @@ namespace DuiLib
         }
     }
 
+    void CDuiGif::SetVisible(BOOL bVisible /*= TRUE*/)
+    {
+        CDuiControl::SetVisible(bVisible);
+        if(bVisible)
+        {
+            PlayGif();
+        }
+        else
+        {
+            StopGif();
+        }
+    }
+
     void CDuiGif::SetInternVisible(BOOL bVisible /*= TRUE*/)
     {
         CDuiControl::SetInternVisible(bVisible);

@@ -28,6 +28,7 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiRing);
         INNER_REGISTER_DUICONTROL(CDuiGif);
         INNER_REGISTER_DUICONTROL(CDuiColorPalette);
+        INNER_REGISTER_DUICONTROL(CDuiChart);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

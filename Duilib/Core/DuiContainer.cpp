@@ -872,10 +872,6 @@ namespace DuiLib
     void CDuiContainer::SetInternVisible(BOOL bVisible /*= TRUE*/)
     {
         CDuiControl::SetInternVisible(bVisible);
-        if(m_items.IsEmpty())
-        {
-            return;
-        }
         for(int it = 0; it < m_items.GetSize(); it++)
         {
             // 控制子控件显示状态

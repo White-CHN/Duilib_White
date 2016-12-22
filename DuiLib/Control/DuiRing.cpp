@@ -66,6 +66,19 @@ namespace DuiLib
         }
     }
 
+    void CDuiRing::SetVisible(BOOL bVisible /*= TRUE*/)
+    {
+        CDuiControl::SetVisible(bVisible);
+        if(bVisible)
+        {
+            PlayImage();
+        }
+        else
+        {
+            StopImage();
+        }
+    }
+
     void CDuiRing::SetInternVisible(BOOL bVisible /*= TRUE*/)
     {
         CDuiControl::SetInternVisible(bVisible);

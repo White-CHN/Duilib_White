@@ -28,6 +28,25 @@ void CDemoFrame::InitWindow()
     m_pSlider = static_cast<CDuiSlider*>(GetPaintManager()->FindControl(_T("Slider")));
     m_pProgress = static_cast<CDuiProgress*>(GetPaintManager()->FindControl(_T("Progress")));
     m_pProgress->SetShowText(TRUE);
+
+    CDuiChart* pPieView = static_cast<CDuiChart*>(GetPaintManager()->FindControl(_T("ChartPie")));
+    if(NULL != pPieView)
+    {
+        pPieView->Add(_T("北京{c #FE5900}35%{/c}"), 35);
+        pPieView->Add(_T("上海{c #FE5900}38%{/c}"), 38);
+        pPieView->Add(_T("广州{c #FE5900}35%{/c}"), 35);
+        pPieView->Add(_T("香港{c #FE5900}15%{/c}"), 15);
+    }
+    CDuiChart* pHistpgramView = static_cast<CDuiChart*>(GetPaintManager()->FindControl(_T("ChartHistpgram")));
+    if(NULL != pHistpgramView)
+    {
+        pHistpgramView->Add(_T("1月{c #FE5900}13%{/c}"), 13);
+        pHistpgramView->Add(_T("2月{c #FE5900}11%{/c}"), 11);
+        pHistpgramView->Add(_T("3月{c #FE5900}32%{/c}"), 32);
+        pHistpgramView->Add(_T("4月{c #FE5900}17%{/c}"), 17);
+        pHistpgramView->Add(_T("5月{c #FE5900}8%{/c}"), 8);
+        pHistpgramView->Add(_T("6月{c #FE5900}12%{/c}"), 12);
+    }
 }
 
 CDuiString CDemoFrame::GetSkinFile()
@@ -84,6 +103,15 @@ void CDemoFrame::Notify(TNotifyUI& msg)
         if(msg.pSender == m_pSlider && m_pProgress != NULL)
         {
             m_pProgress->SetValue(m_pSlider->GetValue());
+        }
+    }
+    else if(msg.sType == DUI_MSGTYPE_COLORCHANGED)
+    {
+        CDuiColorPalette* pColorPalette = static_cast<CDuiColorPalette*>(GetPaintManager()->FindControl(_T("Pallet")));
+        if(msg.pSender == pColorPalette)
+        {
+            GetPaintManager()->GetRoot()->SetBkImage(_T(""));
+            GetPaintManager()->GetRoot()->SetBkColor(pColorPalette->GetSelectColor());
         }
     }
     else if(msg.sType == DUI_MSGTYPE_SELECTCHANGED)
