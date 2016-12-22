@@ -243,7 +243,7 @@ namespace DuiLib
             return;
         }
         m_sBkImage = pStrImage;
-        Invalidate();
+
     }
 
     CDuiString CDuiControl::GetForeImage() const

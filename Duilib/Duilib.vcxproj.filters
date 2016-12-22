@@ -168,6 +168,9 @@
     <ClInclude Include="Control\DuiGif.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiColorPalette.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -294,6 +297,9 @@
       <Filter>源文件\Control</Filter>
     </ClCompile>
     <ClCompile Include="Control\DuiGif.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiColorPalette.cpp">
       <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>

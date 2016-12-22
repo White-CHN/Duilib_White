@@ -854,6 +854,65 @@ namespace DuiLib
         CDuiControl::DoEvent(event);
     }
 
+    void CDuiContainer::SetVisible(BOOL bVisible /*= TRUE*/)
+    {
+        if(IsVisible() == bVisible)
+        {
+            return;
+        }
+        CDuiControl::SetVisible(bVisible);
+        for(int it = 0; it < m_items.GetSize(); it++)
+        {
+            static_cast<CDuiControl*>(m_items[it])->SetInternVisible(IsVisible());
+        }
+    }
+
+    // 逻辑上，对于Container控件不公开此方法
+    // 调用此方法的结果是，内部子控件隐藏，控件本身依然显示，背景等效果存在
+    void CDuiContainer::SetInternVisible(BOOL bVisible /*= TRUE*/)
+    {
+        CDuiControl::SetInternVisible(bVisible);
+        if(m_items.IsEmpty())
+        {
+            return;
+        }
+        for(int it = 0; it < m_items.GetSize(); it++)
+        {
+            // 控制子控件显示状态
+            // InternVisible状态应由子控件自己控制
+            static_cast<CDuiControl*>(m_items[it])->SetInternVisible(IsVisible());
+        }
+    }
+
+    void CDuiContainer::SetEnabled(BOOL bEnabled)
+    {
+        if(IsEnabled() == bEnabled)
+        {
+            return;
+        }
+        SetEnabled(bEnabled);
+
+        for(int it = 0; it < m_items.GetSize(); it++)
+        {
+            static_cast<CDuiControl*>(m_items[it])->SetEnabled(bEnabled);
+        }
+
+        Invalidate();
+    }
+
+    void CDuiContainer::SetMouseEnabled(BOOL bEnable /*= TRUE*/)
+    {
+        if(m_pVerticalScrollBar != NULL)
+        {
+            m_pVerticalScrollBar->SetMouseEnabled(bEnable);
+        }
+        if(m_pHorizontalScrollBar != NULL)
+        {
+            m_pHorizontalScrollBar->SetMouseEnabled(bEnable);
+        }
+        CDuiControl::SetMouseEnabled(bEnable);
+    }
+
     void CDuiContainer::EnableScrollBar(BOOL bEnableVertical /*= TRUE*/, bool bEnableHorizontal /*= FALSE*/)
     {
         if(bEnableVertical && !m_pVerticalScrollBar)

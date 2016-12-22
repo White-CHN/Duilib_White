@@ -16,8 +16,12 @@ namespace DuiLib
 
         void PaintBkImage(HDC hDC) override;
 
+        void SetInternVisible(BOOL bVisible = TRUE) OVERRIDE;
+        void DoInit() OVERRIDE;
         void DoEvent(TEventUI& event) override;
     private:
+        void PlayImage();
+        void StopImage();
         void InitImage();
         void DeleteImage();
     private:

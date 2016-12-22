@@ -106,11 +106,8 @@ namespace DuiLib
         {
             return;
         }
-        CDuiControl::SetBkImage(pStrImage);
-        StopGif();
         DeleteGif();
-
-        Invalidate();
+        CDuiControl::SetBkImage(pStrImage);
     }
 
     void CDuiGif::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
@@ -133,6 +130,19 @@ namespace DuiLib
         }
     }
 
+    void CDuiGif::SetInternVisible(BOOL bVisible /*= TRUE*/)
+    {
+        CDuiControl::SetInternVisible(bVisible);
+        if(bVisible)
+        {
+            PlayGif();
+        }
+        else
+        {
+            StopGif();
+        }
+    }
+
     void CDuiGif::DoPaint(HDC hDC, const RECT& rcPaint)
     {
         if(!::IntersectRect(&GetPaintRect(), &rcPaint, &GetPos()))
@@ -144,6 +154,14 @@ namespace DuiLib
             InitGifImage();
         }
         DrawFrame(hDC);
+    }
+
+    void CDuiGif::DoInit()
+    {
+        if(NULL == m_pGifImage)
+        {
+            InitGifImage();
+        }
     }
 
     void CDuiGif::DoEvent(TEventUI& event)
@@ -192,9 +210,13 @@ namespace DuiLib
             SetFixedWidth(m_pGifImage->GetWidth());
             SetFixedHeight(m_pGifImage->GetHeight());
         }
-        if(m_bIsAutoPlay)
+        if(m_bIsAutoPlay && Activate())
         {
             PlayGif();
+        }
+        else
+        {
+            StopGif();
         }
     }
 

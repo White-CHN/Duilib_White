@@ -90,6 +90,7 @@ using namespace Gdiplus;
 #include "Control/DuiIPAddress.h"
 #include "Control/DuiRing.h"
 #include "Control/DuiGif.h"
+#include "Control/DuiColorPalette.h"
 
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "comctl32.lib" )

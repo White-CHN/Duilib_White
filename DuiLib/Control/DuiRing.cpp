@@ -14,6 +14,7 @@ namespace DuiLib
 
     CDuiRing::~CDuiRing(void)
     {
+        StopImage();
         DeleteImage();
     }
 
@@ -65,6 +66,19 @@ namespace DuiLib
         }
     }
 
+    void CDuiRing::SetInternVisible(BOOL bVisible /*= TRUE*/)
+    {
+        CDuiControl::SetInternVisible(bVisible);
+        if(bVisible)
+        {
+            PlayImage();
+        }
+        else
+        {
+            StopImage();
+        }
+    }
+
     void CDuiRing::DoEvent(TEventUI& event)
     {
         if(event.Type == UIEVENT_TIMER && event.wParam == TIMERID_RING)
@@ -82,26 +96,43 @@ namespace DuiLib
         }
     }
 
-    void CDuiRing::InitImage()
+    void CDuiRing::PlayImage()
     {
-        m_pBkimage = CRenderEngine::GdiplusLoadImage(GetBkImage());
-        if(NULL == m_pBkimage)
-        {
-            return;
-        }
         if(GetManager())
         {
             GetManager()->SetTimer(this, TIMERID_RING, 100);
         }
     }
 
-    void CDuiRing::DeleteImage()
+    void CDuiRing::StopImage()
     {
         if(GetManager())
         {
             GetManager()->KillTimer(this, TIMERID_RING);
         }
+    }
+
+    void CDuiRing::InitImage()
+    {
+        m_pBkimage = CRenderEngine::GdiplusLoadImage(GetBkImage());
+        if(Activate())
+        {
+            PlayImage();
+        }
+        else
+        {
+            StopImage();
+        }
+    }
+
+    void CDuiRing::DeleteImage()
+    {
         DUI_FREE_POINT(m_pBkimage);
+    }
+
+    void CDuiRing::DoInit()
+    {
+        InitImage();
     }
 
 }

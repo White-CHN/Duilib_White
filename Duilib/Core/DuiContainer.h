@@ -81,7 +81,7 @@ namespace DuiLib
         BOOL RemoveAt(int iIndex) OVERRIDE;
         void RemoveAll();
 
-        virtual int FindSelectable(int iIndex, BOOL bForward = TRUE) const;
+        virtual int FindSelectable(int iIndex, BOOL bForward = TRUE) const ;
 
         RECT GetClientPos() const OVERRIDE;
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
@@ -89,6 +89,10 @@ namespace DuiLib
         void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
 
         void DoEvent(TEventUI& event) OVERRIDE;
+        void SetVisible(BOOL bVisible = TRUE) OVERRIDE;
+        void SetInternVisible(BOOL bVisible = TRUE) OVERRIDE;
+        void SetEnabled(BOOL bEnabled) OVERRIDE;
+        void SetMouseEnabled(BOOL bEnable = TRUE) OVERRIDE;
 
         void EnableScrollBar(BOOL bEnableVertical = TRUE, bool bEnableHorizontal = FALSE) ;
 

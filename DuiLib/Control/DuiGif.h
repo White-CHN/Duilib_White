@@ -25,8 +25,11 @@ namespace DuiLib
 
         void SetBkImage(LPCTSTR pStrImage) OVERRIDE;
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
+        void SetInternVisible(BOOL bVisible = TRUE) OVERRIDE;
 
         void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
+
+        void DoInit() OVERRIDE;
 
         void DoEvent(TEventUI& event) OVERRIDE;
     private:

@@ -454,7 +454,7 @@ namespace DuiLib
 
                     CDuiRect rcInvalidate = GetThumbRect(TRUE);
                     m_rcNewPos = rc;
-                    SetFixedWidth(m_rcNewPos.bottom - m_rcNewPos.top);
+                    SetFixedHeight(m_rcNewPos.bottom - m_rcNewPos.top);
 
                     if(m_bImmMode)
                     {
