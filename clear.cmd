@@ -4,6 +4,8 @@ del bin\*.ilk
 del bin\*.manifest
 del bin\*.pdb
 del bin\*.lib
+del bin\*.exe
+del bin\*.dll
 
 rd /s /q Lib
 rd /s /q Temp

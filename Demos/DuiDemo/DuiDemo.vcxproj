@@ -148,9 +148,8 @@
     <ResourceCompile Include="DuiDemo.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\bin\DuiDemo\icon\DuiDemo.ico" />
     <None Include="res\DuiDemo.ico" />
-    <None Include="res\DuiDemo.zip" />
-    <None Include="res\zipres1.bin" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DemoFrame.cpp" />

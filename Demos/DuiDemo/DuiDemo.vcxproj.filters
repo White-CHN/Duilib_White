@@ -37,10 +37,9 @@
     <None Include="res\DuiDemo.ico">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="res\zipres1.bin">
+    <None Include="..\..\bin\DuiDemo\icon\DuiDemo.ico">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="res\DuiDemo.zip" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
