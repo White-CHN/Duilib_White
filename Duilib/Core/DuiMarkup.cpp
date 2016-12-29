@@ -1,51 +1,6 @@
 #include "StdAfx.h"
 #include "DuiMarkup.h"
 
-typedef DWORD ZRESULT;
-
-typedef struct
-{
-    int index;                 // index of this file within the zip
-    char name[MAX_PATH];       // filename within the zip
-    DWORD attr;                // attributes, as in GetFileAttributes.
-    FILETIME atime, ctime, mtime; // access, create, modify filetimes
-    long comp_size;            // sizes of item, compressed and uncompressed. These
-    long unc_size;             // may be -1 if not yet known (e.g. being streamed in)
-} ZIPENTRY;
-
-typedef struct
-{
-    int index;                 // index of this file within the zip
-    TCHAR name[MAX_PATH];      // filename within the zip
-    DWORD attr;                // attributes, as in GetFileAttributes.
-    FILETIME atime, ctime, mtime; // access, create, modify filetimes
-    long comp_size;            // sizes of item, compressed and uncompressed. These
-    long unc_size;             // may be -1 if not yet known (e.g. being streamed in)
-} ZIPENTRYW;
-
-DECLARE_HANDLE(HZIP);	// An HZIP identifies a zip file that has been opened
-
-extern ZRESULT GetZipItemA(HZIP hz, int index, ZIPENTRY* ze);
-extern ZRESULT GetZipItemW(HZIP hz, int index, ZIPENTRYW* ze);
-extern ZRESULT FindZipItemA(HZIP hz, const TCHAR* name, bool ic, int* index, ZIPENTRY* ze);
-extern ZRESULT FindZipItemW(HZIP hz, const TCHAR* name, bool ic, int* index, ZIPENTRYW* ze);
-extern ZRESULT UnzipItem(HZIP hz, int index, void* dst, unsigned int len, DWORD flags);
-
-extern HZIP OpenZipU(void* z, unsigned int len, DWORD flags);
-extern ZRESULT CloseZipU(HZIP hz);
-
-#define OpenZip OpenZipU
-#define CloseZip(hz) CloseZipU(hz)
-
-#ifdef _UNICODE
-    #define ZIPENTRY ZIPENTRYW
-    #define GetZipItem GetZipItemW
-    #define FindZipItem FindZipItemW
-#else
-    #define GetZipItem GetZipItemA
-    #define FindZipItem FindZipItemA
-#endif
-
 namespace DuiLib
 {
 
@@ -234,7 +189,14 @@ namespace DuiLib
             }
             else
             {
-                hz = OpenZip((void*)sFile.GetData(), 0, 2);
+                CDuiString sFilePwd = CDuiPaintManager::GetResourceZipPwd();
+#ifdef UNICODE
+                char* pwd = w2a((wchar_t*)sFilePwd.GetData());
+                hz = OpenZip(sFile.GetData(), pwd);
+                DUI_FREE_ARRAY(pwd);
+#else
+                hz = OpenZip(sFile.GetData(), sFilePwd.GetData());
+#endif
             }
             if(hz == NULL)
             {
@@ -256,7 +218,7 @@ namespace DuiLib
                 return _Failed(_T("File too large"));
             }
             BYTE* pByte = new BYTE[ dwSize ];
-            int res = UnzipItem(hz, i, pByte, dwSize, 3);
+            int res = UnzipItem(hz, i, pByte, dwSize);
             if(res != 0x00000000 && res != 0x00000600)
             {
                 delete[] pByte;

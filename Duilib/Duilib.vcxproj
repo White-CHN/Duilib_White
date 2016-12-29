@@ -682,6 +682,7 @@
     <ClInclude Include="Utils\DuiString.h" />
     <ClInclude Include="Utils\DuiUtils.h" />
     <ClInclude Include="Utils\stb_image.h" />
+    <ClInclude Include="Utils\unzip.h" />
     <ClInclude Include="Utils\VersionHelpers.h" />
   </ItemGroup>
   <ItemGroup>
@@ -794,7 +795,7 @@
     <ClCompile Include="Utils\DuiShadow.cpp" />
     <ClCompile Include="Utils\DuiString.cpp" />
     <ClCompile Include="Utils\DuiUtils.cpp" />
-    <ClCompile Include="Utils\XUnzip.cpp" />
+    <ClCompile Include="Utils\unzip.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -706,6 +706,7 @@ namespace DuiLib
         {
             pShadow->SetImage(m_sShadowImage);
             pShadow->SetShadowCorner(m_rcShadowCorner);
+            pShadow->SetSize((int)m_nSize);
         }
         else
         {

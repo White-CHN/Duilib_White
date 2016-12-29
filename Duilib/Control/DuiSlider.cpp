@@ -126,17 +126,22 @@ namespace DuiLib
     RECT CDuiSlider::GetThumbRect() const
     {
         CDuiRect rcThumb;
+        CDuiSize szThumb = m_szThumb;
+        if(GetManager() != NULL)
+        {
+            GetManager()->GetDPIObj()->Scale(&szThumb);
+        }
         if(IsHorizontal())
         {
-            int left = GetPos().left + (GetPos().right - GetPos().left - m_szThumb.cx) * (GetValue() - GetMinValue()) / (GetMaxValue() - GetMinValue());
-            int top = (GetPos().bottom + GetPos().top - m_szThumb.cy) / 2;
-            rcThumb = CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy);
+            int left = GetPos().left + (GetPos().right - GetPos().left - szThumb.cx) * (GetValue() - GetMinValue()) / (GetMaxValue() - GetMinValue());
+            int top = (GetPos().bottom + GetPos().top - szThumb.cy) / 2;
+            rcThumb = CDuiRect(left, top, left + szThumb.cx, top + szThumb.cy);
         }
         else
         {
-            int left = (GetPos().right + GetPos().left - m_szThumb.cx) / 2;
-            int top = GetPos().bottom - m_szThumb.cy - (GetPos().bottom - GetPos().top - m_szThumb.cy) * (GetValue() - GetMinValue()) / (GetMaxValue() - GetMinValue());
-            rcThumb = CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy);
+            int left = (GetPos().right + GetPos().left - szThumb.cx) / 2;
+            int top = GetPos().bottom - szThumb.cy - (GetPos().bottom - GetPos().top - szThumb.cy) * (GetValue() - GetMinValue()) / (GetMaxValue() - GetMinValue());
+            rcThumb = CDuiRect(left, top, left + szThumb.cx, top + szThumb.cy);
         }
         if(GetManager() != NULL)
         {
@@ -154,6 +159,12 @@ namespace DuiLib
         rcThumb.top -= GetPos().top;
         rcThumb.right -= GetPos().left;
         rcThumb.bottom -= GetPos().top;
+
+        if(GetManager())
+        {
+            GetManager()->GetDPIObj()->ScaleBack(&rcThumb);
+        }
+
         if((m_uButtonState & UISTATE_CAPTURED) != 0)
         {
             if(!m_sThumbPushedImage.IsEmpty())

@@ -461,9 +461,12 @@ namespace DuiLib
         {
             m_uButton1State &= ~ UISTATE_DISABLED;
         }
+        int d1 = MulDiv(m_rcButton1.left - GetPos().left, 100, GetManager()->GetDPIObj()->GetScale());
+        int d2 = MulDiv(m_rcButton1.top - GetPos().top, 100, GetManager()->GetDPIObj()->GetScale());
+        int d3 = MulDiv(m_rcButton1.right - GetPos().left, 100, GetManager()->GetDPIObj()->GetScale());
+        int d4 = MulDiv(m_rcButton1.bottom - GetPos().top, 100, GetManager()->GetDPIObj()->GetScale());
         m_sImageModify.SetEmpty();
-        m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), m_rcButton1.left - GetPos().left,
-                                   m_rcButton1.top - GetPos().top, m_rcButton1.right - GetPos().left, m_rcButton1.bottom - GetPos().top);
+        m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), d1, d2, d3, d4);
 
         if((m_uButton1State & UISTATE_DISABLED) != 0)
         {
@@ -540,10 +543,12 @@ namespace DuiLib
         {
             m_uButton2State &= ~ UISTATE_DISABLED;
         }
-
+        int d1 = MulDiv(m_rcButton2.left - GetPos().left, 100, GetManager()->GetDPIObj()->GetScale());
+        int d2 = MulDiv(m_rcButton2.top - GetPos().top, 100, GetManager()->GetDPIObj()->GetScale());
+        int d3 = MulDiv(m_rcButton2.right - GetPos().left, 100, GetManager()->GetDPIObj()->GetScale());
+        int d4 = MulDiv(m_rcButton2.bottom - GetPos().top, 100, GetManager()->GetDPIObj()->GetScale());
         m_sImageModify.SetEmpty();
-        m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), m_rcButton2.left - GetPos().left,
-                                   m_rcButton2.top - GetPos().top, m_rcButton2.right - GetPos().left, m_rcButton2.bottom - GetPos().top);
+        m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), d1 , d2 , d3 , d4);
 
         if((m_uButton2State & UISTATE_DISABLED) != 0)
         {
@@ -616,10 +621,12 @@ namespace DuiLib
         {
             m_uThumbState &= ~ UISTATE_DISABLED;
         }
-
+        int d1 = MulDiv(m_rcThumb.left - GetPos().left, 100, GetManager()->GetDPIObj()->GetScale());
+        int d2 = MulDiv(m_rcThumb.top - GetPos().top, 100, GetManager()->GetDPIObj()->GetScale());
+        int d3 = MulDiv(m_rcThumb.right - GetPos().left, 100, GetManager()->GetDPIObj()->GetScale());
+        int d4 = MulDiv(m_rcThumb.bottom - GetPos().top, 100, GetManager()->GetDPIObj()->GetScale());
         m_sImageModify.SetEmpty();
-        m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), m_rcThumb.left - GetPos().left, \
-                                   m_rcThumb.top - GetPos().top, m_rcThumb.right - GetPos().left, m_rcThumb.bottom - GetPos().top);
+        m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), d1, d2, d3, d4);
 
         if((m_uThumbState & UISTATE_DISABLED) != 0)
         {
@@ -687,18 +694,19 @@ namespace DuiLib
         m_sImageModify.SetEmpty();
         if(!m_bHorizontal)
         {
-            m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), m_rcThumb.left - GetPos().left, \
-                                       (m_rcThumb.top + m_rcThumb.bottom) / 2 - GetPos().top - GetFixedWidth() / 2, \
-                                       m_rcThumb.right - GetPos().left, \
-                                       (m_rcThumb.top + m_rcThumb.bottom) / 2 - GetPos().top + GetFixedWidth() - GetFixedWidth() / 2);
+            int d1 = MulDiv(m_rcThumb.left - GetPos().left, 100, GetManager()->GetDPIObj()->GetScale());
+            int d2 = MulDiv((m_rcThumb.top + m_rcThumb.bottom) / 2 - GetPos().top - GetFixedWidth() / 2, 100, GetManager()->GetDPIObj()->GetScale());
+            int d3 = MulDiv(m_rcThumb.right - GetPos().left, 100, GetManager()->GetDPIObj()->GetScale());
+            int d4 = MulDiv((m_rcThumb.top + m_rcThumb.bottom) / 2 - GetPos().top + GetFixedWidth() - GetFixedWidth() / 2, 100, GetManager()->GetDPIObj()->GetScale());
+            m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), d1, d2, d3, d4);
         }
         else
         {
-            m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), \
-                                       (m_rcThumb.left + m_rcThumb.right) / 2 - GetPos().left - GetFixedHeight() / 2, \
-                                       m_rcThumb.top - GetPos().top, \
-                                       (m_rcThumb.left + m_rcThumb.right) / 2 - GetPos().left + GetFixedHeight() - GetFixedHeight() / 2, \
-                                       m_rcThumb.bottom - GetPos().top);
+            int d1 = MulDiv((m_rcThumb.left + m_rcThumb.right) / 2 - GetPos().left - GetFixedHeight() / 2, 100, GetManager()->GetDPIObj()->GetScale());
+            int d2 = MulDiv(m_rcThumb.top - GetPos().top, 100, GetManager()->GetDPIObj()->GetScale());
+            int d3 = MulDiv((m_rcThumb.left + m_rcThumb.right) / 2 - GetPos().left + GetFixedHeight() - GetFixedHeight() / 2, 100, GetManager()->GetDPIObj()->GetScale());
+            int d4 = MulDiv(m_rcThumb.bottom - GetPos().top, 100, GetManager()->GetDPIObj()->GetScale());
+            m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), d1, d2, d3, d4);
         }
 
         if((m_uThumbState & UISTATE_DISABLED) != 0)

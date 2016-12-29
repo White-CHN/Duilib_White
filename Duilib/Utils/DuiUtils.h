@@ -2,6 +2,8 @@
 
 namespace DuiLib
 {
+    char* w2a(wchar_t* lpszSrc);
+    wchar_t* a2w(char* lpszSrc);
 
     class DUILIB_API CDuiConsole
     {

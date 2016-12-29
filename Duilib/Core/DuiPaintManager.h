@@ -380,9 +380,11 @@ namespace DuiLib
         static const CDuiString& GetResourcePath();
         static void SetResourcePath(LPCTSTR pStrPath);
 
+        static const CDuiString& GetResourceZipPwd();
+
         static const CDuiString& GetResourceZip();
-        static void SetResourceZip(LPVOID pVoid, unsigned int len);
-        static void SetResourceZip(LPCTSTR pstrZip, BOOL bCachedResourceZip = FALSE);
+        static void SetResourceZip(LPVOID pVoid, unsigned int len, LPCTSTR password = NULL);
+        static void SetResourceZip(LPCTSTR pstrZip, BOOL bCachedResourceZip = FALSE, LPCTSTR password = NULL);
 
         static BOOL IsCachedResourceZip();
         static HANDLE GetResourceZipHandle();
@@ -486,6 +488,7 @@ namespace DuiLib
         static int m_iResourceType;				//资源加载的方式
         static CDuiString m_strResourcePath;	//资源目录路径
         static CDuiString m_strResourceZip;		//资源文件名
+        static CDuiString m_pStrResourceZipPwd;	//zip密码
         static CStdPtrArray m_aPreMessages;		//CDuiPaintManager句柄
         static CStdPtrArray m_aPlugins;			//插件
         static TResInfo m_SharedResInfo;		//共享的所有属性

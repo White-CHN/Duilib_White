@@ -21,7 +21,7 @@
 
 #define DUILIB_COMDAT __declspec(selectany)
 
-//#define USE_XIMAGE_EFFECT //使用ximage的gif控件CGifAnimExUI开关，提升性能,默认不使用
+#define USE_XIMAGE_EFFECT //使用ximage的gif控件CGifAnimExUI开关，提升性能,默认不使用
 
 #if defined _M_IX86
     #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
@@ -56,6 +56,7 @@ using namespace Gdiplus;
 #include "Utils/DuiShadow.h"
 #include "Utils/DuiIcon.h"
 #include "Utils/DragDropImpl.h"
+#include "Utils/unzip.h"
 
 #include "Core/DuiMarkupNode.h"
 #include "Core/DuiMarkup.h"

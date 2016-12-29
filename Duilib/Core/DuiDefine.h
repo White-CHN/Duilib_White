@@ -187,10 +187,13 @@ namespace DuiLib
     //PaintManager所用到的定时器ID
     enum DuiPaintManagerTimerID
     {
-        TIMERID_SCROLLBAR	=	100,
+        // 内部保留定时器ID
+        TIMERID_SCROLLBAR	=	0x64,
         TIMERID_ANIMATION_TABLAYOUT,
         TIMERID_RING,
-        TIMERID_GIF
+        TIMERID_GIF,
+        //外部自定义定时器ID
+        TIMER_ID_USER		=	0x100
     };
 
     enum DuiMsg

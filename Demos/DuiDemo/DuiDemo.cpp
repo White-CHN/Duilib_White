@@ -54,6 +54,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
             strResourcePath += _T("DuiDemo\\");
             CDuiPaintManager::SetResourcePath(strResourcePath.GetData());
             CDuiPaintManager::SetResourceZip(_T("DuiDemo.zip"), TRUE);
+            //CDuiPaintManager::SetResourceZip(_T("DuiDemo.zip"), TRUE, _T("123456"));
             // 加载资源管理器
             CDuiResourceManager::GetInstance()->LoadResource(_T("res.xml"), NULL);
             break;
@@ -71,6 +72,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
                     if(dwSize > 0)
                     {
                         CDuiPaintManager::SetResourceZip((LPBYTE)::LockResource(hGlobal), dwSize);
+                        //CDuiPaintManager::SetResourceZip((LPBYTE)::LockResource(hGlobal), dwSize, _T("123456"));
                         // 加载资源管理器
                         CDuiResourceManager::GetInstance()->LoadResource(_T("res.xml"), NULL);
                     }
