@@ -10,7 +10,7 @@ namespace DuiLib
         CDuiButton(void);
         virtual ~CDuiButton(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
 

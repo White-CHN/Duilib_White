@@ -3665,7 +3665,7 @@ namespace DuiLib
         {
             pFS->bPickNext = TRUE;
         }
-        if(_tcsstr(pThis->GetClass(), _T("LabelUI")) != NULL)
+        if(pThis->GetClass() == DUI_CTR_LABEL)
         {
             return NULL;    // Labels never get focus!
         }

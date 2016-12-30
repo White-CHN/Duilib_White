@@ -11,7 +11,7 @@ namespace DuiLib
         CDuiGroupBox(void);
         virtual ~CDuiGroupBox(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         DWORD GetTextColor() const;

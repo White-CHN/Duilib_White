@@ -198,7 +198,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiDateTime::GetClass() const
+    CDuiString CDuiDateTime::GetClass() const
     {
         return DUI_CTR_DATETIME;
     }

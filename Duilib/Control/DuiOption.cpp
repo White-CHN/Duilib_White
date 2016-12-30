@@ -21,7 +21,7 @@ namespace DuiLib
         }
     }
 
-    LPCTSTR CDuiOption::GetClass() const
+    CDuiString CDuiOption::GetClass() const
     {
         return DUI_CTR_OPTION;
     }

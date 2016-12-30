@@ -24,7 +24,7 @@ namespace DuiLib
         DeleteGif();
     }
 
-    LPCTSTR CDuiGif::GetClass() const
+    CDuiString CDuiGif::GetClass() const
     {
         return DUI_CTR_GIF;
     }

@@ -18,7 +18,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiSlider::GetClass() const
+    CDuiString CDuiSlider::GetClass() const
     {
         return DUI_CTR_SLIDER;
     }

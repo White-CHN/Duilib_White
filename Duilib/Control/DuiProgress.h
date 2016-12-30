@@ -9,7 +9,7 @@ namespace DuiLib
         CDuiProgress(void);
         virtual ~CDuiProgress(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         BOOL IsShowText();

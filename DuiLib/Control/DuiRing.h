@@ -9,16 +9,16 @@ namespace DuiLib
         CDuiRing(void);
         virtual ~CDuiRing(void);
     public:
-        LPCTSTR GetClass() const override;
-        LPVOID GetInterface(LPCTSTR pstrName) override;
+        CDuiString GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
-        void SetBkImage(LPCTSTR pStrImage) override;
+        void SetBkImage(LPCTSTR pStrImage) OVERRIDE;
 
-        void PaintBkImage(HDC hDC) override;
+        void PaintBkImage(HDC hDC) OVERRIDE;
         void SetVisible(BOOL bVisible = TRUE) OVERRIDE;
         void SetInternVisible(BOOL bVisible = TRUE) OVERRIDE;
         void DoInit() OVERRIDE;
-        void DoEvent(TEventUI& event) override;
+        void DoEvent(TEventUI& event) OVERRIDE;
     private:
         void PlayImage();
         void StopImage();

@@ -22,7 +22,7 @@ namespace DuiLib
     }
 
 
-    LPCTSTR CDuiAnimationTabLayout::GetClass() const
+    CDuiString CDuiAnimationTabLayout::GetClass() const
     {
         return DUI_CTR_ANIMATION_TABLAYOUT;
     }
@@ -167,16 +167,12 @@ namespace DuiLib
         return CDuiTabLayout::SetAttribute(pstrName, pstrValue);
     }
 
-    void CDuiAnimationTabLayout::OnTimer(int nTimerID)
-    {
-        OnAnimationElapse(nTimerID);
-    }
-
     void CDuiAnimationTabLayout::DoEvent(TEventUI& event)
     {
         if(event.Type == UIEVENT_TIMER)
         {
-            OnTimer(event.wParam);
+            int nTimerID = (int)event.wParam;
+            OnAnimationElapse(nTimerID);
         }
         CDuiTabLayout::DoEvent(event);
     }

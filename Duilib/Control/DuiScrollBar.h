@@ -10,7 +10,7 @@ namespace DuiLib
         CDuiScrollBar(void);
         virtual ~CDuiScrollBar(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         void SetOwner(CDuiContainer* pOwner);

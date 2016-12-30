@@ -21,7 +21,7 @@ namespace DuiLib
         CDuiControl(void);
         virtual ~CDuiControl(void);
     public:
-        virtual LPCTSTR GetClass() const;
+        virtual CDuiString GetClass() const;
         virtual LPVOID GetInterface(LPCTSTR pstrName);
         virtual UINT GetControlFlags() const;
 

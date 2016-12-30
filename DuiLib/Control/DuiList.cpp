@@ -25,7 +25,7 @@ namespace DuiLib
 
     }
 
-    LPCTSTR CDuiListHeaderItem::GetClass() const
+    CDuiString CDuiListHeaderItem::GetClass() const
     {
         return DUI_CTR_LISTHEADERITEM;
     }
@@ -79,6 +79,10 @@ namespace DuiLib
 
     void CDuiListHeaderItem::SetTextStyle(UINT uStyle)
     {
+        if(m_uTextStyle == uStyle)
+        {
+            return;
+        }
         m_uTextStyle = uStyle;
         Invalidate();
     }
@@ -101,6 +105,10 @@ namespace DuiLib
 
     void CDuiListHeaderItem::SetTextPadding(RECT rc)
     {
+        if(m_rcTextPadding == rc)
+        {
+            return;
+        }
         m_rcTextPadding = rc;
         Invalidate();
     }
@@ -291,7 +299,6 @@ namespace DuiLib
         {
             LPTSTR pstr = NULL;
             SetScale(_tcstol(pstrValue, &pstr, 10));
-
         }
         else
         {
@@ -315,7 +322,7 @@ namespace DuiLib
             m_dwTextColor = GetManager()->GetDefaultFontColor();
         }
 
-        RECT rcText = GetPos();
+        CDuiRect rcText = GetPos();
         rcText.left += GetTextPadding().left;
         rcText.top += GetTextPadding().top;
         rcText.right -= GetTextPadding().right;
@@ -328,11 +335,15 @@ namespace DuiLib
         }
         int nLinks = 0;
         if(m_bShowHtml)
+        {
             CRenderEngine::DrawHtmlText(hDC, GetManager(), rcText, sText, m_dwTextColor,
                                         NULL, NULL, nLinks, m_uTextStyle);
+        }
         else
+        {
             CRenderEngine::DrawText(hDC, GetManager(), rcText, sText, m_dwTextColor,
                                     m_iFont, m_uTextStyle);
+        }
     }
 
     RECT CDuiListHeaderItem::GetThumbRect() const
@@ -549,7 +560,7 @@ namespace DuiLib
 
     }
 
-    LPCTSTR CDuiListHeader::GetClass() const
+    CDuiString CDuiListHeader::GetClass() const
     {
         return DUI_CTR_LISTHEADER;
     }
@@ -787,7 +798,7 @@ namespace DuiLib
 
     }
 
-    LPCTSTR CDuiListContainerElement::GetClass() const
+    CDuiString CDuiListContainerElement::GetClass() const
     {
         return DUI_CTR_LISTCONTAINERELEMENT;
     }
@@ -835,7 +846,7 @@ namespace DuiLib
         CDuiContainer::SetVisible(bVisible);
         if(!IsVisible() && m_bSelected)
         {
-            m_bSelected = false;
+            m_bSelected = FALSE;
             if(m_pOwner != NULL)
             {
                 m_pOwner->SelectItem(-1);
@@ -947,8 +958,8 @@ namespace DuiLib
                 }
 
                 CDuiControl* pParent = GetParent();
-                RECT rcTemp;
-                RECT rcParent;
+                CDuiRect rcTemp;
+                CDuiRect rcParent;
                 while(pParent = pParent->GetParent())
                 {
                     rcTemp = invalidateRc;
@@ -1114,7 +1125,7 @@ namespace DuiLib
             return;
         }
 
-        RECT rcTemp = { 0 };
+        CDuiRect rcTemp;
         if(!::IntersectRect(&rcTemp, &rcPaint, &GetPos()))
         {
             return;
@@ -1395,7 +1406,7 @@ namespace DuiLib
         m_aTexts.Empty();
     }
 
-    LPCTSTR CDuiListTextElement::GetClass() const
+    CDuiString CDuiListTextElement::GetClass() const
     {
         return DUI_CTR_LISTTEXTELEMENT;
     }
@@ -1618,8 +1629,8 @@ namespace DuiLib
         }
         for(int i = m_nLinks; i < SIZEOF_ARRAY(m_rcLinks); i++)
         {
-            ::ZeroMemory(m_rcLinks + i, sizeof(RECT));
-            ((CDuiString*)(m_sLinks + i))->SetEmpty();
+            m_rcLinks[i].Empty();
+            m_sLinks[i].SetEmpty();
         }
     }
 
@@ -1694,7 +1705,7 @@ namespace DuiLib
             cx = GetHorizontalScrollBar()->GetScrollPos() - iLastScrollPos;
         }
 
-        RECT rcPos = {0};
+        CDuiRect rcPos;
         for(int it2 = 0; it2 < GetCount(); it2++)
         {
             CDuiControl* pControl = GetItemAt(it2);
@@ -2047,7 +2058,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiList::GetClass() const
+    CDuiString CDuiList::GetClass() const
     {
         return DUI_CTR_LIST;
     }
@@ -2094,7 +2105,7 @@ namespace DuiLib
         {
             return CDuiVerticalLayout::GetItemIndex(pControl);
         }
-        if(_tcsstr(pControl->GetClass(), DUI_CTR_LISTHEADERITEM) != NULL)
+        if(pControl->GetClass() == DUI_CTR_LISTHEADERITEM)
         {
             return m_pHeader->GetItemIndex(pControl);
         }
@@ -2108,7 +2119,7 @@ namespace DuiLib
         {
             return CDuiVerticalLayout::SetItemIndex(pControl, iIndex);
         }
-        if(_tcsstr(pControl->GetClass(), DUI_CTR_LISTHEADERITEM) != NULL)
+        if(pControl->GetClass() == DUI_CTR_LISTHEADERITEM)
         {
             return m_pHeader->SetItemIndex(pControl, iIndex);
         }
@@ -2170,7 +2181,7 @@ namespace DuiLib
             return CDuiVerticalLayout::AddAt(pControl, 0);
         }
         // We also need to recognize header sub-items
-        if(_tcsstr(pControl->GetClass(), DUI_CTR_LISTHEADERITEM) != NULL)
+        if(pControl->GetClass() == DUI_CTR_LISTHEADERITEM)
         {
             BOOL ret = m_pHeader->Add(pControl);
             m_ListInfo.nColumns = MIN(m_pHeader->GetCount(), UILIST_MAX_COLUMNS);
@@ -2202,7 +2213,7 @@ namespace DuiLib
             return CDuiVerticalLayout::AddAt(pControl, 0);
         }
         // We also need to recognize header sub-items
-        if(_tcsstr(pControl->GetClass(), DUI_CTR_LISTHEADERITEM) != NULL)
+        if(pControl->GetClass() == DUI_CTR_LISTHEADERITEM)
         {
             BOOL ret = m_pHeader->AddAt(pControl, iIndex);
             m_ListInfo.nColumns = MIN(m_pHeader->GetCount(), UILIST_MAX_COLUMNS);
@@ -2243,7 +2254,7 @@ namespace DuiLib
             return CDuiVerticalLayout::Remove(pControl);
         }
         // We also need to recognize header sub-items
-        if(_tcsstr(pControl->GetClass(), DUI_CTR_LISTHEADERITEM) != NULL)
+        if(pControl->GetClass() == DUI_CTR_LISTHEADERITEM)
         {
             return m_pHeader->Remove(pControl);
         }

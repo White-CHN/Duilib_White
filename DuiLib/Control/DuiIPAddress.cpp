@@ -164,7 +164,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiIPAddress::GetClass() const
+    CDuiString CDuiIPAddress::GetClass() const
     {
         return DUI_CTR_IPADDRESS;
     }

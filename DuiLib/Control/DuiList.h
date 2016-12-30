@@ -16,7 +16,7 @@ namespace DuiLib
         CDuiListHeaderItem();
         virtual ~CDuiListHeaderItem();
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         void SetEnabled(BOOL bEnable = TRUE) OVERRIDE;
@@ -99,7 +99,7 @@ namespace DuiLib
         CDuiListHeader();
         virtual ~CDuiListHeader();
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         BOOL IsScaleHeader() const;
@@ -124,7 +124,7 @@ namespace DuiLib
         CDuiListContainerElement();
         virtual ~CDuiListContainerElement();
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
@@ -171,7 +171,7 @@ namespace DuiLib
         CDuiListTextElement();
         virtual ~CDuiListTextElement();
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
 
@@ -253,7 +253,7 @@ namespace DuiLib
         CDuiList(void);
         virtual ~CDuiList(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         BOOL SortItems(PULVCompareFunc pfnCompare, UINT_PTR dwData);

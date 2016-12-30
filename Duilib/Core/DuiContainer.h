@@ -28,7 +28,7 @@ namespace DuiLib
         CDuiContainer(void);
         virtual ~CDuiContainer(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         virtual CDuiRect GetInset() const;

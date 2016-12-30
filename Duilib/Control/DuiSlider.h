@@ -10,7 +10,7 @@ namespace DuiLib
         CDuiSlider(void);
         virtual ~CDuiSlider(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         LPCTSTR GetThumbImage() const;

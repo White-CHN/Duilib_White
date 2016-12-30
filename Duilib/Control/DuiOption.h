@@ -9,7 +9,7 @@ namespace DuiLib
         CDuiOption(void);
         virtual ~CDuiOption(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         BOOL Activate() OVERRIDE;

@@ -18,7 +18,7 @@ namespace DuiLib
         DeleteImage();
     }
 
-    LPCTSTR CDuiRing::GetClass() const
+    CDuiString CDuiRing::GetClass() const
     {
         return DUI_CTR_RING;
     }

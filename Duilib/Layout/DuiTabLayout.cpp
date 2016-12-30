@@ -15,7 +15,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiTabLayout::GetClass() const
+    CDuiString CDuiTabLayout::GetClass() const
     {
         return DUI_CTR_TABLAYOUT;
     }

@@ -522,7 +522,7 @@ namespace DuiLib
             {
                 CDuiString strClass =  _T("CDui");
                 strClass = strClass + pstrClass ;
-                pControl = dynamic_cast<CDuiControl*>(CDuiControlFactory::GetInstance()->CreateControl(strClass));
+                pControl = CDuiControlFactory::GetInstance()->CreateControl(strClass);
                 // ¼ì²é²å¼þ
                 if(pControl == NULL)
                 {

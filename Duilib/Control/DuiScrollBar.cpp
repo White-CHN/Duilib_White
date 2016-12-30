@@ -28,7 +28,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiScrollBar::GetClass() const
+    CDuiString CDuiScrollBar::GetClass() const
     {
         return DUI_CTR_SCROLLBAR;
     }

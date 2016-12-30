@@ -21,7 +21,7 @@ namespace DuiLib
         CDuiColorPalette(void);
         virtual ~CDuiColorPalette(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         //获取最终被选择的颜色，可以直接用于设置duilib背景色

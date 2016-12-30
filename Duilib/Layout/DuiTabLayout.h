@@ -9,22 +9,22 @@ namespace DuiLib
         CDuiTabLayout(void);
         virtual ~CDuiTabLayout(void);
     public:
-        virtual LPCTSTR GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        CDuiString GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
-        virtual BOOL Add(CDuiControl* pControl);
-        virtual BOOL AddAt(CDuiControl* pControl, int iIndex);
-        virtual BOOL Remove(CDuiControl* pControl);
-        virtual void RemoveAll();
+        BOOL Add(CDuiControl* pControl) OVERRIDE;
+        BOOL AddAt(CDuiControl* pControl, int iIndex) OVERRIDE;
+        BOOL Remove(CDuiControl* pControl) OVERRIDE;
+        void RemoveAll() OVERRIDE;
 
-        virtual BOOL SelectItem(int iIndex);
-        virtual BOOL SelectItem(CDuiControl* pControl);
+        BOOL SelectItem(int iIndex) ;
+        BOOL SelectItem(CDuiControl* pControl) ;
 
         int GetCurSel() const;
         void SetCurSel(int iCurSel);
 
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
-        virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
+        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
     private:
         int m_iCurSel;
     };

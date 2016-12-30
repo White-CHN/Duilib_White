@@ -51,7 +51,7 @@ namespace DuiLib
         }
     }
 
-    LPCTSTR CDuiControl::GetClass() const
+    CDuiString CDuiControl::GetClass() const
     {
         return DUI_CTR_CONTROL;
     }

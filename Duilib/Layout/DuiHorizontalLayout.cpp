@@ -17,7 +17,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiHorizontalLayout::GetClass() const
+    CDuiString CDuiHorizontalLayout::GetClass() const
     {
         return DUI_CTR_HORIZONTALLAYOUT;
     }

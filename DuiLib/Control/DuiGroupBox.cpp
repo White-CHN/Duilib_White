@@ -19,7 +19,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiGroupBox::GetClass() const
+    CDuiString CDuiGroupBox::GetClass() const
     {
         return DUI_CTR_GROUPBOX;
     }

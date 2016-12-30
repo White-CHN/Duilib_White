@@ -10,7 +10,7 @@ namespace DuiLib
         CDuiAnimationTabLayout(void);
         virtual ~CDuiAnimationTabLayout(void);
     public:
-        virtual LPCTSTR GetClass() const;
+        virtual CDuiString GetClass() const;
         virtual LPVOID GetInterface(LPCTSTR pstrName);
 
         void AnimationSwitch();
@@ -22,7 +22,6 @@ namespace DuiLib
 
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 
-        void OnTimer(int nTimerID);
         virtual void DoEvent(TEventUI& event);
     private:
         enum

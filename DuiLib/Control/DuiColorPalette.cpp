@@ -191,7 +191,7 @@ namespace DuiLib
         }
     }
 
-    LPCTSTR CDuiColorPalette::GetClass() const
+    CDuiString CDuiColorPalette::GetClass() const
     {
         return DUI_CTR_COLORPALETTE;
     }

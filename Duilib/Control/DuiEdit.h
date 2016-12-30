@@ -46,7 +46,7 @@ namespace DuiLib
         CDuiEdit(void);
         virtual ~CDuiEdit(void);
     public:
-        LPCTSTR GetClass() const  OVERRIDE;
+        CDuiString GetClass() const  OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName)  OVERRIDE;
         UINT GetControlFlags() const  OVERRIDE;
 

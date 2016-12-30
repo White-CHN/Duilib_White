@@ -46,7 +46,7 @@ namespace DuiLib
         CDuiDateTime(void);
         virtual ~CDuiDateTime(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         void SetUpdateFlag(int nDTUpdateFlag);

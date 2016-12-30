@@ -18,7 +18,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiVerticalLayout::GetClass() const
+    CDuiString CDuiVerticalLayout::GetClass() const
     {
         return DUI_CTR_VERTICALLAYOUT;
     }
@@ -321,10 +321,6 @@ namespace DuiLib
                     iPosX -= pHorizontalScrollBar->GetScrollPos();
                 }
                 RECT rcCtrl = { iPosX + rcPadding.left, iPosY + rcPadding.top, iPosX + rcPadding.left + sz.cx, iPosY + sz.cy + rcPadding.top };
-                if(_tcsicmp(pControl->GetClass(), DUI_CTR_LIST) == 0)
-                {
-                    int i = 0;
-                }
                 pControl->SetPos(rcCtrl, FALSE);
             }
             iPosY += sz.cy + GetChildPadding() + rcPadding.top + rcPadding.bottom;

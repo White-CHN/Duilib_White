@@ -369,7 +369,7 @@ namespace DuiLib
     }
 
 
-    LPCTSTR CDuiEdit::GetClass() const
+    CDuiString CDuiEdit::GetClass() const
     {
         return DUI_CTR_EDIT;
     }

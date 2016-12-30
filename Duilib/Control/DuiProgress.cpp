@@ -21,7 +21,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiProgress::GetClass() const
+    CDuiString CDuiProgress::GetClass() const
     {
         return DUI_CTR_PROGRESS;
     }

@@ -66,7 +66,7 @@ namespace DuiLib
         CDuiListElement(void);
         virtual ~CDuiListElement(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
 
@@ -99,7 +99,7 @@ namespace DuiLib
         CDuiListLabelElement(void);
         virtual ~CDuiListLabelElement(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE ;
+        CDuiString GetClass() const OVERRIDE ;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE ;
 
         UINT GetButtonState();
@@ -167,7 +167,7 @@ namespace DuiLib
         CDuiCombo(void);
         virtual ~CDuiCombo(void);
     public:
-        LPCTSTR GetClass() const OVERRIDE;
+        CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         CDuiString GetText() const OVERRIDE;

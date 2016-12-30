@@ -23,7 +23,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiButton::GetClass() const
+    CDuiString CDuiButton::GetClass() const
     {
         return DUI_CTR_BUTTON;
     }

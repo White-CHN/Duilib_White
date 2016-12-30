@@ -28,7 +28,7 @@ namespace DuiLib
         DUI_FREE_POINT(m_pHorizontalScrollBar);
     }
 
-    LPCTSTR CDuiContainer::GetClass() const
+    CDuiString CDuiContainer::GetClass() const
     {
         return DUI_CTR_CONTAINER;
     }

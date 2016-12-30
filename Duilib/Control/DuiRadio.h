@@ -9,7 +9,7 @@ namespace DuiLib
         CDuiRadio(void);
         virtual ~CDuiRadio(void);
     public:
-        LPCTSTR GetClass() const  OVERRIDE;
+        CDuiString GetClass() const  OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName)  OVERRIDE;
         void DoEvent(TEventUI& event)  OVERRIDE;
     };

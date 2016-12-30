@@ -23,7 +23,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiLabel::GetClass() const
+    CDuiString CDuiLabel::GetClass() const
     {
         return DUI_CTR_LABEL;
     }

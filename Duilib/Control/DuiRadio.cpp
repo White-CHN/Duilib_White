@@ -15,7 +15,7 @@ namespace DuiLib
     {
     }
 
-    LPCTSTR CDuiRadio::GetClass() const
+    CDuiString CDuiRadio::GetClass() const
     {
         return DUI_CTR_RADIO;
     }

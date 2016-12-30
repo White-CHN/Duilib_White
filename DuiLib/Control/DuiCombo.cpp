@@ -19,7 +19,7 @@ namespace DuiLib
 
     }
 
-    LPCTSTR CDuiListElement::GetClass() const
+    CDuiString CDuiListElement::GetClass() const
     {
         return DUI_CTR_LISTELEMENT;
     }
@@ -272,7 +272,7 @@ namespace DuiLib
 
     }
 
-    LPCTSTR CDuiListLabelElement::GetClass() const
+    CDuiString CDuiListLabelElement::GetClass() const
     {
         return DUI_CTR_LISTLABELELEMENT;
     }
@@ -932,7 +932,7 @@ namespace DuiLib
 
     }
 
-    LPCTSTR CDuiCombo::GetClass() const
+    CDuiString CDuiCombo::GetClass() const
     {
         return DUI_CTR_COMBO;
     }
