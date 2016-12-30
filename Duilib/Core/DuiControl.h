@@ -132,6 +132,10 @@ namespace DuiLib
         virtual RECT GetClientPos() const; // 客户区域（除去scrollbar和inset）
         virtual const RECT& GetPos() const;
         virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
+        virtual void Move(SIZE szOffset, BOOL bNeedInvalidate = TRUE);
+
+        virtual int GetWidth() const;
+        virtual int GetHeight() const;
 
         virtual SIZE GetFixedXY() const;         // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
         virtual void SetFixedXY(CDuiSize szXY);      // 仅float为true时有效

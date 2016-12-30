@@ -6,6 +6,7 @@
 	<Style name="btn_style" value="drag=&quot;true&quot; align=&quot;center&quot; normalimage=&quot;file='button\btn_edit_normal.png'&quot; hotimage=&quot;res='button\btn_edit_hover.png'&quot; pushedimage=&quot;res='button\btn_edit_down.png'&quot;"  />
 	<Style name="colortab_style" value="align=&quot;center&quot; valign=&quot;center&quot; textcolor=&quot;#FFAFADAD&quot; hottextcolor=&quot;#FFFFFFFF&quot; selectedtextcolor=&quot;#FFFFFFFF&quot; textpadding=&quot;6,0,6,0&quot; bkcolor=&quot;#FF2c2c2c&quot; hotbkcolor=&quot;#FF4b4b4b&quot; pushedbkcolor=&quot;#FF424242&quot; selectedbkcolor=&quot;#FF424242&quot; group=&quot;tab_header&quot;"  />
 	<Style name="colorbtn_style" value="align=&quot;center&quot; valign=&quot;center&quot; textcolor=&quot;#FFAFADAD&quot; hottextcolor=&quot;#FFFFFFFF&quot; textpadding=&quot;6,0,6,0&quot;  hotbkcolor=&quot;#FF4b4b4b&quot; pushedbkcolor=&quot;#FF424242&quot;"  />
+	<Style name="list_style" value="headerbkimage=&quot;res='list/list_header_bg.png'&quot; itemalign=&quot;center&quot; itemlinecolor=&quot;#FF888888&quot; itemshowrowline=&quot;true&quot; itemshowcolumnline=&quot;true&quot;" />
 	<Font id="0"  size="13" default="true" />
 	<Font id="1" name="华文彩云" size="35" />
 	<Font id="2" name="微软雅黑" size="12" underline="true" />
@@ -147,11 +148,25 @@
 				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true"><!-- 高级控件 -->
+				<HorizontalLayout  childvalign="vcenter" >
+					<Label font="3" valign="center" cursor="hand" align="center"  text="List演示" tooltip="List演示" width="80" textcolor="#FFFFFFFF" />
+					<VerticalLayout height="200" bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
+					<List name="list" vscrollbar="true"  style="list_style" itemvalign="vcenter" scrollstepsize="100">
+						<ListHeader bkcolor="#FFFF0000" height="24" menu="true">
+							<ListHeaderItem text="序号" width="80" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+							<ListHeaderItem text="姓名" width="160" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+							<ListHeaderItem text="学号" width="160" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+							<ListHeaderItem text="成绩" width="160" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+						</ListHeader>
+						<Include source="listitem.xml"/>
+					</List>
+					</VerticalLayout>
+				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true"><!-- 拓展控件 -->
 				<HorizontalLayout  childvalign="vcenter" >
 					<Label font="3" valign="center" cursor="hand" align="center"  text="调色板演示" tooltip="调色板演示" width="80" textcolor="#FFFFFFFF" />
-					<ColorPalette name="Pallet" width="506" height="220" palletheight="200" barheight="14" padding="0,0,0,0" thumbimage="cursor/cursor.png" />
+					<ColorPalette name="Pallet" width="706" height="220" palletheight="200" barheight="14" padding="0,0,0,0" thumbimage="cursor/cursor.png" />
 				</HorizontalLayout>
 				<Label height="1"  bkimage="line/hor_line.bmp"/>
 				<HorizontalLayout  childvalign="vcenter" >

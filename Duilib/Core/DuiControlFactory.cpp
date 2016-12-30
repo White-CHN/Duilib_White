@@ -21,6 +21,7 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiCombo);
         INNER_REGISTER_DUICONTROL(CDuiListElement);
         INNER_REGISTER_DUICONTROL(CDuiListLabelElement);
+        INNER_REGISTER_DUICONTROL(CDuiListTextElement);
         INNER_REGISTER_DUICONTROL(CDuiGroupBox);
         INNER_REGISTER_DUICONTROL(CDuiDateTime);
         INNER_REGISTER_DUICONTROL(CDuiIPAddress);
@@ -29,6 +30,11 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiGif);
         INNER_REGISTER_DUICONTROL(CDuiColorPalette);
         INNER_REGISTER_DUICONTROL(CDuiChart);
+        INNER_REGISTER_DUICONTROL(CDuiList);
+        INNER_REGISTER_DUICONTROL(CDuiListHeader);
+        INNER_REGISTER_DUICONTROL(CDuiListHeaderItem);
+        INNER_REGISTER_DUICONTROL(CDuiListContainerElement);
+
     }
 
     CDuiControlFactory::~CDuiControlFactory()

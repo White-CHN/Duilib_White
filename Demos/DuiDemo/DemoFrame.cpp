@@ -47,6 +47,21 @@ void CDemoFrame::InitWindow()
         pHistpgramView->Add(_T("5月{c #FE5900}8%{/c}"), 8);
         pHistpgramView->Add(_T("6月{c #FE5900}12%{/c}"), 12);
     }
+    CDuiList* pList = static_cast<CDuiList*>(GetPaintManager()->FindControl(_T("list")));
+    for(int i = 0; i < 100; i++)
+    {
+        CDuiString str;
+        str.Format(_T("%d"), i);
+        CDuiListTextElement* pItem  = new CDuiListTextElement();
+        pList->Add(pItem);
+        pItem->SetAttribute(_T("bkcolor"), _T("#FFFFFFFF"));
+        pItem->SetFixedHeight(30);
+        pItem->SetText(0, str);
+        pItem->SetText(1, _T("小明"));
+        pItem->SetText(2, str);
+        pItem->SetText(3, str);
+
+    }
 }
 
 CDuiString CDemoFrame::GetSkinFile()

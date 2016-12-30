@@ -145,17 +145,16 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="DuiDemo.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\bin\DuiDemo\icon\DuiDemo.ico" />
-    <None Include="res\DuiDemo.ico" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DemoFrame.cpp" />
     <ClCompile Include="DuiDemo.cpp" />
     <ClCompile Include="PopDlg.cpp" />
     <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DuiDemo.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

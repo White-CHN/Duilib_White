@@ -286,6 +286,11 @@ namespace DuiLib
         return CDuiListElement::GetInterface(pstrName);
     }
 
+    UINT CDuiListLabelElement::GetButtonState()
+    {
+        return m_uButtonState;
+    }
+
     SIZE CDuiListLabelElement::EstimateSize(SIZE szAvailable)
     {
         if(GetOwner() == NULL)

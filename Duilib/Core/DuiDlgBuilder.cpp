@@ -549,11 +549,8 @@ namespace DuiLib
             }
             if(pControl == NULL)
             {
-#ifdef _DEBUG
                 DUI_TRACE("this[0x%p] Î´Öª¿Ø¼þ[%s]", this, pstrClass);
-#else
                 continue;
-#endif
             }
             // Add children
             if(node.HasChildren())
@@ -567,7 +564,7 @@ namespace DuiLib
                 IContainer* pContainer = NULL;
                 if(pContainer == NULL)
                 {
-                    pContainer = static_cast<IContainer*>(pParent->GetInterface(_T("IContainer")));
+                    pContainer = static_cast<IContainer*>(pParent->GetInterface(GET_CLASS_NAME(IContainer)));
                 }
                 ASSERT(pContainer);
                 if(pContainer == NULL)

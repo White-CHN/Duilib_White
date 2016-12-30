@@ -89,8 +89,8 @@ namespace DuiLib
         rc.top += rcInset.top;
         rc.right -= rcInset.right;
         rc.bottom -= rcInset.bottom;
-        CDuiScrollBar* pVerticalScrollBar = GetVerticalScrollBar();
-        CDuiScrollBar* pHorizontalScrollBar = GetHorizontalScrollBar();
+        CDuiScrollBar* pVerticalScrollBar = CDuiContainer::GetVerticalScrollBar();
+        CDuiScrollBar* pHorizontalScrollBar = CDuiContainer::GetHorizontalScrollBar();
         if(pVerticalScrollBar && pVerticalScrollBar->IsVisible())
         {
             rc.right -= pVerticalScrollBar->GetFixedWidth();
@@ -100,7 +100,7 @@ namespace DuiLib
             rc.bottom -= pHorizontalScrollBar->GetFixedHeight();
         }
 
-        if(GetCount() == 0)
+        if(CDuiContainer::GetCount() == 0)
         {
             ProcessScrollBar(rc, 0, 0);
             return;
@@ -124,9 +124,9 @@ namespace DuiLib
         SIZE szControlAvailable;
         int iControlMaxWidth = 0;
         int iControlMaxHeight = 0;
-        for(int it1 = 0; it1 < GetCount(); it1++)
+        for(int it1 = 0; it1 < CDuiContainer::GetCount(); it1++)
         {
-            CDuiControl* pControl = static_cast<CDuiControl*>(GetItemAt(it1));
+            CDuiControl* pControl = static_cast<CDuiControl*>(CDuiContainer::GetItemAt(it1));
             if(!pControl->IsVisible())
             {
                 continue;
@@ -205,9 +205,9 @@ namespace DuiLib
         int iEstimate = 0;
         int iAdjustable = 0;
         int cxFixedRemaining = cxFixed;
-        for(int it2 = 0; it2 < GetCount(); it2++)
+        for(int it2 = 0; it2 < CDuiContainer::GetCount(); it2++)
         {
-            CDuiControl* pControl = static_cast<CDuiControl*>(GetItemAt(it2));
+            CDuiControl* pControl = static_cast<CDuiControl*>(CDuiContainer::GetItemAt(it2));
             if(!pControl->IsVisible())
             {
                 continue;

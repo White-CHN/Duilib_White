@@ -167,6 +167,7 @@ namespace DuiLib
 #define  DUI_CTR_SLIDER                          (_T("Slider"))
 #define  DUI_CTR_LISTELEMENT                     (_T("ListElement"))
 #define  DUI_CTR_LISTLABELELEMENT                (_T("ListLabelElement"))
+#define  DUI_CTR_LISTTEXTELEMENT                 (_T("ListTextElement"))
 #define  DUI_CTR_DATETIME                        (_T("DateTime"))
 #define  DUI_CTR_IPADDRESS                       (_T("IPAddress"))
 #define  DUI_CTR_RING						     (_T("Ring"))
@@ -180,6 +181,10 @@ namespace DuiLib
 #define  DUI_CTR_ANIMATION_TABLAYOUT             (_T("AnimationTabLayout"))
 #define  DUI_CTR_COMBO                           (_T("Combo"))
 #define  DUI_CTR_GROUPBOX                        (_T("GroupBox"))
+#define  DUI_CTR_LISTHEADERITEM                  (_T("ListHeaderItem"))
+#define  DUI_CTR_LISTHEADER                      (_T("ListHeader"))
+#define  DUI_CTR_LIST                            (_T("List"))
+#define  DUI_CTR_LISTCONTAINERELEMENT            (_T("ListContainerElement"))
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 

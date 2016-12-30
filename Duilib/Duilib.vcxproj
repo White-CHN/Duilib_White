@@ -649,6 +649,7 @@
     <ClInclude Include="Control\DuiGroupBox.h" />
     <ClInclude Include="Control\DuiIPAddress.h" />
     <ClInclude Include="Control\DuiLabel.h" />
+    <ClInclude Include="Control\DuiList.h" />
     <ClInclude Include="Control\DuiOption.h" />
     <ClInclude Include="Control\DuiProgress.h" />
     <ClInclude Include="Control\DuiRadio.h" />
@@ -696,6 +697,7 @@
     <ClCompile Include="Control\DuiGroupBox.cpp" />
     <ClCompile Include="Control\DuiIPAddress.cpp" />
     <ClCompile Include="Control\DuiLabel.cpp" />
+    <ClCompile Include="Control\DuiList.cpp" />
     <ClCompile Include="Control\DuiOption.cpp" />
     <ClCompile Include="Control\DuiProgress.cpp" />
     <ClCompile Include="Control\DuiRadio.cpp" />

@@ -94,8 +94,7 @@ namespace DuiLib
         void SetEnabled(BOOL bEnabled) OVERRIDE;
         void SetMouseEnabled(BOOL bEnable = TRUE) OVERRIDE;
 
-        void EnableScrollBar(BOOL bEnableVertical = TRUE, bool bEnableHorizontal = FALSE) ;
-
+        virtual void EnableScrollBar(BOOL bEnableVertical = TRUE, BOOL bEnableHorizontal = FALSE) ;
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
         void SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit = TRUE) OVERRIDE;

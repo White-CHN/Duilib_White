@@ -909,7 +909,7 @@ namespace DuiLib
         CDuiControl::SetMouseEnabled(bEnable);
     }
 
-    void CDuiContainer::EnableScrollBar(BOOL bEnableVertical /*= TRUE*/, bool bEnableHorizontal /*= FALSE*/)
+    void CDuiContainer::EnableScrollBar(BOOL bEnableVertical /*= TRUE*/, BOOL bEnableHorizontal /*= FALSE*/)
     {
         if(bEnableVertical && !m_pVerticalScrollBar)
         {

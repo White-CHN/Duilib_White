@@ -679,6 +679,23 @@ namespace DuiLib
         }
     }
 
+    void CDuiControl::Move(SIZE szOffset, BOOL bNeedInvalidate /*= TRUE*/)
+    {
+        m_cXY.cx += szOffset.cx;
+        m_cXY.cy += szOffset.cy;
+        NeedParentUpdate();
+    }
+
+    int CDuiControl::GetWidth() const
+    {
+        return m_rcItem.right - m_rcItem.left;
+    }
+
+    int CDuiControl::GetHeight() const
+    {
+        return m_rcItem.bottom - m_rcItem.top;
+    }
+
     SIZE CDuiControl::GetFixedXY() const
     {
         if(m_pManager != NULL)

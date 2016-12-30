@@ -102,6 +102,8 @@ namespace DuiLib
         LPCTSTR GetClass() const OVERRIDE ;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE ;
 
+        UINT GetButtonState();
+
         SIZE EstimateSize(SIZE szAvailable) OVERRIDE;
 
         virtual void DrawItemBk(HDC hDC, const RECT& rcItem) ;
