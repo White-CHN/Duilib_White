@@ -344,6 +344,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>$(SolutionDir)Lib\$(ProjectName)_d.lib</ImportLibrary>
       <BaseAddress>0x11000000</BaseAddress>
+      <GenerateMapFile>false</GenerateMapFile>
+      <MapFileName>
+      </MapFileName>
+      <MapExports>false</MapExports>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -650,6 +654,7 @@
     <ClInclude Include="Control\DuiIPAddress.h" />
     <ClInclude Include="Control\DuiLabel.h" />
     <ClInclude Include="Control\DuiList.h" />
+    <ClInclude Include="Control\DuiMenu.h" />
     <ClInclude Include="Control\DuiOption.h" />
     <ClInclude Include="Control\DuiProgress.h" />
     <ClInclude Include="Control\DuiRadio.h" />
@@ -698,6 +703,7 @@
     <ClCompile Include="Control\DuiIPAddress.cpp" />
     <ClCompile Include="Control\DuiLabel.cpp" />
     <ClCompile Include="Control\DuiList.cpp" />
+    <ClCompile Include="Control\DuiMenu.cpp" />
     <ClCompile Include="Control\DuiOption.cpp" />
     <ClCompile Include="Control\DuiProgress.cpp" />
     <ClCompile Include="Control\DuiRadio.cpp" />

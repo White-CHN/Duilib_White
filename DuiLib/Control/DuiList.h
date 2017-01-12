@@ -145,6 +145,9 @@ namespace DuiLib
         void Invalidate(); // 直接CControl::Invalidate会导致滚动条刷新，重写减少刷新区域
         BOOL Activate() OVERRIDE;
 
+        UINT GetButtonState();
+        void SetButtonState(UINT uButtonState);
+
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
         virtual void DrawItemText(HDC hDC, const RECT& rcItem);

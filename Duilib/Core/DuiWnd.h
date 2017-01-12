@@ -25,7 +25,7 @@ namespace DuiLib
 
         UINT_PTR ShowModal();
 
-        void Close(UINT nRet = IDOK);
+        virtual void Close(UINT nRet = IDOK);
 
         void SetIcon(UINT nRes);
 

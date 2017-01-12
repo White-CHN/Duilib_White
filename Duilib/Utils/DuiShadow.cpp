@@ -105,7 +105,7 @@ namespace DuiLib
 
     LRESULT CALLBACK CDuiShadow::ParentProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
-        _ASSERT(GetShadowMap().find(hwnd) != GetShadowMap().end());	// Shadow must have been attached
+        ASSERT(GetShadowMap().find(hwnd) != GetShadowMap().end());	// Shadow must have been attached
         CDuiShadow* pThis = GetShadowMap()[hwnd];
         if(pThis->m_bIsDisableShadow)
         {

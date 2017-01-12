@@ -1384,6 +1384,16 @@ namespace DuiLib
         }
     }
 
+    UINT CDuiListContainerElement::GetButtonState()
+    {
+        return m_uButtonState;
+    }
+
+    void CDuiListContainerElement::SetButtonState(UINT uButtonState)
+    {
+        m_uButtonState = uButtonState;
+    }
+
     /////////////////////////////////////////////////////////////////////////////
     IMPLEMENT_DUICONTROL(CDuiListTextElement)
 

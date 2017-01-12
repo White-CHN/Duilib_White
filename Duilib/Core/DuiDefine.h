@@ -185,6 +185,8 @@ namespace DuiLib
 #define  DUI_CTR_LISTHEADER                      (_T("ListHeader"))
 #define  DUI_CTR_LIST                            (_T("List"))
 #define  DUI_CTR_LISTCONTAINERELEMENT            (_T("ListContainerElement"))
+#define  DUI_CTR_MENU                            (_T("Menu"))
+#define  DUI_CTR_MENUELEMENT                     (_T("MenuElement"))
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 
@@ -193,10 +195,10 @@ namespace DuiLib
     enum DuiPaintManagerTimerID
     {
         // 内部保留定时器ID
-        TIMERID_SCROLLBAR	=	0x64,
-        TIMERID_ANIMATION_TABLAYOUT,
-        TIMERID_RING,
-        TIMERID_GIF,
+        TIMER_ID_SCROLLBAR	=	0x64,
+        TIMER_ID_ANIMATION_TABLAYOUT,
+        TIMER_ID_RING,
+        TIMER_ID_GIF,
         //外部自定义定时器ID
         TIMER_ID_USER		=	0x100
     };
@@ -205,7 +207,8 @@ namespace DuiLib
     {
         // 内部保留消息
         DUIMSG_ICON = WM_USER + 1,
-        DUIMSG_SET_DPI = WM_USER + 2,
+        DUIMSG_SET_DPI,
+        DUIMSG_MENU_CLICK,
         // 程序自定义消息
         DUIMSG_USER = WM_USER + 100,
     };

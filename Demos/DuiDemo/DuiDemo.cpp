@@ -3,27 +3,10 @@
 
 #include "stdafx.h"
 
-void CALLBACK OneShotTimer(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2)
-{
-    SYSTEMTIME now;
-    GetLocalTime(&now);
-    DUI_TRACE("<%d-%d-%d %d:%d:%d:%d> uTimerID[%d] uMsg[%d]",
-              now.wYear, now.wMonth, now.wDay,
-              now.wHour, now.wMinute, now.wSecond, now.wMilliseconds, uTimerID, uMsg);
-}
-
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
 {
     // 调试信息控制台
     CDuiConsole Console ;
-    MMRESULT m = timeSetEvent(
-                     1,               // 以毫秒指定事件的周期。
-                     1,               // 以毫秒指定延时的精度，数值越小定时器事件分辨率越高。缺省值为1ms。
-                     OneShotTimer,    //
-                     NULL,       // 存放用户提供的回调数据
-                     TIME_PERIODIC | TIME_CALLBACK_FUNCTION | TIME_KILL_SYNCHRONOUS);
-    timeKillEvent(m);
-
     // 全局初始化
     CDuiPaintManager::Initialize(hInstance);
     // 资源类型

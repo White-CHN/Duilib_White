@@ -180,6 +180,9 @@
     <ClInclude Include="Control\DuiList.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiMenu.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -315,6 +318,9 @@
       <Filter>源文件\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Control\DuiList.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiMenu.cpp">
       <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,12 +4,22 @@
 
 CDemoFrame::CDemoFrame(void)
     : bEnglish(FALSE)
+    , m_pCloseBtn(NULL)
+    , m_pMaxBtn(NULL)
+    , m_pRestoreBtn(NULL)
+    , m_pMinBtn(NULL)
+    , m_pSkinBtn(NULL)
+    , m_pMenuBtn(NULL)
+    , m_pSlider(NULL)
+    , m_pProgress(NULL)
+    , m_pMenu(NULL)
 {
 }
 
 
 CDemoFrame::~CDemoFrame(void)
 {
+    DUI_FREE_POINT(m_pMenu);
 }
 
 void CDemoFrame::InitWindow()
@@ -24,6 +34,7 @@ void CDemoFrame::InitWindow()
     m_pRestoreBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("restorebtn")));
     m_pMinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("minbtn")));
     m_pSkinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("skinbtn")));
+    m_pMenuBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("menubtn")));
 
     m_pSlider = static_cast<CDuiSlider*>(GetPaintManager()->FindControl(_T("Slider")));
     m_pProgress = static_cast<CDuiProgress*>(GetPaintManager()->FindControl(_T("Progress")));
@@ -186,6 +197,14 @@ void CDemoFrame::Notify(TNotifyUI& msg)
         {
             Close(0);
             return;
+        }
+        else if(msg.pSender == m_pMenuBtn)
+        {
+            DUI_FREE_POINT(m_pMenu);
+            m_pMenu = new CDuiMenuWnd();
+            CDuiPoint point;
+            ::GetCursorPos(&point);
+            m_pMenu->Init(NULL, _T("menu.xml"), point, GetPaintManager());
         }
         else if(msg.pSender == m_pSkinBtn)
         {

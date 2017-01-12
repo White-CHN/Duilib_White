@@ -94,7 +94,7 @@ namespace DuiLib
 
     void CDuiRing::DoEvent(TEventUI& event)
     {
-        if(event.Type == UIEVENT_TIMER && event.wParam == TIMERID_RING)
+        if(event.Type == UIEVENT_TIMER && event.wParam == TIMER_ID_RING)
         {
             if(m_fCurAngle > 359)
             {
@@ -113,7 +113,7 @@ namespace DuiLib
     {
         if(GetManager())
         {
-            GetManager()->SetTimer(this, TIMERID_RING, 100);
+            GetManager()->SetTimer(this, TIMER_ID_RING, 100);
         }
     }
 
@@ -121,7 +121,7 @@ namespace DuiLib
     {
         if(GetManager())
         {
-            GetManager()->KillTimer(this, TIMERID_RING);
+            GetManager()->KillTimer(this, TIMER_ID_RING);
         }
     }
 

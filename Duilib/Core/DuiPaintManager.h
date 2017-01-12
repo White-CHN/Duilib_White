@@ -199,6 +199,7 @@ namespace DuiLib
 
         HWND GetPaintWindow() const;
         //属性设置与获取
+        CDuiSize GetInitSize() const;
         void SetInitSize(int cx, int cy);
 
         RECT GetSizeBox();

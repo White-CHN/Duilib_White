@@ -54,8 +54,8 @@ namespace DuiLib
             m_rcCurPos.bottom = GetPos().bottom - (GetPos().bottom - GetPos().top) * m_nPositiveDirection;
         }
 
-        StopAnimation(TIMERID_ANIMATION_TABLAYOUT);
-        StartAnimation(TAB_ANIMATION_ELLAPSE, TAB_ANIMATION_FRAME_COUNT, TIMERID_ANIMATION_TABLAYOUT);
+        StopAnimation(TIMER_ID_ANIMATION_TABLAYOUT);
+        StartAnimation(TAB_ANIMATION_ELLAPSE, TAB_ANIMATION_FRAME_COUNT, TIMER_ID_ANIMATION_TABLAYOUT);
     }
 
     BOOL CDuiAnimationTabLayout::SelectItem(int iIndex)

@@ -34,7 +34,8 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiListHeader);
         INNER_REGISTER_DUICONTROL(CDuiListHeaderItem);
         INNER_REGISTER_DUICONTROL(CDuiListContainerElement);
-
+        INNER_REGISTER_DUICONTROL(CDuiMenu);
+        INNER_REGISTER_DUICONTROL(CDuiMenuElement);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

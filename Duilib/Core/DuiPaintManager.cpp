@@ -395,7 +395,10 @@ namespace DuiLib
         return m_hWndPaint;
     }
 
-
+    CDuiSize CDuiPaintManager::GetInitSize() const
+    {
+        return m_szInitWindowSize;
+    }
 
     void CDuiPaintManager::SetInitSize(int cx, int cy)
     {
@@ -1596,15 +1599,18 @@ namespace DuiLib
         // 创建阴影窗口
         m_shadow.Create(this);
         SetFocus(NULL);
+        m_pEventKey = NULL;
+        m_pEventHover = NULL;
+        m_pEventClick = NULL;
         if(m_pRoot != NULL)
         {
             m_aPostPaintControls.Empty();
             AddDelayedCleanup(m_pRoot);
         }
+        m_pRoot = pControl;
         m_bUpdateNeeded = TRUE;
         m_bFocusNeeded = TRUE;
         m_bFirstLayout = TRUE;
-        m_pRoot = pControl;
         return InitControls(pControl);
     }
 

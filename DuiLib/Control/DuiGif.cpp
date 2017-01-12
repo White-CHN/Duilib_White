@@ -20,7 +20,7 @@ namespace DuiLib
 
     CDuiGif::~CDuiGif(void)
     {
-        GetManager()->KillTimer(this, TIMERID_GIF);
+        GetManager()->KillTimer(this, TIMER_ID_GIF);
         DeleteGif();
     }
 
@@ -50,7 +50,7 @@ namespace DuiLib
         {
             lPause = 100;
         }
-        GetManager()->SetTimer(this, TIMERID_GIF, lPause);
+        GetManager()->SetTimer(this, TIMER_ID_GIF, lPause);
 
         m_bIsPlaying = TRUE;
     }
@@ -62,7 +62,7 @@ namespace DuiLib
             return;
         }
 
-        GetManager()->KillTimer(this, TIMERID_GIF);
+        GetManager()->KillTimer(this, TIMER_ID_GIF);
         Invalidate();
         m_bIsPlaying = FALSE;
     }
@@ -74,7 +74,7 @@ namespace DuiLib
             return;
         }
 
-        GetManager()->KillTimer(this, TIMERID_GIF);
+        GetManager()->KillTimer(this, TIMER_ID_GIF);
         m_nFramePosition = 0;
         Invalidate();
         m_bIsPlaying = FALSE;
@@ -179,7 +179,7 @@ namespace DuiLib
 
     void CDuiGif::DoEvent(TEventUI& event)
     {
-        if(event.Type == UIEVENT_TIMER && event.wParam == TIMERID_GIF)
+        if(event.Type == UIEVENT_TIMER && event.wParam == TIMER_ID_GIF)
         {
             m_nFramePosition = (++m_nFramePosition) % m_nFrameCount;
             Invalidate();
