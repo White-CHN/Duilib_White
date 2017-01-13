@@ -29,13 +29,11 @@ namespace DuiLib
         for(size_t i = 0; i < m_StgMedium.size(); ++i)
         {
             ReleaseStgMedium(m_StgMedium[i]);
-            delete m_StgMedium[i];
-            m_StgMedium[i] = NULL;
+            DUI_FREE_POINT(m_StgMedium[i]);
         }
         for(size_t j = 0; j < m_ArrFormatEtc.size(); ++j)
         {
-            delete m_ArrFormatEtc[j];
-            m_ArrFormatEtc[j] = NULL;
+            DUI_FREE_POINT(m_ArrFormatEtc[j]);
         }
     }
 

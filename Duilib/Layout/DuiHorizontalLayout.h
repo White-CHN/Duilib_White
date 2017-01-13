@@ -12,19 +12,19 @@ namespace DuiLib
         virtual ~CDuiHorizontalLayout(void);
 
     public:
-        virtual CDuiString GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
-        virtual UINT GetControlFlags() const;
+        CDuiString GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        UINT GetControlFlags() const OVERRIDE;
 
         void SetSepWidth(int iWidth);
         void SetSepImmMode(BOOL bImmediately);
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
-        virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
+        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
 
         RECT GetThumbRect(BOOL bUseNew = FALSE) const;
-        virtual void DoEvent(TEventUI& event);
+        void DoEvent(TEventUI& event) OVERRIDE;
 
-        virtual void DoPostPaint(HDC hDC, const RECT& rcPaint);
+        void DoPostPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
     private:
         BOOL m_bImmMode;
         int m_iSepWidth;

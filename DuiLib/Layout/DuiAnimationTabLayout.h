@@ -10,19 +10,19 @@ namespace DuiLib
         CDuiAnimationTabLayout(void);
         virtual ~CDuiAnimationTabLayout(void);
     public:
-        virtual CDuiString GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        CDuiString GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         void AnimationSwitch();
-        virtual BOOL SelectItem(int iIndex);
+        BOOL SelectItem(int iIndex) OVERRIDE;
 
-        virtual void OnAnimationStart(INT nAnimationID, BOOL bFirstLoop);
-        virtual void OnAnimationStep(INT nTotalFrame, INT nCurFrame, INT nAnimationID);
-        virtual void OnAnimationStop(INT nAnimationID);
+        void OnAnimationStart(INT nAnimationID, BOOL bFirstLoop) OVERRIDE;
+        void OnAnimationStep(INT nTotalFrame, INT nCurFrame, INT nAnimationID) OVERRIDE;
+        void OnAnimationStop(INT nAnimationID) OVERRIDE;
 
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        virtual void DoEvent(TEventUI& event);
+        void DoEvent(TEventUI& event) OVERRIDE;
     private:
         enum
         {

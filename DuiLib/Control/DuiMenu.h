@@ -225,6 +225,7 @@ namespace DuiLib
     public:
         static MenuObserverImpl& GetGlobalContextMenuObserver();
         static void DestroyMenu();
+        static MenuItemInfo* SetMenuItemInfo(LPCTSTR pstrName, BOOL bChecked);
     private:
         BOOL bIsClosing;
         DWORD m_dwAlignment;	//菜单对齐方式

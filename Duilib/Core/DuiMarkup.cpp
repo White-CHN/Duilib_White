@@ -171,12 +171,12 @@ namespace DuiLib
             ::CloseHandle(hFile);
             if(dwRead != dwSize)
             {
-                delete[] pByte;
+                DUI_FREE_ARRAY(pByte);
                 Release();
                 return _Failed(_T("Could not read file"));
             }
             BOOL ret = LoadFromMem(pByte, dwSize, encoding);
-            delete[] pByte;
+            DUI_FREE_ARRAY(pByte);
             return ret;
         }
         else
@@ -221,7 +221,7 @@ namespace DuiLib
             int res = UnzipItem(hz, i, pByte, dwSize);
             if(res != 0x00000000 && res != 0x00000600)
             {
-                delete[] pByte;
+                DUI_FREE_ARRAY(pByte);
                 if(!CDuiPaintManager::IsCachedResourceZip())
                 {
                     CloseZip(hz);
@@ -233,7 +233,7 @@ namespace DuiLib
                 CloseZip(hz);
             }
             BOOL ret = LoadFromMem(pByte, dwSize, encoding);
-            delete[] pByte;
+            DUI_FREE_ARRAY(pByte);
             return ret;
         }
     }

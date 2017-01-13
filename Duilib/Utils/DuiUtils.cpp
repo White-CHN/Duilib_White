@@ -570,17 +570,16 @@ namespace DuiLib
                 {
                     TITEM* pKill = pItem;
                     pItem = pItem->pNext;
-                    delete pKill;
+                    DUI_FREE_POINT(pKill);
                 }
             }
-            delete [] m_aT;
-            m_aT = NULL;
+            DUI_FREE_ARRAY(m_aT);
         }
     }
 
     void CStdStringPtrMap::RemoveAll()
     {
-        this->Resize(m_nBuckets);
+        Resize(m_nBuckets);
     }
 
     void CStdStringPtrMap::Resize(int nSize)
@@ -595,11 +594,10 @@ namespace DuiLib
                 {
                     TITEM* pKill = pItem;
                     pItem = pItem->pNext;
-                    delete pKill;
+                    DUI_FREE_POINT(pKill);
                 }
             }
-            delete [] m_aT;
-            m_aT = NULL;
+            DUI_FREE_ARRAY(m_aT);
         }
         if(nSize < 0)
         {
@@ -712,7 +710,7 @@ namespace DuiLib
                 {
                     (*ppItem)->pPrev = pKill->pPrev;
                 }
-                delete pKill;
+                DUI_FREE_POINT(pKill);
                 m_nCount--;
                 return TRUE;
             }

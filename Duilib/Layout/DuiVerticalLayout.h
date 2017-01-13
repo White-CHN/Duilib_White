@@ -11,20 +11,20 @@ namespace DuiLib
         CDuiVerticalLayout(void);
         virtual ~CDuiVerticalLayout(void);
     public:
-        virtual CDuiString GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
-        virtual UINT GetControlFlags() const;
+        CDuiString GetClass() const OVERRIDE;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        UINT GetControlFlags() const OVERRIDE;
 
         void SetSepHeight(int iHeight);
         void SetSepImmMode(BOOL bImmediately);
-        virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
+        void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        virtual void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE);
+        void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
 
         RECT GetThumbRect(BOOL bUseNew = FALSE) const;
-        virtual void DoEvent(TEventUI& event);
+        void DoEvent(TEventUI& event) OVERRIDE;
 
-        virtual void DoPostPaint(HDC hDC, const RECT& rcPaint);
+        void DoPostPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
     private:
         BOOL m_bImmMode;
         INT m_iSepHeight;

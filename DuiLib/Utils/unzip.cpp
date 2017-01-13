@@ -584,7 +584,7 @@ struct inflate_huft_s
 int inflate_trees_bits(
     uInt*,                     // 19 code lengths
     uInt*,                     // bits tree desired/actual depth
-    inflate_huft **,        // bits tree result
+    inflate_huft**,         // bits tree result
     inflate_huft*,              // space for trees
     z_streamp);                // for messages
 
@@ -594,16 +594,16 @@ int inflate_trees_dynamic(
     uInt*,                     // that many (total) code lengths
     uInt*,                     // literal desired/actual bit depth
     uInt*,                     // distance desired/actual bit depth
-    inflate_huft **,        // literal/length tree result
-    inflate_huft **,        // distance tree result
+    inflate_huft**,         // literal/length tree result
+    inflate_huft**,         // distance tree result
     inflate_huft*,              // space for trees
     z_streamp);                // for messages
 
 int inflate_trees_fixed(
     uInt*,                     // literal desired/actual bit depth
     uInt*,                     // distance desired/actual bit depth
-    const inflate_huft **,        // literal/length tree result
-    const inflate_huft **,        // distance tree result
+    const inflate_huft**,         // literal/length tree result
+    const inflate_huft**,         // distance tree result
     z_streamp);                // for memory allocation
 
 
@@ -4482,16 +4482,8 @@ public:
     }
     ~TUnzip()
     {
-        if(password != 0)
-        {
-            delete[] password;
-        }
-        password = 0;
-        if(unzbuf != 0)
-        {
-            delete[] unzbuf;
-        }
-        unzbuf = 0;
+        DUI_FREE_ARRAY(password);
+        DUI_FREE_ARRAY(unzbuf);
     }
 
     unzFile uf;
@@ -4622,7 +4614,7 @@ ZRESULT TUnzip::Get(int index, ZIPENTRY* ze)
     unsigned char* extra = new unsigned char[extralen];
     if(lufread(extra, 1, (uInt)extralen, uf->file) != extralen)
     {
-        delete[] extra;
+        DUI_FREE_ARRAY(extra);
         return ZR_READ;
     }
     //
@@ -4779,10 +4771,7 @@ ZRESULT TUnzip::Get(int index, ZIPENTRY* ze)
         break;
     }
     //
-    if(extra != 0)
-    {
-        delete[] extra;
-    }
+    DUI_FREE_ARRAY(extra);
     memcpy(&cze, ze, sizeof(ZIPENTRY));
     czei = index;
     return ZR_OK;
@@ -5202,7 +5191,7 @@ HZIP OpenZipInternal(void* z, unsigned int len, DWORD flags, const char* passwor
     lasterrorU = unz->Open(z, len, flags);
     if(lasterrorU != ZR_OK)
     {
-        delete unz;
+        DUI_FREE_POINT(unz);
         return 0;
     }
     TUnzipHandleData* han = new TUnzipHandleData;
@@ -5327,8 +5316,8 @@ ZRESULT CloseZipU(HZIP hz)
     }
     TUnzip* unz = han->unz;
     lasterrorU = unz->Close();
-    delete unz;
-    delete han;
+    DUI_FREE_POINT(unz);
+    DUI_FREE_POINT(han);
     return lasterrorU;
 }
 

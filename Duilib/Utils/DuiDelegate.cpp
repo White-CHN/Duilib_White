@@ -47,7 +47,7 @@ namespace DuiLib
             CDelegateBase* pObject = static_cast<CDelegateBase*>(m_aDelegates[i]);
             if(pObject)
             {
-                delete pObject;
+                DUI_FREE_POINT(pObject);
             }
         }
     }
@@ -82,7 +82,7 @@ namespace DuiLib
             CDelegateBase* pObject = static_cast<CDelegateBase*>(m_aDelegates[i]);
             if(pObject && pObject->Equals(d))
             {
-                delete pObject;
+                DUI_FREE_POINT(pObject);
                 m_aDelegates.Remove(i);
                 return;
             }
@@ -110,10 +110,7 @@ namespace DuiLib
         for(int i = 0; i < m_aDelegates.GetSize(); i++)
         {
             CDelegateBase* pObject = static_cast<CDelegateBase*>(m_aDelegates[i]);
-            if(pObject)
-            {
-                delete pObject;
-            }
+            DUI_FREE_POINT(pObject);
         }
         m_aDelegates.Empty();
     }

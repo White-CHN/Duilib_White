@@ -201,14 +201,18 @@ namespace DuiLib
                     rcText.left += drawTextHeight + 5; // 因为在文字前面画了一个色块， 所以文字要在色块后面输出, 5为文字和色块的间距
                     int nLinks = 0;
                     DWORD clrColor = IsEnabled() ? m_dwTextColor : m_dwDisabledTextColor;
+                    if(clrColor << 8 == 0)
+                    {
+                        clrColor = 1;
+                    }
                     if(m_bShowHtml)
                     {
-                        CRenderEngine::DrawHtmlText(hDC, GetManager(), rcText, m_items[i].name, m_dwTextColor, \
+                        CRenderEngine::DrawHtmlText(hDC, GetManager(), rcText, m_items[i].name, clrColor, \
                                                     NULL, NULL, nLinks, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
                     }
                     else
                     {
-                        CRenderEngine::DrawText(hDC, GetManager(), rcText, m_items[i].name, m_dwTextColor, \
+                        CRenderEngine::DrawText(hDC, GetManager(), rcText, m_items[i].name, clrColor, \
                                                 m_iFont, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
                     }
                 }
@@ -290,14 +294,18 @@ namespace DuiLib
 
                 int nLinks = 0;
                 DWORD clrColor = IsEnabled() ? m_dwTextColor : m_dwDisabledTextColor;
+                if(clrColor << 8 == 0)
+                {
+                    clrColor = 1;
+                }
                 if(m_bShowHtml)
                 {
-                    CRenderEngine::DrawHtmlText(hDC, GetManager(), rcText, m_items[i].name, m_dwTextColor, \
+                    CRenderEngine::DrawHtmlText(hDC, GetManager(), rcText, m_items[i].name, clrColor, \
                                                 NULL, NULL, nLinks, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
                 }
                 else
                 {
-                    CRenderEngine::DrawText(hDC, GetManager(), rcText, m_items[i].name, m_dwTextColor, \
+                    CRenderEngine::DrawText(hDC, GetManager(), rcText, m_items[i].name, clrColor, \
                                             m_iFont, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
                 }
             }

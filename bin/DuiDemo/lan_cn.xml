@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Res>
   <Text id="HomePage" value="Duilib-White项目官网" />
+  <Text id="lantext" value="切换到英文" />
 </Res>

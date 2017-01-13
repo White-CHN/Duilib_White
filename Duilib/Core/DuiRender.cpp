@@ -172,7 +172,7 @@ namespace DuiLib
                               NULL, NULL);
         if((NULL == hSrcDib) || (NULL == pSrcBits))
         {
-            delete [] lpbiSrc;
+            DUI_FREE_ARRAY(lpbiSrc);
             ::DeleteDC(hTempDC);
             return FALSE;
         }
@@ -185,7 +185,7 @@ namespace DuiLib
         lpbiDest = (LPBITMAPINFO) new BYTE[sizeof(BITMAPINFOHEADER)];
         if(lpbiDest == NULL)
         {
-            delete [] lpbiSrc;
+            DUI_FREE_ARRAY(lpbiSrc);
             ::DeleteObject(hSrcDib);
             ::DeleteDC(hTempDC);
             return FALSE;
@@ -207,7 +207,7 @@ namespace DuiLib
                                NULL, NULL);
         if((NULL == hDestDib) || (NULL == pDestBits))
         {
-            delete [] lpbiSrc;
+            DUI_FREE_ARRAY(lpbiSrc);
             ::DeleteObject(hSrcDib);
             ::DeleteDC(hTempDC);
             return FALSE;
@@ -230,9 +230,9 @@ namespace DuiLib
         ::SelectObject(hTempDC, hDestDib);
         ::BitBlt(hDC, nDestX, nDestY, dwWidth, dwHeight, hTempDC, 0, 0, SRCCOPY);
         ::SelectObject(hTempDC, hOldTempBmp);
-        delete [] lpbiDest;
+        DUI_FREE_ARRAY(lpbiDest);
         ::DeleteObject(hDestDib);
-        delete [] lpbiSrc;
+        DUI_FREE_ARRAY(lpbiSrc);
         ::DeleteObject(hSrcDib);
         ::DeleteDC(hTempDC);
         return TRUE;
@@ -336,8 +336,7 @@ namespace DuiLib
                     ::CloseHandle(hFile);
                     if(dwRead != dwSize)
                     {
-                        delete[] pData;
-                        pData = NULL;
+                        DUI_FREE_ARRAY(pData);
                         break;
                     }
                 }
@@ -379,8 +378,7 @@ namespace DuiLib
                     int res = UnzipItem(hz, i, pData, dwSize);
                     if(res != 0x00000000 && res != 0x00000600)
                     {
-                        delete[] pData;
-                        pData = NULL;
+                        DUI_FREE_ARRAY(pData);
                         if(!CDuiPaintManager::IsCachedResourceZip())
                         {
                             CloseZip(hz);
@@ -446,8 +444,7 @@ namespace DuiLib
             ::CloseHandle(hFile);
             if(dwRead != dwSize)
             {
-                delete[] pData;
-                pData = NULL;
+                DUI_FREE_ARRAY(pData);
             }
             break;
         }
@@ -459,7 +456,7 @@ namespace DuiLib
         LPBYTE pImage = NULL;
         int x, y, n;
         pImage = stbi_load_from_memory(pData, dwSize, &x, &y, &n, 4);
-        delete[] pData;
+        DUI_FREE_ARRAY(pData);
         if(!pImage)
         {
             //::MessageBox(0, _T("½âÎöÍ¼Æ¬Ê§°Ü"), _T("×¥BUG"), MB_OK);
@@ -549,8 +546,7 @@ namespace DuiLib
                     ::CloseHandle(hFile);
                     if(dwRead != dwSize)
                     {
-                        delete[] pData;
-                        pData = NULL;
+                        DUI_FREE_ARRAY(pData);
                         dwSize = 0U;
                         break;
                     }
@@ -593,8 +589,7 @@ namespace DuiLib
                     int res = UnzipItem(hz, i, pData, dwSize);
                     if(res != 0x00000000 && res != 0x00000600)
                     {
-                        delete[] pData;
-                        pData = NULL;
+                        DUI_FREE_ARRAY(pData);
                         dwSize = 0U;
                         if(!CDuiPaintManager::IsCachedResourceZip())
                         {
@@ -653,8 +648,7 @@ namespace DuiLib
             ::CloseHandle(hFile);
             if(dwRead != dwSize)
             {
-                delete[] pData;
-                pData = NULL;
+                DUI_FREE_ARRAY(pData);
                 dwSize = 0U;
             }
             break;
@@ -676,12 +670,10 @@ namespace DuiLib
             pImg->SetRetreiveAllFrames(TRUE);
             if(!pImg->Decode(pData, dwSize, CXIMAGE_FORMAT_GIF))
             {
-                delete pImg;
-                pImg = nullptr;
+                DUI_FREE_POINT(pImg);
             }
         }
-        delete[] pData;
-        pData = NULL;
+        DUI_FREE_ARRAY(pData);
         return pImg;
     }
 #endif//USE_XIMAGE_EFFECT
@@ -694,22 +686,13 @@ namespace DuiLib
         if(bitmap->hBitmap)
         {
             ::DeleteObject(bitmap->hBitmap);
+            bitmap->hBitmap = NULL;
         }
-        bitmap->hBitmap = NULL;
-        if(bitmap->pBits)
-        {
-            delete[] bitmap->pBits;
-        }
-        bitmap->pBits = NULL;
-        if(bitmap->pSrcBits)
-        {
-            delete[] bitmap->pSrcBits;
-        }
-        bitmap->pSrcBits = NULL;
+        DUI_FREE_ARRAY(bitmap->pBits);
+        DUI_FREE_ARRAY(bitmap->pSrcBits);
         if(bDelete)
         {
-            delete bitmap;
-            bitmap = NULL;
+            DUI_FREE_POINT(bitmap);
         }
     }
 
@@ -744,8 +727,7 @@ namespace DuiLib
 
                 if(dwRead != dwSize)
                 {
-                    delete[] pData;
-                    pData = NULL;
+                    DUI_FREE_ARRAY(pData);
                     break;
                 }
             }
@@ -787,8 +769,7 @@ namespace DuiLib
                 int res = UnzipItem(hz, i, pData, dwSize);
                 if(res != 0x00000000 && res != 0x00000600)
                 {
-                    delete[] pData;
-                    pData = NULL;
+                    DUI_FREE_ARRAY(pData);
                     if(!CDuiPaintManager::IsCachedResourceZip())
                     {
                         CloseZip(hz);
@@ -825,8 +806,7 @@ namespace DuiLib
 
             if(dwRead != dwSize)
             {
-                delete[] pData;
-                pData = NULL;
+                DUI_FREE_ARRAY(pData);
             }
             break;
         }
@@ -835,8 +815,7 @@ namespace DuiLib
         if(pData != NULL)
         {
             pImage = GdiplusLoadImage(pData, dwSize);
-            delete pData;
-            pData = NULL;
+            DUI_FREE_ARRAY(pData);
         }
         return pImage;
     }
@@ -1954,7 +1933,7 @@ namespace DuiLib
                 {
                     graphics.DrawString(pcwszDest, -1, &font, rectF, &stringFormat, &brush);
                 }
-                delete []pcwszDest;
+                DUI_FREE_ARRAY(pcwszDest);
             }
 #endif
             ::SelectObject(hDC, hOldFont);
@@ -3010,7 +2989,7 @@ namespace DuiLib
         lpbiSrc->bmiHeader.biClrUsed = 0;
         lpbiSrc->bmiHeader.biClrImportant = 0;
         HBITMAP hBitmap = CreateDIBSection(hDC, lpbiSrc, DIB_RGB_COLORS, (void**)pBits, NULL, NULL);
-        delete [] lpbiSrc;
+        DUI_FREE_ARRAY(lpbiSrc);
         return hBitmap;
     }
 

@@ -16,6 +16,8 @@ public:
     LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType) OVERRIDE;
 
     void Notify(TNotifyUI& msg)  OVERRIDE;
+
+    LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
 private:
     BOOL bEnglish;
     CDuiButton* m_pCloseBtn;

@@ -17,8 +17,8 @@ namespace DuiLib
         BOOL Remove(CDuiControl* pControl) OVERRIDE;
         void RemoveAll() OVERRIDE;
 
-        BOOL SelectItem(int iIndex) ;
-        BOOL SelectItem(CDuiControl* pControl) ;
+        virtual BOOL SelectItem(int iIndex) ;
+        virtual BOOL SelectItem(CDuiControl* pControl) ;
 
         int GetCurSel() const;
         void SetCurSel(int iCurSel);

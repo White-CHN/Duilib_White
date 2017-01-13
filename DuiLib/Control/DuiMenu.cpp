@@ -1301,7 +1301,36 @@ namespace DuiLib
                 MenuItemInfo* pItemInfo = (MenuItemInfo*)mCheckInfos->Find(mCheckInfos->GetAt(i));
                 DUI_FREE_POINT(pItemInfo);
             }
+            mCheckInfos->Resize(0);
         }
+    }
+
+    MenuItemInfo* CDuiMenuWnd::SetMenuItemInfo(LPCTSTR pstrName, BOOL bChecked)
+    {
+        if(pstrName == NULL || lstrlen(pstrName) <= 0)
+        {
+            return NULL;
+        }
+
+        CStdStringPtrMap* mCheckInfos = GetGlobalContextMenuObserver().GetMenuCheckInfo();
+        if(mCheckInfos != NULL)
+        {
+            MenuItemInfo* pItemInfo = (MenuItemInfo*)mCheckInfos->Find(pstrName);
+            if(pItemInfo == NULL)
+            {
+                pItemInfo = new MenuItemInfo;
+                pItemInfo->strName =  pstrName;
+                pItemInfo->bChecked = bChecked;
+                mCheckInfos->Insert(pstrName, pItemInfo);
+            }
+            else
+            {
+                pItemInfo->bChecked = bChecked;
+            }
+
+            return pItemInfo;
+        }
+        return NULL;
     }
 
     /////////////////////////////////////////////////////////////

@@ -220,7 +220,6 @@ namespace DuiLib
         m_nCurS = (int)(S * 200);
         m_nCurB = (int)(B * 200);
         UpdatePalletData();
-        UpdateBarData();
         NeedUpdate();
     }
 
@@ -309,7 +308,7 @@ namespace DuiLib
         ::SetStretchBltMode(hDC, HALFTONE);
         //拉伸模式将内存图画到控件上
         CDuiRect rc = GetPos();
-        StretchBlt(hDC, rc.left, rc.top, rc.right - rc.left, m_nPalletHeight, m_MemDc, 0, 0, 360, 200 - 1, SRCCOPY);
+        StretchBlt(hDC, rc.left, rc.top, rc.right - rc.left, m_nPalletHeight, m_MemDc, 0, 1, 360, 200, SRCCOPY);
         StretchBlt(hDC, rc.left, rc.bottom - m_nBarHeight, rc.right - rc.left, m_nBarHeight, m_MemDc, 0, 210, 200, m_nBarHeight, SRCCOPY);
 
         RECT rcCurSorPaint = { m_ptLastPalletMouse.x - 4, m_ptLastPalletMouse.y - 4, m_ptLastPalletMouse.x + 4, m_ptLastPalletMouse.y + 4 };
@@ -439,7 +438,7 @@ namespace DuiLib
                     UpdateBarData();
                 }
             }
-            if(m_bIsInBar == TRUE)
+            else if(m_bIsInBar == TRUE)
             {
                 m_nCurS = (event.ptMouse.x - rc.left) * 200 / (rc.right - rc.left);
                 m_nCurS = min(max(m_nCurS, 0), 200);
@@ -467,8 +466,12 @@ namespace DuiLib
         {
             for(x = 0; x < 360; ++x)
             {
-                pPiexl = LPBYTE(m_pBits) + ((199 - y) * m_bmInfo.bmWidthBytes) + ((x * m_bmInfo.bmBitsPixel) / 8);
+                pPiexl = LPBYTE(m_pBits) + ((200 - y) * m_bmInfo.bmWidthBytes) + ((x * m_bmInfo.bmBitsPixel) / 8);
                 dwColor = _HSLToRGB(x, m_nCurS, y);
+                if(dwColor == 0xFF000000)
+                {
+                    dwColor = 0xFF000001;
+                }
                 pPiexl[0] = GetBValue(dwColor);
                 pPiexl[1] = GetGValue(dwColor);
                 pPiexl[2] = GetRValue(dwColor);
@@ -489,8 +492,11 @@ namespace DuiLib
             for(x = 0; x < 200; ++x)
             {
                 pPiexl = LPBYTE(m_pBits) + ((210 + y) * m_bmInfo.bmWidthBytes) + ((x * m_bmInfo.bmBitsPixel) / 8);
-                //*(DWORD*)pPiexl = _HSLToRGB(m_nCurH, x , m_nCurB);
                 dwColor = _HSLToRGB(m_nCurH, x, m_nCurB);
+                if(dwColor == 0xFF000000)
+                {
+                    dwColor = 0xFF000001;
+                }
                 pPiexl[0] = GetBValue(dwColor);
                 pPiexl[1] = GetGValue(dwColor);
                 pPiexl[2] = GetRValue(dwColor);

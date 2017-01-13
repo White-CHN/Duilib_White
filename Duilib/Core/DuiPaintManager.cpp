@@ -1118,13 +1118,13 @@ namespace DuiLib
             if(pOldFontInfo)
             {
                 ::DeleteObject(pOldFontInfo->hFont);
-                delete pOldFontInfo;
+                DUI_FREE_POINT(pOldFontInfo);
                 m_SharedResInfo.m_CustomFonts.Remove(idBuffer);
             }
             if(!m_SharedResInfo.m_CustomFonts.Insert(idBuffer, pFontInfo))
             {
                 ::DeleteObject(hFont);
-                delete pFontInfo;
+                DUI_FREE_POINT(pFontInfo);
                 return NULL;
             }
         }
@@ -1134,13 +1134,13 @@ namespace DuiLib
             if(pOldFontInfo)
             {
                 ::DeleteObject(pOldFontInfo->hFont);
-                delete pOldFontInfo;
+                DUI_FREE_POINT(pOldFontInfo);
                 m_ResInfo.m_CustomFonts.Remove(idBuffer);
             }
             if(!m_ResInfo.m_CustomFonts.Insert(idBuffer, pFontInfo))
             {
                 ::DeleteObject(hFont);
-                delete pFontInfo;
+                DUI_FREE_POINT(pFontInfo);
                 return NULL;
             }
         }

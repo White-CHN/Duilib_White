@@ -142,7 +142,7 @@ void CDemoFrame::Notify(TNotifyUI& msg)
     }
     else if(msg.sType == DUI_MSGTYPE_SELECTCHANGED)
     {
-        CDuiTabLayout* pTabSwitch = static_cast<CDuiTabLayout*>(GetPaintManager()->FindControl(_T("tab_switch")));
+        CDuiAnimationTabLayout* pTabSwitch = static_cast<CDuiAnimationTabLayout*>(GetPaintManager()->FindControl(_T("tab_switch")));
         if(name.CompareNoCase(_T("basic_tab")) == 0)
         {
             pTabSwitch->SelectItem(0);
@@ -208,20 +208,7 @@ void CDemoFrame::Notify(TNotifyUI& msg)
         }
         else if(msg.pSender == m_pSkinBtn)
         {
-            if(!bEnglish)
-            {
-                CDuiResourceManager::GetInstance()->SetLanguage(_T("en"));
-                CDuiResourceManager::GetInstance()->LoadLanguage(_T("lan_en.xml"));
-            }
-            else
-            {
-                CDuiResourceManager::GetInstance()->SetLanguage(_T("cn_zh"));
-                CDuiResourceManager::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
-            }
-            bEnglish = !bEnglish;
-            CDuiResourceManager::GetInstance()->ReloadText();
-            GetPaintManager()->GetRoot()->NeedUpdate();
-            return;
+
         }
         else if(msg.pSender->GetName().CompareNoCase(_T("dpi_btn")) == 0)
         {
@@ -242,5 +229,44 @@ void CDemoFrame::Notify(TNotifyUI& msg)
             pPopDlg->ShowModal();
         }
     }
+}
+
+LRESULT CDemoFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+{
+    bHandled = FALSE;
+    if(uMsg == DUIMSG_MENU_CLICK)
+    {
+        bHandled = TRUE;
+        MenuCmd* pMenuCmd = (MenuCmd*)wParam;
+        if(pMenuCmd != NULL)
+        {
+            BOOL bChecked = pMenuCmd->bChecked;
+            CDuiString sMenuName = pMenuCmd->strName;
+            CDuiString sUserData = pMenuCmd->strUserData;
+            CDuiString sText = pMenuCmd->strText;
+            if(sMenuName.CompareNoCase(_T("lan")) == 0)
+            {
+                if(!bEnglish)
+                {
+                    CDuiResourceManager::GetInstance()->SetLanguage(_T("en"));
+                    CDuiResourceManager::GetInstance()->LoadLanguage(_T("lan_en.xml"));
+                }
+                else
+                {
+                    CDuiResourceManager::GetInstance()->SetLanguage(_T("cn_zh"));
+                    CDuiResourceManager::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
+                }
+                bEnglish = !bEnglish;
+                CDuiResourceManager::GetInstance()->ReloadText();
+                GetPaintManager()->GetRoot()->NeedUpdate();
+            }
+            else if(sMenuName == _T("exit"))
+            {
+                Close(0);
+            }
+        }
+    }
+
+    return 0;
 }
 
