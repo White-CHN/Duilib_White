@@ -13,6 +13,8 @@ CDemoFrame::CDemoFrame(void)
     , m_pSlider(NULL)
     , m_pProgress(NULL)
     , m_pMenu(NULL)
+    , m_pComboControlNames(NULL)
+    , m_pListControl(NULL)
 {
 }
 
@@ -73,6 +75,21 @@ void CDemoFrame::InitWindow()
         pItem->SetText(3, str);
 
     }
+    m_pComboControlNames = static_cast<CDuiCombo*>(GetPaintManager()->FindControl(_T("ComboControlNames")));
+    if(m_pComboControlNames != NULL)
+    {
+        m_pComboControlNames->SetItemTextPadding(CDuiRect(5, 0, 0, 0));
+        for(map<CDuiString, CControl*>::iterator it = m_ControlsName.m_mapControlsName.begin(); it != m_ControlsName.m_mapControlsName.end(); ++it)
+        {
+
+            CDuiListLabelElement* pItem = new CDuiListLabelElement;
+            m_pComboControlNames->Add(pItem);
+            CDuiString str = it->first;
+            pItem->SetText(str);
+            pItem->SetAttribute(_T("height"), _T("25"));
+        }
+    }
+    m_pListControl = static_cast<CDuiList*>(GetPaintManager()->FindControl(_T("list_xml")));
 }
 
 CDuiString CDemoFrame::GetSkinFile()
@@ -131,6 +148,81 @@ void CDemoFrame::Notify(TNotifyUI& msg)
             m_pProgress->SetValue(m_pSlider->GetValue());
         }
     }
+    else if(msg.sType == DUI_MSGTYPE_ITEMSELECT)
+    {
+        if(msg.pSender == m_pComboControlNames)
+        {
+            CDuiString strName = m_pComboControlNames->GetText();
+            m_pListControl->RemoveAll();
+            for(map<CDuiString, CControl*>::iterator it = m_ControlsName.m_mapControlsName.begin(); it != m_ControlsName.m_mapControlsName.end(); ++it)
+            {
+                if(strName == it->first)
+                {
+                    CControl* pControl = it->second;
+                    for(int i = 0; i < pControl->m_vtAttributes.size(); i++)
+                    {
+                        CDuiListContainerElement* pListItem  = new CDuiListContainerElement;
+                        pListItem->SetChildVAlign(DT_VCENTER);
+                        pListItem->SetChildAlign(DT_CENTER);
+                        pListItem->SetFixedHeight(25);
+                        pListItem->SetManager(GetPaintManager(), NULL, FALSE);
+                        m_pListControl->Add(pListItem);
+
+                        CDuiLabel* pLabel1 = new CDuiLabel;
+                        pLabel1->SetManager(GetPaintManager(), NULL, FALSE);
+                        pLabel1->SetAttribute(_T("align"), _T("center"));
+                        pLabel1->SetText(pControl->m_vtAttributes[i].m_strName);
+                        pListItem->Add(pLabel1);
+
+                        if(pControl->m_vtAttributes[i].m_strType == DATATYPE_BOOL)
+                        {
+                            CDuiCombo* pCombo = new CDuiCombo;
+                            if(pCombo)
+                            {
+                                pListItem->Add(pCombo);
+
+                                CDuiListLabelElement* pElement = new CDuiListLabelElement;
+                                pElement->SetText(_T("true"));
+                                pCombo->Add(pElement);
+
+                                CDuiListLabelElement* pElement1 = new CDuiListLabelElement;
+                                pElement1->SetText(_T("false"));
+                                pCombo->Add(pElement1);
+
+                            }
+                        }
+                        else
+                        {
+                            CDuiEdit* pEdit = new CDuiEdit;
+                            pEdit->SetManager(GetPaintManager(), NULL, FALSE);
+                            pEdit->SetAttribute(_T("style"), _T("edit_style"));
+                            pEdit->SetText(pControl->m_vtAttributes[i].m_strValue);
+                            pListItem->Add(pEdit);
+                        }
+
+
+                        CDuiLabel* pLabel2 = new CDuiLabel;
+                        pLabel2->SetManager(GetPaintManager(), NULL, FALSE);
+                        pLabel2->SetAttribute(_T("align"), _T("center"));
+                        pLabel2->SetText(pControl->m_vtAttributes[i].m_strType);
+                        pListItem->Add(pLabel2);
+
+                        CDuiLabel* pLabel3 = new CDuiLabel;
+                        pLabel3->SetManager(GetPaintManager(), NULL, FALSE);
+                        pLabel3->SetAttribute(_T("align"), _T("center"));
+                        pLabel3->SetText(pControl->m_vtAttributes[i].m_strDefault);
+                        pListItem->Add(pLabel3);
+
+                        CDuiLabel* pLabel4 = new CDuiLabel;
+                        pLabel4->SetManager(GetPaintManager(), NULL, FALSE);
+                        pLabel4->SetText(pControl->m_vtAttributes[i].m_strRemarks);
+                        pListItem->Add(pLabel4);
+                    }
+                    break;
+                }
+            }
+        }
+    }
     else if(msg.sType == DUI_MSGTYPE_COLORCHANGED)
     {
         CDuiColorPalette* pColorPalette = static_cast<CDuiColorPalette*>(GetPaintManager()->FindControl(_T("Pallet")));
@@ -147,21 +239,25 @@ void CDemoFrame::Notify(TNotifyUI& msg)
         {
             pTabSwitch->SelectItem(0);
         }
-        if(name.CompareNoCase(_T("rich_tab")) == 0)
+        else if(name.CompareNoCase(_T("rich_tab")) == 0)
         {
             pTabSwitch->SelectItem(1);
         }
-        if(name.CompareNoCase(_T("ex_tab")) == 0)
+        else if(name.CompareNoCase(_T("ex_tab")) == 0)
         {
             pTabSwitch->SelectItem(2);
         }
-        if(name.CompareNoCase(_T("ani_tab")) == 0)
+        else if(name.CompareNoCase(_T("ani_tab")) == 0)
         {
             pTabSwitch->SelectItem(3);
         }
-        if(name.CompareNoCase(_T("split_tab")) == 0)
+        else if(name.CompareNoCase(_T("split_tab")) == 0)
         {
             pTabSwitch->SelectItem(4);
+        }
+        else if(name.CompareNoCase(_T("xml_tab")) == 0)
+        {
+            pTabSwitch->SelectItem(5);
         }
     }
     else if(msg.sType == DUI_MSGTYPE_CLICK)

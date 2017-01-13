@@ -1,4 +1,6 @@
 #pragma once
+
+#include "ControlsName.h"
 class CDemoFrame : public CDuiDlgImplBase
 {
 public:
@@ -29,6 +31,9 @@ private:
     CDuiSlider* m_pSlider;
     CDuiProgress* m_pProgress;
     CDuiMenuWnd* m_pMenu;
+    CDuiCombo* m_pComboControlNames;
+    CDuiList* m_pListControl;
     CDuiIcon m_Icon;
+    CControlsName m_ControlsName;
 };
 

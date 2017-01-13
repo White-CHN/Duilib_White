@@ -39,6 +39,18 @@ namespace DuiLib
         return CDuiContainer::GetInterface(pstrName);
     }
 
+    UINT CDuiListHeaderItem::GetControlFlags() const
+    {
+        if(IsEnabled() && m_iSepWidth != 0)
+        {
+            return UIFLAG_SETCURSOR;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     void CDuiListHeaderItem::SetEnabled(BOOL bEnable /*= TRUE*/)
     {
         CDuiContainer::SetEnabled(bEnable);
@@ -502,8 +514,12 @@ namespace DuiLib
 
                 if(rc.right - rc.left > GetMinWidth())
                 {
-                    ptLastMouse = event.ptMouse;
                     SetFixedWidth(rc.right - rc.left);
+                    ptLastMouse = event.ptMouse;
+                    if(GetParent())
+                    {
+                        GetParent()->NeedParentUpdate();
+                    }
                 }
             }
             return;

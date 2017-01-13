@@ -18,6 +18,7 @@ namespace DuiLib
     public:
         CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        UINT GetControlFlags() const OVERRIDE;
 
         void SetEnabled(BOOL bEnable = TRUE) OVERRIDE;
 

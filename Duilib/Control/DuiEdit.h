@@ -39,7 +39,7 @@ namespace DuiLib
         CDuiEdit* m_pOwner;
     };
 
-    class CDuiEdit : public CDuiLabel
+    class DUILIB_API CDuiEdit : public CDuiLabel
     {
         DECLARE_DUICONTROL(CDuiEdit)
     public:

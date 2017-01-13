@@ -381,7 +381,7 @@ namespace DuiLib
                 for(int i = 0; i < mCheckInfos->GetSize(); i++)
                 {
                     MenuItemInfo* itemInfo = (MenuItemInfo*)mCheckInfos->GetAt(i);
-                    if(lstrcmpi(itemInfo->strName, GetName()) == 0)
+                    if(itemInfo->strName == GetName())
                     {
                         bFind = TRUE;
                         break;

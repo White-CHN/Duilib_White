@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ControlsName.h" />
     <ClInclude Include="DemoFrame.h" />
     <ClInclude Include="PopDlg.h" />
     <ClInclude Include="resource.h" />
@@ -148,6 +149,7 @@
     <None Include="..\..\bin\DuiDemo\icon\DuiDemo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ControlsName.cpp" />
     <ClCompile Include="DemoFrame.cpp" />
     <ClCompile Include="DuiDemo.cpp" />
     <ClCompile Include="PopDlg.cpp" />
