@@ -42,7 +42,7 @@ namespace DuiLib
         return (IsKeyboardEnabled() ? UIFLAG_TABSTOP : 0) | (IsEnabled() ? UIFLAG_SETCURSOR : 0);
     }
 
-    LPCTSTR CDuiButton::GetNormalImage()
+    CDuiString CDuiButton::GetNormalImage() const
     {
         return m_sNormalImage;
     }
@@ -57,7 +57,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    LPCTSTR CDuiButton::GetHotImage()
+    CDuiString CDuiButton::GetHotImage() const
     {
         return m_sHotImage;
     }
@@ -72,7 +72,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    LPCTSTR CDuiButton::GetPushedImage()
+    CDuiString CDuiButton::GetPushedImage() const
     {
         return m_sPushedImage;
     }
@@ -87,7 +87,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    LPCTSTR CDuiButton::GetFocusedImage()
+    CDuiString CDuiButton::GetFocusedImage() const
     {
         return m_sFocusedImage;
     }
@@ -102,7 +102,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    LPCTSTR CDuiButton::GetDisabledImage()
+    CDuiString CDuiButton::GetDisabledImage() const
     {
         return m_sDisabledImage;
     }
@@ -117,7 +117,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    LPCTSTR CDuiButton::GetHotForeImage()
+    CDuiString CDuiButton::GetHotForeImage() const
     {
         return m_sHotForeImage;
     }

@@ -183,6 +183,9 @@
     <ClInclude Include="Control\DuiMenu.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiFadeButton.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -321,6 +324,9 @@
       <Filter>源文件\Control</Filter>
     </ClCompile>
     <ClCompile Include="Control\DuiMenu.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiFadeButton.cpp">
       <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>

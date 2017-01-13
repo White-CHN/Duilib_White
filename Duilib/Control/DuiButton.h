@@ -14,17 +14,17 @@ namespace DuiLib
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
 
-        virtual LPCTSTR GetNormalImage();
+        virtual CDuiString GetNormalImage() const;
         virtual void SetNormalImage(LPCTSTR pStrImage);
-        virtual LPCTSTR GetHotImage();
+        virtual CDuiString GetHotImage() const;
         virtual void SetHotImage(LPCTSTR pStrImage);
-        virtual LPCTSTR GetPushedImage();
+        virtual CDuiString GetPushedImage() const;
         virtual void SetPushedImage(LPCTSTR pStrImage);
-        virtual LPCTSTR GetFocusedImage();
+        virtual CDuiString GetFocusedImage() const;
         virtual void SetFocusedImage(LPCTSTR pStrImage);
-        virtual LPCTSTR GetDisabledImage();
+        virtual CDuiString GetDisabledImage() const;
         virtual void SetDisabledImage(LPCTSTR pStrImage);
-        virtual LPCTSTR GetHotForeImage();
+        virtual CDuiString GetHotForeImage() const;
         virtual void SetHotForeImage(LPCTSTR pStrImage);
 
         int	 GetBindTabLayoutIndex();

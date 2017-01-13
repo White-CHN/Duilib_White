@@ -95,6 +95,7 @@ using namespace Gdiplus;
 #include "Control/DuiChart.h"
 #include "Control/DuiList.h"
 #include "Control/DuiMenu.h"
+#include "Control/DuiFadeButton.h"
 
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "comctl32.lib" )

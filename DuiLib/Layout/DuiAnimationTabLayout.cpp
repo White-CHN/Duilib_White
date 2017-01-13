@@ -3,12 +3,14 @@
 
 namespace DuiLib
 {
-#pragma warning(disable: 4355)
+
 
     IMPLEMENT_DUICONTROL(CDuiAnimationTabLayout)
 
     CDuiAnimationTabLayout::CDuiAnimationTabLayout(void)
+#pragma warning(disable: 4355)
         : IAnimation(this)
+#pragma warning(default: 4355)
         , m_bIsVerticalDirection(FALSE)
         , m_bControlVisibleFlag(FALSE)
         , m_nPositiveDirection(1)

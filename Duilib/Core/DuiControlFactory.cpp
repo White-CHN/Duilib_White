@@ -36,6 +36,7 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiListContainerElement);
         INNER_REGISTER_DUICONTROL(CDuiMenu);
         INNER_REGISTER_DUICONTROL(CDuiMenuElement);
+        INNER_REGISTER_DUICONTROL(CDuiFadeButton);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

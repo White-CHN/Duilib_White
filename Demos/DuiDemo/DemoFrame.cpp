@@ -37,7 +37,7 @@ void CDemoFrame::InitWindow()
     m_pMinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("minbtn")));
     m_pSkinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("skinbtn")));
     m_pMenuBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("menubtn")));
-
+    m_pListControl = static_cast<CDuiList*>(GetPaintManager()->FindControl(_T("list_xml")));
     m_pSlider = static_cast<CDuiSlider*>(GetPaintManager()->FindControl(_T("Slider")));
     m_pProgress = static_cast<CDuiProgress*>(GetPaintManager()->FindControl(_T("Progress")));
     m_pProgress->SetShowText(TRUE);
@@ -88,8 +88,12 @@ void CDemoFrame::InitWindow()
             pItem->SetText(str);
             pItem->SetAttribute(_T("height"), _T("25"));
         }
+        if(m_pComboControlNames->GetCount() > 0)
+        {
+            m_pComboControlNames->SelectItem(0);
+        }
     }
-    m_pListControl = static_cast<CDuiList*>(GetPaintManager()->FindControl(_T("list_xml")));
+
 }
 
 CDuiString CDemoFrame::GetSkinFile()
@@ -159,7 +163,7 @@ void CDemoFrame::Notify(TNotifyUI& msg)
                 if(strName == it->first)
                 {
                     CControl* pControl = it->second;
-                    for(int i = 0; i < pControl->m_vtAttributes.size(); i++)
+                    for(int i = 0; i < (int)pControl->m_vtAttributes.size(); i++)
                     {
                         CDuiListContainerElement* pListItem  = new CDuiListContainerElement;
                         pListItem->SetChildVAlign(DT_VCENTER);

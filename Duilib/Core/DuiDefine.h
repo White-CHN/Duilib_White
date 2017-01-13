@@ -160,6 +160,7 @@ namespace DuiLib
 #define  DUI_CTR_LABEL                           (_T("Label"))
 #define  DUI_CTR_SCROLLBAR                       (_T("ScrollBar"))
 #define  DUI_CTR_BUTTON                          (_T("Button"))
+#define  DUI_CTR_FADEBUTTON                      (_T("FadeButton"))
 #define  DUI_CTR_OPTION                          (_T("Option"))
 #define  DUI_CTR_RADIO                           (_T("Radio"))
 #define  DUI_CTR_EDIT                            (_T("Edit"))
@@ -199,6 +200,8 @@ namespace DuiLib
         TIMER_ID_ANIMATION_TABLAYOUT,
         TIMER_ID_RING,
         TIMER_ID_GIF,
+        TIMER_ID_FADEBUTTON_IN,
+        TIMER_ID_FADEBUTTON_OUT,
         //外部自定义定时器ID
         TIMER_ID_USER		=	0x100
     };

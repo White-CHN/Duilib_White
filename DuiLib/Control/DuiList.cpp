@@ -2044,7 +2044,7 @@ namespace DuiLib
     }
 
     ////////////////////////////////////////////////////////////////////////////////
-#pragma warning(disable: 4355)
+
 
     IMPLEMENT_DUICONTROL(CDuiList)
 
@@ -2054,7 +2054,9 @@ namespace DuiLib
         , m_iCurSel(-1)
         , m_iExpandedItem(-1)
         , m_pCallback(NULL)
+#pragma warning(disable: 4355)
         , m_pList(new CDuiListBody(this))
+#pragma warning(default: 4355)
         , m_pHeader(new CDuiListHeader)
     {
         m_ListInfo.bAlternateBk = FALSE;
