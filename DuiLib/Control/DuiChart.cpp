@@ -237,7 +237,7 @@ namespace DuiLib
             rcShadow.bottom = GetPos().bottom - drawTextHeight;
             if(!CRenderEngine::DrawImageString(hDC, GetManager(), rcShadow, GetPaintRect(), m_sShadowImage, NULL))
             {
-                m_sShadowImage.SetEmpty();
+                m_sShadowImage.Empty();
             }
         }
 
@@ -279,7 +279,7 @@ namespace DuiLib
                 rcPillar.bottom = rc.bottom - drawTextHeight;
                 if(!CRenderEngine::DrawImageString(hDC, GetManager(), rcPillar, GetPaintRect(), m_sPillarImage, NULL))
                 {
-                    m_sPillarImage.SetEmpty();
+                    m_sPillarImage.Empty();
                 }
             }
 

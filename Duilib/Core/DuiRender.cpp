@@ -873,8 +873,8 @@ namespace DuiLib
             }
             while(*pStrImage != _T('\0'))
             {
-                sItem.SetEmpty();
-                sValue.SetEmpty();
+                sItem.Empty();
+                sValue.Empty();
                 while(*pStrImage > _T('\0') && *pStrImage <= _T(' '))
                 {
                     pStrImage = ::CharNext(pStrImage);
@@ -2137,7 +2137,7 @@ namespace DuiLib
                         if(iLinkIndex < nLinkRects && !bLineDraw)
                         {
                             CDuiString* pStr = (CDuiString*)(sLinks + iLinkIndex);
-                            pStr->SetEmpty();
+                            pStr->Empty();
                             while(*pstrText != _T('\0') && *pstrText != _T('>') && *pstrText != _T('}'))
                             {
                                 LPCTSTR pstrTemp = ::CharNext(pstrText);
@@ -2378,8 +2378,8 @@ namespace DuiLib
                                 CDuiString sValue;
                                 while(*pStrImage != _T('\0'))
                                 {
-                                    sItem.SetEmpty();
-                                    sValue.SetEmpty();
+                                    sItem.Empty();
+                                    sValue.Empty();
                                     while(*pStrImage > _T('\0') && *pStrImage <= _T(' '))
                                     {
                                         pStrImage = ::CharNext(pStrImage);

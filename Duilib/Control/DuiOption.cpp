@@ -61,7 +61,7 @@ namespace DuiLib
             {
                 return;
             }
-            m_sGroupName.SetEmpty();
+            m_sGroupName.Empty();
         }
         else
         {

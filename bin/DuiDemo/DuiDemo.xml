@@ -8,10 +8,13 @@
 	<Style name="colorbtn_style" value="align=&quot;center&quot; valign=&quot;center&quot; textcolor=&quot;#FFAFADAD&quot; hottextcolor=&quot;#FFFFFFFF&quot; textpadding=&quot;6,0,6,0&quot; hotbkcolor=&quot;#FF4b4b4b&quot; pushedbkcolor=&quot;#FF424242&quot;"  />
 	<Style name="list_style" value="headerbkimage=&quot;res='list/list_header_bg.png'&quot; itemalign=&quot;center&quot; itemlinecolor=&quot;#FF888888&quot; itemshowrowline=&quot;true&quot; itemshowcolumnline=&quot;true&quot;" />
 	<Style name="edit_style" value="align=&quot;center&quot; normalimage=&quot;res='button/button_pushed.png' corner='6,6,6,6'&quot; hotimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot; focusedimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot;" />
+	<Style name="combo_style" value="textpadding=&quot;4,0,0,0&quot; normalimage=&quot;file='combox/combo.png' source='0,0,100,22' corner='2,2,20,2'&quot; hotimage=&quot;file='combox\combo.png' source='0,22,100,44' corner='2,2,22,2'&quot; pushedimage=&quot;file='combox\combo.png' source='0,44,100,66' corner='2,2,22,2'&quot;" />
+	
 	<Font id="0"  size="13" default="true" />
 	<Font id="1" name="华文彩云" size="35" />
 	<Font id="2" name="微软雅黑" size="12" underline="true" />
 	<Font id="3"  size="15"  />
+	<Font id="4" name="Consolas" size="15"  />
 	<VerticalLayout name="root" bkcolor="#FF0199cb"  bkimage="res='bkimage/12.png' fade='255'">
 		<HorizontalLayout  height="64" >
 			<HorizontalLayout  >
@@ -105,7 +108,7 @@
 					<Label font="3" valign="center" cursor="hand" align="center" tooltip="Combo演示" text="Combo演示"  width="80" textcolor="#FFFFFFFF" />
 					<HorizontalLayout height="25" childpadding="12"  >
 
-						<Combo width="100" dropboxsize="0,100" itemalign="center" textpadding="8,0,0,0" normalimage="file='combox\combo.png' source='0,0,100,22' corner='2,2,20,2'" hotimage="file='combox\combo.png' source='0,22,100,44' corner='2,2,22,2'" pushedimage="file='combox\combo.png' source='0,44,100,66' corner='2,2,22,2'">
+						<Combo width="100" dropboxsize="0,100" align="center" itemalign="center" style="combo_style">
 							<ListLabelElement text="1" selected="true" height="25" bkimage="dest='4,7,20,23' res='icon/icon.png'"/>
 							<ListLabelElement  text="2"  height="25" bkimage="dest='4,7,20,23' res='icon/icon.png'"/>
 							<ListLabelElement  text="3"  height="25" bkimage="dest='4,7,20,23' res='icon/icon.png'"/>
@@ -116,7 +119,7 @@
 							<ListLabelElement  text="8"  height="25" bkimage="dest='4,7,20,23' res='icon/icon.png'"/>
 						</Combo>
 
-						<Combo width="100" dropboxsize="0,100" itemalign="center" textpadding="8,0,0,0" normalimage="file='combox\combo.png' source='0,0,100,22' corner='2,2,20,2'" hotimage="file='combox\combo.png' source='0,22,100,44' corner='2,2,22,2'" pushedimage="file='combox\combo.png' source='0,44,100,66' corner='2,2,22,2'">
+						<Combo width="100" dropboxsize="0,100" itemalign="center" style="combo_style">
 							<ListLabelElement text="1" selected="true" height="25" bkimage="dest='4,7,20,23' res='icon/icon.png'"/>
 							<ListLabelElement  text="2"  height="25" bkimage="dest='4,7,20,23' res='icon/icon.png'"/>
 							<ListLabelElement  text="3"  height="25" bkimage="dest='4,7,20,23' res='icon/icon.png'"/>
@@ -191,28 +194,37 @@
 				</VerticalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true" ><!-- 属性生成 -->
-				<HorizontalLayout height="10"></HorizontalLayout>
-				<HorizontalLayout height="30" childvalign="vcenter" >
+				<HorizontalLayout height="10"/>
+				<HorizontalLayout height="28" childvalign="vcenter" childpadding="12" >
 					<Control />
-					<Combo name="ComboControlNames" width="200" dropboxsize="0,100" textpadding="8,0,0,0" normalimage="file='combox\combo.png' source='0,0,100,22' corner='2,2,20,2'" hotimage="file='combox\combo.png' source='0,22,100,44' corner='2,2,22,2'" pushedimage="file='combox\combo.png' source='0,44,100,66' corner='2,2,22,2'">
+					<Combo name="ComboControlNames" width="200" dropboxsize="0,200" style="combo_style" >				
 					</Combo>
+					<Button name="BtnCreateXML" width="120" text="XML生成" textcolor="#FFFFFFFF"  style="btn_style" />
+					<Option name="OptionSplit" text="拆分" cursor="hand" selectedtextcolor="#FFFF0000" textcolor="#FFFFFFFF"  width="60" height="20" align="left" textpadding="18,4,0,0" selectedimage="file='Radio/RadioBtnSel.png' source='0,0,13,13' dest='0,5,14,19'" normalimage="file='Radio/RadioBtnNon.png' source='0,0,13,13' dest='0,5,14,19'" />
 					<Control />
 				</HorizontalLayout>
-				<HorizontalLayout  childvalign="vcenter" >
+				<HorizontalLayout height="10"/>
+				<HorizontalLayout height="250" childvalign="vcenter" >
 					<Control width="30"/>
-					<VerticalLayout height="200"  bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
+					<VerticalLayout   bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
 						<List name="list_xml" hscrollbar="true" vscrollbar="true" bkcolor="#FFFFFFFF" style="list_style" scrollstepsize="100">
 							<ListHeader bkcolor="#FFFF0000" height="24" menu="true">
 								<ListHeaderItem text="属性" width="100" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-								<ListHeaderItem text="值" width="160" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-								<ListHeaderItem text="类型" width="60" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-								<ListHeaderItem text="默认值" width="100" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+								<ListHeaderItem text="值" width="140" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+								<ListHeaderItem text="类型" width="80" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+								<ListHeaderItem text="默认值" width="120" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
 								<ListHeaderItem text="备注" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
 							</ListHeader>
 
 						</List>
 					</VerticalLayout>
 					<Control width="30"/>
+				</HorizontalLayout>
+				<HorizontalLayout height="10"/>
+				<HorizontalLayout height="28" childvalign="vcenter" childpadding="12" >
+					<Label width="40" text="XML:" align="right" textcolor="#FFFFFFFF" />
+						<Edit font="4" name="EditXML" style="edit_style" align="left" />
+					<Control width="30" />
 				</HorizontalLayout>
 			</VerticalLayout>
 		</AnimationTabLayout>

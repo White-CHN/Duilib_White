@@ -104,8 +104,10 @@ namespace DuiLib
         {
             SetFont(_ttoi(pstrValue));
         }
-
-        CDuiVerticalLayout::SetAttribute(pstrName, pstrValue);
+        else
+        {
+            CDuiVerticalLayout::SetAttribute(pstrName, pstrValue);
+        }
     }
 
     void CDuiGroupBox::PaintText(HDC hDC)

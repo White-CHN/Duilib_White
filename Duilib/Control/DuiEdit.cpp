@@ -82,8 +82,8 @@ namespace DuiLib
             ::GetWindowRect(m_pOwner->GetManager()->GetPaintWindow(), &rcWnd);
             rcPos.left += rcWnd.left;
             rcPos.right += rcWnd.left;
-            rcPos.top += rcWnd.top - 1;
-            rcPos.bottom += rcWnd.top - 1;
+            rcPos.top += rcWnd.top ;
+            rcPos.bottom += rcWnd.top + 1;
         }
         else
         {
@@ -757,7 +757,7 @@ namespace DuiLib
             CDuiString sTemp = sDrawText;
             if(m_bPasswordMode)
             {
-                sDrawText.SetEmpty();
+                sDrawText.Empty();
                 LPCTSTR pStr = sTemp.GetData();
                 while(*pStr != _T('\0'))
                 {

@@ -44,8 +44,8 @@ namespace DuiLib
             }
             while(*pStrImage != _T('\0'))
             {
-                sItem.SetEmpty();
-                sValue.SetEmpty();
+                sItem.Empty();
+                sValue.Empty();
                 while(*pStrImage > _T('\0') && *pStrImage <= _T(' '))
                 {
                     pStrImage = ::CharNext(pStrImage);

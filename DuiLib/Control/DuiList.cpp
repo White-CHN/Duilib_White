@@ -421,7 +421,7 @@ namespace DuiLib
             rcThumb.right -= GetPos().left;
             rcThumb.bottom -= GetPos().top;
 
-            m_sSepImageModify.SetEmpty();
+            m_sSepImageModify.Empty();
             m_sSepImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), rcThumb.left, rcThumb.top, rcThumb.right, rcThumb.bottom);
             if(!DrawImage(hDC, (LPCTSTR)m_sSepImage, (LPCTSTR)m_sSepImageModify)) {}
         }
@@ -1656,7 +1656,7 @@ namespace DuiLib
         for(int i = m_nLinks; i < SIZEOF_ARRAY(m_rcLinks); i++)
         {
             m_rcLinks[i].Empty();
-            m_sLinks[i].SetEmpty();
+            m_sLinks[i].Empty();
         }
     }
 

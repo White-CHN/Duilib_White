@@ -231,7 +231,7 @@ namespace DuiLib
 
         if(!GetForeImage().IsEmpty())
         {
-            m_sForeImageModify.SetEmpty();
+            m_sForeImageModify.Empty();
             int sw = MulDiv(rc.right - rc.left, 100, GetManager()->GetDPIObj()->GetScale());
             int sh = MulDiv(rc.bottom - rc.top, 100, GetManager()->GetDPIObj()->GetScale());
             rc.left = MulDiv(rc.left, 100, GetManager()->GetDPIObj()->GetScale());

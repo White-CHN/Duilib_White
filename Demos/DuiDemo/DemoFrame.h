@@ -29,12 +29,14 @@ public:
     LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
 private:
     BOOL bEnglish;
+    BOOL m_bIsSplit;
     CDuiAnimationTabLayout* m_pTabSwitch;
     CDuiSlider* m_pSlider;
     CDuiProgress* m_pProgress;
     CDuiMenuWnd* m_pMenu;
     CDuiCombo* m_pComboControlNames;
     CDuiList* m_pListControl;
+    CDuiEdit* m_pEditXML;
     CDuiIcon m_Icon;
     CControlsName m_ControlsName;
 };

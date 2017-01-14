@@ -40,7 +40,7 @@ namespace DuiLib
     public:
         int GetLength() const;
 
-        void SetEmpty();
+        void Empty();
         BOOL IsEmpty() const;
 
         TCHAR GetAt(int index) const;

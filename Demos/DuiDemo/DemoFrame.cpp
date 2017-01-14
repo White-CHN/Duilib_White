@@ -15,12 +15,14 @@ DUI_END_MESSAGE_MAP()
 
 CDemoFrame::CDemoFrame(void)
     : bEnglish(FALSE)
+    , m_bIsSplit(FALSE)
     , m_pTabSwitch(NULL)
     , m_pSlider(NULL)
     , m_pProgress(NULL)
     , m_pMenu(NULL)
     , m_pComboControlNames(NULL)
     , m_pListControl(NULL)
+    , m_pEditXML(NULL)
 {
 }
 
@@ -37,10 +39,13 @@ void CDemoFrame::InitWindow()
     CDuiResourceManager::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
     SetIcon(IDR_MAINFRAME);
     m_Icon.CreateIcon(GetHWND(), IDR_MAINFRAME, _T("Duilib开源项目\nDuilib开源项目"));
+
     m_pTabSwitch = static_cast<CDuiAnimationTabLayout*>(GetPaintManager()->FindControl(_T("tab_switch")));
     m_pListControl = static_cast<CDuiList*>(GetPaintManager()->FindControl(_T("list_xml")));
     m_pSlider = static_cast<CDuiSlider*>(GetPaintManager()->FindControl(_T("Slider")));
     m_pProgress = static_cast<CDuiProgress*>(GetPaintManager()->FindControl(_T("Progress")));
+    m_pEditXML = static_cast<CDuiEdit*>(GetPaintManager()->FindControl(_T("EditXML")));
+
     m_pProgress->SetShowText(TRUE);
 
     CDuiChart* pPieView = static_cast<CDuiChart*>(GetPaintManager()->FindControl(_T("ChartPie")));
@@ -80,7 +85,7 @@ void CDemoFrame::InitWindow()
     if(m_pComboControlNames != NULL)
     {
         m_pComboControlNames->SetItemTextPadding(CDuiRect(5, 0, 0, 0));
-        for(map<CDuiString, CControl*>::iterator it = m_ControlsName.m_mapControlsName.begin(); it != m_ControlsName.m_mapControlsName.end(); ++it)
+        for(map<CDuiString, IControl*>::iterator it = m_ControlsName.m_mapControlsName.begin(); it != m_ControlsName.m_mapControlsName.end(); ++it)
         {
 
             CDuiListLabelElement* pItem = new CDuiListLabelElement;
@@ -186,23 +191,71 @@ void CDemoFrame::OnClick(TNotifyUI& msg)
     {
 
     }
-    else if(msg.pSender->GetName().CompareNoCase(_T("dpi_btn")) == 0)
+    else if(msg.pSender->GetName() == _T("dpi_btn"))
     {
         int nDPI = _ttoi(msg.pSender->GetUserData());
         GetPaintManager()->SetDPI(nDPI);
     }
-    else if(msg.pSender->GetName().CompareNoCase(_T("popwnd_btn")) == 0)
+    else if(msg.pSender->GetName() == _T("popwnd_btn"))
     {
         CPopDlg* pPopDlg = new CPopDlg();
         pPopDlg->Create(GetHWND(), _T("普通窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
         pPopDlg->CenterWindow();
     }
-    else if(msg.pSender->GetName().CompareNoCase(_T("modal_popwnd_btn")) == 0)
+    else if(msg.pSender->GetName() == _T("modal_popwnd_btn"))
     {
         CPopDlg* pPopDlg = new CPopDlg();
         pPopDlg->Create(GetHWND(), _T("模式窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
         pPopDlg->CenterWindow();
         pPopDlg->ShowModal();
+    }
+    else if(msg.pSender->GetName() == _T("BtnCreateXML"))
+    {
+        CDuiString strText;
+        int nComboIndex = m_pComboControlNames->GetCurSel();
+        int nListCount = m_pListControl->GetCount();
+        if(nComboIndex >= 0 && nListCount > 0)
+        {
+            CDuiString strControlName = m_pComboControlNames->GetText();
+            if(strControlName.IsEmpty())
+            {
+                return;
+            }
+            CDuiString strAttribute;
+            for(int i = 0; i < nListCount; i++)
+            {
+                CDuiString str, strName, strValue;
+                CDuiListContainerElement* pListItem = static_cast<CDuiListContainerElement*>(m_pListControl->GetItemAt(i));
+                strName = pListItem->GetItemAt(0)->GetText();
+                strValue = pListItem->GetItemAt(1)->GetText();
+                if(strValue.IsEmpty() || strName.IsEmpty())
+                {
+                    continue;
+                }
+                strName += _T("=\"");
+                strValue += _T("\" ");
+                strAttribute += strName + strValue;
+            }
+            if(strAttribute.IsEmpty())
+            {
+                strText.Format(_T("<%s />"), strControlName);
+            }
+            else
+            {
+                strText.Format(_T("<%s "), strControlName);
+                if(m_bIsSplit)
+                {
+                    strText = strText + strAttribute + _T("></");
+                    strText = strText + strControlName + _T(">");
+                }
+                else
+                {
+                    strText = strText + strAttribute + _T("/>");
+                }
+
+            }
+        }
+        m_pEditXML->SetText(strText);
     }
 }
 
@@ -233,12 +286,12 @@ void CDemoFrame::OnIteamSelect(TNotifyUI& msg)
     {
         CDuiString strName = m_pComboControlNames->GetText();
         m_pListControl->RemoveAll();
-        for(map<CDuiString, CControl*>::iterator it = m_ControlsName.m_mapControlsName.begin(); it != m_ControlsName.m_mapControlsName.end(); ++it)
+        for(map<CDuiString, IControl*>::iterator it = m_ControlsName.m_mapControlsName.begin(); it != m_ControlsName.m_mapControlsName.end(); ++it)
         {
             if(strName == it->first)
             {
-                CControl* pControl = it->second;
-                for(int i = 0; i < (int)pControl->m_vtAttributes.size(); i++)
+                IControl* pControl = it->second;
+                for(size_t i = 0; i < pControl->m_vtAttributes.size(); i++)
                 {
                     CDuiListContainerElement* pListItem  = new CDuiListContainerElement;
                     pListItem->SetChildVAlign(DT_VCENTER);
@@ -253,21 +306,76 @@ void CDemoFrame::OnIteamSelect(TNotifyUI& msg)
                     pLabel1->SetText(pControl->m_vtAttributes[i].m_strName);
                     pListItem->Add(pLabel1);
 
-                    if(pControl->m_vtAttributes[i].m_strType == DATATYPE_BOOL)
+                    if(pControl->m_vtAttributes[i].m_strType == DATATYPE_BOOL
+                            || pControl->m_vtAttributes[i].m_strType == DATATYPE_FLOAT_ALIGN
+                            || pControl->m_vtAttributes[i].m_strType == DATATYPE_CURSOR
+                            || pControl->m_vtAttributes[i].m_strType == DATATYPE_ALIGN
+                            || pControl->m_vtAttributes[i].m_strType == DATATYPE_VALIGN)
                     {
                         CDuiCombo* pCombo = new CDuiCombo;
                         if(pCombo)
                         {
                             pListItem->Add(pCombo);
+                            pCombo->SetAttribute(_T("style"), _T("combo_style"));
+                            pCombo->SetAttribute(_T("align"), _T("center"));
+                            pCombo->SetAttribute(_T("itemalign"), _T("center"));
+                            vector<CDuiString> vtValues;
+                            if(pControl->m_vtAttributes[i].m_strType == DATATYPE_BOOL)
+                            {
+                                vtValues.push_back(_T(""));
+                                vtValues.push_back(_T("true"));
+                                vtValues.push_back(_T("false"));
+                            }
+                            else if(pControl->m_vtAttributes[i].m_strType == DATATYPE_CURSOR)
+                            {
+                                vtValues.push_back(_T(""));
+                                vtValues.push_back(_T("left"));
+                                vtValues.push_back(_T("center"));
+                                vtValues.push_back(_T("right"));
+                            }
+                            else if(pControl->m_vtAttributes[i].m_strType == DATATYPE_VALIGN)
+                            {
+                                vtValues.push_back(_T(""));
+                                vtValues.push_back(_T("top"));
+                                vtValues.push_back(_T("vcenter"));
+                                vtValues.push_back(_T("bottom"));
+                            }
+                            else if(pControl->m_vtAttributes[i].m_strType == DATATYPE_FLOAT_ALIGN)
+                            {
+                                vtValues.push_back(_T(""));
+                                vtValues.push_back(_T("null"));
+                                vtValues.push_back(_T("left"));
+                                vtValues.push_back(_T("center"));
+                                vtValues.push_back(_T("right"));
+                                vtValues.push_back(_T("top"));
+                                vtValues.push_back(_T("vcenter"));
+                                vtValues.push_back(_T("bottom"));
+                            }
 
-                            CDuiListLabelElement* pElement = new CDuiListLabelElement;
-                            pElement->SetText(_T("true"));
-                            pCombo->Add(pElement);
-
-                            CDuiListLabelElement* pElement1 = new CDuiListLabelElement;
-                            pElement1->SetText(_T("false"));
-                            pCombo->Add(pElement1);
-
+                            else if(pControl->m_vtAttributes[i].m_strType == DATATYPE_CURSOR)
+                            {
+                                vtValues.push_back(_T(""));
+                                vtValues.push_back(_T("arrow"));
+                                vtValues.push_back(_T("ibeam"));
+                                vtValues.push_back(_T("wait"));
+                                vtValues.push_back(_T("cross"));
+                                vtValues.push_back(_T("uparrow"));
+                                vtValues.push_back(_T("size"));
+                                vtValues.push_back(_T("icon"));
+                                vtValues.push_back(_T("sizenwse"));
+                                vtValues.push_back(_T("sizenesw"));
+                                vtValues.push_back(_T("sizewe"));
+                                vtValues.push_back(_T("sizens"));
+                                vtValues.push_back(_T("sizeall"));
+                                vtValues.push_back(_T("no"));
+                                vtValues.push_back(_T("hand"));
+                            }
+                            for(size_t i = 0; i < vtValues.size(); i++)
+                            {
+                                CDuiListLabelElement* pElement = new CDuiListLabelElement;
+                                pElement->SetText(vtValues[i]);
+                                pCombo->Add(pElement);
+                            }
                         }
                     }
                     else
@@ -305,7 +413,6 @@ void CDemoFrame::OnIteamSelect(TNotifyUI& msg)
 
 void CDemoFrame::OnSelectChanged(TNotifyUI& msg)
 {
-
     if(msg.pSender->GetName() == _T("basic_tab"))
     {
         m_pTabSwitch->SelectItem(0);
@@ -329,6 +436,14 @@ void CDemoFrame::OnSelectChanged(TNotifyUI& msg)
     else if(msg.pSender->GetName() == _T("xml_tab"))
     {
         m_pTabSwitch->SelectItem(5);
+    }
+    else if(msg.pSender->GetName() == _T("OptionSplit"))
+    {
+        CDuiOption* pOption = static_cast<CDuiOption*>(msg.pSender);
+        if(pOption)
+        {
+            m_bIsSplit = pOption->IsSelected();
+        }
     }
 }
 

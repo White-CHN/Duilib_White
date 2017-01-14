@@ -15,7 +15,6 @@ namespace DuiLib
         , m_bFloat(FALSE)
         , m_bColorHSL(FALSE)
         , m_bDragEnabled(FALSE)
-        , m_bDropEnabled(FALSE)
         , m_bResourceText(FALSE)
         , m_bEnabled(TRUE)
         , m_bMouseEnabled(TRUE)
@@ -518,11 +517,6 @@ namespace DuiLib
     void CDuiControl::SetDragEnable(BOOL bDrag)
     {
         m_bDragEnabled = bDrag;
-    }
-
-    void CDuiControl::SetDropEnable(BOOL bDrop)
-    {
-        m_bDropEnabled = bDrop;
     }
 
     CDuiString CDuiControl::GetToolTip() const
@@ -1031,6 +1025,68 @@ namespace DuiLib
         NeedParentUpdate();
     }
 
+    void CDuiControl::AddCustomAttribute(LPCTSTR pstrName, LPCTSTR pstrAttr)
+    {
+        if(pstrName == NULL || pstrName[0] == _T('\0') || pstrAttr == NULL || pstrAttr[0] == _T('\0'))
+        {
+            return;
+        }
+        CDuiString* pCostomAttr = new CDuiString(pstrAttr);
+        if(pCostomAttr != NULL)
+        {
+            if(m_mCustomAttrHash.Find(pstrName) == NULL)
+            {
+                m_mCustomAttrHash.Set(pstrName, (LPVOID)pCostomAttr);
+            }
+            else
+            {
+                DUI_FREE_POINT(pCostomAttr);
+            }
+        }
+    }
+    LPCTSTR CDuiControl::GetCustomAttribute(LPCTSTR pstrName) const
+    {
+        if(pstrName == NULL || pstrName[0] == _T('\0'))
+        {
+            return NULL;
+        }
+        CDuiString* pCostomAttr = static_cast<CDuiString*>(m_mCustomAttrHash.Find(pstrName));
+        if(pCostomAttr)
+        {
+            return pCostomAttr->GetData();
+        }
+        return NULL;
+    }
+
+    BOOL CDuiControl::RemoveCustomAttribute(LPCTSTR pstrName)
+    {
+        if(pstrName == NULL || pstrName[0] == _T('\0'))
+        {
+            return NULL;
+        }
+        CDuiString* pCostomAttr = static_cast<CDuiString*>(m_mCustomAttrHash.Find(pstrName));
+        if(!pCostomAttr)
+        {
+            return FALSE;
+        }
+
+        DUI_FREE_POINT(pCostomAttr);
+        return m_mCustomAttrHash.Remove(pstrName);
+    }
+
+    void CDuiControl::RemoveAllCustomAttribute()
+    {
+        for(int i = 0; i < m_mCustomAttrHash.GetSize(); i++)
+        {
+            if(LPCTSTR key = m_mCustomAttrHash.GetAt(i))
+            {
+                CDuiString* pCostomAttr = static_cast<CDuiString*>(m_mCustomAttrHash.Find(key));
+                DUI_FREE_POINT(pCostomAttr);
+            }
+        }
+        m_mCustomAttrHash.Resize();
+    }
+
     CDuiControl* CDuiControl::ApplyAttributeList(LPCTSTR pstrValue)
     {
         // 解析样式表
@@ -1050,8 +1106,8 @@ namespace DuiLib
         CDuiString sValue;
         while(*pstrList != _T('\0'))
         {
-            sItem.SetEmpty();
-            sValue.SetEmpty();
+            sItem.Empty();
+            sValue.Empty();
             while(*pstrList != _T('\0') && *pstrList != _T('='))
             {
                 LPTSTR pstrTemp = ::CharNext(pstrList);
@@ -1390,10 +1446,6 @@ namespace DuiLib
         {
             SetDragEnable(_tcsicmp(pstrValue, _T("true")) == 0);
         }
-        else if(_tcsicmp(pstrName, _T("drop")) == 0)
-        {
-            SetDropEnable(_tcsicmp(pstrValue, _T("true")) == 0);
-        }
         else if(_tcsicmp(pstrName, _T("resourcetext")) == 0)
         {
             SetResourceText(_tcsicmp(pstrValue, _T("true")) == 0);
@@ -1510,8 +1562,8 @@ namespace DuiLib
             CDuiString sValue;
             while(*pstrList != _T('\0'))
             {
-                sItem.SetEmpty();
-                sValue.SetEmpty();
+                sItem.Empty();
+                sValue.Empty();
                 while(*pstrList != _T('\0') && *pstrList != _T('='))
                 {
                     LPTSTR pstrTemp = ::CharNext(pstrList);
@@ -1549,6 +1601,10 @@ namespace DuiLib
                     return;
                 }
             }
+        }
+        else
+        {
+            AddCustomAttribute(pstrName, pstrValue);
         }
     }
 

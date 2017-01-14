@@ -104,9 +104,6 @@ namespace DuiLib
         //拖拽
         BOOL IsDragEnabled() const;
         virtual void SetDragEnable(BOOL bDrag);
-
-        virtual void SetDropEnable(BOOL bDrop);
-
         // 鼠标提示
         virtual CDuiString GetToolTip() const;
         virtual void SetToolTip(LPCTSTR pstrText);
@@ -190,6 +187,11 @@ namespace DuiLib
         virtual BOOL IsFloat() const;
         virtual void SetFloat(BOOL bFloat = TRUE);
 
+        // 自定义(未处理的)属性
+        void AddCustomAttribute(LPCTSTR pstrName, LPCTSTR pstrAttr);
+        LPCTSTR GetCustomAttribute(LPCTSTR pstrName) const;
+        BOOL RemoveCustomAttribute(LPCTSTR pstrName);
+        void RemoveAllCustomAttribute();
         //设置属性
         CDuiControl* ApplyAttributeList(LPCTSTR pstrValue);
         virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
@@ -227,7 +229,6 @@ namespace DuiLib
         BOOL m_bFloat;				//float属性
         BOOL m_bColorHSL;			//colorhsl属性
         BOOL m_bDragEnabled;		//drag属性
-        BOOL m_bDropEnabled;		//drop属性
         BOOL m_bResourceText;		//resourcetext属性
         BOOL m_bEnabled;			//enabled属性
         BOOL m_bMouseEnabled;		//mouse属性
@@ -275,6 +276,8 @@ namespace DuiLib
         CDuiString m_sToolTip;		//tooltip属性
         CDuiString m_sUserData;		//userdata属性
         CDuiString m_sVirtualWnd;	//virtualwnd属性
+
+        CStdStringPtrMap m_mCustomAttrHash;
     };
 
 

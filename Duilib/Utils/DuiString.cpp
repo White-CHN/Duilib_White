@@ -58,7 +58,7 @@ namespace DuiLib
 
     const CDuiString& CDuiString::operator=(const TCHAR ch)
     {
-        SetEmpty();
+        Empty();
         m_strBuffer[0] = ch;
         m_strBuffer[1] = _T('\0');
         return *this;
@@ -73,7 +73,7 @@ namespace DuiLib
         }
         else
         {
-            SetEmpty();
+            Empty();
         }
         return *this;
     }
@@ -95,7 +95,7 @@ namespace DuiLib
         }
         else
         {
-            SetEmpty();
+            Empty();
         }
         return *this;
     }
@@ -232,7 +232,7 @@ namespace DuiLib
         return (int) _tcslen(m_lpStr);
     }
 
-    void CDuiString::SetEmpty()
+    void CDuiString::Empty()
     {
         if(m_lpStr != m_strBuffer)
         {
