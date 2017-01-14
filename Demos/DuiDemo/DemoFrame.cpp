@@ -2,14 +2,20 @@
 #include "DemoFrame.h"
 #include "PopDlg.h"
 
+
+DUI_BEGIN_MESSAGE_MAP(CDemoFrame, CDuiDlgImplBase)
+DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
+DUI_ON_WINDOWINIT()
+DUI_ON_MSGTYPE(DUI_MSGTYPE_VALUECHANGED, OnValueChanged)
+DUI_ON_MSGTYPE(DUI_MSGTYPE_VALUECHANGED_MOVE, OnValueChangedMove)
+DUI_ON_MSGTYPE(DUI_MSGTYPE_ITEMSELECT, OnIteamSelect)
+DUI_ON_MSGTYPE(DUI_MSGTYPE_SELECTCHANGED, OnSelectChanged)
+DUI_ON_MSGTYPE(DUI_MSGTYPE_COLORCHANGED, OnColorChanged)
+DUI_END_MESSAGE_MAP()
+
 CDemoFrame::CDemoFrame(void)
     : bEnglish(FALSE)
-    , m_pCloseBtn(NULL)
-    , m_pMaxBtn(NULL)
-    , m_pRestoreBtn(NULL)
-    , m_pMinBtn(NULL)
-    , m_pSkinBtn(NULL)
-    , m_pMenuBtn(NULL)
+    , m_pTabSwitch(NULL)
     , m_pSlider(NULL)
     , m_pProgress(NULL)
     , m_pMenu(NULL)
@@ -31,12 +37,7 @@ void CDemoFrame::InitWindow()
     CDuiResourceManager::GetInstance()->LoadLanguage(_T("lan_cn.xml"));
     SetIcon(IDR_MAINFRAME);
     m_Icon.CreateIcon(GetHWND(), IDR_MAINFRAME, _T("Duilib开源项目\nDuilib开源项目"));
-    m_pCloseBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("closebtn")));
-    m_pMaxBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("maxbtn")));
-    m_pRestoreBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("restorebtn")));
-    m_pMinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("minbtn")));
-    m_pSkinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("skinbtn")));
-    m_pMenuBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("menubtn")));
+    m_pTabSwitch = static_cast<CDuiAnimationTabLayout*>(GetPaintManager()->FindControl(_T("tab_switch")));
     m_pListControl = static_cast<CDuiList*>(GetPaintManager()->FindControl(_T("list_xml")));
     m_pSlider = static_cast<CDuiSlider*>(GetPaintManager()->FindControl(_T("Slider")));
     m_pProgress = static_cast<CDuiProgress*>(GetPaintManager()->FindControl(_T("Progress")));
@@ -139,195 +140,205 @@ LPCTSTR CDemoFrame::QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType)
     return CDuiDlgImplBase::QueryControlText(lpstrId, lpstrType);
 }
 
-void CDemoFrame::Notify(TNotifyUI& msg)
+void CDemoFrame::OnClick(TNotifyUI& msg)
 {
-    CDuiString name = msg.pSender->GetName();
-    if(msg.sType == DUI_MSGTYPE_WINDOWINIT)
+    if(msg.pSender->GetName() == _T("home"))
     {
+        ShellExecute(NULL, _T("open"), _T("https://github.com/White-CHN/Duilib_White"), NULL, NULL, SW_SHOW);
     }
-    else if(msg.sType == DUI_MSGTYPE_VALUECHANGED)
+    else if(msg.pSender->GetName() == _T("join"))
     {
-        if(msg.pSender == m_pSlider && m_pProgress != NULL)
-        {
-            m_pProgress->SetValue(m_pSlider->GetValue());
-        }
+        ShellExecute(NULL, _T("open"), _T("tencent://Message/?Uin=450756957&Menu=yes"), NULL, NULL, SW_SHOW);
     }
-    else if(msg.sType == DUI_MSGTYPE_ITEMSELECT)
+    else if(msg.pSender->GetName() == _T("joingroup"))
     {
-        if(msg.pSender == m_pComboControlNames)
+        ShellExecute(NULL, _T("open"), _T("http://qm.qq.com/cgi-bin/qm/qr?k=tGGUVkSEUP7-aAHtd8KSMulikqLyUcBZ#"), NULL, NULL, SW_SHOW);
+    }
+    else if(msg.pSender->GetName() == _T("minbtn"))
+    {
+        SendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0);
+        return;
+    }
+    else if(msg.pSender->GetName() == _T("maxbtn"))
+    {
+        SendMessage(WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+        return;
+    }
+    else if(msg.pSender->GetName() == _T("restorebtn"))
+    {
+        SendMessage(WM_SYSCOMMAND, SC_RESTORE, 0);
+        return;
+    }
+    else if(msg.pSender->GetName() == _T("closebtn"))
+    {
+        Close(0);
+        return;
+    }
+    else if(msg.pSender->GetName() == _T("menubtn"))
+    {
+        DUI_FREE_POINT(m_pMenu);
+        m_pMenu = new CDuiMenuWnd();
+        CDuiPoint point;
+        ::GetCursorPos(&point);
+        m_pMenu->Init(NULL, _T("menu.xml"), point, GetPaintManager());
+    }
+    else if(msg.pSender->GetName() == _T("skinbtn"))
+    {
+
+    }
+    else if(msg.pSender->GetName().CompareNoCase(_T("dpi_btn")) == 0)
+    {
+        int nDPI = _ttoi(msg.pSender->GetUserData());
+        GetPaintManager()->SetDPI(nDPI);
+    }
+    else if(msg.pSender->GetName().CompareNoCase(_T("popwnd_btn")) == 0)
+    {
+        CPopDlg* pPopDlg = new CPopDlg();
+        pPopDlg->Create(GetHWND(), _T("普通窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
+        pPopDlg->CenterWindow();
+    }
+    else if(msg.pSender->GetName().CompareNoCase(_T("modal_popwnd_btn")) == 0)
+    {
+        CPopDlg* pPopDlg = new CPopDlg();
+        pPopDlg->Create(GetHWND(), _T("模式窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
+        pPopDlg->CenterWindow();
+        pPopDlg->ShowModal();
+    }
+}
+
+void CDemoFrame::OnWindowInit(TNotifyUI& msg)
+{
+
+}
+
+void CDemoFrame::OnValueChanged(TNotifyUI& msg)
+{
+    if(msg.pSender == m_pSlider && m_pProgress != NULL)
+    {
+        m_pProgress->SetValue(m_pSlider->GetValue());
+    }
+}
+
+void CDemoFrame::OnValueChangedMove(TNotifyUI& msg)
+{
+    if(msg.pSender == m_pSlider && m_pProgress != NULL)
+    {
+        m_pProgress->SetValue(m_pSlider->GetValue());
+    }
+}
+
+void CDemoFrame::OnIteamSelect(TNotifyUI& msg)
+{
+    if(msg.pSender == m_pComboControlNames)
+    {
+        CDuiString strName = m_pComboControlNames->GetText();
+        m_pListControl->RemoveAll();
+        for(map<CDuiString, CControl*>::iterator it = m_ControlsName.m_mapControlsName.begin(); it != m_ControlsName.m_mapControlsName.end(); ++it)
         {
-            CDuiString strName = m_pComboControlNames->GetText();
-            m_pListControl->RemoveAll();
-            for(map<CDuiString, CControl*>::iterator it = m_ControlsName.m_mapControlsName.begin(); it != m_ControlsName.m_mapControlsName.end(); ++it)
+            if(strName == it->first)
             {
-                if(strName == it->first)
+                CControl* pControl = it->second;
+                for(int i = 0; i < (int)pControl->m_vtAttributes.size(); i++)
                 {
-                    CControl* pControl = it->second;
-                    for(int i = 0; i < (int)pControl->m_vtAttributes.size(); i++)
+                    CDuiListContainerElement* pListItem  = new CDuiListContainerElement;
+                    pListItem->SetChildVAlign(DT_VCENTER);
+                    pListItem->SetChildAlign(DT_CENTER);
+                    pListItem->SetFixedHeight(25);
+                    pListItem->SetManager(GetPaintManager(), NULL, FALSE);
+                    m_pListControl->Add(pListItem);
+
+                    CDuiLabel* pLabel1 = new CDuiLabel;
+                    pLabel1->SetManager(GetPaintManager(), NULL, FALSE);
+                    pLabel1->SetAttribute(_T("align"), _T("center"));
+                    pLabel1->SetText(pControl->m_vtAttributes[i].m_strName);
+                    pListItem->Add(pLabel1);
+
+                    if(pControl->m_vtAttributes[i].m_strType == DATATYPE_BOOL)
                     {
-                        CDuiListContainerElement* pListItem  = new CDuiListContainerElement;
-                        pListItem->SetChildVAlign(DT_VCENTER);
-                        pListItem->SetChildAlign(DT_CENTER);
-                        pListItem->SetFixedHeight(25);
-                        pListItem->SetManager(GetPaintManager(), NULL, FALSE);
-                        m_pListControl->Add(pListItem);
-
-                        CDuiLabel* pLabel1 = new CDuiLabel;
-                        pLabel1->SetManager(GetPaintManager(), NULL, FALSE);
-                        pLabel1->SetAttribute(_T("align"), _T("center"));
-                        pLabel1->SetText(pControl->m_vtAttributes[i].m_strName);
-                        pListItem->Add(pLabel1);
-
-                        if(pControl->m_vtAttributes[i].m_strType == DATATYPE_BOOL)
+                        CDuiCombo* pCombo = new CDuiCombo;
+                        if(pCombo)
                         {
-                            CDuiCombo* pCombo = new CDuiCombo;
-                            if(pCombo)
-                            {
-                                pListItem->Add(pCombo);
+                            pListItem->Add(pCombo);
 
-                                CDuiListLabelElement* pElement = new CDuiListLabelElement;
-                                pElement->SetText(_T("true"));
-                                pCombo->Add(pElement);
+                            CDuiListLabelElement* pElement = new CDuiListLabelElement;
+                            pElement->SetText(_T("true"));
+                            pCombo->Add(pElement);
 
-                                CDuiListLabelElement* pElement1 = new CDuiListLabelElement;
-                                pElement1->SetText(_T("false"));
-                                pCombo->Add(pElement1);
+                            CDuiListLabelElement* pElement1 = new CDuiListLabelElement;
+                            pElement1->SetText(_T("false"));
+                            pCombo->Add(pElement1);
 
-                            }
                         }
-                        else
-                        {
-                            CDuiEdit* pEdit = new CDuiEdit;
-                            pEdit->SetManager(GetPaintManager(), NULL, FALSE);
-                            pEdit->SetAttribute(_T("style"), _T("edit_style"));
-                            pEdit->SetText(pControl->m_vtAttributes[i].m_strValue);
-                            pListItem->Add(pEdit);
-                        }
-
-
-                        CDuiLabel* pLabel2 = new CDuiLabel;
-                        pLabel2->SetManager(GetPaintManager(), NULL, FALSE);
-                        pLabel2->SetAttribute(_T("align"), _T("center"));
-                        pLabel2->SetText(pControl->m_vtAttributes[i].m_strType);
-                        pListItem->Add(pLabel2);
-
-                        CDuiLabel* pLabel3 = new CDuiLabel;
-                        pLabel3->SetManager(GetPaintManager(), NULL, FALSE);
-                        pLabel3->SetAttribute(_T("align"), _T("center"));
-                        pLabel3->SetText(pControl->m_vtAttributes[i].m_strDefault);
-                        pListItem->Add(pLabel3);
-
-                        CDuiLabel* pLabel4 = new CDuiLabel;
-                        pLabel4->SetManager(GetPaintManager(), NULL, FALSE);
-                        pLabel4->SetText(pControl->m_vtAttributes[i].m_strRemarks);
-                        pListItem->Add(pLabel4);
                     }
-                    break;
+                    else
+                    {
+                        CDuiEdit* pEdit = new CDuiEdit;
+                        pEdit->SetManager(GetPaintManager(), NULL, FALSE);
+                        pEdit->SetAttribute(_T("style"), _T("edit_style"));
+                        pEdit->SetText(pControl->m_vtAttributes[i].m_strValue);
+                        pListItem->Add(pEdit);
+                    }
+
+
+                    CDuiLabel* pLabel2 = new CDuiLabel;
+                    pLabel2->SetManager(GetPaintManager(), NULL, FALSE);
+                    pLabel2->SetAttribute(_T("align"), _T("center"));
+                    pLabel2->SetText(pControl->m_vtAttributes[i].m_strType);
+                    pListItem->Add(pLabel2);
+
+                    CDuiLabel* pLabel3 = new CDuiLabel;
+                    pLabel3->SetManager(GetPaintManager(), NULL, FALSE);
+                    pLabel3->SetAttribute(_T("align"), _T("center"));
+                    pLabel3->SetText(pControl->m_vtAttributes[i].m_strDefault);
+                    pListItem->Add(pLabel3);
+
+                    CDuiLabel* pLabel4 = new CDuiLabel;
+                    pLabel4->SetManager(GetPaintManager(), NULL, FALSE);
+                    pLabel4->SetText(pControl->m_vtAttributes[i].m_strRemarks);
+                    pListItem->Add(pLabel4);
                 }
+                break;
             }
         }
     }
-    else if(msg.sType == DUI_MSGTYPE_COLORCHANGED)
-    {
-        CDuiColorPalette* pColorPalette = static_cast<CDuiColorPalette*>(GetPaintManager()->FindControl(_T("Pallet")));
-        if(msg.pSender == pColorPalette)
-        {
-            GetPaintManager()->GetRoot()->SetBkImage(_T(""));
-            GetPaintManager()->GetRoot()->SetBkColor(pColorPalette->GetSelectColor());
-        }
-    }
-    else if(msg.sType == DUI_MSGTYPE_SELECTCHANGED)
-    {
-        CDuiAnimationTabLayout* pTabSwitch = static_cast<CDuiAnimationTabLayout*>(GetPaintManager()->FindControl(_T("tab_switch")));
-        if(name.CompareNoCase(_T("basic_tab")) == 0)
-        {
-            pTabSwitch->SelectItem(0);
-        }
-        else if(name.CompareNoCase(_T("rich_tab")) == 0)
-        {
-            pTabSwitch->SelectItem(1);
-        }
-        else if(name.CompareNoCase(_T("ex_tab")) == 0)
-        {
-            pTabSwitch->SelectItem(2);
-        }
-        else if(name.CompareNoCase(_T("ani_tab")) == 0)
-        {
-            pTabSwitch->SelectItem(3);
-        }
-        else if(name.CompareNoCase(_T("split_tab")) == 0)
-        {
-            pTabSwitch->SelectItem(4);
-        }
-        else if(name.CompareNoCase(_T("xml_tab")) == 0)
-        {
-            pTabSwitch->SelectItem(5);
-        }
-    }
-    else if(msg.sType == DUI_MSGTYPE_CLICK)
-    {
-        if(msg.pSender->GetName() == _T("home"))
-        {
-            ShellExecute(NULL, _T("open"), _T("https://github.com/White-CHN/Duilib_White"), NULL, NULL, SW_SHOW);
-        }
-        else if(msg.pSender->GetName() == _T("join"))
-        {
-            ShellExecute(NULL, _T("open"), _T("tencent://Message/?Uin=450756957&Menu=yes"), NULL, NULL, SW_SHOW);
-        }
-        else if(msg.pSender->GetName() == _T("joingroup"))
-        {
-            ShellExecute(NULL, _T("open"), _T("http://qm.qq.com/cgi-bin/qm/qr?k=tGGUVkSEUP7-aAHtd8KSMulikqLyUcBZ#"), NULL, NULL, SW_SHOW);
-        }
-        else if(msg.pSender == m_pMinBtn)
-        {
-            SendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0);
-            return;
-        }
-        else if(msg.pSender == m_pMaxBtn)
-        {
-            SendMessage(WM_SYSCOMMAND, SC_MAXIMIZE, 0);
-            return;
-        }
-        else if(msg.pSender == m_pRestoreBtn)
-        {
-            SendMessage(WM_SYSCOMMAND, SC_RESTORE, 0);
-            return;
-        }
-        else if(msg.pSender == m_pCloseBtn)
-        {
-            Close(0);
-            return;
-        }
-        else if(msg.pSender == m_pMenuBtn)
-        {
-            DUI_FREE_POINT(m_pMenu);
-            m_pMenu = new CDuiMenuWnd();
-            CDuiPoint point;
-            ::GetCursorPos(&point);
-            m_pMenu->Init(NULL, _T("menu.xml"), point, GetPaintManager());
-        }
-        else if(msg.pSender == m_pSkinBtn)
-        {
+}
 
-        }
-        else if(msg.pSender->GetName().CompareNoCase(_T("dpi_btn")) == 0)
-        {
-            int nDPI = _ttoi(msg.pSender->GetUserData());
-            GetPaintManager()->SetDPI(nDPI);
-        }
-        else if(msg.pSender->GetName().CompareNoCase(_T("popwnd_btn")) == 0)
-        {
-            CPopDlg* pPopDlg = new CPopDlg();
-            pPopDlg->Create(GetHWND(), _T("普通窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
-            pPopDlg->CenterWindow();
-        }
-        else if(msg.pSender->GetName().CompareNoCase(_T("modal_popwnd_btn")) == 0)
-        {
-            CPopDlg* pPopDlg = new CPopDlg();
-            pPopDlg->Create(GetHWND(), _T("模式窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
-            pPopDlg->CenterWindow();
-            pPopDlg->ShowModal();
-        }
+void CDemoFrame::OnSelectChanged(TNotifyUI& msg)
+{
+
+    if(msg.pSender->GetName() == _T("basic_tab"))
+    {
+        m_pTabSwitch->SelectItem(0);
+    }
+    else if(msg.pSender->GetName() == _T("rich_tab"))
+    {
+        m_pTabSwitch->SelectItem(1);
+    }
+    else if(msg.pSender->GetName() == _T("ex_tab"))
+    {
+        m_pTabSwitch->SelectItem(2);
+    }
+    else if(msg.pSender->GetName() == _T("ani_tab"))
+    {
+        m_pTabSwitch->SelectItem(3);
+    }
+    else if(msg.pSender->GetName() == _T("split_tab"))
+    {
+        m_pTabSwitch->SelectItem(4);
+    }
+    else if(msg.pSender->GetName() == _T("xml_tab"))
+    {
+        m_pTabSwitch->SelectItem(5);
+    }
+}
+
+void CDemoFrame::OnColorChanged(TNotifyUI& msg)
+{
+    if(msg.pSender->GetName() == _T("Pallet"))
+    {
+        CDuiColorPalette* pColorPalette = static_cast<CDuiColorPalette*>(msg.pSender);
+        GetPaintManager()->GetRoot()->SetBkImage(_T(""));
+        GetPaintManager()->GetRoot()->SetBkColor(pColorPalette->GetSelectColor());
     }
 }
 

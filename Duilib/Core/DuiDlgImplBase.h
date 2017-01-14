@@ -9,10 +9,12 @@ namespace DuiLib
         , public IDialogBuilderCallback
         , public INotifyUI
         , public IQueryControlText
+        , public CDuiNotifyPump
     {
+        DUI_DECLARE_MESSAGE_MAP()
     public:
         CDuiDlgImplBase(void);
-        ~CDuiDlgImplBase(void);
+        virtual ~CDuiDlgImplBase(void);
     public:
         CDuiPaintManager* GetPaintManager();
     protected:

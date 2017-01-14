@@ -3,7 +3,8 @@
 
 namespace DuiLib
 {
-
+    DUI_BEGIN_MESSAGE_MAP(CDuiDlgImplBase, CDuiNotifyPump)
+    DUI_END_MESSAGE_MAP()
 
     CDuiDlgImplBase::CDuiDlgImplBase(void)
     {
@@ -43,6 +44,7 @@ namespace DuiLib
 
     void CDuiDlgImplBase::Notify(TNotifyUI& msg)
     {
+        return CDuiNotifyPump::NotifyPump(msg);
     }
 
     CDuiControl* CDuiDlgImplBase::CreateControl(LPCTSTR pstrClass)

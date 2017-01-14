@@ -671,6 +671,7 @@
     <ClInclude Include="Core\DuiDlgImplBase.h" />
     <ClInclude Include="Core\DuiMarkup.h" />
     <ClInclude Include="Core\DuiMarkupNode.h" />
+    <ClInclude Include="Core\DuiNotifyPump.h" />
     <ClInclude Include="Core\DuiPaintManager.h" />
     <ClInclude Include="Core\DuiRender.h" />
     <ClInclude Include="Core\DuiResourceManager.h" />
@@ -721,6 +722,7 @@
     <ClCompile Include="Core\DuiDlgImplBase.cpp" />
     <ClCompile Include="Core\DuiMarkup.cpp" />
     <ClCompile Include="Core\DuiMarkupNode.cpp" />
+    <ClCompile Include="Core\DuiNotifyPump.cpp" />
     <ClCompile Include="Core\DuiPaintManager.cpp" />
     <ClCompile Include="Core\DuiRender.cpp" />
     <ClCompile Include="Core\DuiResourceManager.cpp" />

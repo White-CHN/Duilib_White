@@ -42,6 +42,8 @@ namespace DuiLib
 #ifndef OVERRIDE
     #define OVERRIDE override
 #endif
+
+#define DUILIB_COMDAT __declspec(selectany)
     // 鼠标光标定义
 #define DUI_ARROW           32512
 #define DUI_IBEAM           32513
@@ -252,9 +254,12 @@ namespace DuiLib
     LPCTSTR DUILIB_API DuiTraceMsg(UINT uMsg);
     DWORD GetLocalIpAddress();
 
-// 核心控件
+
+    /*
+    * @作者：White-CHN
+    * @说明：核心控件
+    * @版本号：V1.0
+    * @创建日期：2017/1/14 9:45:14
+    */
     class CDuiControl;
-
-
-
 }

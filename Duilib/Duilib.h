@@ -18,9 +18,6 @@
     #endif
 #endif
 
-
-#define DUILIB_COMDAT __declspec(selectany)
-
 //#define USE_XIMAGE_EFFECT //使用ximage的gif控件CGifAnimExUI开关，提升性能,默认不使用
 
 #if defined _M_IX86
@@ -66,11 +63,13 @@ using namespace Gdiplus;
 #include "Core/DuiControl.h"
 #include "Core/DuiContainer.h"
 #include "Core/DuiResourceManager.h"
+#include "Core/DuiNotifyPump.h"
 #include "Core/DuiWnd.h"
 #include "Core/DuiDlgBuilder.h"
 #include "Core/DuiDlgImplBase.h"
 #include "Core/DuiRender.h"
 #include "Core/DuiAnimation.h"
+
 
 #include "Layout/DuiVerticalLayout.h"
 #include "Layout/DuiHorizontalLayout.h"

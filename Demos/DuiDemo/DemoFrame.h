@@ -3,6 +3,7 @@
 #include "ControlsName.h"
 class CDemoFrame : public CDuiDlgImplBase
 {
+    DUI_DECLARE_MESSAGE_MAP()
 public:
     CDemoFrame(void);
     virtual ~CDemoFrame(void);
@@ -17,17 +18,18 @@ public:
 
     LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType) OVERRIDE;
 
-    void Notify(TNotifyUI& msg)  OVERRIDE;
+    void OnClick(TNotifyUI& msg);
+    void OnWindowInit(TNotifyUI& msg);
+    void OnValueChanged(TNotifyUI& msg);
+    void OnValueChangedMove(TNotifyUI& msg);
+    void OnIteamSelect(TNotifyUI& msg);
+    void OnSelectChanged(TNotifyUI& msg);
+    void OnColorChanged(TNotifyUI& msg);
 
     LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
 private:
     BOOL bEnglish;
-    CDuiButton* m_pCloseBtn;
-    CDuiButton* m_pMaxBtn;
-    CDuiButton* m_pRestoreBtn;
-    CDuiButton* m_pMinBtn;
-    CDuiButton* m_pSkinBtn;
-    CDuiButton* m_pMenuBtn;
+    CDuiAnimationTabLayout* m_pTabSwitch;
     CDuiSlider* m_pSlider;
     CDuiProgress* m_pProgress;
     CDuiMenuWnd* m_pMenu;
