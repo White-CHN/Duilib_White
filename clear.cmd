@@ -6,6 +6,7 @@ del bin\*.pdb
 del bin\*.lib
 del bin\*.exe
 del bin\*.dll
+del Demos\DuiDemo\*.aps
 
 rd /s /q Lib
 rd /s /q Temp
