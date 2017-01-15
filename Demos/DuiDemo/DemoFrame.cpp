@@ -326,7 +326,7 @@ void CDemoFrame::OnIteamSelect(TNotifyUI& msg)
                                 vtValues.push_back(_T("true"));
                                 vtValues.push_back(_T("false"));
                             }
-                            else if(pControl->m_vtAttributes[i].m_strType == DATATYPE_CURSOR)
+                            else if(pControl->m_vtAttributes[i].m_strType == DATATYPE_ALIGN)
                             {
                                 vtValues.push_back(_T(""));
                                 vtValues.push_back(_T("left"));

@@ -204,7 +204,7 @@
 					<Control />
 				</HorizontalLayout>
 				<HorizontalLayout height="10"/>
-				<HorizontalLayout height="250" childvalign="vcenter" >
+				<HorizontalLayout height="350" childvalign="vcenter" >
 					<Control width="30"/>
 					<VerticalLayout   bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
 						<List name="list_xml" hscrollbar="true" vscrollbar="true" bkcolor="#FFFFFFFF" style="list_style" scrollstepsize="100">
