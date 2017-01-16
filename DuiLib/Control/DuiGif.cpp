@@ -112,11 +112,7 @@ namespace DuiLib
 
     void CDuiGif::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
     {
-        if(_tcsicmp(pstrName, _T("bkimage")) == 0)
-        {
-            SetBkImage(pstrValue);
-        }
-        else if(_tcsicmp(pstrName, _T("autoplay")) == 0)
+        if(_tcsicmp(pstrName, _T("autoplay")) == 0)
         {
             SetAutoPlay(_tcsicmp(pstrValue, _T("true")) == 0);
         }

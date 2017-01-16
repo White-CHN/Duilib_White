@@ -46,8 +46,6 @@ void CDemoFrame::InitWindow()
     m_pProgress = static_cast<CDuiProgress*>(GetPaintManager()->FindControl(_T("Progress")));
     m_pEditXML = static_cast<CDuiEdit*>(GetPaintManager()->FindControl(_T("EditXML")));
 
-    m_pProgress->SetShowText(TRUE);
-
     CDuiChart* pPieView = static_cast<CDuiChart*>(GetPaintManager()->FindControl(_T("ChartPie")));
     if(NULL != pPieView)
     {

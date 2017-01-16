@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ControlsName.h"
+using namespace ControlAttributes;
 class CDemoFrame : public CDuiDlgImplBase
 {
     DUI_DECLARE_MESSAGE_MAP()

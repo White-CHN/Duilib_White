@@ -6,7 +6,10 @@
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
 {
     // 调试信息控制台
+#ifdef _DEBUG
     CDuiConsole Console ;
+#endif // _DEBUG
+
     // 全局初始化
     CDuiPaintManager::Initialize(hInstance);
     // 资源类型

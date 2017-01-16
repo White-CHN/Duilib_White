@@ -1,5 +1,9 @@
 #pragma once
 
+namespace ControlAttributes
+{
+
+
 
 #define DATATYPE_CHAR			(_T("char"))
 #define DATATYPE_INT			(_T("int"))
@@ -17,86 +21,182 @@
 #define DATATYPE_VALIGN			(_T("valign"))
 
 
-class CAttribute
-{
-public:
-    CDuiString m_strName;		// 属性字段
-    CDuiString m_strValue;		// 值
-    CDuiString m_strType;		// 类型
-    CDuiString m_strDefault;	// 默认值
-    CDuiString m_strRemarks;	// 备注
-};
+    class CAttribute
+    {
+    public:
+        CDuiString m_strName;		// 属性字段
+        CDuiString m_strValue;		// 值
+        CDuiString m_strType;		// 类型
+        CDuiString m_strDefault;	// 默认值
+        CDuiString m_strRemarks;	// 备注
+    };
 
-class IControl
-{
-public:
-    vector<CAttribute> m_vtAttributes;
-};
+    class IControl
+    {
+    public:
+        void Add(CDuiString strName = _T(""), CDuiString strType = _T(""), CDuiString strDefault = _T(""), CDuiString strRemarks = _T(""), CDuiString strValue = _T(""));
+    public:
+        vector<CAttribute> m_vtAttributes;
+    };
 
-class CImage
-    : public IControl
-{
-public:
-    CImage(void);
-};
+    class CImage
+        : public IControl
+    {
+    public:
+        CImage(void);
+    };
 
-class CFont
-    : public IControl
-{
-public:
-    CFont(void);
-};
+    class CFont
+        : public IControl
+    {
+    public:
+        CFont(void);
+    };
 
-class CDefault
-    : public IControl
-{
-public:
-    CDefault(void);
-};
+    class CDefault
+        : public IControl
+    {
+    public:
+        CDefault(void);
+    };
 
-class CStyle
-    : public IControl
-{
-public:
-    CStyle(void);
-};
+    class CStyle
+        : public IControl
+    {
+    public:
+        CStyle(void);
+    };
 
-class CInclude
-    : public IControl
-{
-public:
-    CInclude(void);
-};
+    class CInclude
+        : public IControl
+    {
+    public:
+        CInclude(void);
+    };
 
-class CWindow
-    : public IControl
-{
-public:
-    CWindow(void);
-};
+    class CWindow
+        : public IControl
+    {
+    public:
+        CWindow(void);
+    };
 
-class CControl
-    : public IControl
-{
-public:
-    CControl(void);
-};
+    class CControl
+        : public IControl
+    {
+    public:
+        CControl(void);
+    };
 
-class CLabel
-    : public CControl
-{
-public:
-    CLabel(void);
-};
-
-class CControlsName
-{
-public:
-    CControlsName(void);
-    ~CControlsName(void);
-public:
-    map<CDuiString, IControl*> m_mapControlsName;
-};
+    class CLabel
+        : public CControl
+    {
+    public:
+        CLabel(void);
+    };
 
 
+    class CScrollBar
+        : public CControl
+    {
+    public:
+        CScrollBar(void);
+    };
 
+    class CButton
+        : public CLabel
+    {
+    public:
+        CButton(void);
+    };
+
+    class COption
+        : public CButton
+    {
+    public:
+        COption(void);
+    };
+
+    class CRadio
+        : public COption
+    {
+    };
+
+    class CEdit
+        : public CLabel
+    {
+    public:
+        CEdit(void);
+    };
+
+    class CProgress :
+        public CLabel
+    {
+    public:
+        CProgress(void);
+    };
+
+    class CSlider :
+        public CProgress
+    {
+    public:
+        CSlider(void);
+    };
+
+    class  CContainer
+        : public CControl
+    {
+    public:
+        CContainer(void);
+    };
+
+    class  CListElement
+        : public CControl
+    {
+    public:
+        CListElement(void);
+    };
+
+    class  CListLabelElement : public CListElement
+    {
+
+    };
+
+    class CListTextElement : public CListLabelElement
+    {
+
+    };
+
+    class CDateTime :
+        public CLabel
+    {
+    };
+
+    class CIPAddress
+        : public CLabel
+    {
+    };
+
+    class CRing
+        : public CLabel
+    {
+    };
+
+    class CGif
+        : public CControl
+    {
+    public:
+        CGif(void);
+    };
+
+    class CControlsName
+    {
+    public:
+        CControlsName(void);
+        ~CControlsName(void);
+    public:
+        map<CDuiString, IControl*> m_mapControlsName;
+    };
+
+
+}

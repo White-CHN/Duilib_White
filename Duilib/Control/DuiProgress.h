@@ -34,6 +34,7 @@ namespace DuiLib
 
         void PaintForeColor(HDC hDC) OVERRIDE;
         void PaintForeImage(HDC hDC) OVERRIDE;
+        void PaintText(HDC hDC) OVERRIDE;
     private:
         BOOL m_bShowText;
         BOOL m_bHorizontal;

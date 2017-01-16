@@ -98,7 +98,7 @@
 					<Label font="3" valign="center" cursor="hand" align="center" tooltip="进度条演示" text="进度条演示"  width="80" textcolor="#FFFFFFFF" />
 					<HorizontalLayout height="25" childpadding="12"  >
 
-						<Progress name="Progress"  text="Progress" textcolor="#FFCD00CD" bordercolor="#FFFFFFFF" bordersize="1" align="center" width="139"  valign="center"  foreimage="Progress/progress_fore.png"  value="30"   />
+						<Progress name="Progress" showtext="true" text="Progress" textcolor="#FFCD00CD" bordercolor="#FFFFFFFF" bordersize="1" align="center" width="139"  valign="center"  foreimage="Progress/progress_fore.png"  value="30"   />
 						<Slider name="Slider" value="30"  width="139" sendmove="true" thumbsize="12,20" bkimage="file='Slider/slider_fore.bmp' mask='0xffff00ff'" thumbimage="file='Slider/SliderBar.png' mask='0xffffffff'"/>
 					</HorizontalLayout>
 
@@ -193,7 +193,7 @@
 				<VerticalLayout bkcolor="#FFFFFFFF" inset="0,0,0,6" sepimm="true" sepheight="6" height="200" minheight="200" maxheight="300">
 				</VerticalLayout>
 			</VerticalLayout>
-			<VerticalLayout vscrollbar="true" ><!-- 属性生成 -->
+			<VerticalLayout  ><!-- 属性生成 -->
 				<HorizontalLayout height="10"/>
 				<HorizontalLayout height="28" childvalign="vcenter" childpadding="12" >
 					<Control />
@@ -204,7 +204,7 @@
 					<Control />
 				</HorizontalLayout>
 				<HorizontalLayout height="10"/>
-				<HorizontalLayout height="350" childvalign="vcenter" >
+				<HorizontalLayout  childvalign="vcenter" >
 					<Control width="30"/>
 					<VerticalLayout   bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
 						<List name="list_xml" hscrollbar="true" vscrollbar="true" bkcolor="#FFFFFFFF" style="list_style" scrollstepsize="100">

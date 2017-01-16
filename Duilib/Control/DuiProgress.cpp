@@ -161,6 +161,10 @@ namespace DuiLib
         {
             SetStretchForeImage(_tcsicmp(pstrValue, _T("true")) == 0 ? TRUE : FALSE);
         }
+        else if(_tcsicmp(pstrName, _T("showtext")) == 0)
+        {
+            SetShowText(_tcsicmp(pstrValue, _T("true")) == 0 ? TRUE : FALSE);
+        }
         else
         {
             CDuiLabel::SetAttribute(pstrName, pstrValue);
@@ -252,6 +256,14 @@ namespace DuiLib
             {
                 return;
             }
+        }
+    }
+
+    void CDuiProgress::PaintText(HDC hDC)
+    {
+        if(IsShowText())
+        {
+            CDuiLabel::PaintText(hDC);
         }
     }
 
