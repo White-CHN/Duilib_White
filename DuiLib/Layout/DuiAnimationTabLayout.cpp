@@ -162,7 +162,7 @@ namespace DuiLib
 
     void CDuiAnimationTabLayout::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
     {
-        if(_tcsicmp(pstrName, _T("animation_direction")) == 0 && _tcsicmp(pstrValue, _T("vertical")) == 0)
+        if(_tcsicmp(pstrName, _T("animationdirection")) == 0 && _tcsicmp(pstrValue, _T("vertical")) == 0)
         {
             m_bIsVerticalDirection = TRUE;    // pstrValue = "vertical" or "horizontal"
         }

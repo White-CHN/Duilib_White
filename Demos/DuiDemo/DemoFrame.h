@@ -2,6 +2,7 @@
 
 #include "ControlsName.h"
 using namespace ControlAttributes;
+
 class CDemoFrame : public CDuiDlgImplBase
 {
     DUI_DECLARE_MESSAGE_MAP()
@@ -23,7 +24,7 @@ public:
     void OnWindowInit(TNotifyUI& msg);
     void OnValueChanged(TNotifyUI& msg);
     void OnValueChangedMove(TNotifyUI& msg);
-    void OnIteamSelect(TNotifyUI& msg);
+    void OnItemSelect(TNotifyUI& msg);
     void OnSelectChanged(TNotifyUI& msg);
     void OnColorChanged(TNotifyUI& msg);
 

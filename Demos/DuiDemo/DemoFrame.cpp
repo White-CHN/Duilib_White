@@ -8,7 +8,7 @@ DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
 DUI_ON_WINDOWINIT()
 DUI_ON_MSGTYPE(DUI_MSGTYPE_VALUECHANGED, OnValueChanged)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_VALUECHANGED_MOVE, OnValueChangedMove)
-DUI_ON_MSGTYPE(DUI_MSGTYPE_ITEMSELECT, OnIteamSelect)
+DUI_ON_MSGTYPE(DUI_MSGTYPE_ITEMSELECT, OnItemSelect)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_SELECTCHANGED, OnSelectChanged)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_COLORCHANGED, OnColorChanged)
 DUI_END_MESSAGE_MAP()
@@ -278,7 +278,7 @@ void CDemoFrame::OnValueChangedMove(TNotifyUI& msg)
     }
 }
 
-void CDemoFrame::OnIteamSelect(TNotifyUI& msg)
+void CDemoFrame::OnItemSelect(TNotifyUI& msg)
 {
     if(msg.pSender == m_pComboControlNames)
     {
@@ -308,7 +308,8 @@ void CDemoFrame::OnIteamSelect(TNotifyUI& msg)
                             || pControl->m_vtAttributes[i].m_strType == DATATYPE_FLOAT_ALIGN
                             || pControl->m_vtAttributes[i].m_strType == DATATYPE_CURSOR
                             || pControl->m_vtAttributes[i].m_strType == DATATYPE_ALIGN
-                            || pControl->m_vtAttributes[i].m_strType == DATATYPE_VALIGN)
+                            || pControl->m_vtAttributes[i].m_strType == DATATYPE_VALIGN
+                            || pControl->m_vtAttributes[i].m_strType == DATATYPE_ANIMATION)
                     {
                         CDuiCombo* pCombo = new CDuiCombo;
                         if(pCombo)
@@ -323,6 +324,12 @@ void CDemoFrame::OnIteamSelect(TNotifyUI& msg)
                                 vtValues.push_back(_T(""));
                                 vtValues.push_back(_T("true"));
                                 vtValues.push_back(_T("false"));
+                            }
+                            else if(pControl->m_vtAttributes[i].m_strType == DATATYPE_ANIMATION)
+                            {
+                                vtValues.push_back(_T(""));
+                                vtValues.push_back(_T("vertical"));
+                                vtValues.push_back(_T("horizontal"));
                             }
                             else if(pControl->m_vtAttributes[i].m_strType == DATATYPE_ALIGN)
                             {

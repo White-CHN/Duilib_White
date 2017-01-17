@@ -19,7 +19,7 @@ namespace ControlAttributes
 #define DATATYPE_CURSOR			(_T("cursor"))
 #define DATATYPE_ALIGN			(_T("align"))
 #define DATATYPE_VALIGN			(_T("valign"))
-
+#define DATATYPE_ANIMATION		(_T("animation"))
 
     class CAttribute
     {
@@ -189,6 +189,96 @@ namespace ControlAttributes
         CGif(void);
     };
 
+    class CColorPalette
+        : public CControl
+    {
+    public:
+        CColorPalette(void);
+    };
+
+    class CHorizontalLayout
+        : public CContainer
+    {
+    public:
+        CHorizontalLayout(void);
+    };
+
+    class CVerticalLayout
+        : public CContainer
+    {
+    public:
+        CVerticalLayout(void);
+    };
+
+    class CTabLayout
+        : public CContainer
+    {
+    public:
+        CTabLayout(void);
+    };
+
+    class CAnimationTabLayout
+        : public CTabLayout
+    {
+    public:
+        CAnimationTabLayout(void);
+    };
+
+    class CCombo
+        : public CContainer
+    {
+    public:
+        CCombo(void);
+    };
+
+
+
+    class CGroupBox
+        : public CVerticalLayout
+    {
+    public:
+        CGroupBox(void);
+    };
+
+    class  CList
+        : public CVerticalLayout
+    {
+    public:
+        CList(void);
+    };
+
+    class CMenu
+        : public CList
+    {
+    };
+
+    class CListHeader
+        : public CHorizontalLayout
+    {
+    public:
+        CListHeader(void);
+    };
+
+    class  CListHeaderItem
+        : public CContainer
+    {
+    public:
+        CListHeaderItem(void);
+    };
+
+    class CListContainerElement
+        : public CHorizontalLayout
+    {
+    public:
+        CListContainerElement(void);
+    };
+
+    class CMenuElement
+        : public CListContainerElement
+    {
+    public:
+        CMenuElement(void);
+    };
     class CControlsName
     {
     public:

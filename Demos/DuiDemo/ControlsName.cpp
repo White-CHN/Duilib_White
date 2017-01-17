@@ -288,11 +288,163 @@ namespace ControlAttributes
         Add(_T("autoplay"), DATATYPE_BOOL, _T("true"), _T("是否自动播放GIF动画"));
         Add(_T("autosize"), DATATYPE_BOOL, _T("false"), _T("是否根据图片自动设置控件大小(开启后width和height属性失效)"));
     }
+    ///////////////////////////////////////////////////
+    CColorPalette::CColorPalette(void)
+    {
+        Add(_T("palletheight"), DATATYPE_INT, _T("200"), _T("pallet高度"));
+        Add(_T("barheight"), DATATYPE_INT, _T("10"), _T("bar高度"));
+        Add(_T("thumbimage"), DATATYPE_STRING, _T(""), _T("鼠标图片"));
+    }
+
+    ///////////////////////////////////////////////////////
+    CHorizontalLayout::CHorizontalLayout(void)
+    {
+        Add(_T("sepwidth"), DATATYPE_INT, _T("0"), _T("窗口分割分隔符宽度,正负表示分隔符在左边还是右边,如(-4)"));
+        Add(_T("sepimm"), DATATYPE_BOOL, _T("false"), _T("拖动分隔符是否立即改变大小"));
+    }
+    //////////////////////////////////////////////////////////
+    CVerticalLayout::CVerticalLayout(void)
+    {
+        Add(_T("sepheight"), DATATYPE_INT, _T("0"), _T("窗口分割分隔符高度,正负表示分隔符在上边还是下边,如(-4)"));
+        Add(_T("sepimm"), DATATYPE_BOOL, _T("false"), _T("拖动分隔符是否立即改变大小"));
+    }
+    //////////////////////////////////////////////////////////
+    CTabLayout::CTabLayout(void)
+    {
+        Add(_T("selectedid"), DATATYPE_INT, _T("0"), _T("默认选中的页面id"));
+    }
+
+    //////////////////////////////////////////////////////////
+    CAnimationTabLayout::CAnimationTabLayout(void)
+    {
+        Add(_T("animationdirection"), DATATYPE_ANIMATION, _T("horizontal"), _T("动画方向左右上下,默认是左右,如(vertical、horizontal)"));
+    }
+
+    ////////////////////////////////////////////////////////
+    CCombo::CCombo(void)
+    {
+        Add(_T("align"), DATATYPE_ALIGN, _T("left"), _T("文字横向对齐方式"));
+        Add(_T("valign"), DATATYPE_VALIGN, _T("vcenter"), _T("文字纵向对齐方式"));
+        Add(_T("endellipsis"), DATATYPE_BOOL, _T("false"), _T("句末显示不全是否使用...代替"));
+        Add(_T("wordbreak"), DATATYPE_BOOL, _T("false"), _T("是否支持多行文字"));
+        Add(_T("font"), DATATYPE_INT, _T("-1"), _T("字体id"));
+        Add(_T("textcolor"), DATATYPE_DWORD, _T("0x00000000"), _T("字体颜色,0表示使用默认字体颜色"));
+        Add(_T("disabledtextcolor"), DATATYPE_DWORD, _T("0x00000000"), _T("disable字体颜色,0表示使用默认字体颜色"));
+        Add(_T("textpadding"), DATATYPE_RECT, _T("0,0,0,0"), _T("文字显示的边距"));
+        Add(_T("showhtml"), DATATYPE_BOOL, _T("false"), _T("是否使用类html富文本绘制"));
+        Add(_T("normalimage"), DATATYPE_STRING, _T(""), _T("普通状态图片"));
+        Add(_T("hotimage"), DATATYPE_STRING, _T(""), _T("鼠标悬浮的状态图片"));
+        Add(_T("pushedimage"), DATATYPE_STRING, _T(""), _T("鼠标按下的状态图片"));
+        Add(_T("focusedimage"), DATATYPE_STRING, _T(""), _T("获得焦点时的状态图片"));
+        Add(_T("disabledimage"), DATATYPE_STRING, _T(""), _T("禁用的状态图片"));
+        Add(_T("scrollselect"), DATATYPE_BOOL, _T("true"), _T("是否随滚动改变选中项"));
+        Add(_T("dropbox"), DATATYPE_STRING, _T(""), _T("dropbox风格"));
+        Add(_T("dropboxsize"), DATATYPE_SIZE, _T("0,150"), _T("弹出框大小设置"));
+        Add(_T("itemfont"), DATATYPE_INT, _T("-1"), _T("子控件字体id"));
+        Add(_T("itemalign"), DATATYPE_ALIGN, _T("left"), _T("文字横向对齐方式"));
+        Add(_T("itemendellipsis"), DATATYPE_BOOL, _T("false"), _T("子控件句末显示不全是否使用...代替"));
+        Add(_T("itemtextpadding"), DATATYPE_RECT, _T("0,0,0,0"), _T("子控件文字显示的边距"));
+        Add(_T("itemtextcolor"), DATATYPE_DWORD, _T("0xFF000000"), _T("子控件字体颜色"));
+        Add(_T("itembkcolor"), DATATYPE_DWORD, _T("0x00000000"), _T("子控件背景颜色"));
+        Add(_T("itembkimage"), DATATYPE_STRING, _T(""), _T("子控件背景图片"));
+        Add(_T("itemaltbk"), DATATYPE_BOOL, _T("false"), _T("子控件是否使用隔行交替背景"));
+        Add(_T("itemselectedtextcolor"), DATATYPE_DWORD, _T("0xFF000000"), _T("子控件被选中时的字体颜色"));
+        Add(_T("itemselectedbkcolor"), DATATYPE_DWORD, _T("0xFFC1E3FF"), _T("子控件被选中时的背景颜色"));
+        Add(_T("itemselectedimage"), DATATYPE_STRING, _T(""), _T("子控件被选中时的背景图片"));
+        Add(_T("itemhottextcolor"), DATATYPE_DWORD, _T("0xFF000000"), _T("子控件鼠标悬浮时的字体颜色"));
+        Add(_T("itemhotbkcolor"), DATATYPE_DWORD, _T("0xFFE9F5FF"), _T("子控件鼠标悬浮时的背景颜色"));
+        Add(_T("itemhotimage"), DATATYPE_STRING, _T(""), _T("子控件鼠标悬浮时的背景图片"));
+        Add(_T("itemdisabledtextcolor"), DATATYPE_DWORD, _T("0xFFCCCCCC"), _T("子控件禁用时的字体颜色"));
+        Add(_T("itemdisabledbkcolor"), DATATYPE_DWORD, _T("0xFFFFFFFF"), _T("子控件禁用时的背景颜色"));
+        Add(_T("itemdisabledimage"), DATATYPE_STRING, _T(""), _T("子控件禁用时的背景图片"));
+        Add(_T("itemlinecolor"), DATATYPE_DWORD, _T("0x00000000"), _T("子控件行分割线颜色"));
+        Add(_T("itemshowhtml"), DATATYPE_BOOL, _T("false"), _T("子控件是否使用类html富文本绘制"));
+    }
+
+    ////////////////////////////////////////////////////
+    CGroupBox::CGroupBox(void)
+    {
+        Add(_T("textcolor"), DATATYPE_DWORD, _T("0x00000000"), _T("字体颜色,0表示使用默认字体颜色"));
+        Add(_T("disabledtextcolor"), DATATYPE_DWORD, _T("0x00000000"), _T("disable字体颜色,0表示使用默认字体颜色"));
+        Add(_T("font"), DATATYPE_INT, _T("-1"), _T("字体id"));
+    }
+
+    /////////////////////////////////////////////////
+
+    CList::CList(void)
+    {
+        Add(_T("header"), DATATYPE_BOOL, _T("true"), _T("是否显示表头"));
+        Add(_T("headerbkimage"), DATATYPE_STRING, _T(""), _T("表头背景图片"));
+        Add(_T("scrollselect"), DATATYPE_BOOL, _T("true"), _T("是否随滚动改变选中项"));
+        Add(_T("multiexpanding"), DATATYPE_BOOL, _T("false"), _T("是否支持多个子控件同时打开"));
+        Add(_T("itemfont"), DATATYPE_INT, _T("-1"), _T("子控件字体id"));
+        Add(_T("itemalign"), DATATYPE_ALIGN, _T("left"), _T("文字横向对齐方式"));
+        Add(_T("itemvalign"), DATATYPE_VALIGN, _T("vcenter"), _T("文字纵向对齐方式"));
+        Add(_T("itemendellipsis"), DATATYPE_BOOL, _T("false"), _T("子控件句末显示不全是否使用...代替"));
+        Add(_T("itemtextpadding"), DATATYPE_RECT, _T("0,0,0,0"), _T("子控件文字显示的边距"));
+        Add(_T("itemtextcolor"), DATATYPE_DWORD, _T("0xFF000000"), _T("子控件字体颜色"));
+        Add(_T("itembkcolor"), DATATYPE_DWORD, _T("0x00000000"), _T("子控件背景颜色"));
+        Add(_T("itembkimage"), DATATYPE_STRING, _T(""), _T("子控件背景图片"));
+        Add(_T("itemaltbk"), DATATYPE_BOOL, _T("false"), _T("子控件是否使用隔行交替背景"));
+        Add(_T("itemselectedtextcolor"), DATATYPE_DWORD, _T("0xFF000000"), _T("子控件被选中时的字体颜色"));
+        Add(_T("itemselectedbkcolor"), DATATYPE_DWORD, _T("0xFFC1E3FF"), _T("子控件被选中时的背景颜色"));
+        Add(_T("itemselectedimage"), DATATYPE_STRING, _T(""), _T("子控件被选中时的背景图片"));
+        Add(_T("itemhottextcolor"), DATATYPE_DWORD, _T("0xFF000000"), _T("子控件鼠标悬浮时的字体颜色"));
+        Add(_T("itemhotbkcolor"), DATATYPE_DWORD, _T("0xFFE9F5FF"), _T("子控件鼠标悬浮时的背景颜色"));
+        Add(_T("itemhotimage"), DATATYPE_STRING, _T(""), _T("子控件鼠标悬浮时的背景图片"));
+        Add(_T("itemdisabledtextcolor"), DATATYPE_DWORD, _T("0xFFCCCCCC"), _T("子控件禁用时的字体颜色"));
+        Add(_T("itemdisabledbkcolor"), DATATYPE_DWORD, _T("0xFFFFFFFF"), _T("子控件禁用时的背景颜色"));
+        Add(_T("itemdisabledimage"), DATATYPE_STRING, _T(""), _T("子控件禁用时的背景图片"));
+        Add(_T("itemlinecolor"), DATATYPE_DWORD, _T("0x00000000"), _T("子控件行分割线颜色"));
+        Add(_T("itemshowrowline"), DATATYPE_BOOL, _T("false"), _T("子控件是否绘制行线"));
+        Add(_T("itemshowcolumnline"), DATATYPE_BOOL, _T("false"), _T("子控件是否绘制列线"));
+        Add(_T("itemshowhtml"), DATATYPE_BOOL, _T("false"), _T("子控件是否使用类html富文本绘制"));
+        Add(_T("multiselect"), DATATYPE_BOOL, _T("false"), _T("是否启用虚拟子控件"));
+    }
+    ///////////////////////////////////////////////////////
+    CListHeader::CListHeader(void)
+    {
+        Add(_T("scaleheader"), DATATYPE_BOOL, _T("false"), _T("每个表头的宽度是否按照百分比来设置"));
+    }
+    ////////////////////////////////////////////////////
+    CListHeaderItem::CListHeaderItem(void)
+    {
+        Add(_T("dragable"), DATATYPE_BOOL, _T("true"), _T("是否可拖动改变大小"));
+        Add(_T("sepwidth"), DATATYPE_INT, _T("4"), _T("分隔符宽"));
+        Add(_T("align"), DATATYPE_ALIGN, _T("left"), _T("文字横向对齐方式"));
+        Add(_T("endellipsis"), DATATYPE_BOOL, _T("false"), _T("句末显示不全是否使用...代替"));
+        Add(_T("font"), DATATYPE_INT, _T("-1"), _T("字体id"));
+        Add(_T("textcolor"), DATATYPE_DWORD, _T("0x00000000"), _T("字体颜色,0表示使用默认字体颜色"));
+        Add(_T("textpadding"), DATATYPE_RECT, _T("0,0,0,0"), _T("文字显示的边距"));
+        Add(_T("showhtml"), DATATYPE_BOOL, _T("false"), _T("是否使用类html富文本绘制"));
+        Add(_T("normalimage"), DATATYPE_STRING, _T(""), _T("普通状态图片"));
+        Add(_T("hotimage"), DATATYPE_STRING, _T(""), _T("鼠标悬浮的状态图片"));
+        Add(_T("pushedimage"), DATATYPE_STRING, _T(""), _T("鼠标按下的状态图片"));
+        Add(_T("focusedimage"), DATATYPE_STRING, _T(""), _T("获得焦点时的状态图片"));
+        Add(_T("sepimage"), DATATYPE_STRING, _T(""), _T("拖动条图片"));
+        Add(_T("scale"), DATATYPE_INT, _T("0"), _T("设置子表头所占总表头的百分比宽度，如40（代表占40%的宽度）"));
+    }
+    //////////////////////////////////////////////////////////
+    CListContainerElement::CListContainerElement(void)
+    {
+        Add(_T("selected"), DATATYPE_BOOL, _T("false"), _T("是否选中"));
+    }
+    ///////////////////////////////////////////////////////////
+    CMenuElement::CMenuElement(void)
+    {
+        Add(_T("icon"), DATATYPE_STRING, _T(""), _T("菜单项的图标图片"));
+        Add(_T("iconsize"), DATATYPE_SIZE, _T("0,0"), _T("图片的大小，最大为26x26"));
+        Add(_T("checkitem"), DATATYPE_BOOL, _T("false"), _T("是否有复选功能"));
+        Add(_T("ischeck"), DATATYPE_BOOL, _T("false"), _T("是否被选中（前提是开启了复选功能，复选功能属性应该写在本属性的前面）"));
+        Add(_T("linetype"), DATATYPE_BOOL, _T("false"), _T("是否是分割线（开启后将不会显示图标）"));
+        Add(_T("expland"), DATATYPE_BOOL, _T("false"), _T("是否显示下级菜单的小三角图片（需要通过Default标签设置ExplandIcon属性图片的路径）"));
+        Add(_T("linecolor"), DATATYPE_DWORD, _T("0xFFBCBFC4"), _T(""));
+        Add(_T("linepadding"), DATATYPE_RECT, _T("29,0,7,0"), _T("分割线的外边据"));
+    }
 
 
 
-    ////////////////////////////////////////////
-
+    //////////////////////////////////////////////////////
     CControlsName::CControlsName(void)
     {
         m_mapControlsName[DUI_WINDOW]				= new CWindow;
@@ -318,21 +470,19 @@ namespace ControlAttributes
         m_mapControlsName[DUI_CTR_IPADDRESS]		= new CIPAddress;
         m_mapControlsName[DUI_CTR_RING]				= new CRing;
         m_mapControlsName[DUI_CTR_GIF]				= new CGif;
-
-        //m_vtControlsName.push_back(DUI_CTR_COLORPALETTE);
-
-        //m_vtControlsName.push_back(DUI_CTR_VERTICALLAYOUT);
-        //m_vtControlsName.push_back(DUI_CTR_HORIZONTALLAYOUT);
-        //m_vtControlsName.push_back(DUI_CTR_TABLAYOUT);
-        //m_vtControlsName.push_back(DUI_CTR_ANIMATION_TABLAYOUT);
-        //m_vtControlsName.push_back(DUI_CTR_COMBO);
-        //m_vtControlsName.push_back(DUI_CTR_GROUPBOX);
-        //m_vtControlsName.push_back(DUI_CTR_LISTHEADERITEM);
-        //m_vtControlsName.push_back(DUI_CTR_LISTHEADER);
-        //m_vtControlsName.push_back(DUI_CTR_LIST);
-        //m_vtControlsName.push_back(DUI_CTR_LISTCONTAINERELEMENT);
-        //m_vtControlsName.push_back(DUI_CTR_MENU);
-        //m_vtControlsName.push_back(DUI_CTR_MENUELEMENT);
+        m_mapControlsName[DUI_CTR_COLORPALETTE]		= new CColorPalette;
+        m_mapControlsName[DUI_CTR_VERTICALLAYOUT]	= new CVerticalLayout;
+        m_mapControlsName[DUI_CTR_HORIZONTALLAYOUT]	= new CHorizontalLayout;
+        m_mapControlsName[DUI_CTR_TABLAYOUT]		= new CTabLayout;
+        m_mapControlsName[DUI_CTR_ANIMATION_TABLAYOUT]	= new CAnimationTabLayout;
+        m_mapControlsName[DUI_CTR_COMBO]			= new CCombo;
+        m_mapControlsName[DUI_CTR_GROUPBOX]			= new CGroupBox;
+        m_mapControlsName[DUI_CTR_LIST]				= new CList;
+        m_mapControlsName[DUI_CTR_MENU]				= new CMenu;
+        m_mapControlsName[DUI_CTR_LISTHEADER]		= new CListHeader;
+        m_mapControlsName[DUI_CTR_LISTHEADERITEM]	= new CListHeaderItem;
+        m_mapControlsName[DUI_CTR_LISTCONTAINERELEMENT]	= new CListContainerElement;
+        m_mapControlsName[DUI_CTR_MENUELEMENT]		= new CMenuElement;
     }
 
 
@@ -346,6 +496,8 @@ namespace ControlAttributes
             DUI_FREE_POINT(pControl);
         }
     }
+
+
 
 
 
