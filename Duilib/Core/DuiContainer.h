@@ -46,6 +46,9 @@ namespace DuiLib
         virtual BOOL IsAutoDestroy() const;
         virtual void SetAutoDestroy(BOOL bAuto);
 
+        virtual BOOL IsDelayedDestroy() const;
+        virtual void SetDelayedDestroy(BOOL bDelayed);
+
         virtual BOOL IsMouseChildEnabled() const;
         virtual void SetMouseChildEnabled(BOOL bEnable = TRUE);
 
@@ -79,13 +82,13 @@ namespace DuiLib
         BOOL AddAt(CDuiControl* pControl, int iIndex) OVERRIDE;
         BOOL Remove(CDuiControl* pControl) OVERRIDE;
         BOOL RemoveAt(int iIndex) OVERRIDE;
-        void RemoveAll();
+        void RemoveAll() OVERRIDE;
 
         virtual int FindSelectable(int iIndex, BOOL bForward = TRUE) const ;
 
         RECT GetClientPos() const OVERRIDE;
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
-
+        void Move(SIZE szOffset, BOOL bNeedInvalidate = TRUE) OVERRIDE;
         void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
 
         void DoEvent(TEventUI& event) OVERRIDE;
@@ -99,6 +102,19 @@ namespace DuiLib
 
         void SetManager(CDuiPaintManager* pManager, CDuiControl* pParent, BOOL bInit = TRUE) OVERRIDE;
 
+        CDuiString GetSubControlText(LPCTSTR pstrSubControlName);
+        BOOL SetSubControlText(LPCTSTR pstrSubControlName, LPCTSTR pstrText);
+
+        int GetSubControlFixedHeight(LPCTSTR pstrSubControlName) ;
+        BOOL SetSubControlFixedHeight(LPCTSTR pstrSubControlName, int cy);
+
+        int GetSubControlFixedWdith(LPCTSTR pstrSubControlName) ;
+        BOOL SetSubControlFixedWdith(LPCTSTR pstrSubControlName, int cx);
+
+        CDuiString GetSubControlUserData(LPCTSTR pstrSubControlName) ;
+        BOOL SetSubControlUserData(LPCTSTR pstrSubControlName, LPCTSTR pstrText);
+
+        CDuiControl* FindSubControl(LPCTSTR pstrSubControlName) ;
         CDuiControl* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags) OVERRIDE;
     protected:
         virtual void SetFloatPos(int iIndex);

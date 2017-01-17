@@ -126,6 +126,16 @@ namespace DuiLib
         m_bAutoDestroy = bAuto;
     }
 
+    BOOL CDuiContainer::IsDelayedDestroy() const
+    {
+        return m_bDelayedDestroy;
+    }
+
+    void CDuiContainer::SetDelayedDestroy(BOOL bDelayed)
+    {
+        m_bDelayedDestroy = bDelayed;
+    }
+
     BOOL CDuiContainer::IsMouseChildEnabled() const
     {
         return m_bMouseChildEnabled;
@@ -647,6 +657,27 @@ namespace DuiLib
         }
     }
 
+    void CDuiContainer::Move(SIZE szOffset, BOOL bNeedInvalidate /*= TRUE*/)
+    {
+        CDuiControl::Move(szOffset, bNeedInvalidate);
+        if(m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible())
+        {
+            m_pVerticalScrollBar->Move(szOffset, false);
+        }
+        if(m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible())
+        {
+            m_pHorizontalScrollBar->Move(szOffset, false);
+        }
+        for(int it = 0; it < m_items.GetSize(); it++)
+        {
+            CDuiControl* pControl = static_cast<CDuiControl*>(m_items[it]);
+            if(pControl != NULL && pControl->IsVisible())
+            {
+                pControl->Move(szOffset, false);
+            }
+        }
+    }
+
     void CDuiContainer::DoPaint(HDC hDC, const RECT& rcPaint)
     {
         RECT rcTemp = { 0 };
@@ -1074,6 +1105,132 @@ namespace DuiLib
             m_pHorizontalScrollBar->SetManager(pManager, this, bInit);
         }
         CDuiControl::SetManager(pManager, pParent, bInit);
+    }
+
+    CDuiString CDuiContainer::GetSubControlText(LPCTSTR pstrSubControlName)
+    {
+        CDuiControl* pSubControl = NULL;
+        pSubControl = FindSubControl(pstrSubControlName);
+        if(pSubControl == NULL)
+        {
+            return _T("");
+        }
+        else
+        {
+            return pSubControl->GetText();
+        }
+    }
+
+    BOOL CDuiContainer::SetSubControlText(LPCTSTR pstrSubControlName, LPCTSTR pstrText)
+    {
+        CDuiControl* pSubControl = NULL;
+        pSubControl = FindSubControl(pstrSubControlName);
+        if(pSubControl != NULL)
+        {
+            pSubControl->SetText(pstrText);
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    int CDuiContainer::GetSubControlFixedHeight(LPCTSTR pstrSubControlName)
+    {
+        CDuiControl* pSubControl = NULL;
+        pSubControl = FindSubControl(pstrSubControlName);
+        if(pSubControl == NULL)
+        {
+            return -1;
+        }
+        else
+        {
+            return pSubControl->GetFixedHeight();
+        }
+    }
+
+    BOOL CDuiContainer::SetSubControlFixedHeight(LPCTSTR pstrSubControlName, int cy)
+    {
+        CDuiControl* pSubControl = NULL;
+        pSubControl = FindSubControl(pstrSubControlName);
+        if(pSubControl != NULL)
+        {
+            pSubControl->SetFixedHeight(cy);
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    int CDuiContainer::GetSubControlFixedWdith(LPCTSTR pstrSubControlName)
+    {
+        CDuiControl* pSubControl = NULL;
+        pSubControl = FindSubControl(pstrSubControlName);
+        if(pSubControl == NULL)
+        {
+            return -1;
+        }
+        else
+        {
+            return pSubControl->GetFixedWidth();
+        }
+    }
+
+    BOOL CDuiContainer::SetSubControlFixedWdith(LPCTSTR pstrSubControlName, int cx)
+    {
+        CDuiControl* pSubControl = NULL;
+        pSubControl = FindSubControl(pstrSubControlName);
+        if(pSubControl != NULL)
+        {
+            pSubControl->SetFixedWidth(cx);
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    CDuiString CDuiContainer::GetSubControlUserData(LPCTSTR pstrSubControlName)
+    {
+        CDuiControl* pSubControl = NULL;
+        pSubControl = FindSubControl(pstrSubControlName);
+        if(pSubControl == NULL)
+        {
+            return _T("");
+        }
+        else
+        {
+            return pSubControl->GetUserData();
+        }
+    }
+
+    BOOL CDuiContainer::SetSubControlUserData(LPCTSTR pstrSubControlName, LPCTSTR pstrText)
+    {
+        CDuiControl* pSubControl = NULL;
+        pSubControl = FindSubControl(pstrSubControlName);
+        if(pSubControl != NULL)
+        {
+            pSubControl->SetUserData(pstrText);
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    CDuiControl* CDuiContainer::FindSubControl(LPCTSTR pstrSubControlName)
+    {
+        CDuiControl* pSubControl = NULL;
+        if(GetManager() != NULL)
+        {
+            pSubControl = static_cast<CDuiControl*>(GetManager()->FindSubControlByName(this, pstrSubControlName));
+        }
+        return pSubControl;
     }
 
     CDuiControl* CDuiContainer::FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags)

@@ -317,6 +317,7 @@ namespace DuiLib
         CDuiControl* GetRoot() const;
         CDuiControl* FindControl(POINT pt) const;
         CDuiControl* FindControl(LPCTSTR pstrName) const;
+        CDuiControl* FindSubControlByName(CDuiControl* pParent, LPCTSTR pstrName) const;
 
         const TImageInfo* GetImage(LPCTSTR bitmap);
         const TImageInfo* GetImageEx(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, HINSTANCE instance = NULL);
@@ -406,6 +407,7 @@ namespace DuiLib
         static CDuiControl* CALLBACK __FindControlFromTab(CDuiControl* pThis, LPVOID pData);
         static CDuiControl* CALLBACK __FindControlFromPoint(CDuiControl* pThis, LPVOID pData);
         static CDuiControl* CALLBACK __FindControlFromShortcut(CDuiControl* pThis, LPVOID pData);
+        static CDuiControl* CALLBACK __FindControlFromName(CDuiControl* pThis, LPVOID pData);
     private:
         HWND m_hWndPaint;						//绘制窗口的句柄
         HWND m_hwndTooltip;						//提示消息

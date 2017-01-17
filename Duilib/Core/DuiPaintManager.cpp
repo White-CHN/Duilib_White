@@ -1786,6 +1786,16 @@ namespace DuiLib
         return static_cast<CDuiControl*>(m_mNameHash.Find(pstrName));
     }
 
+    CDuiControl* CDuiPaintManager::FindSubControlByName(CDuiControl* pParent, LPCTSTR pstrName) const
+    {
+        if(pParent == NULL)
+        {
+            pParent = GetRoot();
+        }
+        ASSERT(pParent);
+        return pParent->FindControl(__FindControlFromName, (LPVOID)pstrName, UIFIND_ALL);
+    }
+
     const TImageInfo* CDuiPaintManager::GetImage(LPCTSTR bitmap)
     {
         TImageInfo* data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
@@ -3676,6 +3686,17 @@ namespace DuiLib
             return NULL;    // Labels never get focus!
         }
         return pFS->bPickNext ? pThis : NULL;
+    }
+
+    CDuiControl* CALLBACK CDuiPaintManager::__FindControlFromName(CDuiControl* pThis, LPVOID pData)
+    {
+        LPCTSTR pstrName = static_cast<LPCTSTR>(pData);
+        const CDuiString& sName = pThis->GetName();
+        if(sName.IsEmpty())
+        {
+            return NULL;
+        }
+        return (_tcsicmp(sName, pstrName) == 0) ? pThis : NULL;
     }
 
 }
