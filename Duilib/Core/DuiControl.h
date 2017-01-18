@@ -158,8 +158,8 @@ namespace DuiLib
         virtual int GetMaxHeight() const;
         virtual void SetMaxHeight(int cy);
 
-        virtual TPercentInfo GetFloatPercent() const;
-        virtual void SetFloatPercent(TPercentInfo piFloatPercent);
+        virtual CDuiRectD GetFloatPercent() const;
+        virtual void SetFloatPercent(CDuiRectD piFloatPercent);
 
         virtual UINT GetFloatAlign() const;
         virtual void SetFloatAlign(UINT uAlign);
@@ -256,6 +256,8 @@ namespace DuiLib
         CDuiControl* m_pParent;			//父控件指针
         CDuiPaintManager* m_pManager;
 
+        CDuiRectD m_piFloatPercent;		//float 的数值
+
         CDuiSize m_cXY;					//pos左上角xy
         CDuiSize m_cxyFixed;			//pos宽度高度
         CDuiSize m_cxyBorderRound;		//borderround属性
@@ -266,8 +268,6 @@ namespace DuiLib
         CDuiRect m_rcPadding;			//padding属性
         CDuiRect m_rcBorderSize;		//bordersize属性
         CDuiRect m_rcPaint;				//实际绘制区域
-
-        TPercentInfo m_piFloatPercent;		//float 的数值
 
         CDuiString m_sBkImage;		//bkimage属性
         CDuiString m_sForeImage;	//foreimage属性

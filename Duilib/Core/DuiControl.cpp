@@ -37,8 +37,6 @@ namespace DuiLib
         , m_pManager(NULL)
     {
         m_cxyMax = CDuiSize(9999, 9999);
-
-        ZeroMemory(&m_piFloatPercent, sizeof(m_piFloatPercent));
     }
 
 
@@ -48,6 +46,7 @@ namespace DuiLib
         {
             m_pManager->ReapObjects(this);
         }
+        RemoveAllCustomAttribute();
     }
 
     CDuiString CDuiControl::GetClass() const
@@ -870,12 +869,12 @@ namespace DuiLib
         NeedParentUpdate();
     }
 
-    TPercentInfo CDuiControl::GetFloatPercent() const
+    CDuiRectD CDuiControl::GetFloatPercent() const
     {
         return m_piFloatPercent;
     }
 
-    void CDuiControl::SetFloatPercent(TPercentInfo piFloatPercent)
+    void CDuiControl::SetFloatPercent(CDuiRectD piFloatPercent)
     {
         if(piFloatPercent.bottom == m_piFloatPercent.bottom &&
                 piFloatPercent.top == m_piFloatPercent.top &&
@@ -1150,16 +1149,7 @@ namespace DuiLib
 
     void CDuiControl::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
     {
-        // 是否样式表
-        if(m_pManager != NULL)
-        {
-            LPCTSTR pStyle = m_pManager->GetStyle(pstrValue);
-            if(pStyle != NULL)
-            {
-                ApplyAttributeList(pStyle);
-                return;
-            }
-        }
+
         if(_tcsicmp(pstrName, _T("pos")) == 0)
         {
             RECT rcPos = { 0 };
@@ -1187,7 +1177,7 @@ namespace DuiLib
             }
             else
             {
-                TPercentInfo piFloatPercent = { 0 };
+                CDuiRectD piFloatPercent;
                 LPTSTR pstr = NULL;
                 piFloatPercent.left		= _tcstod(pstrValue, &pstr);
                 ASSERT(pstr);
@@ -1604,6 +1594,16 @@ namespace DuiLib
         }
         else
         {
+            // 是否样式表
+            if(m_pManager != NULL)
+            {
+                LPCTSTR pStyle = m_pManager->GetStyle(pstrValue);
+                if(pStyle != NULL)
+                {
+                    ApplyAttributeList(pStyle);
+                    return;
+                }
+            }
             AddCustomAttribute(pstrName, pstrValue);
         }
     }

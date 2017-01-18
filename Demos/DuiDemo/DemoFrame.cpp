@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "DemoFrame.h"
 #include "PopDlg.h"
-
+#include "MessageBox.h"
 
 DUI_BEGIN_MESSAGE_MAP(CDemoFrame, CDuiDlgImplBase)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
@@ -177,7 +177,10 @@ void CDemoFrame::OnClick(TNotifyUI& msg)
     }
     else if(msg.pSender->GetName() == _T("closebtn"))
     {
-        Close(0);
+        if(CMessageBox::MessageBox(GetHWND(), _T("提示"), _T("是否关闭")) == IDOK)
+        {
+            Close();
+        }
         return;
     }
     else if(msg.pSender->GetName() == _T("menubtn"))
@@ -498,6 +501,27 @@ LRESULT CDemoFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
             {
                 Close(0);
             }
+        }
+    }
+    else if(uMsg == DUIMSG_ICON)
+    {
+        UINT uIconMsg = (UINT)lParam;
+        if(uIconMsg == WM_LBUTTONUP)
+        {
+            BOOL bVisible = IsWindowVisible(GetHWND());
+            ::ShowWindow(GetHWND(), !bVisible ?  SW_SHOW : SW_HIDE);
+        }
+        else if(uIconMsg == WM_RBUTTONUP)
+        {
+            DUI_FREE_POINT(m_pMenu);
+            m_pMenu = new CDuiMenuWnd();
+            CDuiPoint point;
+            ::GetCursorPos(&point);
+            point.x += 5;
+            point.y -= 5;
+            m_pMenu->Init(NULL, _T("menu.xml"), point, GetPaintManager(), NULL, eMenuAlignment_Left | eMenuAlignment_Bottom);
+            // 动态添加后重新设置菜单的大小
+            m_pMenu->ResizeMenu();
         }
     }
 

@@ -95,6 +95,18 @@ namespace DuiLib
         CDuiRect MulDiv(int nMultiplier, int nDivisor) const;
     };
 
+    class DUILIB_API CDuiRectD
+    {
+    public:
+        CDuiRectD();
+        CDuiRectD(const CDuiRectD& src);
+    public:
+        double left;
+        double top;
+        double right;
+        double bottom;
+    };
+
     class DUILIB_API CStdPtrArray
     {
     public:

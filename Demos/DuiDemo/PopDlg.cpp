@@ -2,6 +2,10 @@
 #include "PopDlg.h"
 
 
+DUI_BEGIN_MESSAGE_MAP(CPopDlg, CDuiDlgImplBase)
+DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
+DUI_END_MESSAGE_MAP()
+
 CPopDlg::CPopDlg(void)
 {
 }
@@ -21,42 +25,26 @@ LPCTSTR CPopDlg::GetWindowClassName() const
     return GET_CLASS_NAME(CPopDlg);
 }
 
-void CPopDlg::InitWindow()
+void CPopDlg::OnClick(TNotifyUI& msg)
 {
-    m_pCloseBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("closebtn")));
-    m_pMaxBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("maxbtn")));
-    m_pRestoreBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("restorebtn")));
-    m_pMinBtn = static_cast<CDuiButton*>(GetPaintManager()->FindControl(_T("minbtn")));
-}
-
-CDuiControl* CPopDlg::CreateControl(LPCTSTR pstrClass)
-{
-    return NULL;
-}
-
-void CPopDlg::Notify(TNotifyUI& msg)
-{
-    if(msg.sType == DUI_MSGTYPE_CLICK)
+    if(msg.pSender->GetName() == _T("minbtn"))
     {
-        if(msg.pSender == m_pMinBtn)
-        {
-            SendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0);
-            return;
-        }
-        else if(msg.pSender == m_pMaxBtn)
-        {
-            SendMessage(WM_SYSCOMMAND, SC_MAXIMIZE, 0);
-            return;
-        }
-        else if(msg.pSender == m_pRestoreBtn)
-        {
-            SendMessage(WM_SYSCOMMAND, SC_RESTORE, 0);
-            return;
-        }
-        else if(msg.pSender == m_pCloseBtn)
-        {
-            Close(0);
-            return;
-        }
+        SendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0);
+        return;
+    }
+    else if(msg.pSender->GetName() == _T("maxbtn"))
+    {
+        SendMessage(WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+        return;
+    }
+    else if(msg.pSender->GetName() == _T("restorebtn"))
+    {
+        SendMessage(WM_SYSCOMMAND, SC_RESTORE, 0);
+        return;
+    }
+    else if(msg.pSender->GetName() == _T("closebtn"))
+    {
+        Close(IDCANCEL);
+        return;
     }
 }

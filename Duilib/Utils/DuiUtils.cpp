@@ -349,6 +349,24 @@ namespace DuiLib
                         ::MulDiv(right, nMultiplier, nDivisor),
                         ::MulDiv(bottom, nMultiplier, nDivisor));
     }
+    //////////////////////////////////////////////////////////////////////
+    CDuiRectD::CDuiRectD()
+        : left(0.0f)
+        , top(0.0f)
+        , right(0.0f)
+        , bottom(0.0f)
+    {
+
+    }
+
+
+    CDuiRectD::CDuiRectD(const CDuiRectD& src)
+    {
+        left = src.left;
+        top = src.top;
+        right = src.right;
+        bottom = src.bottom;
+    }
 
     //////////////////////////////////////////////////////////////////////
     CStdPtrArray::CStdPtrArray(int iPreallocSize)

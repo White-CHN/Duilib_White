@@ -1400,7 +1400,7 @@ namespace DuiLib
         }
         else
         {
-            TPercentInfo rcPercent = pControl->GetFloatPercent();
+            CDuiRectD rcPercent = pControl->GetFloatPercent();
             LONG width = GetPos().right - GetPos().left;
             LONG height = GetPos().bottom - GetPos().top;
             RECT rcCtrl = { 0 };

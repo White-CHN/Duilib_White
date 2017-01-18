@@ -80,8 +80,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -141,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="ControlsName.h" />
     <ClInclude Include="DemoFrame.h" />
+    <ClInclude Include="MessageBox.h" />
     <ClInclude Include="PopDlg.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -152,6 +152,7 @@
     <ClCompile Include="ControlsName.cpp" />
     <ClCompile Include="DemoFrame.cpp" />
     <ClCompile Include="DuiDemo.cpp" />
+    <ClCompile Include="MessageBox.cpp" />
     <ClCompile Include="PopDlg.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
