@@ -143,6 +143,8 @@
     <ClInclude Include="MessageBox.h" />
     <ClInclude Include="PopDlg.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SkinDlg.h" />
+    <ClInclude Include="SkinPictureBtn.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +156,8 @@
     <ClCompile Include="DuiDemo.cpp" />
     <ClCompile Include="MessageBox.cpp" />
     <ClCompile Include="PopDlg.cpp" />
+    <ClCompile Include="SkinDlg.cpp" />
+    <ClCompile Include="SkinPictureBtn.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>

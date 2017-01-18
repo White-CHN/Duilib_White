@@ -33,6 +33,12 @@
     <ClInclude Include="MessageBox.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SkinDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinPictureBtn.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\bin\DuiDemo\icon\DuiDemo.ico">
@@ -56,6 +62,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MessageBox.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinPictureBtn.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

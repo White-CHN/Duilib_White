@@ -29,6 +29,7 @@ public:
     void OnColorChanged(TNotifyUI& msg);
 
     LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
+
 private:
     BOOL bEnglish;
     BOOL m_bIsSplit;

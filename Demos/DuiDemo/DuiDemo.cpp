@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "SkinPictureBtn.h"
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
 {
@@ -68,10 +69,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*l
         }
         break;
     }
+    // 注册控件
+    REGIST_DUICONTROL(CDuiSkinPictureBtn);
+    //
     CDemoFrame* pDemoFrame = new CDemoFrame;
-    pDemoFrame->Create(NULL, _T("Duilib开源项目展示(By White)"), UI_WNDSTYLE_FRAME, 0L, 0, 0, 800, 572);
+    pDemoFrame->Create(NULL, _T("Duilib开源项目展示(By White)"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
     pDemoFrame->CenterWindow();
-    CDuiPaintManager::MessageLoop();
+    CDuiPaintManager::MessageLoop();	//非模式对话框
+    //pDemoFrame->ShowModal();			//模式对话框
     CDuiPaintManager::Uninitialize();
     return 0;
 }

@@ -192,6 +192,9 @@
     <ClInclude Include="Control\DuiCheckBox.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Layout\DuiTileLayout.h">
+      <Filter>头文件\Layout</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -340,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="Control\DuiCheckBox.cpp">
       <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Layout\DuiTileLayout.cpp">
+      <Filter>源文件\Layout</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

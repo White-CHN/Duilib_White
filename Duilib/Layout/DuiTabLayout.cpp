@@ -180,7 +180,11 @@ namespace DuiLib
         {
             SelectItem(_ttoi(pstrValue));
         }
-        return CDuiContainer::SetAttribute(pstrName, pstrValue);
+        else
+        {
+            return CDuiContainer::SetAttribute(pstrName, pstrValue);
+        }
+
     }
 
     void CDuiTabLayout::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)
@@ -194,9 +198,9 @@ namespace DuiLib
         rc.right -= rcInset.right;
         rc.bottom -= rcInset.bottom;
 
-        for(int it = 0; it <  GetCount(); it++)
+        for(int it = 0; it <  CDuiContainer::GetCount(); it++)
         {
-            CDuiControl* pControl = static_cast<CDuiControl*>(GetItemAt(it));
+            CDuiControl* pControl = static_cast<CDuiControl*>(CDuiContainer::GetItemAt(it));
             if(!pControl->IsVisible())
             {
                 continue;

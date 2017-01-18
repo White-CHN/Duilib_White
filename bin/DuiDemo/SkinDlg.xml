@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window size="632,402" sizebox="4,4,4,4" caption="0,0,0,30" mininfo="632,402" roundcorner="3,3" >
+	<Font name="微软雅黑" size="13" default="true"/>
+	<Font name="微软雅黑" size="13" bold="true" />
+	<VerticalLayout bordercolor="#FF47484B" bordersize="1" inset="1,1,1,1">
+		<HorizontalLayout name="background" height="30"  ><!-- 标题栏 -->
+			<Label text="皮肤管理" textcolor="#FFFFFFFF" textpadding="5,0,0,0" font="1" autocalcwidth="false" width="300"/>
+			<Control />
+			<FadeButton name="closebtn" width="39" height="20" tooltip="关闭" normalimage="file='sysbtn/btn_close_normal.png'" hotimage="file='sysbtn/btn_close_highlight.png'" pushedimage="file='sysbtn/btn_close_down.png'"/>
+		</HorizontalLayout>
+
+		<VerticalLayout height="306" bkcolor="#FFFFFFFF" ><!-- 主体 -->
+			<HorizontalLayout height="36" bottombordersize="1" bordercolor="FFCACACA">
+				<Option name="OptionPic" text="我的图片" width="84" align="center" height="36" textcolor="#FF000000" hottextcolor="#FFACD6FF" selectedtextcolor="#FFACD6FF" group="TopTab" selected="true" />
+				<Option name="OptionColor" text="我的颜色" width="84" align="center" height="36" textcolor="#FF000000" hottextcolor="#FFACD6FF" selectedtextcolor="#FFACD6FF" group="TopTab" />
+			</HorizontalLayout >
+
+			<AnimationTabLayout bkcolor="#FFeeeeee" name="SkinTab" height="270" selectedid="0">
+				<TileLayout columns="5" vscrollbar="true" padding="13,10,0,0" childpadding="1,0,0,0" width="613" height="260" >
+					<SkinPictureBtn bkimage="small/0.png" width="118" height="70" bkname="蓝色经典" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/1.png" width="118" height="70" bkname="加油奥运" author="Bill"/>
+					<SkinPictureBtn bkimage="small/2.png" width="118" height="70" bkname="幸福满满" author="Colby"/>
+					<SkinPictureBtn bkimage="small/3.png" width="118" height="70" bkname="青青草原" author="Gordon"/>
+					<SkinPictureBtn bkimage="small/4.png" width="118" height="70" bkname="城市夜色" author="Jerome"/>
+					<SkinPictureBtn bkimage="small/5.png" width="118" height="70" bkname="绿色草原" author="Lambert"/>
+					<SkinPictureBtn bkimage="small/6.png" width="118" height="70" bkname="极光日落" author="Lawrence"/>
+					<SkinPictureBtn bkimage="small/7.png" width="118" height="70" bkname="青色水滴" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/8.png" width="118" height="70" bkname="渐变橙色" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/9.png" width="118" height="70" bkname="冰封草原" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/10.png" width="118" height="70" bkname="渐变浅蓝" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/11.png" width="118" height="70" bkname="渐变深绿" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/12.png" width="118" height="70" bkname="WIN10桌面" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/13.png" width="118" height="70" bkname="炫酷黑色" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/14.png" width="118" height="70" bkname="渐变蓝色" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/15.png" width="118" height="70" bkname="梦幻蓝色" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/16.png" width="118" height="70" bkname="梦幻红色" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/17.png" width="118" height="70" bkname="梦幻紫色" author="Archibald"/>
+					<SkinPictureBtn bkimage="small/18.png" width="118" height="70" bkname="WIN8桌面" author="Archibald"/>
+				</TileLayout >
+				<TileLayout columns="5" vscrollbar="true" padding="13,10,0,0" childpadding="1,0,0,0" width="613" height="260" >
+					<SkinPictureBtn bkcolor="#FF66BAEB" width="118" height="70" bkname="蓝色" author="Archibald"/>
+					<SkinPictureBtn bkcolor="#FF76A8D0" width="118" height="70" bkname="灰蓝" author="Bill"/>
+					<SkinPictureBtn bkcolor="#FFA138D8" width="118" height="70" bkname="紫色" author="Colby"/>
+					<SkinPictureBtn bkcolor="#FF6EC446" width="118" height="70" bkname="绿色" author="Gordon"/>
+					<SkinPictureBtn bkcolor="#FFD08942" width="118" height="70" bkname="橙色" author="Jerome"/>
+					<SkinPictureBtn bkcolor="#FFC55C3C" width="118" height="70" bkname="橘红" author="Lambert"/>
+					<SkinPictureBtn bkcolor="#FF929292" width="118" height="70" bkname="深灰" author="Lawrence"/>
+				</TileLayout >
+			</AnimationTabLayout>	            
+		</VerticalLayout> 
+
+		<HorizontalLayout height="64" inset="12,23,0,0" ><!-- 状态栏 -->
+		</HorizontalLayout>
+	</VerticalLayout>
+
+</Window>

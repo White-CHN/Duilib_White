@@ -241,7 +241,7 @@ namespace DuiLib
             return;
         }
         m_sBkImage = pStrImage;
-
+        Invalidate();
     }
 
     CDuiString CDuiControl::GetForeImage() const
@@ -1030,6 +1030,7 @@ namespace DuiLib
         {
             return;
         }
+        DUI_TRACE("user-defined Attribute[%s] Value[%s]", pstrName, pstrAttr);
         CDuiString* pCostomAttr = new CDuiString(pstrAttr);
         if(pCostomAttr != NULL)
         {

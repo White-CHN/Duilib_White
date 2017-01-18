@@ -2,6 +2,7 @@
 #include "DemoFrame.h"
 #include "PopDlg.h"
 #include "MessageBox.h"
+#include "SkinDlg.h"
 
 DUI_BEGIN_MESSAGE_MAP(CDemoFrame, CDuiDlgImplBase)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
@@ -193,7 +194,10 @@ void CDemoFrame::OnClick(TNotifyUI& msg)
     }
     else if(msg.pSender->GetName() == _T("skinbtn"))
     {
-
+        CSkinDlg* pSkinDlg = new CSkinDlg(this);
+        pSkinDlg->Create(GetHWND(), _T("皮肤窗口"), UI_WNDSTYLE_DIALOG, WS_EX_WINDOWEDGE);
+        pSkinDlg->CenterWindow();
+        pSkinDlg->ShowModal();
     }
     else if(msg.pSender->GetName() == _T("dpi_btn"))
     {
@@ -203,13 +207,13 @@ void CDemoFrame::OnClick(TNotifyUI& msg)
     else if(msg.pSender->GetName() == _T("popwnd_btn"))
     {
         CPopDlg* pPopDlg = new CPopDlg();
-        pPopDlg->Create(GetHWND(), _T("普通窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
+        pPopDlg->Create(GetHWND(), _T("普通窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW);
         pPopDlg->CenterWindow();
     }
     else if(msg.pSender->GetName() == _T("modal_popwnd_btn"))
     {
         CPopDlg* pPopDlg = new CPopDlg();
-        pPopDlg->Create(GetHWND(), _T("模式窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW, 0, 0, 800, 572);
+        pPopDlg->Create(GetHWND(), _T("模式窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW);
         pPopDlg->CenterWindow();
         pPopDlg->ShowModal();
     }

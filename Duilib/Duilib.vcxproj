@@ -681,6 +681,7 @@
     <ClInclude Include="Layout\DuiAnimationTabLayout.h" />
     <ClInclude Include="Layout\DuiHorizontalLayout.h" />
     <ClInclude Include="Layout\DuiTabLayout.h" />
+    <ClInclude Include="Layout\DuiTileLayout.h" />
     <ClInclude Include="Layout\DuiVerticalLayout.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Utils\DragDropImpl.h" />
@@ -783,6 +784,7 @@
     <ClCompile Include="Layout\DuiAnimationTabLayout.cpp" />
     <ClCompile Include="Layout\DuiHorizontalLayout.cpp" />
     <ClCompile Include="Layout\DuiTabLayout.cpp" />
+    <ClCompile Include="Layout\DuiTileLayout.cpp" />
     <ClCompile Include="Layout\DuiVerticalLayout.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

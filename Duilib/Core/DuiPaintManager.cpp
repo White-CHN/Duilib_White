@@ -3210,7 +3210,8 @@ namespace DuiLib
     BOOL CDuiPaintManager::Initialize(HINSTANCE hInstance)
     {
         ASSERT(hInstance);
-        OleInitialize(NULL);
+        ::OleInitialize(NULL);
+        ::CoInitialize(NULL);
         InitCommonControls();
 
         if(hInstance == NULL)
@@ -3320,7 +3321,8 @@ namespace DuiLib
             CloseZip((HZIP)m_hResourceZip);
             m_hResourceZip = NULL;
         }
-        OleUninitialize();
+        ::CoUninitialize();
+        ::OleUninitialize();
     }
 
     HINSTANCE CDuiPaintManager::GetInstance()
