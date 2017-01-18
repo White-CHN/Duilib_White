@@ -189,6 +189,9 @@
     <ClInclude Include="Core\DuiNotifyPump.h">
       <Filter>头文件\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiCheckBox.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -334,6 +337,9 @@
     </ClCompile>
     <ClCompile Include="Core\DuiNotifyPump.cpp">
       <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiCheckBox.cpp">
+      <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

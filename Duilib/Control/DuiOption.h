@@ -17,7 +17,7 @@ namespace DuiLib
         void SetGroup(LPCTSTR pStrGroupName = NULL);
 
         BOOL IsSelected() const;
-        void Selected(BOOL bSelected);
+        virtual void Selected(BOOL bSelected);
 
         LPCTSTR GetSelectedImage();
         void SetSelectedImage(LPCTSTR pStrImage);

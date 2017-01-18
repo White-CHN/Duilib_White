@@ -18,8 +18,6 @@
     #endif
 #endif
 
-//#define USE_XIMAGE_EFFECT //使用ximage的gif控件CGifAnimExUI开关，提升性能,默认不使用
-
 #if defined _M_IX86
     #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #elif defined _M_IA64
@@ -95,6 +93,7 @@ using namespace Gdiplus;
 #include "Control/DuiList.h"
 #include "Control/DuiMenu.h"
 #include "Control/DuiFadeButton.h"
+#include "Control/DuiCheckBox.h"
 
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "comctl32.lib" )

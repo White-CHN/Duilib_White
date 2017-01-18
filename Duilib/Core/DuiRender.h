@@ -1,8 +1,4 @@
 #pragma once
-
-#ifdef USE_XIMAGE_EFFECT
-    class CxImage;
-#endif
 namespace DuiLib
 {
     /////////////////////////////////////////////////////////////////////////////////////
@@ -37,9 +33,7 @@ namespace DuiLib
         static HBITMAP CreateARGB32Bitmap(HDC hDC, int cx, int cy, BYTE** pBits);
         static void AdjustImage(BOOL bUseHSL, TImageInfo* imageInfo, short H, short S, short L);
         static TImageInfo* LoadImage(STRINGorID bitmap, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
-#ifdef USE_XIMAGE_EFFECT
-        static CxImage* LoadGifImageX(STRINGorID bitmap, LPCTSTR type = NULL, DWORD mask = 0);
-#endif
+
         static void FreeImage(TImageInfo* bitmap, BOOL bDelete = TRUE);
         static TImageInfo* LoadImage(LPCTSTR pStrImage, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
         static TImageInfo* LoadImage(UINT nID, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
