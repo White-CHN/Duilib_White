@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\Control">
+      <UniqueIdentifier>{17a36f5c-3404-4eea-85f6-a41224056c7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Control">
+      <UniqueIdentifier>{5e9ef8b6-4ff2-496d-b774-11804fb453d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Dialog">
+      <UniqueIdentifier>{66ad0683-caa3-4eae-9c57-ee1abc7e7c45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Dialog">
+      <UniqueIdentifier>{87676a0d-7beb-4d3a-8629-673029eaa26a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -21,23 +33,26 @@
     <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DemoFrame.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PopDlg.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ControlsName.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MessageBox.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="SkinDlg.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="DemoFrame.h">
+      <Filter>头文件\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="PopDlg.h">
+      <Filter>头文件\Dialog</Filter>
     </ClInclude>
     <ClInclude Include="SkinPictureBtn.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinDlg.h">
+      <Filter>头文件\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinSliderDlg.h">
+      <Filter>头文件\Dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -49,26 +64,29 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DemoFrame.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="DuiDemo.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PopDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ControlsName.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MessageBox.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Dialog</Filter>
     </ClCompile>
-    <ClCompile Include="SkinDlg.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="DemoFrame.cpp">
+      <Filter>源文件\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="PopDlg.cpp">
+      <Filter>源文件\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="SkinPictureBtn.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinDlg.cpp">
+      <Filter>源文件\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinSliderDlg.cpp">
+      <Filter>源文件\Dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

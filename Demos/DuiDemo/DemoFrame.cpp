@@ -101,7 +101,6 @@ void CDemoFrame::InitWindow()
             m_pComboControlNames->SelectItem(0);
         }
     }
-
 }
 
 CDuiString CDemoFrame::GetSkinFile()
@@ -207,13 +206,13 @@ void CDemoFrame::OnClick(TNotifyUI& msg)
     else if(msg.pSender->GetName() == _T("popwnd_btn"))
     {
         CPopDlg* pPopDlg = new CPopDlg();
-        pPopDlg->Create(GetHWND(), _T("普通窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW);
+        pPopDlg->Create(GetHWND(), _T("普通窗口演示"), UI_WNDSTYLE_DIALOG, WS_EX_TOOLWINDOW);
         pPopDlg->CenterWindow();
     }
     else if(msg.pSender->GetName() == _T("modal_popwnd_btn"))
     {
         CPopDlg* pPopDlg = new CPopDlg();
-        pPopDlg->Create(GetHWND(), _T("模式窗口演示"), WS_POPUP | WS_VISIBLE, WS_EX_TOOLWINDOW);
+        pPopDlg->Create(GetHWND(), _T("模式窗口演示"), UI_WNDSTYLE_DIALOG, WS_EX_TOOLWINDOW);
         pPopDlg->CenterWindow();
         pPopDlg->ShowModal();
     }

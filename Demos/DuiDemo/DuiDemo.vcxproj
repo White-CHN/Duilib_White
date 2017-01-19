@@ -145,6 +145,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SkinDlg.h" />
     <ClInclude Include="SkinPictureBtn.h" />
+    <ClInclude Include="SkinSliderDlg.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,7 @@
     <ClCompile Include="PopDlg.cpp" />
     <ClCompile Include="SkinDlg.cpp" />
     <ClCompile Include="SkinPictureBtn.cpp" />
+    <ClCompile Include="SkinSliderDlg.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>

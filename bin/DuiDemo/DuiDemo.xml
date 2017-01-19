@@ -1,6 +1,6 @@
 ﻿<!-- 注释 -->
 <?xml version="1.0" encoding="utf-8"?>
-<Window size="920,600" sizebox="4,4,6,6" bktrans="true" roundcorner="4,4" caption="0,0,0,64"  mininfo="400,300" showshadow="true" shadowimage="shadow/shadow.png" shadowsize="6"  shadowcorner="8,8,8,8" >
+<Window size="920,600" sizebox="4,4,6,6"  roundcorner="4,4" caption="0,0,0,64"  mininfo="400,300" showshadow="true" shadowimage="shadow/shadow.png" shadowsize="6"  shadowcorner="8,8,8,8" >
 	<Default name="VScrollBar" shared="true" value="button1normalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,90,16,106' mask='#FFFF00FF'&quot; button1hotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,90,34,106' mask='#FFFF00FF'&quot; button1pushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,90,52,106' mask='#FFFF00FF'&quot; button1disabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,90,70,106' mask='#FFFF00FF'&quot; button2normalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,108,16,124' mask='#FFFF00FF'&quot; button2hotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,108,34,124' mask='#FFFF00FF'&quot; button2pushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,108,52,124' mask='#FFFF00FF'&quot; button2disabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,108,70,124' mask='#FFFF00FF'&quot; thumbnormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,126,16,142' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,126,34,142' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,126,52,142' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbdisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,126,70,142' corner='2,2,2,2' mask='#FFFF00FF'&quot; railnormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,144,16,160' corner='2,2,2,2' mask='#FFFF00FF'&quot; railhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,144,34,160' corner='2,2,2,2' mask='#FFFF00FF'&quot; railpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,144,52,160' corner='2,2,2,2' mask='#FFFF00FF'&quot; raildisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,144,70,160' corner='2,2,2,2' mask='#FFFF00FF'&quot; bknormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,162,16,178' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,162,34,178' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,162,52,178' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkdisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,162,70,178' corner='2,2,2,2' mask='#FFFF00FF'&quot; " />
 	<Default name="HScrollBar" shared="true" value="button1normalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,0,16,16' mask='#FFFF00FF'&quot; button1hotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,0,34,16' mask='#FFFF00FF'&quot; button1pushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,0,52,16' mask='#FFFF00FF'&quot; button1disabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,0,70,16' mask='#FFFF00FF'&quot; button2normalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,18,16,34' mask='#FFFF00FF'&quot; button2hotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,18,34,34' mask='#FFFF00FF'&quot; button2pushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,18,52,34' mask='#FFFF00FF'&quot; button2disabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,18,70,34' mask='#FFFF00FF'&quot; thumbnormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,36,16,52' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,36,34,52' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,36,52,52' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbdisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,36,70,52' corner='2,2,2,2' mask='#FFFF00FF'&quot; railnormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,54,16,70' corner='2,2,2,2' mask='#FFFF00FF'&quot; railhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,54,34,70' corner='2,2,2,2' mask='#FFFF00FF'&quot; railpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,54,52,70' corner='2,2,2,2' mask='#FFFF00FF'&quot; raildisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,54,70,70' corner='2,2,2,2' mask='#FFFF00FF'&quot; bknormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,72,16,88' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,72,34,88' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,72,52,88' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkdisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,72,70,88' corner='2,2,2,2' mask='#FFFF00FF'&quot; " />
 	<Style name="btn_style" value="drag=&quot;true&quot; align=&quot;center&quot; normalimage=&quot;file='button/btn_edit_normal.png'&quot; hotimage=&quot;res='button/btn_edit_hover.png'&quot; pushedimage=&quot;res='button/btn_edit_down.png'&quot;"  />
@@ -15,10 +15,10 @@
 	<Font id="2" name="微软雅黑" size="12" underline="true" />
 	<Font id="3"  size="15"  />
 	<Font id="4" name="Consolas" size="15"  />
-	<VerticalLayout name="root" bkcolor="#FF0199cb"  bkimage="res='bkimage/12.png' fade='255'">
+	<VerticalLayout name="root" bkcolor="#FF0199cb"  bkimage="bkimage/12.png">
 		<HorizontalLayout  height="64" >
 			<HorizontalLayout  >
-				<Control width="64" height="64" bkimage="res='bkimage/logo.png' fade='255'"/>
+				<Control width="64" height="64" bkimage="bkimage/logo.png"/>
 				<Label  text="Duilib开源项目展示" valign="vcenter" align="left" textpadding="10,0,0,0" textcolor="#FFFFFFFF" font="1" tooltip="duilib开源项目圈"/>
 				<VerticalLayout childvalign="vcenter" childpadding="2" >
 
@@ -94,12 +94,13 @@
 
 				</HorizontalLayout>
 				<Label height="1"  bkimage="line/hor_line.bmp"/>
-				<HorizontalLayout  childpadding="6" childvalign="vcenter" >
+				<HorizontalLayout bkcolor="#FFFFFFFF"  childpadding="6"  >
 					<Label font="3" valign="center" cursor="hand" align="center" tooltip="进度条演示" text="进度条演示"  width="80" textcolor="#FFFFFFFF" />
-					<HorizontalLayout height="25" childpadding="12"  >
+					<HorizontalLayout childpadding="12" childvalign="vcenter" >
 
-						<Progress name="Progress" showtext="true" text="Progress" textcolor="#FFCD00CD" bordercolor="#FFFFFFFF" bordersize="1" align="center" width="139"  valign="center"  foreimage="Progress/progress_fore.png"  value="30"   />
-						<Slider name="Slider" value="30"  width="139" sendmove="true" thumbsize="12,20" bkimage="file='Slider/slider_fore.bmp' mask='0xffff00ff'" thumbimage="file='Slider/SliderBar.png' mask='0xffffffff'"/>
+						<Progress height="25"  name="Progress" showtext="true" text="Progress" textcolor="#FFCD00CD" bordercolor="#FFFFFFFF" bordersize="1" align="center" width="139"  valign="center"  foreimage="Progress/progress_fore.png"  value="30"   />
+						<Slider height="25"  name="Slider" value="30"  width="139" sendmove="true" thumbsize="12,20" bkimage="file='Slider/slider_fore.bmp' mask='0xffff00ff'" thumbimage="file='Slider/SliderBar.png' mask='0xffffffff'"/>
+						<Test bkcolor="#FFEEEEEE" width="139" />
 					</HorizontalLayout>
 
 				</HorizontalLayout>

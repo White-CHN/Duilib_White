@@ -340,15 +340,11 @@ namespace DuiLib
                         {
                             m_pManager->SetShowUpdateRect(_tcsicmp(pstrValue, _T("true")) == 0);
                         }
-                        else if(_tcsicmp(pstrName, _T("opacity")) == 0 || _tcsicmp(pstrName, _T("alpha")) == 0)
+                        else if(_tcsicmp(pstrName, _T("alpha")) == 0)
                         {
                             m_pManager->SetOpacity(_ttoi(pstrValue));
                         }
-                        else if(_tcscmp(pstrName, _T("layeredopacity")) == 0)
-                        {
-                            m_pManager->SetLayeredOpacity(_ttoi(pstrValue));
-                        }
-                        else if(_tcscmp(pstrName, _T("layered")) == 0 || _tcscmp(pstrName, _T("bktrans")) == 0)
+                        else if(_tcscmp(pstrName, _T("layered")) == 0)
                         {
                             m_pManager->SetLayered(_tcsicmp(pstrValue, _T("true")) == 0);
                         }

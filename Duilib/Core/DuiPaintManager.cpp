@@ -223,7 +223,6 @@ namespace DuiLib
         , m_bOffscreenPaint(TRUE)
         , m_bShowUpdateRect(FALSE)
         , m_bFirstLayout(TRUE)
-        , m_bLayeredChanged(FALSE)
         , m_bMouseCapture(FALSE)
         , m_bDragMode(FALSE)
         , m_bUseGdiplusText(FALSE)
@@ -380,9 +379,9 @@ namespace DuiLib
         return m_hDcPaint;
     }
 
-    POINT CDuiPaintManager::GetMousePos() const
+    HWND CDuiPaintManager::GetPaintWindow() const
     {
-        return m_ptLastMousePos;
+        return m_hWndPaint;
     }
 
     void CDuiPaintManager::SetPainting(BOOL bIsPainting)
@@ -390,9 +389,16 @@ namespace DuiLib
         m_bIsPainting = bIsPainting;
     }
 
-    HWND CDuiPaintManager::GetPaintWindow() const
+    POINT CDuiPaintManager::GetMousePos() const
     {
-        return m_hWndPaint;
+        return m_ptLastMousePos;
+    }
+
+    CDuiSize CDuiPaintManager::GetClientSize() const
+    {
+        CDuiRect rcClient;
+        ::GetClientRect(m_hWndPaint, &rcClient);
+        return CDuiSize(rcClient.right - rcClient.left, rcClient.bottom - rcClient.top);
     }
 
     CDuiSize CDuiPaintManager::GetInitSize() const
@@ -525,23 +531,6 @@ namespace DuiLib
             Invalidate();
         }
     }
-
-    BYTE CDuiPaintManager::GetLayeredOpacity() const
-    {
-        return m_nOpacity;
-    }
-
-    void CDuiPaintManager::SetLayeredOpacity(BYTE nOpacity)
-    {
-        if(m_nOpacity == nOpacity)
-        {
-            return;
-        }
-        m_nOpacity = nOpacity;
-        m_bLayeredChanged = TRUE;
-        Invalidate();
-    }
-
 
     DWORD CDuiPaintManager::GetDefaultDisabledColor() const
     {

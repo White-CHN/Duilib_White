@@ -76,9 +76,8 @@ namespace ControlAttributes
         Add(_T("mininfo"), DATATYPE_SIZE, _T("0,0"), _T("窗口最小大小,如(320,240)"));
         Add(_T("maxinfo"), DATATYPE_SIZE, _T("0,0"), _T("窗口最大大小,如(1600,1200)"));
         Add(_T("showdirty"), DATATYPE_BOOL, _T("false"), _T("窗口绘制红色边框"));
-        Add(_T("alpha"), DATATYPE_BYTE, _T("255"), _T("窗口的alpha值(0-255)"));
-        Add(_T("layeredopacity"), DATATYPE_BYTE, _T("255"), _T("分层窗口的alpha值(0-255)"));
-        Add(_T("bktrans"), DATATYPE_BOOL, _T("false"), _T("窗口是否使用静态透明背景"));
+        Add(_T("alpha"), DATATYPE_BYTE, _T("255"), _T("窗口的alpha值(0-255),所有图片都会透明,并且子控件的fade值嵌套"));
+        Add(_T("layered"), DATATYPE_BOOL, _T("false"), _T("窗口是否使用分层窗口,如果启用请取消window的alpha值"));
         Add(_T("disabledfontcolor"), DATATYPE_DWORD, _T("0xFFA7A6AA"), _T("默认的disabled字体颜色"));
         Add(_T("defaultfontcolor"), DATATYPE_DWORD, _T("0xFF000000"), _T("默认的字体颜色"));
         Add(_T("linkfontcolor"), DATATYPE_DWORD, _T("0xFF0000FF"), _T("默认的link字体颜色"));

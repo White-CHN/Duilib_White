@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "SkinDlg.h"
 #include "SkinPictureBtn.h"
+#include "SkinSliderDlg.h"
 
 
 DUI_BEGIN_MESSAGE_MAP(CSkinDlg, CDuiDlgImplBase)
@@ -54,6 +55,15 @@ void CSkinDlg::OnClick(TNotifyUI& msg)
     {
         Close(IDCANCEL);
         return;
+    }
+    else if(msg.pSender->GetName() == _T("AlphaBtn"))
+    {
+        CDuiButton* pBtn = static_cast<CDuiButton*>(msg.pSender);
+        CSkinSliderDlg* pSkinSliderDlg  = new CSkinSliderDlg(m_pDemoFrame->GetPaintManager(), pBtn);
+        pSkinSliderDlg->Create(GetHWND(), _T("皮肤进度条窗口"), UI_WNDSTYLE_DIALOG, WS_EX_TOOLWINDOW);
+        CDuiPoint ptPos(msg.pSender->GetPos().left, msg.pSender->GetPos().top);
+        ::ClientToScreen(GetHWND(), &ptPos);
+        ::SetWindowPos(pSkinSliderDlg->GetHWND(), NULL, ptPos.x, ptPos.y - pSkinSliderDlg->GetPaintManager()->GetClientSize().cy , 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE);
     }
     else if(msg.pSender->GetClass() == DUI_CTR_PICTUREBTN)
     {

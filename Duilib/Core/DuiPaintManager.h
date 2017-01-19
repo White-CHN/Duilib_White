@@ -192,13 +192,13 @@ namespace DuiLib
         BOOL Invalidate(RECT& rcItem);
 
         HDC GetPaintDC() const;
-
-        POINT GetMousePos() const;
+        HWND GetPaintWindow() const;
 
         void SetPainting(BOOL bIsPainting);
 
-        HWND GetPaintWindow() const;
         //属性设置与获取
+        POINT GetMousePos() const;
+        CDuiSize GetClientSize() const;
         CDuiSize GetInitSize() const;
         void SetInitSize(int cx, int cy);
 
@@ -224,9 +224,6 @@ namespace DuiLib
 
         BOOL IsLayered() const;
         void SetLayered(BOOL bLayered);
-
-        BYTE GetLayeredOpacity() const ;
-        void SetLayeredOpacity(BYTE nOpacity);
 
         DWORD GetDefaultDisabledColor() const;
         void SetDefaultDisabledColor(DWORD dwColor, BOOL bShared = FALSE);
@@ -429,7 +426,6 @@ namespace DuiLib
         BOOL m_bOffscreenPaint;
         BOOL m_bShowUpdateRect;					//是否显示窗口边框(默认红色)
         BOOL m_bFirstLayout;					//第一次界面绘制完的标志位
-        BOOL m_bLayeredChanged;					//分层alpha值改变了
         BOOL m_bMouseCapture;					//是否设置鼠标捕获
         BOOL m_bDragMode;						//是否拖拽
         BOOL m_bUseGdiplusText;					//gdiplustext属性,是否用gdi+渲染文字

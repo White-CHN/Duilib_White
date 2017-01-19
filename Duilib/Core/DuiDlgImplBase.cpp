@@ -383,6 +383,12 @@ namespace DuiLib
         return 0;
     }
 
+    LRESULT CDuiDlgImplBase::OnMouseLeave(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        bHandled = FALSE;
+        return 0;
+    }
+
     LRESULT CDuiDlgImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
         LRESULT lRes = 0;
@@ -447,6 +453,9 @@ namespace DuiLib
                 break;
             case WM_MOUSEHOVER:
                 lRes = OnMouseHover(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_MOUSELEAVE:
+                lRes = OnMouseLeave(uMsg, wParam, lParam, bHandled);
                 break;
             default:
                 bHandled = FALSE;

@@ -68,7 +68,7 @@ void CDuiSkinPictureBtn::PaintStatusImage(HDC hDC)
     if((uButtonState & UISTATE_PUSHED) != 0 || (uButtonState & UISTATE_HOT) != 0)
     {
 
-        //DrawImage(hDC, kSkinPickerPictureItemForeImage) ;
+        DrawImage(hDC, GetFocusedImage()) ;
 
         //计算作者信息文字和背景图片名字文字的显示位置，这里是用了硬编码，请使用者自己修改
         RECT rcBkName = GetPos();
