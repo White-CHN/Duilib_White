@@ -132,7 +132,7 @@ namespace DuiLib
         }
         else
         {
-            SetEmpty();
+            Empty();
         }
         return *this;
     }
