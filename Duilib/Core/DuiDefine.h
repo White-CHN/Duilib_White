@@ -191,6 +191,7 @@ namespace DuiLib
 #define  DUI_CTR_GIF	                         (_T("Gif"))
 #define  DUI_CTR_COLORPALETTE					 (_T("ColorPalette"))
 #define  DUI_CTR_CHECKBOX						 (_T("CheckBox"))
+#define  DUI_CTR_WATER						     (_T("Water"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
@@ -220,6 +221,7 @@ namespace DuiLib
         TIMER_ID_GIF,
         TIMER_ID_FADEBUTTON_IN,
         TIMER_ID_FADEBUTTON_OUT,
+        TIMER_ID_WATER,
         //外部自定义定时器ID
         TIMER_ID_USER		=	0x100
     };

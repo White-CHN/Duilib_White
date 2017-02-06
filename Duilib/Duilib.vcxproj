@@ -663,6 +663,7 @@
     <ClInclude Include="Control\DuiRing.h" />
     <ClInclude Include="Control\DuiScrollBar.h" />
     <ClInclude Include="Control\DuiSlider.h" />
+    <ClInclude Include="Control\DuiWater.h" />
     <ClInclude Include="Core\DuiAnimation.h" />
     <ClInclude Include="Core\DuiContainer.h" />
     <ClInclude Include="Core\DuiControl.h" />
@@ -684,6 +685,7 @@
     <ClInclude Include="Layout\DuiTileLayout.h" />
     <ClInclude Include="Layout\DuiVerticalLayout.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Utils\DIB.h" />
     <ClInclude Include="Utils\DragDropImpl.h" />
     <ClInclude Include="Utils\DuiDelegate.h" />
     <ClInclude Include="Utils\DuiDPI.h" />
@@ -692,8 +694,10 @@
     <ClInclude Include="Utils\DuiString.h" />
     <ClInclude Include="Utils\DuiUtils.h" />
     <ClInclude Include="Utils\stb_image.h" />
+    <ClInclude Include="Utils\stdex_vector.h" />
     <ClInclude Include="Utils\unzip.h" />
     <ClInclude Include="Utils\VersionHelpers.h" />
+    <ClInclude Include="Utils\WaterEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Control\DuiButton.cpp" />
@@ -716,6 +720,7 @@
     <ClCompile Include="Control\DuiRing.cpp" />
     <ClCompile Include="Control\DuiScrollBar.cpp" />
     <ClCompile Include="Control\DuiSlider.cpp" />
+    <ClCompile Include="Control\DuiWater.cpp" />
     <ClCompile Include="Core\DuiAnimation.cpp" />
     <ClCompile Include="Core\DuiContainer.cpp" />
     <ClCompile Include="Core\DuiControl.cpp" />
@@ -804,6 +809,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='SReleaseA|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='SReleaseA|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Utils\DIB.cpp" />
     <ClCompile Include="Utils\DragDropImpl.cpp" />
     <ClCompile Include="Utils\DuiDelegate.cpp" />
     <ClCompile Include="Utils\DuiDPI.cpp" />
@@ -812,6 +818,7 @@
     <ClCompile Include="Utils\DuiString.cpp" />
     <ClCompile Include="Utils\DuiUtils.cpp" />
     <ClCompile Include="Utils\unzip.cpp" />
+    <ClCompile Include="Utils\WaterEffect.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

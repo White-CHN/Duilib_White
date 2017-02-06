@@ -44,6 +44,7 @@
 using namespace std;
 using namespace Gdiplus;
 
+
 #include "Utils/DuiString.h"
 #include "Utils/DuiUtils.h"
 #include "Utils/DuiDPI.h"
@@ -52,6 +53,8 @@ using namespace Gdiplus;
 #include "Utils/DuiIcon.h"
 #include "Utils/DragDropImpl.h"
 #include "Utils/unzip.h"
+#include "Utils/DIB.h"
+#include "Utils/WaterEffect.h"
 
 #include "Core/DuiMarkupNode.h"
 #include "Core/DuiMarkup.h"
@@ -68,7 +71,6 @@ using namespace Gdiplus;
 #include "Core/DuiRender.h"
 #include "Core/DuiAnimation.h"
 
-
 #include "Layout/DuiVerticalLayout.h"
 #include "Layout/DuiHorizontalLayout.h"
 #include "Layout/DuiTabLayout.h"
@@ -77,6 +79,7 @@ using namespace Gdiplus;
 
 #include "Control/DuiScrollBar.h"
 #include "Control/DuiLabel.h"
+#include "Control/DuiWater.h"
 #include "Control/DuiButton.h"
 #include "Control/DuiOption.h"
 #include "Control/DuiRadio.h"
@@ -95,6 +98,7 @@ using namespace Gdiplus;
 #include "Control/DuiMenu.h"
 #include "Control/DuiFadeButton.h"
 #include "Control/DuiCheckBox.h"
+
 
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "comctl32.lib" )

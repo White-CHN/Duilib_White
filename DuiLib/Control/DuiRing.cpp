@@ -64,6 +64,7 @@ namespace DuiLib
             graphics.TranslateTransform(-centerPos.X, -centerPos.Y);//还原源点
             graphics.DrawImage(m_pBkimage, rcItem.left, rcItem.top, iWidth, iHeight);
         }
+
     }
 
     void CDuiRing::SetVisible(BOOL bVisible /*= TRUE*/)
@@ -72,6 +73,7 @@ namespace DuiLib
         if(bVisible)
         {
             PlayImage();
+
         }
         else
         {
@@ -136,6 +138,7 @@ namespace DuiLib
         {
             StopImage();
         }
+
     }
 
     void CDuiRing::DeleteImage()

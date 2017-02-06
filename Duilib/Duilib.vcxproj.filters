@@ -195,6 +195,18 @@
     <ClInclude Include="Layout\DuiTileLayout.h">
       <Filter>头文件\Layout</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiWater.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\stdex_vector.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\WaterEffect.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\DIB.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -346,6 +358,15 @@
     </ClCompile>
     <ClCompile Include="Layout\DuiTileLayout.cpp">
       <Filter>源文件\Layout</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiWater.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\DIB.cpp">
+      <Filter>源文件\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\WaterEffect.cpp">
+      <Filter>源文件\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

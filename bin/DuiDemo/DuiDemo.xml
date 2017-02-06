@@ -57,6 +57,7 @@
 						<Label align="left" valign="bottom" autocalcwidth="true" text="Label自动计算宽度"  tooltip="Label演示"  textcolor="#FFB23AEE" bkcolor="#FFFFFFFF" />
 						<GroupBox text="GroupBox控件" tooltip="GroupBox控件" width="200"  textcolor="#FFeeeeee" bordercolor="#FFFFFFFF" bordersize="1" borderround="6,6"/>
 						<Ring text="Ring" textcolor="#FFeeeeee" align="center" valign="vcenter" height="60" width="60" bkimage="ring/ring.png"/>
+						<Water text="水波纹" textcolor="#FFeeeeee" align="center" valign="vcenter"/>
 					</HorizontalLayout>
 				</HorizontalLayout>
 				<Label height="1"  bkimage="line/hor_line.bmp"/>
