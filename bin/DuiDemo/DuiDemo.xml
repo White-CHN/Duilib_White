@@ -101,7 +101,6 @@
 
 						<Progress height="25"  name="Progress" showtext="true" text="Progress" textcolor="#FFCD00CD" bordercolor="#FFFFFFFF" bordersize="1" align="center" width="139"  valign="center"  foreimage="Progress/progress_fore.png"  value="30"   />
 						<Slider height="25"  name="Slider" value="30"  width="139" sendmove="true" thumbsize="12,20" bkimage="file='Slider/slider_fore.bmp' mask='0xffff00ff'" thumbimage="file='Slider/SliderBar.png' mask='0xffffffff'"/>
-						<Test bkcolor="#FFEEEEEE" width="139" />
 					</HorizontalLayout>
 
 				</HorizontalLayout>
