@@ -207,6 +207,9 @@
     <ClInclude Include="Utils\DIB.h">
       <Filter>头文件\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Layout\DuiChildLayout.h">
+      <Filter>头文件\Layout</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -367,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="Utils\WaterEffect.cpp">
       <Filter>源文件\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Layout\DuiChildLayout.cpp">
+      <Filter>源文件\Layout</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

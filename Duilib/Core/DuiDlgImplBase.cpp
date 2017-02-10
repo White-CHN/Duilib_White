@@ -18,9 +18,8 @@ namespace DuiLib
         m_vtStaticName.push_back(DUI_CTR_ANIMATION_TABLAYOUT);
         m_vtStaticName.push_back(DUI_CTR_GROUPBOX);
         m_vtStaticName.push_back(DUI_CTR_GIF);
-        m_vtStaticName.push_back(_T("childlayout"));
-        m_vtStaticName.push_back(_T("dialoglayout"));
-        m_vtStaticName.push_back(_T("progresscontainer"));
+        m_vtStaticName.push_back(DUI_CTR_CHILDLAYOUT);
+        m_vtStaticName.push_back(DUI_CTR_TILELAYOUT);
     }
 
 

@@ -680,6 +680,7 @@
     <ClInclude Include="Core\DuiWnd.h" />
     <ClInclude Include="DuiLib.h" />
     <ClInclude Include="Layout\DuiAnimationTabLayout.h" />
+    <ClInclude Include="Layout\DuiChildLayout.h" />
     <ClInclude Include="Layout\DuiHorizontalLayout.h" />
     <ClInclude Include="Layout\DuiTabLayout.h" />
     <ClInclude Include="Layout\DuiTileLayout.h" />
@@ -787,6 +788,7 @@
     </ClCompile>
     <ClCompile Include="DuiLib.cpp" />
     <ClCompile Include="Layout\DuiAnimationTabLayout.cpp" />
+    <ClCompile Include="Layout\DuiChildLayout.cpp" />
     <ClCompile Include="Layout\DuiHorizontalLayout.cpp" />
     <ClCompile Include="Layout\DuiTabLayout.cpp" />
     <ClCompile Include="Layout\DuiTileLayout.cpp" />

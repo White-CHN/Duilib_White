@@ -76,6 +76,7 @@ using namespace Gdiplus;
 #include "Layout/DuiTabLayout.h"
 #include "Layout/DuiAnimationTabLayout.h"
 #include "Layout/DuiTileLayout.h"
+#include "Layout/DuiChildLayout.h"
 
 #include "Control/DuiScrollBar.h"
 #include "Control/DuiLabel.h"

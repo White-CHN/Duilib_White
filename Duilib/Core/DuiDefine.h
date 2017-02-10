@@ -207,6 +207,7 @@ namespace DuiLib
 #define  DUI_CTR_MENU                            (_T("Menu"))
 #define  DUI_CTR_MENUELEMENT                     (_T("MenuElement"))
 #define  DUI_CTR_TILELAYOUT                      (_T("TileLayout"))
+#define  DUI_CTR_CHILDLAYOUT                     (_T("ChildLayout"))
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 
