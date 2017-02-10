@@ -2,11 +2,13 @@
 #include "PopDlg.h"
 
 
+
 DUI_BEGIN_MESSAGE_MAP(CPopDlg, CDuiDlgImplBase)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
 DUI_END_MESSAGE_MAP()
 
 CPopDlg::CPopDlg(void)
+
 {
 }
 

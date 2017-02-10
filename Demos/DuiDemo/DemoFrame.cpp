@@ -3,6 +3,7 @@
 #include "PopDlg.h"
 #include "MessageBox.h"
 #include "SkinDlg.h"
+#include "AnimDlg.h"
 
 DUI_BEGIN_MESSAGE_MAP(CDemoFrame, CDuiDlgImplBase)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
@@ -215,6 +216,12 @@ void CDemoFrame::OnClick(TNotifyUI& msg)
         pPopDlg->Create(GetHWND(), _T("模式窗口演示"), UI_WNDSTYLE_DIALOG, WS_EX_TOOLWINDOW);
         pPopDlg->CenterWindow();
         pPopDlg->ShowModal();
+    }
+    else if(msg.pSender->GetName() == _T("anim_popwnd_btn"))
+    {
+        CAnimDlg* pDlg = new CAnimDlg();
+        pDlg->Create(GetHWND(), _T("动画窗口演示"), UI_WNDSTYLE_DIALOG, WS_EX_TOOLWINDOW);
+        pDlg->CenterWindow();
     }
     else if(msg.pSender->GetName() == _T("BtnCreateXML"))
     {

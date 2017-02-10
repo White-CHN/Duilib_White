@@ -54,6 +54,12 @@
     <ClInclude Include="SkinSliderDlg.h">
       <Filter>头文件\Dialog</Filter>
     </ClInclude>
+    <ClInclude Include="DuiAnimLayout.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimDlg.h">
+      <Filter>头文件\Dialog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\bin\DuiDemo\icon\DuiDemo.ico">
@@ -86,6 +92,12 @@
       <Filter>源文件\Dialog</Filter>
     </ClCompile>
     <ClCompile Include="SkinSliderDlg.cpp">
+      <Filter>源文件\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DuiAnimLayout.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimDlg.cpp">
       <Filter>源文件\Dialog</Filter>
     </ClCompile>
   </ItemGroup>

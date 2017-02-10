@@ -45,5 +45,21 @@ using namespace DuiLib;
     #endif
 #endif
 // TODO: 在此处引用程序需要的其他头文件
-#pragma comment(lib, "winmm.lib")
+
+#include "..\..\DuiFeatureEffect\DuiFeatureEffect.h"
+
+#ifdef _WIN64
+    //不支持64位
+#else
+    #ifdef _DEBUG
+        #ifdef _UNICODE
+            #pragma comment(lib, "..\\..\\Lib\\DuiFeatureEffect_d.lib")
+        #endif
+    #else
+        #ifdef _UNICODE
+            #pragma comment(lib, "..\\..\\Lib\\DuiFeatureEffect.lib")
+        #endif
+    #endif
+#endif
+
 #include "DemoFrame.h"

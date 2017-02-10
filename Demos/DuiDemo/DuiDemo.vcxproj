@@ -66,17 +66,21 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)\x64\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)\x64\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -138,8 +142,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AnimDlg.h" />
     <ClInclude Include="ControlsName.h" />
     <ClInclude Include="DemoFrame.h" />
+    <ClInclude Include="DuiAnimLayout.h" />
     <ClInclude Include="MessageBox.h" />
     <ClInclude Include="PopDlg.h" />
     <ClInclude Include="resource.h" />
@@ -152,8 +158,10 @@
     <None Include="..\..\bin\DuiDemo\icon\DuiDemo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimDlg.cpp" />
     <ClCompile Include="ControlsName.cpp" />
     <ClCompile Include="DemoFrame.cpp" />
+    <ClCompile Include="DuiAnimLayout.cpp" />
     <ClCompile Include="DuiDemo.cpp" />
     <ClCompile Include="MessageBox.cpp" />
     <ClCompile Include="PopDlg.cpp" />
