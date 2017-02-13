@@ -219,7 +219,6 @@ namespace DuiLib
         , m_bForceUseSharedRes(FALSE)
         , m_bUsedVirtualWnd(FALSE)
         , m_bIsPainting(FALSE)
-        , m_bFocusNeeded(TRUE)
         , m_bOffscreenPaint(TRUE)
         , m_bShowUpdateRect(FALSE)
         , m_bFirstLayout(TRUE)
@@ -228,6 +227,7 @@ namespace DuiLib
         , m_bUseGdiplusText(FALSE)
         , m_bCaretActive(FALSE)
         , m_bMouseTracking(FALSE)
+        , m_bCaretShowing(FALSE)
         , m_trh(0)
         , m_uTimerID(0x1000)
         , m_gdiplusToken(0)
@@ -239,6 +239,7 @@ namespace DuiLib
         , m_pEventHover(NULL)
         , m_pEventKey(NULL)
         , m_pGdiplusStartupInput(NULL)
+        , m_currentCaretObject(NULL)
     {
         ZeroMemory(&m_ToolTip, sizeof(m_ToolTip));
 
@@ -746,7 +747,6 @@ namespace DuiLib
         info.pFocus = pControl;
         info.bForward = FALSE;
         m_pFocus = m_pRoot->FindControl(__FindControlFromTab, &info, UIFIND_VISIBLE | UIFIND_ENABLED | UIFIND_ME_FIRST);
-        m_bFocusNeeded = TRUE;
         if(m_pRoot != NULL)
         {
             m_pRoot->NeedUpdate();
@@ -957,9 +957,97 @@ namespace DuiLib
         return true; //let base free the medium
     }
 
+    CDuiRichEdit* CDuiPaintManager::GetCurrentCaretObject()
+    {
+        return m_currentCaretObject;
+    }
+
+    BOOL CDuiPaintManager::CreateCaret(HBITMAP hBmp, int nWidth, int nHeight)
+    {
+        ::CreateCaret(m_hWndPaint, hBmp, nWidth, nHeight);
+        //TODO hBmp处理位图光标
+        m_rtCaret.right = m_rtCaret.left + nWidth;
+        m_rtCaret.bottom = m_rtCaret.top + nHeight;
+        return TRUE;
+    }
+
+    BOOL CDuiPaintManager::ShowCaret(BOOL bShow)
+    {
+        if(m_bCaretShowing == bShow)
+        {
+            return TRUE;
+        }
+
+        m_bCaretShowing = bShow;
+        if(!bShow)
+        {
+            ::KillTimer(m_hWndPaint, CARET_TIMERID);
+            if(m_bCaretActive)
+            {
+                Invalidate(m_rtCaret);
+            }
+            m_bCaretActive = FALSE;
+        }
+        else
+        {
+            ::SetTimer(m_hWndPaint, CARET_TIMERID, ::GetCaretBlinkTime(), NULL);
+            if(!m_bCaretActive)
+            {
+                Invalidate(m_rtCaret);
+                m_bCaretActive = TRUE;
+            }
+        }
+
+        return TRUE;
+    }
+
+    BOOL CDuiPaintManager::SetCaretPos(CDuiRichEdit* pRichEdit, int x, int y)
+    {
+        if(!::SetCaretPos(x, y))
+        {
+            return FALSE;
+        }
+
+        m_currentCaretObject = pRichEdit;
+        RECT tempRt = m_rtCaret;
+        int w = m_rtCaret.right - m_rtCaret.left;
+        int h = m_rtCaret.bottom - m_rtCaret.top;
+        m_rtCaret.left = x;
+        m_rtCaret.top = y;
+        m_rtCaret.right = x + w;
+        m_rtCaret.bottom = y + h;
+        Invalidate(tempRt);
+        Invalidate(m_rtCaret);
+
+        return TRUE;
+    }
+
     void CDuiPaintManager::DrawCaret(HDC hDC, const RECT& rcPaint)
     {
+        if(m_currentCaretObject && (!m_currentCaretObject->IsFocused() || m_hWndPaint != ::GetFocus()))
+        {
+            ::KillTimer(m_hWndPaint, CARET_TIMERID);
+            if(m_bCaretActive)
+            {
+                Invalidate(m_rtCaret);
+            }
+            m_bCaretActive = FALSE;
+            return;
+        }
 
+        if(m_bCaretActive && m_bCaretShowing && m_currentCaretObject)
+        {
+            RECT temp = {};
+            if(::IntersectRect(&temp, &rcPaint, &m_rtCaret))
+            {
+                DWORD dwColor = m_currentCaretObject->GetTextColor();
+                if(dwColor == 0)
+                {
+                    dwColor = m_ResInfo.m_dwDefaultFontColor;
+                }
+                CRenderEngine::DrawColor(hDC, temp, dwColor);
+            }
+        }
     }
 
     TFontInfo* CDuiPaintManager::GetDefaultFontInfo()
@@ -1273,6 +1361,11 @@ namespace DuiLib
         return pFontInfo;
     }
 
+    BOOL CDuiPaintManager::IsCaptured()
+    {
+        return m_bMouseCapture;
+    }
+
     void CDuiPaintManager::SetCapture()
     {
         ::SetCapture(m_hWndPaint);
@@ -1317,7 +1410,6 @@ namespace DuiLib
         // focus calulation until the next repaint.
         if(m_bUpdateNeeded && bForward)
         {
-            m_bFocusNeeded = TRUE;
             ::InvalidateRect(m_hWndPaint, NULL, FALSE);
             return TRUE;
         }
@@ -1345,7 +1437,6 @@ namespace DuiLib
         {
             SetFocus(pControl);
         }
-        m_bFocusNeeded = FALSE;
         return TRUE;
     }
 
@@ -1598,7 +1689,6 @@ namespace DuiLib
         }
         m_pRoot = pControl;
         m_bUpdateNeeded = TRUE;
-        m_bFocusNeeded = TRUE;
         m_bFirstLayout = TRUE;
         return InitControls(pControl);
     }
@@ -2130,6 +2220,24 @@ namespace DuiLib
         return FALSE;
     }
 
+    BOOL CDuiPaintManager::AddMessageFilter(IMessageFilterUI* pFilter)
+    {
+        ASSERT(m_aMessageFilters.Find(pFilter) < 0);
+        return m_aMessageFilters.Add(pFilter);
+    }
+
+    BOOL CDuiPaintManager::RemoveMessageFilter(IMessageFilterUI* pFilter)
+    {
+        for(int i = 0; i < m_aMessageFilters.GetSize(); i++)
+        {
+            if(static_cast<IMessageFilterUI*>(m_aMessageFilters[i]) == pFilter)
+            {
+                return m_aMessageFilters.Remove(i);
+            }
+        }
+        return FALSE;
+    }
+
     BOOL CDuiPaintManager::SetTimer(CDuiControl* pControl, UINT nTimerID, UINT uElapse)
     {
         ASSERT(pControl != NULL);
@@ -2348,11 +2456,6 @@ namespace DuiLib
                     m_shadow.Update(m_hWndPaint);
                 }
             }
-        }
-        // Set focus to first control?
-        if(m_bFocusNeeded)
-        {
-            SetNextTabControl();
         }
         if(m_bLayered)
         {
@@ -2687,23 +2790,31 @@ namespace DuiLib
     LRESULT CDuiPaintManager::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         bHandled = FALSE;
-        for(int i = 0; i < m_aTimers.GetSize(); i++)
+        if(CARET_TIMERID == LOWORD(wParam))
         {
-            const TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
-            if(pTimer->hWnd == m_hWndPaint &&
-                    pTimer->uWinTimer == LOWORD(wParam) &&
-                    pTimer->bKilled == FALSE)
+            Invalidate(m_rtCaret);
+            m_bCaretActive = !m_bCaretActive;
+        }
+        else
+        {
+            for(int i = 0; i < m_aTimers.GetSize(); i++)
             {
-                TEventUI event = { 0 };
-                event.Type = UIEVENT_TIMER;
-                event.pSender = pTimer->pSender;
-                event.dwTimestamp = ::GetTickCount();
-                event.ptMouse = m_ptLastMousePos;
-                event.wKeyState = MapKeyState();
-                event.wParam = pTimer->nLocalID;
-                event.lParam = lParam;
-                pTimer->pSender->Event(event);
-                break;
+                const TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
+                if(pTimer->hWnd == m_hWndPaint &&
+                        pTimer->uWinTimer == LOWORD(wParam) &&
+                        pTimer->bKilled == FALSE)
+                {
+                    TEventUI event = { 0 };
+                    event.Type = UIEVENT_TIMER;
+                    event.pSender = pTimer->pSender;
+                    event.dwTimestamp = ::GetTickCount();
+                    event.ptMouse = m_ptLastMousePos;
+                    event.wKeyState = MapKeyState();
+                    event.wParam = pTimer->nLocalID;
+                    event.lParam = lParam;
+                    pTimer->pSender->Event(event);
+                    break;
+                }
             }
         }
         return 0;

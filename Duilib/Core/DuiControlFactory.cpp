@@ -41,6 +41,7 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiTileLayout);
         INNER_REGISTER_DUICONTROL(CDuiWater);
         INNER_REGISTER_DUICONTROL(CDuiChildLayout);
+        INNER_REGISTER_DUICONTROL(CDuiRichEdit);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

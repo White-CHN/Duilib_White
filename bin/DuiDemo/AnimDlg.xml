@@ -15,11 +15,11 @@
     <VerticalLayout> <!-- 主界面 -->
         <HorizontalLayout inset="170,3,0,0" padding="0,5,0,0" height="30">
             <Label text="用户名:" width="45" />
-            <Edit width="120" padding="5,2,0,0" textpadding="5,0,5,0" bkcolor="88cecece" tipvalue="请输入用户名" tipvaluecolor="#FF888888" nativetextcolor="#FF010101" />
+            <Edit width="120" padding="5,2,0,0" textpadding="5,0,5,0"  tipvalue="请输入用户名" tipvaluecolor="#FF888888" nativetextcolor="#FF010101" />
         </HorizontalLayout>
         <HorizontalLayout inset="170,3,0,0" padding="0,2,0,0" height="30">
             <Label text="密   码:" width="45" />
-            <Edit  width="120" padding="5,2,0,0" textpadding="5,0,5,0" bkcolor="88cecece" tipvalue="请输入密码" tipvaluecolor="#FF888888" nativetextcolor="#FF010101" password="true" />
+            <Edit  width="120" padding="5,2,0,0" textpadding="5,0,5,0"  tipvalue="请输入密码" tipvaluecolor="#FF888888" nativetextcolor="#FF010101" password="true" />
         </HorizontalLayout>
     </VerticalLayout>
 

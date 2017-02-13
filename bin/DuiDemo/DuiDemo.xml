@@ -9,12 +9,13 @@
 	<Style name="list_style" value="headerbkimage=&quot;res='list/list_header_bg.png'&quot; itemalign=&quot;center&quot; itemlinecolor=&quot;#FF888888&quot; itemshowrowline=&quot;true&quot; itemshowcolumnline=&quot;true&quot;" />
 	<Style name="edit_style" value="align=&quot;center&quot; normalimage=&quot;res='button/button_pushed.png' corner='6,6,6,6'&quot; hotimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot; focusedimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot;" />
 	<Style name="combo_style" value="textpadding=&quot;4,0,0,0&quot; normalimage=&quot;file='combox/combo.png' source='0,0,100,22' corner='2,2,20,2'&quot; hotimage=&quot;file='combox\combo.png' source='0,22,100,44' corner='2,2,22,2'&quot; pushedimage=&quot;file='combox\combo.png' source='0,44,100,66' corner='2,2,22,2'&quot;" />
-	
+
 	<Font id="0"  size="13" default="true" />
 	<Font id="1" name="华文彩云" size="35" />
 	<Font id="2" name="微软雅黑" size="12" underline="true" />
 	<Font id="3"  size="15"  />
 	<Font id="4" name="Consolas" size="15"  />
+	<Font id="5" name="宋体" size="16"  />
 	<VerticalLayout name="root" bkcolor="#FF0199cb"  bkimage="bkimage/12.png">
 		<HorizontalLayout  height="64" >
 			<HorizontalLayout  >
@@ -95,7 +96,7 @@
 
 				</HorizontalLayout>
 				<Label height="1"  bkimage="line/hor_line.bmp"/>
-				<HorizontalLayout bkcolor="#FFFFFFFF"  childpadding="6"  >
+				<HorizontalLayout childpadding="6"  >
 					<Label font="3" valign="center" cursor="hand" align="center" tooltip="进度条演示" text="进度条演示"  width="80" textcolor="#FFFFFFFF" />
 					<HorizontalLayout childpadding="12" childvalign="vcenter" >
 
@@ -155,9 +156,17 @@
 				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true"><!-- 高级控件 -->
-				<HorizontalLayout  childvalign="vcenter" >
-					<Label font="3" valign="center" cursor="hand" align="center"  text="List演示" tooltip="List演示" width="80" textcolor="#FFFFFFFF" />
+				<HorizontalLayout height="150" childvalign="vcenter" inset="0,6,0,6" >
+					<Label font="3" valign="center" cursor="hand" align="center"  text="RichEdit" tooltip="RichEdit演示" width="80" textcolor="#FFFFFFFF" />
 					<VerticalLayout height="200" bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
+					<RichEdit font="5" textcolor="#FFFFFFFF" password="false" tipvalue="请输入文字" mutiline="true" autovscroll="true" rich="false" text="duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）duilib地址：https://github.com/qdtroy/DuiLib_Ultimate duilib 开源项目交流圈（261675375）" vscrollbar="true" hscrollbar="false" autohscroll="false"/>
+					</VerticalLayout>
+					<Control width="30"/>
+				</HorizontalLayout>
+				<Label height="1"  bkimage="line/hor_line.bmp"/>
+				<HorizontalLayout height="200" childvalign="vcenter" inset="0,6,0,6" >
+					<Label font="3" valign="center" cursor="hand" align="center"  text="List演示" tooltip="List演示" width="80" textcolor="#FFFFFFFF" />
+					<VerticalLayout  bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
 						<List name="list" vscrollbar="true"  style="list_style" itemvalign="vcenter" scrollstepsize="100">
 							<ListHeader bkcolor="#FFFF0000" height="24" menu="true">
 								<ListHeaderItem text="序号" width="80" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
@@ -168,6 +177,13 @@
 							<Include source="listitem.xml"/>
 						</List>
 					</VerticalLayout>
+					<Control width="30"/>
+				</HorizontalLayout>
+				<Label height="1"  bkimage="line/hor_line.bmp"/>
+				<HorizontalLayout height="200" childvalign="vcenter" inset="0,6,0,6" >
+					<Label font="3" valign="center" cursor="hand" align="center"  text="Tree" tooltip="Tree演示" width="80" textcolor="#FFFFFFFF" />
+					<VerticalLayout height="200" bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
+						</VerticalLayout>
 					<Control width="30"/>
 				</HorizontalLayout>
 			</VerticalLayout>
@@ -225,7 +241,7 @@
 				<HorizontalLayout height="10"/>
 				<HorizontalLayout height="28" childvalign="vcenter" childpadding="12" >
 					<Label width="40" text="XML:" align="right" textcolor="#FFFFFFFF" />
-						<Edit font="4" name="EditXML" style="edit_style" align="left" />
+					<Edit font="4" name="EditXML" style="edit_style" align="left" />
 					<Control width="30" />
 				</HorizontalLayout>
 			</VerticalLayout>

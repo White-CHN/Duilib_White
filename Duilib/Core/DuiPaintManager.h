@@ -2,7 +2,7 @@
 
 namespace DuiLib
 {
-
+    class CDuiRichEdit;
     enum DUILIB_RESTYPE
     {
         DUILIB_FILE		=  1,		// 来自磁盘文件
@@ -183,7 +183,7 @@ namespace DuiLib
     {
     public:
         CDuiPaintManager(void);
-        ~CDuiPaintManager(void);
+        virtual ~CDuiPaintManager(void);
 
     public:
         void Init(HWND hWnd);
@@ -252,7 +252,11 @@ namespace DuiLib
         static WORD DIBNumColors(void* pv);
         static WORD ColorTableSize(LPVOID lpv);
         virtual bool OnDrop(FORMATETC* pFmtEtc, STGMEDIUM& medium, DWORD* pdwEffect);
-        // 光标
+        // RichEdit光标
+        CDuiRichEdit* GetCurrentCaretObject();
+        BOOL CreateCaret(HBITMAP hBmp, int nWidth, int nHeight);
+        BOOL ShowCaret(BOOL bShow);
+        BOOL SetCaretPos(CDuiRichEdit* pRichEdit, int x, int y);
         void DrawCaret(HDC hDC, const RECT& rcPaint);
 
         //字体相关
@@ -266,6 +270,7 @@ namespace DuiLib
         TFontInfo* GetFontInfo(HFONT hFont);
 
         //鼠标捕获
+        BOOL IsCaptured();
         void SetCapture();
         void ReleaseCapture();
         //虚拟窗口
@@ -330,6 +335,9 @@ namespace DuiLib
         BOOL AddPreMessageFilter(IMessageFilterUI* pFilter);
         BOOL RemovePreMessageFilter(IMessageFilterUI* pFilter);
         BOOL PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
+
+        BOOL AddMessageFilter(IMessageFilterUI* pFilter);
+        BOOL RemoveMessageFilter(IMessageFilterUI* pFilter);
 
         BOOL SetTimer(CDuiControl* pControl, UINT nTimerID, UINT uElapse);
         BOOL KillTimer(CDuiControl* pControl, UINT nTimerID);
@@ -422,7 +430,6 @@ namespace DuiLib
         BOOL m_bForceUseSharedRes;				//是否将资源添加到共享的属性中
         BOOL m_bUsedVirtualWnd;					//虚拟窗口
         BOOL m_bIsPainting;						//是否正在绘制
-        BOOL m_bFocusNeeded;					//第一个tab的控件设置焦点的标志位
         BOOL m_bOffscreenPaint;
         BOOL m_bShowUpdateRect;					//是否显示窗口边框(默认红色)
         BOOL m_bFirstLayout;					//第一次界面绘制完的标志位
@@ -431,6 +438,7 @@ namespace DuiLib
         BOOL m_bUseGdiplusText;					//gdiplustext属性,是否用gdi+渲染文字
         BOOL m_bCaretActive;					//光标相关
         BOOL m_bMouseTracking;					//鼠标是否在本窗口区域
+        BOOL m_bCaretShowing;
 
         int m_trh;								//textrenderinghint属性,gdi+渲染文字提示
 
@@ -446,6 +454,7 @@ namespace DuiLib
         CDuiControl* m_pEventHover;				//当前鼠标停留的控件
         CDuiControl* m_pEventKey;				//键盘键值
         GdiplusStartupInput* m_pGdiplusStartupInput;
+        CDuiRichEdit* m_currentCaretObject;
 
         TOOLINFO m_ToolTip;
 

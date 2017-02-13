@@ -33,6 +33,7 @@
 #include <windowsx.h>
 #include <winsock.h>
 #include <comdef.h>
+#include <richedit.h>
 #include <commctrl.h>
 #include <gdiplus.h>
 #include <locale.h>
@@ -99,6 +100,7 @@ using namespace Gdiplus;
 #include "Control/DuiMenu.h"
 #include "Control/DuiFadeButton.h"
 #include "Control/DuiCheckBox.h"
+#include "Control/DuiRichEdit.h"
 
 
 #pragma comment( lib, "GdiPlus.lib" )

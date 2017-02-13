@@ -208,10 +208,11 @@ namespace DuiLib
 #define  DUI_CTR_MENUELEMENT                     (_T("MenuElement"))
 #define  DUI_CTR_TILELAYOUT                      (_T("TileLayout"))
 #define  DUI_CTR_CHILDLAYOUT                     (_T("ChildLayout"))
+#define  DUI_CTR_RICHEDIT                        (_T("RichEdit"))
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 
-
+#define CARET_TIMERID	0x1999
     //PaintManager所用到的定时器ID
     enum DuiPaintManagerTimerID
     {

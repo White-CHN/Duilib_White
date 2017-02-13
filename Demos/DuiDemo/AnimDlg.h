@@ -14,6 +14,9 @@ public:
     CDuiControl* CreateControl(LPCTSTR pstrClassName) OVERRIDE;
 
     void InitWindow() OVERRIDE;
+
+    LRESULT OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
+
     void OnWindowInit(TNotifyUI& msg);
 
     void OnClick(TNotifyUI& msg);

@@ -100,7 +100,7 @@ namespace DuiLib
         virtual ~CDuiListLabelElement(void);
     public:
         CDuiString GetClass() const OVERRIDE ;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE ;
+        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
         UINT GetButtonState();
 

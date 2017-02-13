@@ -107,7 +107,7 @@ BOOL CDuiAnimLayout::StartEffect()
     {
         return FALSE;
     }
-    if(m_dwEffectNum > 40)
+    if(m_dwEffectNum > 80)
     {
         m_dwEffectNum = 2;
         return FALSE;
@@ -148,7 +148,7 @@ BOOL CDuiAnimLayout::StartEffect()
     ASSERT(bRet);
 
     // 递归演示所有动画效果,这只是为了演示效果,实际开发不要这样做!
-    StartEffect();
+    //StartEffect();
 
     m_pEffect->DependAnimation(animParam.effectKey);
 

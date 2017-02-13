@@ -76,7 +76,7 @@ namespace DuiLib
         }
         if(event.Type == UIEVENT_TIMER)
         {
-            OnTimer(event.wParam);
+            OnTimer((int)event.wParam);
         }
         CDuiButton::DoEvent(event);
     }
