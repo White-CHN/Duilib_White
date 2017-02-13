@@ -119,8 +119,8 @@ namespace DuiLib
 
     BOOL CTxtWinHost::Init(CDuiRichEdit* pRichEdit, const CREATESTRUCT* pcs)
     {
-        IUnknown* pUnk;
-        HRESULT hr;
+        IUnknown* pUnk = NULL;
+        HRESULT hr = 0;
 
         m_pRichEdit = pRichEdit;
         // Initialize Reference count

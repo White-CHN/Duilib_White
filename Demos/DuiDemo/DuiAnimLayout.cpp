@@ -10,15 +10,24 @@ CDuiAnimLayout::CDuiAnimLayout(void)
     , m_hTransBitmap(NULL)
     , m_pEffect(NULL)
 {
+#ifdef _UNICODE
     m_pEffect = GetAnimation();
     ASSERT(m_pEffect);
+#endif
+
 }
 
 
 CDuiAnimLayout::~CDuiAnimLayout(void)
 {
-    m_pEffect->ClearAllAnimation();
-    ReleaseAnimation(m_pEffect);
+    if(m_pEffect)
+    {
+        m_pEffect->ClearAllAnimation();
+#ifdef _UNICODE
+        ReleaseAnimation(m_pEffect);
+#endif
+
+    }
 }
 
 CDuiString CDuiAnimLayout::GetClass() const
@@ -103,7 +112,7 @@ void RestoreAlphaColor(LPBYTE pBits, int bitsWidth, PRECT rc)
 
 BOOL CDuiAnimLayout::StartEffect()
 {
-    if(m_bPlaying)
+    if(m_bPlaying || m_pEffect == NULL)
     {
         return FALSE;
     }
