@@ -46,6 +46,8 @@ namespace DuiLib
         void SetClientRect(RECT* prc);
         void SetTransparent(BOOL bTransparent);
         BOOL DoSetCursor(RECT* prc, POINT* pt);
+        void SetCharFormat(CHARFORMAT2W& c);
+        void SetParaFormat(PARAFORMAT2& p);
         HRESULT OnTxInPlaceActivate(LPCRECT prcClient);
 
         ULONG STDMETHODCALLTYPE AddRef(void) OVERRIDE;
@@ -137,6 +139,11 @@ namespace DuiLib
         CDuiString GetText() const OVERRIDE;
         void SetText(LPCTSTR pstrText) OVERRIDE;
 
+        void SetEnabled(BOOL bEnabled);
+
+        LONG GetWinStyle();
+        void SetWinStyle(LONG lStyle);
+
         BOOL IsAccumulateDBCMode();
         void SetAccumulateDBCMode(BOOL bDBCMode);
 
@@ -218,6 +225,9 @@ namespace DuiLib
         virtual void OnTxNotify(DWORD iNotify, void* pv);
         virtual HRESULT TxSendMessage(UINT msg, WPARAM wparam, LPARAM lparam, LRESULT* plresult) const;
 
+        BOOL GetModify() const;
+        void SetModify(BOOL bModified = TRUE) const;
+
         BOOL CanUndo();
         BOOL CanRedo();
         BOOL CanPaste();
@@ -230,6 +240,14 @@ namespace DuiLib
 
         WORD GetSelectionType() const;
 
+        CDuiString GetSelText() const;
+        CDuiString GetTextRange(long nStartChar, long nEndChar) const;
+        int InsertText(long nInsertAfterChar, LPCTSTR lpstrText, BOOL bCanUndo = FALSE);
+        int AppendText(LPCTSTR lpstrText, BOOL bCanUndo = FALSE);
+
+        void HideSelection(BOOL bHide = TRUE, BOOL bChangeStyle = FALSE);
+        void ScrollCaret();
+
         void ReplaceSel(LPCTSTR lpszNewText, BOOL bCanUndo);
 
         void GetSel(CHARRANGE& cr) const;
@@ -240,6 +258,40 @@ namespace DuiLib
 
         int SetSelAll();
         int SetSelNone();
+
+        BOOL GetZoom(int& nNum, int& nDen) const;
+        BOOL SetZoom(int nNum, int nDen);
+        BOOL SetZoomOff();
+
+        BOOL GetAutoURLDetect() const;
+        BOOL SetAutoURLDetect(BOOL bAutoDetect = TRUE);
+
+        DWORD GetEventMask() const;
+        DWORD SetEventMask(DWORD dwEventMask);
+
+        DWORD GetDefaultCharFormat(CHARFORMAT2& cf) const;
+        BOOL SetDefaultCharFormat(CHARFORMAT2& cf);
+
+        DWORD GetSelectionCharFormat(CHARFORMAT2& cf) const;
+        BOOL SetSelectionCharFormat(CHARFORMAT2& cf);
+
+        BOOL SetWordCharFormat(CHARFORMAT2& cf);
+
+        DWORD GetParaFormat(PARAFORMAT2& pf) const;
+        BOOL SetParaFormat(PARAFORMAT2& pf);
+
+        int GetLineCount() const;
+        CDuiString GetLine(int nIndex, int nMaxLength) const;
+        int LineIndex(int nLine = -1) const;
+        int LineLength(int nLine = -1) const;
+        BOOL LineScroll(int nLines, int nChars = 0);
+        long LineFromChar(long nIndex) const;
+        CDuiPoint PosFromChar(UINT nChar) const;
+        int CharFromPos(CDuiPoint pt) const;
+        void EmptyUndoBuffer();
+        UINT SetUndoLimit(UINT nLimit);
+        long StreamIn(int nFormat, EDITSTREAM& es);
+        long StreamOut(int nFormat, EDITSTREAM& es);
 
         LRESULT MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
     private:

@@ -5,6 +5,7 @@
 namespace DuiLib
 {
     IMPLEMENT_DUICONTROL(CDuiScrollBar)
+
     CDuiScrollBar::CDuiScrollBar(void)
         : m_bHorizontal(FALSE)
         , m_bShowButton1(TRUE)

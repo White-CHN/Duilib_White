@@ -643,6 +643,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Control\DuiActiveX.h" />
     <ClInclude Include="Control\DuiButton.h" />
     <ClInclude Include="Control\DuiChart.h" />
     <ClInclude Include="Control\DuiCheckBox.h" />
@@ -662,6 +663,7 @@
     <ClInclude Include="Control\DuiRadio.h" />
     <ClInclude Include="Control\DuiRichEdit.h" />
     <ClInclude Include="Control\DuiRing.h" />
+    <ClInclude Include="Control\DuiRollText.h" />
     <ClInclude Include="Control\DuiScrollBar.h" />
     <ClInclude Include="Control\DuiSlider.h" />
     <ClInclude Include="Control\DuiWater.h" />
@@ -702,6 +704,7 @@
     <ClInclude Include="Utils\WaterEffect.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Control\DuiActiveX.cpp" />
     <ClCompile Include="Control\DuiButton.cpp" />
     <ClCompile Include="Control\DuiChart.cpp" />
     <ClCompile Include="Control\DuiCheckBox.cpp" />
@@ -721,6 +724,7 @@
     <ClCompile Include="Control\DuiRadio.cpp" />
     <ClCompile Include="Control\DuiRichEdit.cpp" />
     <ClCompile Include="Control\DuiRing.cpp" />
+    <ClCompile Include="Control\DuiRollText.cpp" />
     <ClCompile Include="Control\DuiScrollBar.cpp" />
     <ClCompile Include="Control\DuiSlider.cpp" />
     <ClCompile Include="Control\DuiWater.cpp" />

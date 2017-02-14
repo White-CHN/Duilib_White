@@ -316,6 +316,17 @@ err:
         return FALSE;
     }
 
+
+    void CTxtWinHost::SetCharFormat(CHARFORMAT2W& c)
+    {
+        cf = c;
+    }
+
+    void CTxtWinHost::SetParaFormat(PARAFORMAT2& p)
+    {
+        pf = p;
+    }
+
     HRESULT CTxtWinHost::OnTxInPlaceActivate(LPCRECT prcClient)
     {
         m_bInplaceActive = TRUE;
@@ -885,6 +896,31 @@ err:
         ReplaceSel(pstrText, FALSE);
     }
 
+
+    void CDuiRichEdit::SetEnabled(BOOL bEnabled)
+    {
+        if(IsEnabled() == bEnabled)
+        {
+            return;
+        }
+
+        if(m_pTwh)
+        {
+            m_pTwh->SetColor(bEnabled ? m_dwTextColor : GetManager()->GetDefaultDisabledColor());
+        }
+
+        CDuiContainer::SetEnabled(bEnabled);
+    }
+
+    LONG CDuiRichEdit::GetWinStyle()
+    {
+        return m_lTwhStyle;
+    }
+
+    void CDuiRichEdit::SetWinStyle(LONG lStyle)
+    {
+        m_lTwhStyle = lStyle;
+    }
 
     BOOL CDuiRichEdit::IsAccumulateDBCMode()
     {
@@ -2077,6 +2113,21 @@ err:
         return S_FALSE;
     }
 
+    BOOL CDuiRichEdit::GetModify() const
+    {
+        if(!m_pTwh)
+        {
+            return FALSE;
+        }
+        LRESULT lResult = 0;
+        TxSendMessage(EM_GETMODIFY, 0, 0, &lResult);
+        return (BOOL)lResult == TRUE;
+    }
+
+    void CDuiRichEdit::SetModify(BOOL bModified /*= TRUE*/) const
+    {
+        TxSendMessage(EM_SETMODIFY, bModified, 0, 0);
+    }
 
     BOOL CDuiRichEdit::CanUndo()
     {
@@ -2164,6 +2215,68 @@ err:
     }
 
 
+    CDuiString CDuiRichEdit::GetSelText() const
+    {
+        if(!m_pTwh)
+        {
+            return CDuiString();
+        }
+        CHARRANGE cr;
+        cr.cpMin = cr.cpMax = 0;
+        TxSendMessage(EM_EXGETSEL, 0, (LPARAM)&cr, 0);
+        LPWSTR lpText = NULL;
+        lpText = new WCHAR[cr.cpMax - cr.cpMin + 1];
+        ::ZeroMemory(lpText, (cr.cpMax - cr.cpMin + 1) * sizeof(WCHAR));
+        TxSendMessage(EM_GETSELTEXT, 0, (LPARAM)lpText, 0);
+        CDuiString sText;
+        sText = (LPCWSTR)lpText;
+        DUI_FREE_ARRAY(lpText);
+        return sText;
+    }
+
+
+    CDuiString CDuiRichEdit::GetTextRange(long nStartChar, long nEndChar) const
+    {
+        TEXTRANGEW tr = { 0 };
+        tr.chrg.cpMin = nStartChar;
+        tr.chrg.cpMax = nEndChar;
+        LPWSTR lpText = NULL;
+        lpText = new WCHAR[nEndChar - nStartChar + 1];
+        ::ZeroMemory(lpText, (nEndChar - nStartChar + 1) * sizeof(WCHAR));
+        tr.lpstrText = lpText;
+        TxSendMessage(EM_GETTEXTRANGE, 0, (LPARAM)&tr, 0);
+        CDuiString sText;
+        sText = (LPCWSTR)lpText;
+        DUI_FREE_ARRAY(lpText);
+        return sText;
+    }
+
+
+    int CDuiRichEdit::InsertText(long nInsertAfterChar, LPCTSTR lpstrText, BOOL bCanUndo /*= FALSE*/)
+    {
+        int nRet = SetSel(nInsertAfterChar, nInsertAfterChar);
+        ReplaceSel(lpstrText, bCanUndo);
+        return nRet;
+    }
+
+    int CDuiRichEdit::AppendText(LPCTSTR lpstrText, BOOL bCanUndo /*= FALSE*/)
+    {
+        int nRet = SetSel(-1, -1);
+        ReplaceSel(lpstrText, bCanUndo);
+        return nRet;
+    }
+
+    void CDuiRichEdit::HideSelection(BOOL bHide /*= TRUE*/, BOOL bChangeStyle /*= FALSE*/)
+    {
+        TxSendMessage(EM_HIDESELECTION, bHide, bChangeStyle, 0);
+    }
+
+
+    void CDuiRichEdit::ScrollCaret()
+    {
+        TxSendMessage(EM_SCROLLCARET, 0, 0, 0);
+    }
+
     void CDuiRichEdit::ReplaceSel(LPCTSTR lpszNewText, BOOL bCanUndo)
     {
 #ifdef _UNICODE
@@ -2217,6 +2330,274 @@ err:
     int CDuiRichEdit::SetSelNone()
     {
         return SetSel(-1, 0);
+    }
+
+
+    BOOL CDuiRichEdit::GetZoom(int& nNum, int& nDen) const
+    {
+        LRESULT lResult = 0;
+        TxSendMessage(EM_GETZOOM, (WPARAM)&nNum, (LPARAM)&nDen, &lResult);
+        return (BOOL)lResult == TRUE;
+    }
+
+    BOOL CDuiRichEdit::SetZoom(int nNum, int nDen)
+    {
+        if(nNum < 0 || nNum > 64)
+        {
+            return FALSE;
+        }
+        if(nDen < 0 || nDen > 64)
+        {
+            return FALSE;
+        }
+        LRESULT lResult = 0;
+        TxSendMessage(EM_SETZOOM, nNum, nDen, &lResult);
+        return (BOOL)lResult == TRUE;
+    }
+
+    BOOL CDuiRichEdit::SetZoomOff()
+    {
+        LRESULT lResult = 0;
+        TxSendMessage(EM_SETZOOM, 0, 0, &lResult);
+        return (BOOL)lResult == TRUE;
+    }
+
+
+    BOOL CDuiRichEdit::GetAutoURLDetect() const
+    {
+        LRESULT lResult = 0;
+        TxSendMessage(EM_GETAUTOURLDETECT, 0, 0, &lResult);
+        return (BOOL)lResult == TRUE;
+    }
+
+    BOOL CDuiRichEdit::SetAutoURLDetect(BOOL bAutoDetect /*= TRUE*/)
+    {
+        LRESULT lResult = 0;
+        TxSendMessage(EM_AUTOURLDETECT, bAutoDetect, 0, &lResult);
+        return (BOOL)lResult == FALSE;
+    }
+
+
+    DWORD CDuiRichEdit::GetEventMask() const
+    {
+        LRESULT lResult = 0;
+        TxSendMessage(EM_GETEVENTMASK, 0, 0, &lResult);
+        return (DWORD)lResult;
+    }
+
+    DWORD CDuiRichEdit::SetEventMask(DWORD dwEventMask)
+    {
+        LRESULT lResult = 0;
+        TxSendMessage(EM_SETEVENTMASK, 0, dwEventMask, &lResult);
+        return (DWORD)lResult;
+    }
+
+
+    DWORD CDuiRichEdit::GetDefaultCharFormat(CHARFORMAT2& cf) const
+    {
+        cf.cbSize = sizeof(CHARFORMAT2);
+        LRESULT lResult = 0;
+        TxSendMessage(EM_GETCHARFORMAT, 0, (LPARAM)&cf, &lResult);
+        return (DWORD)lResult;
+    }
+
+    BOOL CDuiRichEdit::SetDefaultCharFormat(CHARFORMAT2& cf)
+    {
+        if(!m_pTwh)
+        {
+            return FALSE;
+        }
+        cf.cbSize = sizeof(CHARFORMAT2);
+        LRESULT lResult = 0;
+        TxSendMessage(EM_SETCHARFORMAT, 0, (LPARAM)&cf, &lResult);
+        if((BOOL)lResult == TRUE)
+        {
+            CHARFORMAT2W cfw;
+            cfw.cbSize = sizeof(CHARFORMAT2W);
+            TxSendMessage(EM_GETCHARFORMAT, 1, (LPARAM)&cfw, 0);
+            m_pTwh->SetCharFormat(cfw);
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+
+    DWORD CDuiRichEdit::GetSelectionCharFormat(CHARFORMAT2& cf) const
+    {
+        cf.cbSize = sizeof(CHARFORMAT2);
+        LRESULT lResult = 0;
+        TxSendMessage(EM_GETCHARFORMAT, 1, (LPARAM)&cf, &lResult);
+        return (DWORD)lResult;
+    }
+
+    BOOL CDuiRichEdit::SetSelectionCharFormat(CHARFORMAT2& cf)
+    {
+        if(GetManager()->IsLayered())
+        {
+            CRenderEngine::CheckAlphaColor(cf.crTextColor);
+            CRenderEngine::CheckAlphaColor(cf.crBackColor);
+        }
+        if(!m_pTwh)
+        {
+            return FALSE;
+        }
+        cf.cbSize = sizeof(CHARFORMAT2);
+        LRESULT lResult = 0;
+        TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION, (LPARAM)&cf, &lResult);
+        return (BOOL)lResult == TRUE;
+    }
+
+
+    BOOL CDuiRichEdit::SetWordCharFormat(CHARFORMAT2& cf)
+    {
+        if(!m_pTwh)
+        {
+            return FALSE;
+        }
+        cf.cbSize = sizeof(CHARFORMAT2);
+        LRESULT lResult = 0;
+        TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION | SCF_WORD, (LPARAM)&cf, &lResult);
+        return (BOOL)lResult == TRUE;
+    }
+
+
+    DWORD CDuiRichEdit::GetParaFormat(PARAFORMAT2& pf) const
+    {
+        pf.cbSize = sizeof(PARAFORMAT2);
+        LRESULT lResult = 0;
+        TxSendMessage(EM_GETPARAFORMAT, 0, (LPARAM)&pf, &lResult);
+        return (DWORD)lResult;
+    }
+
+
+    BOOL CDuiRichEdit::SetParaFormat(PARAFORMAT2& pf)
+    {
+        if(!m_pTwh)
+        {
+            return FALSE;
+        }
+        pf.cbSize = sizeof(PARAFORMAT2);
+        LRESULT lResult = 0;
+        TxSendMessage(EM_SETPARAFORMAT, 0, (LPARAM)&pf, &lResult);
+        if((BOOL)lResult == TRUE)
+        {
+            m_pTwh->SetParaFormat(pf);
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    int CDuiRichEdit::GetLineCount() const
+    {
+        if(!m_pTwh)
+        {
+            return 0;
+        }
+        LRESULT lResult = 0;
+        TxSendMessage(EM_GETLINECOUNT, 0, 0, &lResult);
+        return (int)lResult;
+    }
+
+    CDuiString CDuiRichEdit::GetLine(int nIndex, int nMaxLength) const
+    {
+        LPWSTR lpText = NULL;
+        lpText = new WCHAR[nMaxLength + 1];
+        ::ZeroMemory(lpText, (nMaxLength + 1) * sizeof(WCHAR));
+        *(LPWORD)lpText = (WORD)nMaxLength;
+        TxSendMessage(EM_GETLINE, nIndex, (LPARAM)lpText, 0);
+        CDuiString sText;
+        sText = (LPCWSTR)lpText;
+        DUI_FREE_ARRAY(lpText);
+        return sText;
+    }
+
+    int CDuiRichEdit::LineIndex(int nLine) const
+    {
+        LRESULT lResult = 0;
+        TxSendMessage(EM_LINEINDEX, nLine, 0, &lResult);
+        return (int)lResult;
+    }
+
+    int CDuiRichEdit::LineLength(int nLine) const
+    {
+        LRESULT lResult = 0;
+        TxSendMessage(EM_LINELENGTH, nLine, 0, &lResult);
+        return (int)lResult;
+    }
+
+    BOOL CDuiRichEdit::LineScroll(int nLines, int nChars)
+    {
+        LRESULT lResult = 0;
+        TxSendMessage(EM_LINESCROLL, nChars, nLines, &lResult);
+        return (BOOL)lResult == TRUE;
+    }
+
+    long CDuiRichEdit::LineFromChar(long nIndex) const
+    {
+        if(!m_pTwh)
+        {
+            return 0L;
+        }
+        LRESULT lResult = 0;
+        TxSendMessage(EM_EXLINEFROMCHAR, 0, nIndex, &lResult);
+        return (long)lResult;
+    }
+
+    CDuiPoint CDuiRichEdit::PosFromChar(UINT nChar) const
+    {
+        POINTL pt;
+        TxSendMessage(EM_POSFROMCHAR, (WPARAM)&pt, nChar, 0);
+        return CDuiPoint(pt.x, pt.y);
+    }
+
+    int CDuiRichEdit::CharFromPos(CDuiPoint pt) const
+    {
+        POINTL ptl = {pt.x, pt.y};
+        if(!m_pTwh)
+        {
+            return 0;
+        }
+        LRESULT lResult = 0;
+        TxSendMessage(EM_CHARFROMPOS, 0, (LPARAM)&ptl, &lResult);
+        return (int)lResult;
+    }
+
+    void CDuiRichEdit::EmptyUndoBuffer()
+    {
+        TxSendMessage(EM_EMPTYUNDOBUFFER, 0, 0, 0);
+    }
+
+    UINT CDuiRichEdit::SetUndoLimit(UINT nLimit)
+    {
+        if(!m_pTwh)
+        {
+            return 0;
+        }
+        LRESULT lResult = 0;
+        TxSendMessage(EM_SETUNDOLIMIT, (WPARAM) nLimit, 0, &lResult);
+        return (UINT)lResult;
+    }
+
+    long CDuiRichEdit::StreamIn(int nFormat, EDITSTREAM& es)
+    {
+        if(!m_pTwh)
+        {
+            return 0L;
+        }
+        LRESULT lResult = 0;
+        TxSendMessage(EM_STREAMIN, nFormat, (LPARAM)&es, &lResult);
+        return (long)lResult;
+    }
+
+    long CDuiRichEdit::StreamOut(int nFormat, EDITSTREAM& es)
+    {
+        if(!m_pTwh)
+        {
+            return 0L;
+        }
+        LRESULT lResult = 0;
+        TxSendMessage(EM_STREAMOUT, nFormat, (LPARAM)&es, &lResult);
+        return (long)lResult;
     }
 
     LRESULT CDuiRichEdit::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)

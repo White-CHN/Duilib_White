@@ -101,6 +101,8 @@ using namespace Gdiplus;
 #include "Control/DuiFadeButton.h"
 #include "Control/DuiCheckBox.h"
 #include "Control/DuiRichEdit.h"
+#include "Control/DuiActiveX.h"
+#include "Control/DuiRollText.h"
 
 
 #pragma comment( lib, "GdiPlus.lib" )

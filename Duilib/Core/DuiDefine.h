@@ -143,7 +143,6 @@ namespace DuiLib
 #define DUI_MSGTYPE_TREEITEMACTIVATE 		(_T("treeitemactivate"))
 #define DUI_MSGTYPE_TREEITEMDBCLICK 		(_T("treeitemdbclick"))
 #define DUI_MSGTYPE_CHECKCLICK				(_T("checkclick"))
-#define DUI_MSGTYPE_TEXTROLLEND 			(_T("textrollend"))
 #define DUI_MSGTYPE_COLORCHANGED		    (_T("colorchanged"))
 
 #define DUI_MSGTYPE_LISTITEMSELECT 		   	(_T("listitemselect"))
@@ -192,6 +191,8 @@ namespace DuiLib
 #define  DUI_CTR_COLORPALETTE					 (_T("ColorPalette"))
 #define  DUI_CTR_CHECKBOX						 (_T("CheckBox"))
 #define  DUI_CTR_WATER						     (_T("Water"))
+#define  DUI_CTR_ACTIVEX                         (_T("ActiveX"))
+#define  DUI_CTR_ROLLTEXT                        (_T("RollText"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
@@ -212,7 +213,7 @@ namespace DuiLib
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 
-#define CARET_TIMERID	0x1999
+
     //PaintManager所用到的定时器ID
     enum DuiPaintManagerTimerID
     {
@@ -224,6 +225,7 @@ namespace DuiLib
         TIMER_ID_FADEBUTTON_IN,
         TIMER_ID_FADEBUTTON_OUT,
         TIMER_ID_WATER,
+        TIMER_ID_ROLLTEXT,
         //外部自定义定时器ID
         TIMER_ID_USER		=	0x100
     };

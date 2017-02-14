@@ -3,6 +3,8 @@
 namespace DuiLib
 {
     class CDuiRichEdit;
+#define CARET_TIMERID	0x1999
+
     enum DUILIB_RESTYPE
     {
         DUILIB_FILE		=  1,		// 来自磁盘文件

@@ -200,6 +200,10 @@
 				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true"><!-- 动画控件 -->
+			     <HorizontalLayout height="160" childvalign="vcenter" >
+					<Label font="3" valign="center" cursor="hand" align="center"  text="滚动文字" tooltip="滚动文字" width="80" textcolor="#FFFFFFFF" />
+						<RollText direction="up" textcolor="#FFFFFFFF" text="超过5000万人使用，适用于 Chrome 的免费的广告拦截器，可阻止所有烦人的广告及恶意软件和跟踪。"/>
+				  </HorizontalLayout>
 				<HorizontalLayout  childvalign="vcenter" >
 					<Label font="3" valign="center" cursor="hand" align="center"  text="Gif演示" tooltip="Gif演示" width="80" textcolor="#FFFFFFFF" />
 					<HorizontalLayout height="25" childpadding="12"  >

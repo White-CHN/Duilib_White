@@ -7,11 +7,13 @@ namespace DuiLib
 
     CDuiWater::CDuiWater(void)
     {
+        m = FALSE;
     }
 
 
     CDuiWater::~CDuiWater(void)
     {
+        GetManager()->KillTimer(this, TIMER_ID_WATER);
     }
 
     CDuiString CDuiWater::GetClass() const
@@ -30,12 +32,32 @@ namespace DuiLib
 
     void CDuiWater::DoInit()
     {
-        GetManager()->SetTimer(this, TIMER_ID_WATER, 15);
+        if(Activate())
+        {
+            GetManager()->SetTimer(this, TIMER_ID_WATER, 15);
+        }
+        else
+        {
+            GetManager()->KillTimer(this, TIMER_ID_WATER);
+        }
+    }
+
+    void CDuiWater::SetVisible(BOOL bVisible /*= TRUE*/)
+    {
+        CDuiLabel::SetVisible(bVisible);
+        if(bVisible)
+        {
+            GetManager()->SetTimer(this, TIMER_ID_WATER, 15);
+        }
+        else
+        {
+            GetManager()->KillTimer(this, TIMER_ID_WATER);
+        }
     }
 
     void CDuiWater::SetInternVisible(BOOL bVisible /*= TRUE*/)
     {
-        CDuiControl::SetInternVisible(bVisible);
+        CDuiLabel::SetInternVisible(bVisible);
         if(bVisible)
         {
             GetManager()->SetTimer(this, TIMER_ID_WATER, 15);
@@ -54,9 +76,15 @@ namespace DuiLib
             return;
         }
         CDuiRect rc = GetPos();
-        m_renderSrc.Create32BitFromPicture(hDC, rc.left, rc.top, rc.GetWidth(), rc.GetHeight());
-        m_renderDest.Create32BitFromPicture(hDC, rc.left, rc.top, rc.GetWidth(), rc.GetHeight());
-        m_waterEffect.Create(rc.GetWidth(), rc.GetHeight());
+
+        if(m == FALSE)
+        {
+            m = TRUE;
+            m_renderSrc.Create32BitFromPicture(hDC, rc.left, rc.top, rc.GetWidth(), rc.GetHeight());
+            m_renderDest.Create32BitFromPicture(hDC, rc.left, rc.top, rc.GetWidth(), rc.GetHeight());
+            m_waterEffect.Create(rc.GetWidth(), rc.GetHeight());
+        }
+
     }
 
     void CDuiWater::DoEvent(TEventUI& event)
@@ -103,6 +131,12 @@ namespace DuiLib
             }
 
         }
+    }
+
+    void CDuiWater::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)
+    {
+        CDuiLabel::SetPos(rc, bNeedInvalidate);
+        m = FALSE;
     }
 
 }
