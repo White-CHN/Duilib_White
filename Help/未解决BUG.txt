@@ -6,4 +6,10 @@
 
 
 2017/1/13
-1.2级菜单内存泄漏，点击2级菜单崩溃问题
+二级菜单内存泄漏，点击二级菜单崩溃问题
+
+2017/2/13
+richedit 剪切和复制后，关闭时异常（CTxtWinHost析构里面注释掉ITextServices的release解决）
+
+2017/2/14
+richedit大概5行文字，从拓展控件到高级控件的动画，会出现定时器只执行一次，导致界面只有一部分显示(CTxtWinHost::SetClientRect注释掉OnTxPropertyBitsChange的调用暂时解决)

@@ -92,30 +92,30 @@ namespace DuiLib
         void		TxImmReleaseContext(HIMC himc) OVERRIDE;
         HRESULT		TxGetSelectionBarWidth(LONG* lSelBarWidth) OVERRIDE;
     private:
-        WCHAR		chPasswordChar;		    // Password character
+        WCHAR chPasswordChar;		    // Password character
         BOOL m_bRichText;				// Whether control is rich text
         BOOL m_bTransparent;			// Whether control is transparent
         BOOL m_bInplaceActive;			// Whether control is inplace active
         BOOL m_bShowCaret;
         BOOL m_bTimer;					// A timer is set
         BOOL m_bCaptured;
-        BOOL	m_bEnableAutoWordSel;	// enable Word style auto word selection?
-        BOOL	m_bWordWrap;			// Whether control should word wrap
-        BOOL	m_bAllowBeep;			// Whether beep is allowed
-        BOOL	m_bSaveSelection;		// Whether to save the selection when inactive
-        LONG		lSelBarWidth;			// Width of the selection bar
-        LONG  m_iLimitText;				// maximum text size
-        LONG		laccelpos;				// Accelerator position
-        ULONG	cRefs;					// Reference Count
-        DWORD		m_dwStyle;				// style bits
-        INT         m_iCaretWidth;
-        INT         m_iCaretHeight;
-        INT         m_iCaretLastWidth;
-        INT         m_iCaretLastHeight;
-        ITextServices*	pserv;		    // pointer to Text Services object
+        BOOL m_bEnableAutoWordSel;	// enable Word style auto word selection?
+        BOOL m_bWordWrap;			// Whether control should word wrap
+        BOOL m_bAllowBeep;			// Whether beep is allowed
+        BOOL m_bSaveSelection;		// Whether to save the selection when inactive
+        LONG lSelBarWidth;			// Width of the selection bar
+        LONG m_iLimitText;				// maximum text size
+        LONG laccelpos;				// Accelerator position
+        ULONG cRefs;					// Reference Count
+        DWORD m_dwStyle;				// style bits
+        INT m_iCaretWidth;
+        INT m_iCaretHeight;
+        INT m_iCaretLastWidth;
+        INT m_iCaretLastHeight;
+        ITextServices* pserv;		    // pointer to Text Services object
         CDuiRichEdit* m_pRichEdit;
-        RECT		rcClient;				// Client Rect for this control
-        SIZEL		sizelExtent;			// Extent array
+        RECT rcClient;				// Client Rect for this control
+        SIZEL sizelExtent;			// Extent array
         CHARFORMAT2W cf;					// Default character format
         PARAFORMAT2	pf;					    // Default paragraph format
     };

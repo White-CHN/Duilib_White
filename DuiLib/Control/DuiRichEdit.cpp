@@ -55,7 +55,7 @@ namespace DuiLib
     CTxtWinHost::~CTxtWinHost(void)
     {
         pserv->OnTxInPlaceDeactivate();
-        pserv->Release();
+        //pserv->Release(); 剪切和复制后，关闭时会造成delete异常，暂时注释掉
     }
 
 
@@ -288,7 +288,7 @@ err:
         LONG yPerInch =	::GetDeviceCaps(m_pRichEdit->GetManager()->GetPaintDC(), LOGPIXELSY);
         sizelExtent.cx = MulDiv(rcClient.right - rcClient.left, HIMETRIC_PER_INCH, xPerInch);
         sizelExtent.cy = MulDiv(rcClient.bottom - rcClient.top, HIMETRIC_PER_INCH, yPerInch);
-        pserv->OnTxPropertyBitsChange(TXTBIT_VIEWINSETCHANGE, TXTBIT_VIEWINSETCHANGE);
+        //pserv->OnTxPropertyBitsChange(TXTBIT_VIEWINSETCHANGE, TXTBIT_VIEWINSETCHANGE);  解决动画过程中循环调用setpos
     }
 
     void CTxtWinHost::SetTransparent(BOOL bTransparent)
@@ -1298,6 +1298,7 @@ err:
 
     // 多行非rich格式的richedit有一个滚动条bug，在最后一行是空行时，LineDown和SetScrollPos无法滚动到最后
     // 引入iPos就是为了修正这个bug
+
     void CDuiRichEdit::SetScrollPos(SIZE szPos, BOOL bMsg /*= TRUE*/)
     {
         int cx = 0;

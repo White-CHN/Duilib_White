@@ -175,6 +175,7 @@ namespace DuiLib
         {
             int nTimerID = (int)event.wParam;
             OnAnimationElapse(nTimerID);
+            return ;
         }
         CDuiTabLayout::DoEvent(event);
     }
