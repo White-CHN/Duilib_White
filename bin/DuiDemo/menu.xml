@@ -10,7 +10,7 @@
 
 	<Menu>
 		<MenuElement name="lan" text="lantext" resourcetext="true"/>
-
+		<MenuElement name="sdi" text="多线程消息循环"/>
 		<MenuElement text="精品服务" expland="true" >
 			<MenuElement name="qianting" text="修潜艇" icon="menu/menu_check.png" iconsize="9,9" checkitem="true" ischeck="false"/>
 			<MenuElement name="yuanzidan" text="保养原子弹" icon="menu/icon.png"/>

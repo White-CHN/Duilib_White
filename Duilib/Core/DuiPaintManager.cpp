@@ -187,6 +187,7 @@ namespace DuiLib
     ////////////////////////////////////////////////////////////////////////////////////////
 
     HINSTANCE CDuiPaintManager::m_hInstance = NULL;
+    DWORD CDuiPaintManager::m_dwMainThreadID = 0;
     HINSTANCE CDuiPaintManager::m_hResourceInstance = NULL;
     HMODULE CDuiPaintManager::m_hMsimg32Module = NULL;
 
@@ -3319,6 +3320,7 @@ namespace DuiLib
             return FALSE;
         }
         m_hInstance = hInstance;
+        m_dwMainThreadID = GetCurrentThreadId();
         if(m_hMsimg32Module == NULL)
         {
             m_hMsimg32Module = ::LoadLibrary(_T("msimg32.dll"));
@@ -3428,6 +3430,11 @@ namespace DuiLib
     HINSTANCE CDuiPaintManager::GetInstance()
     {
         return m_hInstance;
+    }
+
+    DWORD CDuiPaintManager::GetMainThreadID()
+    {
+        return m_dwMainThreadID;
     }
 
     CDuiString CDuiPaintManager::GetInstancePath()
@@ -3650,28 +3657,57 @@ namespace DuiLib
         return FALSE;
     }
 
-    void CDuiPaintManager::MessageLoop()
+    BOOL CDuiPaintManager::IsIdleMessage(const LPMSG pMsg)
+    {
+        // These messages should NOT cause idle processing
+        switch(pMsg->message)
+        {
+            case WM_MOUSEMOVE:
+#ifndef _WIN32_WCE
+            case WM_NCMOUSEMOVE:
+#endif // !_WIN32_WCE
+            case WM_PAINT:
+            case 0x0118:	// WM_SYSTIMER (caret blink)
+                return FALSE;
+        }
+
+        return TRUE;
+    }
+
+    int CDuiPaintManager::MessageLoop()
     {
         MSG msg = { 0 };
-        while(::GetMessage(&msg, NULL, 0, 0))
+        BOOL bDoIdle = TRUE;
+        BOOL bRet = FALSE;
+        for(;;)
         {
-            //DUI_TRACE("%s", DuiTraceMsg(msg.message));
+            while(!::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+            {
+                bDoIdle = FALSE;
+            }
+            bRet = ::GetMessage(&msg, NULL, 0, 0);
+
+            if(bRet == -1)
+            {
+                DUI_ERROR("::GetMessage returned -1 (error)");
+                continue;   // error, don't process
+            }
+            else if(!bRet)
+            {
+                DUI_ERROR("::GetMessage - exiting");
+                break;   // WM_QUIT, exit message loop
+            }
             if(!CDuiPaintManager::TranslateMessage(&msg))
             {
                 ::TranslateMessage(&msg);
-                try
-                {
-                    ::DispatchMessage(&msg);
-                }
-                catch(...)
-                {
-                    DUI_TRACE("EXCEPTION!");
-#ifdef _DEBUG
-                    throw "CDuiPaintManager::MessageLoop";
-#endif
-                }
+                ::DispatchMessage(&msg);
+            }
+            if(IsIdleMessage(&msg))
+            {
+                bDoIdle = TRUE;
             }
         }
+        return (int)msg.wParam;
     }
 
     void CDuiPaintManager::GetChildWndRect(HWND hWnd, HWND hChildWnd, RECT& rcChildWnd)

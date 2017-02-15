@@ -511,6 +511,10 @@ LRESULT CDemoFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
             {
                 Close(0);
             }
+            else if(sMenuName == _T("sdi"))
+            {
+                ::PostThreadMessage(CDuiPaintManager::GetMainThreadID(), WM_USER, 0, 0L);
+            }
         }
     }
     else if(uMsg == DUIMSG_ICON)

@@ -378,6 +378,7 @@ namespace DuiLib
         static void Uninitialize();
 
         static HINSTANCE GetInstance();
+        static DWORD GetMainThreadID();
 
         static CDuiString GetInstancePath();
 
@@ -402,7 +403,8 @@ namespace DuiLib
         static UINT MapKeyState();
 
         static BOOL TranslateMessage(const LPMSG pMsg);
-        static void MessageLoop();
+        static BOOL IsIdleMessage(const LPMSG pMsg);
+        static int MessageLoop();
 
         static void GetChildWndRect(HWND hWnd, HWND hChildWnd, RECT& rcChildWnd);
         //插件
@@ -491,6 +493,7 @@ namespace DuiLib
         CDuiShadow m_shadow;					// 窗口阴影
 
         static HINSTANCE m_hInstance;			//应用程序实例
+        static DWORD m_dwMainThreadID;
         static HINSTANCE m_hResourceInstance;	//资源实例
         static HMODULE m_hMsimg32Module;		//msimg32.dll
         static BOOL m_bCachedResourceZip;
