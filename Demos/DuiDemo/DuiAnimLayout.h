@@ -3,7 +3,9 @@
 
 #define DUI_CTR_ANIMLAYOUT		(_T("AnimLayout"))
 
-class CDuiAnimLayout : public CDuiVerticalLayout, public IUIEffectCallBack
+class CDuiAnimLayout
+    : public CDuiVerticalLayout
+    , public IUIEffectCallBack
 {
 public:
     CDuiAnimLayout(void);

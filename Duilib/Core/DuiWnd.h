@@ -23,7 +23,7 @@ namespace DuiLib
         BOOL ShowWindow(BOOL bShow = TRUE, BOOL bTakeFocus = TRUE);
         BOOL CenterWindow();	// 居中，支持扩展屏幕
 
-        UINT_PTR ShowModal();
+        int ShowModal();
 
         virtual void Close(UINT nRet = IDOK);
 

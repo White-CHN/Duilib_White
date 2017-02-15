@@ -170,10 +170,10 @@ namespace DuiLib
         return TRUE;
     }
 
-    UINT_PTR CDuiWnd::ShowModal()
+    int CDuiWnd::ShowModal()
     {
         ASSERT(::IsWindow(m_hWnd));
-        UINT_PTR nRet = 0;
+
         HWND hWndParent = GetWindowOwner(m_hWnd);
         ::ShowWindow(m_hWnd, SW_SHOWNORMAL);
         ::EnableWindow(hWndParent, FALSE);
@@ -182,7 +182,6 @@ namespace DuiLib
         {
             if(msg.message == WM_CLOSE && msg.hwnd == m_hWnd)
             {
-                nRet = msg.wParam;
                 ::EnableWindow(hWndParent, TRUE);
                 ::SetFocus(hWndParent);
             }
@@ -202,7 +201,7 @@ namespace DuiLib
         {
             ::PostQuitMessage((INT)msg.wParam);
         }
-        return nRet;
+        return (int)msg.wParam;
     }
 
     void CDuiWnd::Close(UINT nRet /*= IDOK*/)
