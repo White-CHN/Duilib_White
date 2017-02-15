@@ -46,6 +46,7 @@
 			<Option width="98" text="动画控件" name="ani_tab" style="colortab_style" />
 			<Option width="98" text="分割窗口" name="split_tab" style="colortab_style" />
 			<Option width="98" text="属性生成" name="xml_tab" style="colortab_style" />
+			<Text></Text>
 			<Control />
 		</HorizontalLayout>
 		<Label height="1"  bkimage="line/hor_line.bmp"/>

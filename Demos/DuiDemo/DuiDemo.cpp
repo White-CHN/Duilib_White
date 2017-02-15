@@ -184,6 +184,8 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         }
         break;
     }
+    // 注册插件
+    CDuiPaintManager::LoadPlugin(_T("DuiControls_d.dll"));
     // 注册用户自定义控件
     REGIST_DUICONTROL(CDuiSkinPictureBtn);
 #define SINGLETHREAD
