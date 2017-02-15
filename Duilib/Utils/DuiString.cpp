@@ -37,6 +37,7 @@ namespace DuiLib
         if(m_lpStr != m_strBuffer)
         {
             free(m_lpStr);
+            m_lpStr = NULL;
         }
     }
 
@@ -237,6 +238,7 @@ namespace DuiLib
         if(m_lpStr != m_strBuffer)
         {
             free(m_lpStr);
+            m_lpStr = NULL;
         }
         m_lpStr = m_strBuffer;
         ZeroMemory(m_strBuffer, sizeof(m_strBuffer));

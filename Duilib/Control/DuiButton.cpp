@@ -548,6 +548,15 @@ namespace DuiLib
         return TRUE;
     }
 
+    void CDuiButton::SetEnabled(BOOL bEnable /*= TRUE*/)
+    {
+        CDuiControl::SetEnabled(bEnable);
+        if(!IsEnabled())
+        {
+            m_uButtonState = 0;
+        }
+    }
+
     void CDuiButton::DoEvent(TEventUI& event)
     {
         if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)

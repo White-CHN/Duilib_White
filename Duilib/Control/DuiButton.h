@@ -56,6 +56,7 @@ namespace DuiLib
         void PaintForeImage(HDC hDC) OVERRIDE;
 
         BOOL Activate() OVERRIDE;
+        void SetEnabled(BOOL bEnable = TRUE) OVERRIDE;
         void DoEvent(TEventUI& event) OVERRIDE;
     private:
         int	m_iBindTabIndex;

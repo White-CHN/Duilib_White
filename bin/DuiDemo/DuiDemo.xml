@@ -46,7 +46,6 @@
 			<Option width="98" text="动画控件" name="ani_tab" style="colortab_style" />
 			<Option width="98" text="分割窗口" name="split_tab" style="colortab_style" />
 			<Option width="98" text="属性生成" name="xml_tab" style="colortab_style" />
-			<Text></Text>
 			<Control />
 		</HorizontalLayout>
 		<Label height="1"  bkimage="line/hor_line.bmp"/>
@@ -63,15 +62,16 @@
 					</HorizontalLayout>
 				</HorizontalLayout>
 				<Label height="1"  bkimage="line/hor_line.bmp"/>
-				<HorizontalLayout  childpadding="6" childvalign="vcenter" >
+				<HorizontalLayout height="95" childpadding="6" childvalign="vcenter" >
 					<Label font="3" valign="center" cursor="hand" align="center" tooltip="Button演示" text="Button演示"  width="80" textcolor="#FFFFFFFF" />
 					<HorizontalLayout height="30" childpadding="12"  >
 						<Button width="100" text="图片按钮" tooltip="Button演示" textcolor="#FFFFFFFF"  style="btn_style" />
 						<Button text="图标按钮(&A)" tooltip="Button演示" shortcut="A" align="center" textcolor="#FF000000" borderround="4,4" bkcolor="#FF00FF00" hotbkcolor="#FF00FFFF" pushedbkcolor="#FFB23AEE"  width="100" textpadding="20,0,0,0" foreimage="dest='4,7,20,23' res='icon/icon.png'" />
 						<Button text="命令按钮(&S)" tooltip="Button演示" textcolor="#FF000000" style="btn_style" shortcut="S" width="100"/>
 						<Button text="自适应比例按钮" align="center"	 tooltip="Button演示" textcolor="#FF000000" borderround="4,4" bkcolor="#FF00FF00" hotbkcolor="#FF00FFFF" pushedbkcolor="#FFB23AEE" minwidth="100"/>
-					</HorizontalLayout>
 
+					</HorizontalLayout>
+					<AnimButton text="插件动画按钮" width="95" height="95"/>
 				</HorizontalLayout>
 				<Label height="1"  bkimage="line/hor_line.bmp"/>
 				<HorizontalLayout  childpadding="6" childvalign="vcenter" >
@@ -160,7 +160,7 @@
 				<HorizontalLayout height="150" childvalign="vcenter" inset="0,6,0,6" >
 					<Label font="3" valign="center" cursor="hand" align="center"  text="RichEdit" tooltip="RichEdit演示" width="80" textcolor="#FFFFFFFF" />
 					<VerticalLayout height="200" bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
-					<RichEdit font="5" textcolor="#FFFFFFFF" password="false" tipvalue="请输入文字" mutiline="true" autovscroll="true" rich="false" text="Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）" vscrollbar="true" hscrollbar="false" autohscroll="false"/>
+						<RichEdit font="5" textcolor="#FFFFFFFF" password="false" tipvalue="请输入文字" mutiline="true" autovscroll="true" rich="false" text="Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）" vscrollbar="true" hscrollbar="false" autohscroll="false"/>
 					</VerticalLayout>
 					<Control width="30"/>
 				</HorizontalLayout>
@@ -184,7 +184,7 @@
 				<HorizontalLayout height="200" childvalign="vcenter" inset="0,6,0,6" >
 					<Label font="3" valign="center" cursor="hand" align="center"  text="Tree" tooltip="Tree演示" width="80" textcolor="#FFFFFFFF" />
 					<VerticalLayout height="200" bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
-						</VerticalLayout>
+					</VerticalLayout>
 					<Control width="30"/>
 				</HorizontalLayout>
 			</VerticalLayout>
@@ -201,10 +201,10 @@
 				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true"><!-- 动画控件 -->
-			     <HorizontalLayout height="160" childvalign="vcenter" >
+				<HorizontalLayout height="160" childvalign="vcenter" >
 					<Label font="3" valign="center" cursor="hand" align="center"  text="滚动文字" tooltip="滚动文字" width="80" textcolor="#FFFFFFFF" />
-						<RollText direction="up" textcolor="#FFFFFFFF" text="超过5000万人使用，适用于 Chrome 的免费的广告拦截器，可阻止所有烦人的广告及恶意软件和跟踪。"/>
-				  </HorizontalLayout>
+					<RollText direction="up" textcolor="#FFFFFFFF" text="超过5000万人使用，适用于 Chrome 的免费的广告拦截器，可阻止所有烦人的广告及恶意软件和跟踪。"/>
+				</HorizontalLayout>
 				<HorizontalLayout  childvalign="vcenter" >
 					<Label font="3" valign="center" cursor="hand" align="center"  text="Gif演示" tooltip="Gif演示" width="80" textcolor="#FFFFFFFF" />
 					<HorizontalLayout height="25" childpadding="12"  >
