@@ -102,6 +102,35 @@ void CDemoFrame::InitWindow()
             m_pComboControlNames->SelectItem(0);
         }
     }
+
+    CDuiControl* pAnimBtn1 =  static_cast<CDuiControl*>(GetPaintManager()->FindControl(_T("animBtn1")));
+    if(pAnimBtn1)
+    {
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='0,0,95,95'"));
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='95,0,190,95'"));
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='190,0,285,95'"));
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='285,0,380,95'"));
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='380,0,475,95'"));
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='475,0,570,95'"));
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='570,0,665,95'"));
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='665,0,760,95'"));
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='760,0,855,95'"));
+        pAnimBtn1->SetAttribute(_T("animimage"), _T("file='bkimage/animation.png' source='855,0,950,95'"));
+    }
+    CDuiControl* pAnimBtn2 =  static_cast<CDuiControl*>(GetPaintManager()->FindControl(_T("animBtn2")));
+    if(pAnimBtn2)
+    {
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='0,0,95,95'"));
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='95,0,190,95'"));
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='190,0,285,95'"));
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='285,0,380,95'"));
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='380,0,475,95'"));
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='475,0,570,95'"));
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='570,0,665,95'"));
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='665,0,760,95'"));
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='760,0,855,95'"));
+        pAnimBtn2->SetAttribute(_T("animimage"), _T("file='bkimage/animation2.png' source='855,0,950,95'"));
+    }
 }
 
 CDuiString CDemoFrame::GetSkinFile()

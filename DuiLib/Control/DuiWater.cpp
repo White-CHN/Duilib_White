@@ -6,8 +6,8 @@ namespace DuiLib
     IMPLEMENT_DUICONTROL(CDuiWater)
 
     CDuiWater::CDuiWater(void)
+        : m_bUpdate(FALSE)
     {
-        m = FALSE;
     }
 
 
@@ -77,12 +77,12 @@ namespace DuiLib
         }
         CDuiRect rc = GetPos();
 
-        if(m == FALSE)
+        if(m_bUpdate == TRUE)
         {
-            m = TRUE;
             m_renderSrc.Create32BitFromPicture(hDC, rc.left, rc.top, rc.GetWidth(), rc.GetHeight());
             m_renderDest.Create32BitFromPicture(hDC, rc.left, rc.top, rc.GetWidth(), rc.GetHeight());
             m_waterEffect.Create(rc.GetWidth(), rc.GetHeight());
+            m_bUpdate = FALSE;
         }
 
     }
@@ -136,7 +136,7 @@ namespace DuiLib
     void CDuiWater::SetPos(RECT rc, BOOL bNeedInvalidate /*= TRUE*/)
     {
         CDuiLabel::SetPos(rc, bNeedInvalidate);
-        m = FALSE;
+        m_bUpdate = TRUE;
     }
 
 }

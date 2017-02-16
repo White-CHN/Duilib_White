@@ -3741,7 +3741,7 @@ namespace DuiLib
             {
                 if(m_aPlugins.Find(lpCreateControl) >= 0)
                 {
-                    return TRUE;
+                    return FALSE;
                 }
                 m_aPlugins.Add(lpCreateControl);
                 return TRUE;

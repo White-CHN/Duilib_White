@@ -18,10 +18,10 @@ namespace DuiLib
         void DoEvent(TEventUI& event) OVERRIDE;
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
     private:
+        BOOL m_bUpdate;
         CDib m_renderSrc;
         CDib m_renderDest;
         CWaterEffect m_waterEffect;
-        BOOL m ;
     };
 
 }

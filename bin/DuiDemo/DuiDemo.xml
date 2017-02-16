@@ -71,7 +71,8 @@
 						<Button text="自适应比例按钮" align="center"	 tooltip="Button演示" textcolor="#FF000000" borderround="4,4" bkcolor="#FF00FF00" hotbkcolor="#FF00FFFF" pushedbkcolor="#FFB23AEE" minwidth="100"/>
 
 					</HorizontalLayout>
-					<AnimButton text="插件动画按钮" width="95" height="95"/>
+					<AnimButton name="animBtn1" width="95" height="95"/>
+					<AnimButton name="animBtn2" width="95" height="95"/>
 				</HorizontalLayout>
 				<Label height="1"  bkimage="line/hor_line.bmp"/>
 				<HorizontalLayout  childpadding="6" childvalign="vcenter" >
