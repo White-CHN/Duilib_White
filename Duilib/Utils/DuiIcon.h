@@ -3,7 +3,7 @@
 
 namespace DuiLib
 {
-    class CDuiIcon
+    class DUILIB_API CDuiIcon
     {
     public:
         CDuiIcon(void);
