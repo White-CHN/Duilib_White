@@ -61,5 +61,3 @@ using namespace DuiLib;
         #endif
     #endif
 #endif
-
-#include "DemoFrame.h"

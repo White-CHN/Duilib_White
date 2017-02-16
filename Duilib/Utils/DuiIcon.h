@@ -3,11 +3,11 @@
 
 namespace DuiLib
 {
-    class DUILIB_API CDuiIcon
+    class CDuiIcon
     {
     public:
         CDuiIcon(void);
-        ~CDuiIcon(void);
+        virtual ~CDuiIcon(void);
 
     public:
         BOOL CreateIcon(HWND hWnd, UINT uIDResource, LPCTSTR pTipText = NULL, UINT uMessage = 0);

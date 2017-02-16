@@ -20,6 +20,10 @@ namespace DuiLib
     {
         CDuiString sMsgType = msg.sType;
         CDuiString sCtrlName = msg.pSender->GetName();
+        if(sCtrlName == _T("root") && sMsgType == _T("windowsize"))
+        {
+            int i = 0;
+        }
         const DUI_MSGMAP_ENTRY* pMsgTypeEntry = NULL;
         while(lpEntry->nSig != DuiSig_end)
         {

@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "SkinPictureBtn.h"
+#include "DemoFrame.h"
 
 
 //多线程消息循环,仿WTL
@@ -185,7 +186,12 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         break;
     }
     // 注册插件
+#ifdef _DEBUG
     CDuiPaintManager::LoadPlugin(_T("DuiControls_d.dll"));
+#else
+    CDuiPaintManager::LoadPlugin(_T("DuiControls.dll"));
+#endif // _DEBUG
+
     // 注册用户自定义控件
     REGIST_DUICONTROL(CDuiSkinPictureBtn);
 #define SINGLETHREAD

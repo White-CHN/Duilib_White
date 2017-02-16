@@ -107,6 +107,12 @@ protected:                                                                \
 
 #endif
 
+    //声明结束
+#define DUI_END_MESSAGE_MAP()                                             \
+	{ _T(""), _T(""), DuiSig_end, (DUI_PMSG)0 }                           \
+	};                                                                        \
+
+
     // @msgtype:定义消息类型 @memberFxn:执行函数宏
 #define DUI_ON_MSGTYPE(msgtype, memberFxn)                                \
 	{ msgtype, _T(""), DuiSig_vn, (DUI_PMSG)&memberFxn},                  \
@@ -143,10 +149,6 @@ protected:                                                                \
 	{ DUI_MSGTYPE_TIMER, _T(""), DuiSig_vn,(DUI_PMSG)&OnTimer },          \
 
 
-    //定义结束
-#define DUI_END_MESSAGE_MAP()                                             \
-	{ _T(""), _T(""), DuiSig_end, (DUI_PMSG)0 }                           \
-	};                                                                        \
 
 
 

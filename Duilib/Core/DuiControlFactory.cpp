@@ -48,6 +48,7 @@ namespace DuiLib
 
     CDuiControlFactory::~CDuiControlFactory()
     {
+
     }
 
     CDuiControl* CDuiControlFactory::CreateControl(CDuiString strClassName)

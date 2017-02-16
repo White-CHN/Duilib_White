@@ -1,4 +1,6 @@
 #pragma once
+
+#include "DemoFrame.h"
 class CSkinDlg
     : public CDuiDlgImplBase
 {

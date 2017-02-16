@@ -42,10 +42,10 @@ namespace DuiLib
         BOOL _Parse();
         BOOL _Parse(LPTSTR& pstrText, size_t iParent);
         XMLELEMENT* _ReserveElement();
-        inline void _SkipWhitespace(LPTSTR& pstr) const;
-        inline void _SkipWhitespace(LPCTSTR& pstr) const;
-        inline void _SkipIdentifier(LPTSTR& pstr) const;
-        inline void _SkipIdentifier(LPCTSTR& pstr) const;
+        void _SkipWhitespace(LPTSTR& pstr) const;
+        void _SkipWhitespace(LPCTSTR& pstr) const;
+        void _SkipIdentifier(LPTSTR& pstr) const;
+        void _SkipIdentifier(LPCTSTR& pstr) const;
         BOOL _ParseData(LPTSTR& pstrText, LPTSTR& pstrData, char cEnd);
         void _ParseMetaChar(LPTSTR& pstrText, LPTSTR& pstrDest);
         BOOL _ParseAttributes(LPTSTR& pstrText);
