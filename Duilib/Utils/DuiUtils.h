@@ -32,6 +32,29 @@ namespace DuiLib
         LPCTSTR m_lpstr;
     };
 
+    template<class T>
+    class CSafeRelease
+    {
+    public:
+        CSafeRelease(T* p) : m_p(p) { };
+        ~CSafeRelease()
+        {
+            if(m_p != NULL)
+            {
+                m_p->Release();
+            }
+        };
+    public:
+        T* Detach()
+        {
+            T* t = m_p;
+            m_p = NULL;
+            return t;
+        };
+    public:
+        T* m_p;
+    };
+
     class DUILIB_API CDuiPoint : public tagPOINT
     {
     public:

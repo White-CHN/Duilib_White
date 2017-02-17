@@ -161,7 +161,7 @@
 				<HorizontalLayout height="150" childvalign="vcenter" inset="0,6,0,6" >
 					<Label font="3" valign="center" cursor="hand" align="center"  text="RichEdit" tooltip="RichEdit演示" width="80" textcolor="#FFFFFFFF" />
 					<VerticalLayout height="200" bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
-						<RichEdit font="5" textcolor="#FFFFFFFF" password="false" tipvalue="请输入文字" mutiline="true" autovscroll="true" rich="false" text="Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）" vscrollbar="true" hscrollbar="false" autohscroll="false"/>
+						<RichEdit font="5" textcolor="#FFFFFFFF" password="false" tipvalue="请输入文字" autovscroll="true" rich="false" text="Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）Duilib地址：https://github.com/White-CHN/Duilib_White duilib 开源项目交流群（14314105）" vscrollbar="true" hscrollbar="false" autohscroll="false"/>
 					</VerticalLayout>
 					<Control width="30"/>
 				</HorizontalLayout>
@@ -211,6 +211,12 @@
 					<HorizontalLayout height="25" childpadding="12"  >
 						<Gif bkimage="gif/checking.gif" width="100"/>
 					</HorizontalLayout>
+				</HorizontalLayout>
+				<HorizontalLayout  childvalign="vcenter" >
+					<Label font="3" valign="center" cursor="hand" align="center"  text="Flash演示" tooltip="Flash演示" width="80" textcolor="#FFFFFFFF" />
+					<VerticalLayout bkimage="res='bkimage/water_bg.jpg' corner='0,360,480,0'">
+						<ActiveX name="ani_flash" clsid="{D27CDB6E-AE6D-11CF-96B8-444553540000}" mouse="true"/>
+					</VerticalLayout>
 				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true" ><!-- 分割窗口 -->

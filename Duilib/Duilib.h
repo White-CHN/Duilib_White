@@ -56,6 +56,7 @@ using namespace Gdiplus;
 #include "Utils/unzip.h"
 #include "Utils/DIB.h"
 #include "Utils/WaterEffect.h"
+#include "Utils/flash11.tlh"
 
 #include "Core/DuiMarkupNode.h"
 #include "Core/DuiMarkup.h"

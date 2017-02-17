@@ -13,6 +13,7 @@ DUI_ON_MSGTYPE(DUI_MSGTYPE_VALUECHANGED_MOVE, OnValueChangedMove)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_ITEMSELECT, OnItemSelect)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_SELECTCHANGED, OnSelectChanged)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_COLORCHANGED, OnColorChanged)
+DUI_ON_MSGTYPE(DUI_MSGTYPE_SHOWACTIVEX, OnShowActiveX)
 DUI_END_MESSAGE_MAP()
 
 CDemoFrame::CDemoFrame(void)
@@ -504,6 +505,26 @@ void CDemoFrame::OnColorChanged(TNotifyUI& msg)
         CDuiColorPalette* pColorPalette = static_cast<CDuiColorPalette*>(msg.pSender);
         GetPaintManager()->GetRoot()->SetBkImage(_T(""));
         GetPaintManager()->GetRoot()->SetBkColor(pColorPalette->GetSelectColor());
+    }
+}
+
+void CDemoFrame::OnShowActiveX(TNotifyUI& msg)
+{
+    if(msg.pSender->GetName() == _T("ani_flash"))
+    {
+        IShockwaveFlash* pFlash = NULL;
+        CDuiActiveX* pActiveX = static_cast<CDuiActiveX*>(msg.pSender);
+        pActiveX->GetControl(__uuidof(IShockwaveFlash), (void**)&pFlash);
+        if(pFlash != NULL)
+        {
+            pFlash->put_WMode(_bstr_t(_T("Transparent")));
+            pFlash->put_Movie(_bstr_t(CDuiPaintManager::GetInstancePath() + _T("\\DuiDemo\\flash\\waterdrop.swf")));
+            pFlash->DisableLocalSecurity();
+            pFlash->put_AllowScriptAccess(_T("always"));
+            BSTR response;
+            pFlash->CallFunction(_T("<invoke name=\"setButtonText\" returntype=\"xml\"><arguments><string>Click me!</string></arguments></invoke>"), &response);
+            pFlash->Release();
+        }
     }
 }
 

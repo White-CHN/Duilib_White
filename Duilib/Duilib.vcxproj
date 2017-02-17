@@ -641,6 +641,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="Utils\flash11.tlh" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Control\DuiActiveX.h" />

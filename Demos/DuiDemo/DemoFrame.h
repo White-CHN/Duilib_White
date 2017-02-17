@@ -27,7 +27,7 @@ public:
     void OnItemSelect(TNotifyUI& msg);
     void OnSelectChanged(TNotifyUI& msg);
     void OnColorChanged(TNotifyUI& msg);
-
+    void OnShowActiveX(TNotifyUI& msg);
     LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
 
 private:

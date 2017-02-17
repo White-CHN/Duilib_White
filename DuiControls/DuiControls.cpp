@@ -4,23 +4,6 @@
 #include "stdafx.h"
 #include "DuiAnimButton.h"
 
-
-class CSafaRelease
-{
-public:
-    CSafaRelease()
-    {
-
-    }
-    ~CSafaRelease()
-    {
-        CDuiControlFactory::GetInstance()->Release();
-        CDuiResourceManager::GetInstance()->Release();
-    }
-};
-
-CSafaRelease g_SafaRelease;
-
 CDuiControl* CreateControl(LPCTSTR pstrType)
 {
     static BOOL bRegister = FALSE;
