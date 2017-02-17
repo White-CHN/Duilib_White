@@ -668,6 +668,7 @@
     <ClInclude Include="Control\DuiScrollBar.h" />
     <ClInclude Include="Control\DuiSlider.h" />
     <ClInclude Include="Control\DuiWater.h" />
+    <ClInclude Include="Control\DuiWebBrowser.h" />
     <ClInclude Include="Core\DuiAnimation.h" />
     <ClInclude Include="Core\DuiContainer.h" />
     <ClInclude Include="Core\DuiControl.h" />
@@ -691,6 +692,7 @@
     <ClInclude Include="Layout\DuiVerticalLayout.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Utils\DIB.h" />
+    <ClInclude Include="Utils\downloadmgr.h" />
     <ClInclude Include="Utils\DragDropImpl.h" />
     <ClInclude Include="Utils\DuiDelegate.h" />
     <ClInclude Include="Utils\DuiDPI.h" />
@@ -729,6 +731,7 @@
     <ClCompile Include="Control\DuiScrollBar.cpp" />
     <ClCompile Include="Control\DuiSlider.cpp" />
     <ClCompile Include="Control\DuiWater.cpp" />
+    <ClCompile Include="Control\DuiWebBrowser.cpp" />
     <ClCompile Include="Core\DuiAnimation.cpp" />
     <ClCompile Include="Core\DuiContainer.cpp" />
     <ClCompile Include="Core\DuiControl.cpp" />

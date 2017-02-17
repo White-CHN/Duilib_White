@@ -220,8 +220,10 @@
 				</HorizontalLayout>
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true" ><!-- 分割窗口 -->
-				<VerticalLayout bkcolor="#FFFFFFFF" inset="0,0,0,6" sepimm="true" sepheight="6" height="200" minheight="200" maxheight="300">
+				<VerticalLayout bkcolor="#FFFFFFFF" inset="0,0,0,6" sepimm="true" sepheight="6" height="350" minheight="200" maxheight="400">
+				<WebBrowser name="webbrowser1" homepage="www.hao123.com" autonavi="true" delaycreate="false" />
 				</VerticalLayout>
+				<WebBrowser homepage="www.hao123.com" autonavi="true" delaycreate="false" />
 			</VerticalLayout>
 			<VerticalLayout  ><!-- 属性生成 -->
 				<HorizontalLayout height="10"/>

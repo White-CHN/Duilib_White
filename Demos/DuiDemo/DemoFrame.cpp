@@ -49,6 +49,12 @@ void CDemoFrame::InitWindow()
     m_pProgress = static_cast<CDuiProgress*>(GetPaintManager()->FindControl(_T("Progress")));
     m_pEditXML = static_cast<CDuiEdit*>(GetPaintManager()->FindControl(_T("EditXML")));
 
+    // 初始化WebBrowser控件
+    CDuiWebBrowser* pBrowser1 = static_cast<CDuiWebBrowser*>(GetPaintManager()->FindControl(_T("webbrowser1")));
+    if(pBrowser1)
+    {
+        pBrowser1->SetWebBrowserEventHandler(this);
+    }
     CDuiChart* pPieView = static_cast<CDuiChart*>(GetPaintManager()->FindControl(_T("ChartPie")));
     if(NULL != pPieView)
     {
@@ -590,5 +596,26 @@ LRESULT CDemoFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
     }
 
     return 0;
+}
+
+HRESULT STDMETHODCALLTYPE CDemoFrame::UpdateUI(CDuiWebBrowser* pWeb)
+{
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE CDemoFrame::GetHostInfo(CDuiWebBrowser* pWeb, DOCHOSTUIINFO __RPC_FAR* pInfo)
+{
+    if(pInfo != NULL)
+    {
+        pInfo->dwFlags |= DOCHOSTUIFLAG_NO3DBORDER | DOCHOSTUIFLAG_NO3DOUTERBORDER | DOCHOSTUIFLAG_SCROLL_NO;
+    }
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE CDemoFrame::ShowContextMenu(CDuiWebBrowser* pWeb, DWORD dwID, POINT __RPC_FAR* ppt, IUnknown __RPC_FAR* pcmdtReserved, IDispatch __RPC_FAR* pdispReserved)
+{
+    return E_NOTIMPL;
+    //返回 E_NOTIMPL 正常弹出系统右键菜单
+    //返回S_OK 则可屏蔽系统右键菜单
 }
 

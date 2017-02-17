@@ -3,7 +3,9 @@
 #include "ControlsName.h"
 using namespace ControlAttributes;
 
-class CDemoFrame : public CDuiDlgImplBase
+class CDemoFrame
+    : public CDuiDlgImplBase
+    , public CWebBrowserEventHandler
 {
     DUI_DECLARE_MESSAGE_MAP()
 public:
@@ -29,6 +31,11 @@ public:
     void OnColorChanged(TNotifyUI& msg);
     void OnShowActiveX(TNotifyUI& msg);
     LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
+
+    // WebBrowser
+    HRESULT STDMETHODCALLTYPE UpdateUI(CDuiWebBrowser* pWeb) OVERRIDE;
+    HRESULT STDMETHODCALLTYPE GetHostInfo(CDuiWebBrowser* pWeb, DOCHOSTUIINFO __RPC_FAR* pInfo) OVERRIDE;
+    HRESULT STDMETHODCALLTYPE ShowContextMenu(CDuiWebBrowser* pWeb, DWORD dwID, POINT __RPC_FAR* ppt, IUnknown __RPC_FAR* pcmdtReserved, IDispatch __RPC_FAR* pdispReserved) OVERRIDE;
 
 private:
     BOOL bEnglish;

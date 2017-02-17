@@ -192,6 +192,7 @@ namespace DuiLib
 #define  DUI_CTR_CHECKBOX						 (_T("CheckBox"))
 #define  DUI_CTR_WATER						     (_T("Water"))
 #define  DUI_CTR_ACTIVEX                         (_T("ActiveX"))
+#define  DUI_CTR_WEBBROWSER                      (_T("WebBrowser"))
 #define  DUI_CTR_ROLLTEXT                        (_T("RollText"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))

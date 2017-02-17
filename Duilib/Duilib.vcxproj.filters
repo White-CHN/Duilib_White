@@ -41,7 +41,7 @@
   <ItemGroup>
     <None Include="ReadMe.txt" />
     <None Include="Utils\flash11.tlh">
-      <Filter>源文件\Utils</Filter>
+      <Filter>头文件\Utils</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +222,12 @@
     <ClInclude Include="Control\DuiRollText.h">
       <Filter>头文件\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiWebBrowser.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\downloadmgr.h">
+      <Filter>头文件\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -393,6 +399,9 @@
       <Filter>源文件\Control</Filter>
     </ClCompile>
     <ClCompile Include="Control\DuiRollText.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiWebBrowser.cpp">
       <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>

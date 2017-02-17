@@ -55,6 +55,44 @@ namespace DuiLib
         T* m_p;
     };
 
+    class CDuiVariant : public VARIANT
+    {
+    public:
+        CDuiVariant()
+        {
+            VariantInit(this);
+        }
+        CDuiVariant(int i)
+        {
+            VariantInit(this);
+            this->vt = VT_I4;
+            this->intVal = i;
+        }
+        CDuiVariant(float f)
+        {
+            VariantInit(this);
+            this->vt = VT_R4;
+            this->fltVal = f;
+        }
+        CDuiVariant(LPOLESTR s)
+        {
+            VariantInit(this);
+            this->vt = VT_BSTR;
+            this->bstrVal = s;
+        }
+        CDuiVariant(IDispatch* disp)
+        {
+            VariantInit(this);
+            this->vt = VT_DISPATCH;
+            this->pdispVal = disp;
+        }
+
+        ~CDuiVariant()
+        {
+            VariantClear(this);
+        }
+    };
+
     class DUILIB_API CDuiPoint : public tagPOINT
     {
     public:

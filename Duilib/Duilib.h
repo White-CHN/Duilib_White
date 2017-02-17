@@ -57,6 +57,7 @@ using namespace Gdiplus;
 #include "Utils/DIB.h"
 #include "Utils/WaterEffect.h"
 #include "Utils/flash11.tlh"
+#include "Utils/downloadmgr.h"
 
 #include "Core/DuiMarkupNode.h"
 #include "Core/DuiMarkup.h"
@@ -104,6 +105,7 @@ using namespace Gdiplus;
 #include "Control/DuiRichEdit.h"
 #include "Control/DuiActiveX.h"
 #include "Control/DuiRollText.h"
+#include "Control/DuiWebBrowser.h"
 
 
 #pragma comment( lib, "GdiPlus.lib" )

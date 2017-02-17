@@ -220,6 +220,10 @@ namespace DuiLib
         HWND GetHostWindow() const;
         void SetHostWindow(HWND hwndHost);
 
+        void SetCLSID(CLSID clsid);
+
+        void SetCreated(BOOL bCreated);
+
         virtual BOOL IsMFC() const;
         virtual void SetMFC(BOOL bMFC = FALSE);
 

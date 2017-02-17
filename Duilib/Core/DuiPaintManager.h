@@ -333,13 +333,16 @@ namespace DuiLib
         const TDrawInfo* GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify);
         void RemoveAllDrawInfos();
 
-        BOOL TranslateAccelerator(LPMSG pMsg);
         BOOL AddPreMessageFilter(IMessageFilterUI* pFilter);
         BOOL RemovePreMessageFilter(IMessageFilterUI* pFilter);
         BOOL PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
 
         BOOL AddMessageFilter(IMessageFilterUI* pFilter);
         BOOL RemoveMessageFilter(IMessageFilterUI* pFilter);
+
+        BOOL AddTranslateAccelerator(ITranslateAccelerator* pTranslateAccelerator);
+        BOOL RemoveTranslateAccelerator(ITranslateAccelerator* pTranslateAccelerator);
+        BOOL TranslateAccelerator(LPMSG pMsg);
 
         BOOL SetTimer(CDuiControl* pControl, UINT nTimerID, UINT uElapse);
         BOOL KillTimer(CDuiControl* pControl, UINT nTimerID);

@@ -2094,19 +2094,6 @@ namespace DuiLib
         m_ResInfo.m_DrawInfoHash.RemoveAll();
     }
 
-    BOOL CDuiPaintManager::TranslateAccelerator(LPMSG pMsg)
-    {
-        for(int i = 0; i < m_aTranslateAccelerator.GetSize(); i++)
-        {
-            LRESULT lResult = static_cast<ITranslateAccelerator*>(m_aTranslateAccelerator[i])->TranslateAccelerator(pMsg);
-            if(lResult == S_OK)
-            {
-                return TRUE;
-            }
-        }
-        return FALSE;
-    }
-
     BOOL CDuiPaintManager::AddPreMessageFilter(IMessageFilterUI* pFilter)
     {
         ASSERT(m_aPreMessageFilters.Find(pFilter) < 0);
@@ -2234,6 +2221,37 @@ namespace DuiLib
             if(static_cast<IMessageFilterUI*>(m_aMessageFilters[i]) == pFilter)
             {
                 return m_aMessageFilters.Remove(i);
+            }
+        }
+        return FALSE;
+    }
+
+    BOOL CDuiPaintManager::AddTranslateAccelerator(ITranslateAccelerator* pTranslateAccelerator)
+    {
+        ASSERT(m_aTranslateAccelerator.Find(pTranslateAccelerator) < 0);
+        return m_aTranslateAccelerator.Add(pTranslateAccelerator);
+    }
+
+    BOOL CDuiPaintManager::RemoveTranslateAccelerator(ITranslateAccelerator* pTranslateAccelerator)
+    {
+        for(int i = 0; i < m_aTranslateAccelerator.GetSize(); i++)
+        {
+            if(static_cast<ITranslateAccelerator*>(m_aTranslateAccelerator[i]) == pTranslateAccelerator)
+            {
+                return m_aTranslateAccelerator.Remove(i);
+            }
+        }
+        return FALSE;
+    }
+
+    BOOL CDuiPaintManager::TranslateAccelerator(LPMSG pMsg)
+    {
+        for(int i = 0; i < m_aTranslateAccelerator.GetSize(); i++)
+        {
+            LRESULT lResult = static_cast<ITranslateAccelerator*>(m_aTranslateAccelerator[i])->TranslateAccelerator(pMsg);
+            if(lResult == S_OK)
+            {
+                return TRUE;
             }
         }
         return FALSE;

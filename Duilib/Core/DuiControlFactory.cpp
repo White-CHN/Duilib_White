@@ -44,6 +44,7 @@ namespace DuiLib
         INNER_REGISTER_DUICONTROL(CDuiRichEdit);
         INNER_REGISTER_DUICONTROL(CDuiActiveX);
         INNER_REGISTER_DUICONTROL(CDuiRollText);
+        INNER_REGISTER_DUICONTROL(CDuiWebBrowser);
     }
 
     CDuiControlFactory::~CDuiControlFactory()

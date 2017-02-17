@@ -1186,6 +1186,16 @@ namespace DuiLib
         m_hwndHost = hwndHost;
     }
 
+    void CDuiActiveX::SetCLSID(CLSID clsid)
+    {
+        m_clsid = clsid;
+    }
+
+    void CDuiActiveX::SetCreated(BOOL bCreated)
+    {
+        m_bCreated = bCreated;
+    }
+
     BOOL CDuiActiveX::IsMFC() const
     {
         return m_bMFC;
