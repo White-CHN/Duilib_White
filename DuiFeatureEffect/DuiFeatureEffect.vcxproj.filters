@@ -51,9 +51,6 @@
     <ClInclude Include="Graph\Graph_Rect.h">
       <Filter>Graph</Filter>
     </ClInclude>
-    <ClInclude Include="Graph\Graph_Vector.h">
-      <Filter>Graph</Filter>
-    </ClInclude>
     <ClInclude Include="Graph\Graph_View.h">
       <Filter>Graph</Filter>
     </ClInclude>
@@ -80,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="AlphaBlendImpl.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph\Graph_Vector.h">
+      <Filter>Graph</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
