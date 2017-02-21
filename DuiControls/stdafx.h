@@ -11,9 +11,14 @@
 // Windows м╥нд╪Ч:
 #include <windows.h>
 
+#ifdef _MSC_VER
+    #pragma warning (disable : 4996) // function or variable may be unsafe (deprecated)
+#endif // _MSC_VER
+
 #include "..\DuiLib\DuiLib.h"
 
 using namespace DuiLib;
+
 
 
 #ifdef _WIN64

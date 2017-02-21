@@ -17,7 +17,7 @@ namespace DuiLib
 
     CDuiRollText::~CDuiRollText(void)
     {
-        GetManager()->KillTimer(this, TIMER_ID_ROLLTEXT);
+        KillTimer(TIMER_ID_ROLLTEXT);
     }
 
     CDuiString CDuiRollText::GetClass() const
@@ -39,11 +39,11 @@ namespace DuiLib
         CDuiLabel::SetVisible(bVisible);
         if(bVisible)
         {
-            GetManager()->SetTimer(this, TIMER_ID_ROLLTEXT, m_nSpeed);
+            SetTimer(TIMER_ID_ROLLTEXT, m_nSpeed);
         }
         else
         {
-            GetManager()->KillTimer(this, TIMER_ID_ROLLTEXT);
+            KillTimer(TIMER_ID_ROLLTEXT);
         }
     }
 
@@ -52,11 +52,11 @@ namespace DuiLib
         CDuiLabel::SetInternVisible(bVisible);
         if(bVisible)
         {
-            GetManager()->SetTimer(this, TIMER_ID_ROLLTEXT, m_nSpeed);
+            SetTimer(TIMER_ID_ROLLTEXT, m_nSpeed);
         }
         else
         {
-            GetManager()->KillTimer(this, TIMER_ID_ROLLTEXT);
+            KillTimer(TIMER_ID_ROLLTEXT);
         }
     }
 
@@ -127,12 +127,12 @@ namespace DuiLib
         {
             m_nScrollPos = 0;
             m_nText_W_H = 0;
-            GetManager()->KillTimer(this, TIMER_ID_ROLLTEXT);
-            GetManager()->SetTimer(this, TIMER_ID_ROLLTEXT, m_nSpeed);
+            KillTimer(TIMER_ID_ROLLTEXT);
+            SetTimer(TIMER_ID_ROLLTEXT, m_nSpeed);
         }
         else
         {
-            GetManager()->KillTimer(this, TIMER_ID_ROLLTEXT);
+            KillTimer(TIMER_ID_ROLLTEXT);
         }
     }
 

@@ -92,6 +92,10 @@ namespace DuiLib
         CDuiString GetVirtualWnd() const;
         void SetVirtualWnd(LPCTSTR pstrValue);
 
+        // ∂® ±∆˜
+        BOOL SetTimer(UINT nTimerID, UINT nElapse);
+        void KillTimer(UINT nTimerID);
+
         //name Ù–‘
         CDuiString GetName() const;
         void SetName(LPCTSTR pstrName);

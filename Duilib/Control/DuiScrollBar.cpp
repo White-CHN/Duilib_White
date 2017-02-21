@@ -1115,7 +1115,7 @@ namespace DuiLib
 
             m_nLastScrollOffset = 0;
             m_nScrollRepeatDelay = 0;
-            GetManager()->SetTimer(this, TIMER_ID_SCROLLBAR, 50U);
+            SetTimer(TIMER_ID_SCROLLBAR, 50U);
 
             if(::PtInRect(&m_rcButton1, event.ptMouse))
             {
@@ -1238,7 +1238,7 @@ namespace DuiLib
         {
             m_nScrollRepeatDelay = 0;
             m_nLastScrollOffset = 0;
-            GetManager()->KillTimer(this, TIMER_ID_SCROLLBAR);
+            KillTimer(TIMER_ID_SCROLLBAR);
 
             if((m_uThumbState & UISTATE_CAPTURED) != 0)
             {

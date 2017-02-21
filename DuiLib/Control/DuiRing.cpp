@@ -115,7 +115,7 @@ namespace DuiLib
     {
         if(GetManager())
         {
-            GetManager()->SetTimer(this, TIMER_ID_RING, 100);
+            SetTimer(TIMER_ID_RING, 100);
         }
     }
 
@@ -123,7 +123,7 @@ namespace DuiLib
     {
         if(GetManager())
         {
-            GetManager()->KillTimer(this, TIMER_ID_RING);
+            KillTimer(TIMER_ID_RING);
         }
     }
 

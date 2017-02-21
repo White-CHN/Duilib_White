@@ -464,6 +464,26 @@ namespace DuiLib
     }
 
 
+    BOOL CDuiControl::SetTimer(UINT nTimerID, UINT nElapse)
+    {
+        if(m_pManager == NULL)
+        {
+            return FALSE;
+        }
+
+        return m_pManager->SetTimer(this, nTimerID, nElapse);
+    }
+
+    void CDuiControl::KillTimer(UINT nTimerID)
+    {
+        if(m_pManager == NULL)
+        {
+            return;
+        }
+
+        m_pManager->KillTimer(this, nTimerID);
+    }
+
     CDuiString CDuiControl::GetName() const
     {
         return m_sName;

@@ -1,3 +1,9 @@
 #pragma once
 
-extern"C" _declspec(dllexport) CDuiControl* CreateControl(LPCTSTR pstrType);
+#include "DuiAnimButton.h"
+#include "DuiWkeWebkit.h"
+
+extern "C"
+{
+    DUILIB_API CDuiControl* CreateControl(LPCTSTR pstrType);
+}

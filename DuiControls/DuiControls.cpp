@@ -2,7 +2,22 @@
 //
 
 #include "stdafx.h"
-#include "DuiAnimButton.h"
+
+
+class CWkeInit
+{
+public:
+    CWkeInit()
+    {
+        CDuiWkeWebkit::InitializeWebkit();
+    }
+    ~CWkeInit()
+    {
+        CDuiWkeWebkit::UninitializeWebkit();
+    }
+};
+
+CWkeInit g_WkeInit;
 
 CDuiControl* CreateControl(LPCTSTR pstrType)
 {
@@ -10,6 +25,7 @@ CDuiControl* CreateControl(LPCTSTR pstrType)
     if(bRegister == FALSE)
     {
         REGIST_DUICONTROL(CDuiAnimButton);
+        REGIST_DUICONTROL(CDuiWkeWebkit);
         bRegister = TRUE;
     }
     CDuiString strClass =  _T("CDui");

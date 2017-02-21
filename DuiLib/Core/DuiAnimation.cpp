@@ -32,7 +32,7 @@ namespace DuiLib
             if(pData != NULL)
             {
                 it = m_arAnimations.erase(it);
-                m_pControl->GetManager()->KillTimer(m_pControl, pData->m_nAnimationID);
+                m_pControl->KillTimer(pData->m_nAnimationID);
                 DUI_FREE_POINT(pData);
             }
             else
@@ -54,7 +54,7 @@ namespace DuiLib
             return FALSE;
         }
         CAnimationData* pAnimation = new CAnimationData(nElapse, nTotalFrame, nAnimationID, bLoop);
-        if(m_pControl->GetManager()->SetTimer(m_pControl, nAnimationID, nElapse))
+        if(m_pControl->SetTimer(nAnimationID, nElapse))
         {
             m_arAnimations.push_back(pAnimation);
             return TRUE;
@@ -71,7 +71,7 @@ namespace DuiLib
         CAnimationData* pData = GetAnimationDataByID(nAnimationID);
         if(pData != NULL)
         {
-            m_pControl->GetManager()->KillTimer(m_pControl, nAnimationID);
+            m_pControl->KillTimer(nAnimationID);
             m_arAnimations.erase(std::remove(m_arAnimations.begin(), m_arAnimations.end(), pData), m_arAnimations.end());
             DUI_FREE_POINT(pData);
         }
@@ -151,7 +151,7 @@ namespace DuiLib
             }
             else
             {
-                m_pControl->GetManager()->KillTimer(m_pControl, nAnimationID);
+                m_pControl->KillTimer(nAnimationID);
                 m_arAnimations.erase(std::remove(m_arAnimations.begin(), m_arAnimations.end(), pData), m_arAnimations.end());
                 DUI_FREE_POINT(pData);
             }

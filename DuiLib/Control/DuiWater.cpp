@@ -13,7 +13,7 @@ namespace DuiLib
 
     CDuiWater::~CDuiWater(void)
     {
-        GetManager()->KillTimer(this, TIMER_ID_WATER);
+        KillTimer(TIMER_ID_WATER);
     }
 
     CDuiString CDuiWater::GetClass() const
@@ -34,11 +34,11 @@ namespace DuiLib
     {
         if(Activate())
         {
-            GetManager()->SetTimer(this, TIMER_ID_WATER, 15);
+            SetTimer(TIMER_ID_WATER, 15);
         }
         else
         {
-            GetManager()->KillTimer(this, TIMER_ID_WATER);
+            KillTimer(TIMER_ID_WATER);
         }
     }
 
@@ -47,11 +47,11 @@ namespace DuiLib
         CDuiLabel::SetVisible(bVisible);
         if(bVisible)
         {
-            GetManager()->SetTimer(this, TIMER_ID_WATER, 15);
+            SetTimer(TIMER_ID_WATER, 15);
         }
         else
         {
-            GetManager()->KillTimer(this, TIMER_ID_WATER);
+            KillTimer(TIMER_ID_WATER);
         }
     }
 
@@ -60,11 +60,11 @@ namespace DuiLib
         CDuiLabel::SetInternVisible(bVisible);
         if(bVisible)
         {
-            GetManager()->SetTimer(this, TIMER_ID_WATER, 15);
+            SetTimer(TIMER_ID_WATER, 15);
         }
         else
         {
-            GetManager()->KillTimer(this, TIMER_ID_WATER);
+            KillTimer(TIMER_ID_WATER);
         }
     }
 

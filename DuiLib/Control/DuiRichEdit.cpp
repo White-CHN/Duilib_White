@@ -555,12 +555,12 @@ err:
     BOOL CTxtWinHost::TxSetTimer(UINT idTimer, UINT uTimeout)
     {
         m_bTimer = TRUE;
-        return m_pRichEdit->GetManager()->SetTimer(m_pRichEdit, idTimer, uTimeout) == TRUE;
+        return m_pRichEdit->SetTimer(idTimer, uTimeout) == TRUE;
     }
 
     void CTxtWinHost::TxKillTimer(UINT idTimer)
     {
-        m_pRichEdit->GetManager()->KillTimer(m_pRichEdit, idTimer);
+        m_pRichEdit->KillTimer(idTimer);
         m_bTimer = FALSE;
     }
 

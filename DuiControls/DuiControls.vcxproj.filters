@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="wke">
+      <UniqueIdentifier>{e97ec4a2-710f-4019-b819-31ebbd09fd73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -30,6 +33,12 @@
     <ClInclude Include="DuiAnimButton.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Wke\Include\wke.h">
+      <Filter>wke</Filter>
+    </ClInclude>
+    <ClInclude Include="DuiWkeWebkit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -42,6 +51,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DuiAnimButton.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DuiWkeWebkit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
