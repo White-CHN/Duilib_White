@@ -45,7 +45,7 @@ namespace DuiLib
 
     BOOL MenuObserverImpl::RBroadcast(ContextMenuParam param)
     {
-        for(vector<MenuMenuReceiverImplBase*>::iterator it = m_vtReceivers.begin(); it != m_vtReceivers.end(); ++it)
+        for(vector<MenuMenuReceiverImplBase*>::reverse_iterator it = m_vtReceivers.rbegin(); it != m_vtReceivers.rend(); ++it)
         {
             (*it)->Receive(param);
         }
@@ -717,6 +717,7 @@ namespace DuiLib
 
         if(event.Type == UIEVENT_BUTTONUP)
         {
+            this;
             if(IsEnabled())
             {
                 CDuiListContainerElement::DoEvent(event);
@@ -1134,7 +1135,6 @@ namespace DuiLib
                 m_pLayout->ApplyAttributeList(pDefaultAttributes);
             }
             m_pLayout->SetAutoDestroy(FALSE);
-
             for(int i = 0; i < m_pOwner->GetCount(); i++)
             {
                 if(m_pOwner->GetItemAt(i)->GetInterface(DUI_CTR_MENUELEMENT) != NULL)

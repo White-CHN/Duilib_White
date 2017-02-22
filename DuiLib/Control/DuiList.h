@@ -260,6 +260,12 @@ namespace DuiLib
         CDuiString GetClass() const OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
 
+        BOOL IsDelayedDestroy() const OVERRIDE;
+        void SetDelayedDestroy(BOOL bDelayed) OVERRIDE;
+
+        int GetChildPadding() const OVERRIDE;
+        void SetChildPadding(int iPadding) OVERRIDE;
+
         BOOL SortItems(PULVCompareFunc pfnCompare, UINT_PTR dwData);
 
         //IContainer

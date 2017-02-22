@@ -32,6 +32,7 @@ CDemoFrame::CDemoFrame(void)
 
 CDemoFrame::~CDemoFrame(void)
 {
+    CDuiMenuWnd::DestroyMenu();
     DUI_FREE_POINT(m_pMenu);
 }
 

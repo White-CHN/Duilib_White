@@ -2108,6 +2108,26 @@ namespace DuiLib
         return CDuiVerticalLayout::GetInterface(pstrName);
     }
 
+    BOOL CDuiList::IsDelayedDestroy() const
+    {
+        return m_pList->IsDelayedDestroy();
+    }
+
+    void CDuiList::SetDelayedDestroy(BOOL bDelayed)
+    {
+        m_pList->SetDelayedDestroy(bDelayed);
+    }
+
+    int CDuiList::GetChildPadding() const
+    {
+        return m_pList->GetChildPadding();
+    }
+
+    void CDuiList::SetChildPadding(int iPadding)
+    {
+        m_pList->SetChildPadding(iPadding);
+    }
+
     BOOL CDuiList::SortItems(PULVCompareFunc pfnCompare, UINT_PTR dwData)
     {
         if(!m_pList)

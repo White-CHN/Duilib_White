@@ -712,6 +712,10 @@ namespace DuiLib
             SendNotify(m_pFocus, DUI_MSGTYPE_KILLFOCUS);
             m_pFocus = NULL;
         }
+        if(pControl == NULL)
+        {
+            return;
+        }
         if(pControl != NULL
                 && pControl->GetManager() == this
                 && pControl->IsVisible()
@@ -1724,7 +1728,7 @@ namespace DuiLib
         for(int i = 0; i < m_aAsyncNotify.GetSize(); i++)
         {
             TNotifyUI* pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
-            if(pMsg->pSender == pControl)
+            if(pMsg && pMsg->pSender == pControl)
             {
                 pMsg->pSender = NULL;
             }
@@ -2402,6 +2406,46 @@ namespace DuiLib
                 static_cast<INotifyUI*>(m_aNotifiers[i])->Notify(*pMsg);
             }
             DUI_FREE_POINT(pMsg);
+        }
+        return 0;
+    }
+
+    LRESULT CDuiPaintManager::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        bHandled = FALSE;
+        // Make sure all matching "closing" events are sent
+        TEventUI event = { 0 };
+        event.ptMouse = m_ptLastMousePos;
+        event.wKeyState = MapKeyState();
+        event.dwTimestamp = ::GetTickCount();
+        if(m_pEventHover != NULL)
+        {
+            event.Type = UIEVENT_MOUSELEAVE;
+            event.pSender = m_pEventHover;
+            m_pEventHover->Event(event);
+        }
+        if(m_pEventClick != NULL)
+        {
+            event.Type = UIEVENT_BUTTONUP;
+            event.pSender = m_pEventClick;
+            m_pEventClick->Event(event);
+        }
+
+        SetFocus(NULL);
+
+        if(::GetActiveWindow() == m_hWndPaint)
+        {
+            HWND hwndParent = GetWindowOwner(m_hWndPaint);
+            if(hwndParent != NULL)
+            {
+                ::SetFocus(hwndParent);
+            }
+        }
+
+        if(m_hwndTooltip != NULL)
+        {
+            ::DestroyWindow(m_hwndTooltip);
+            m_hwndTooltip = NULL;
         }
         return 0;
     }
@@ -3255,6 +3299,9 @@ namespace DuiLib
         {
             case WM_APP + 1:
                 lResult = OnDuiNotify(uMsg, wParam, lParam, bHandled);
+                break;
+            case WM_CLOSE:
+                lResult = OnClose(uMsg, wParam, lParam, bHandled);
                 break;
             case WM_PAINT:
                 lResult = OnPaint(uMsg, wParam, lParam, bHandled);
