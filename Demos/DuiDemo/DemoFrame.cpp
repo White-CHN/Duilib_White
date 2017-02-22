@@ -223,11 +223,18 @@ void CDemoFrame::OnClick(TNotifyUI& msg)
     }
     else if(msg.pSender->GetName() == _T("menubtn"))
     {
+        CDuiMenuWnd::GetGlobalContextMenuObserver().SetMenuCheckInfo(&m_MenuInfos);
+
         DUI_FREE_POINT(m_pMenu);
         m_pMenu = new CDuiMenuWnd();
         CDuiPoint point;
         ::GetCursorPos(&point);
         m_pMenu->Init(NULL, _T("menu.xml"), point, GetPaintManager());
+        // 设置状态
+        CDuiMenuWnd::SetMenuItemInfo(_T("qianting"), TRUE);
+        // 动态添加后重新设置菜单的大小
+        m_pMenu->ResizeMenu();
+
     }
     else if(msg.pSender->GetName() == _T("skinbtn"))
     {
@@ -562,7 +569,7 @@ LRESULT CDemoFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
                 }
                 bEnglish = !bEnglish;
                 CDuiResourceManager::GetInstance()->ReloadText();
-                GetPaintManager()->GetRoot()->NeedUpdate();
+                GetPaintManager()->Invalidate();
             }
             else if(sMenuName == _T("exit"))
             {
@@ -584,6 +591,8 @@ LRESULT CDemoFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
         }
         else if(uIconMsg == WM_RBUTTONUP)
         {
+            CDuiMenuWnd::GetGlobalContextMenuObserver().SetMenuCheckInfo(&m_MenuInfos);
+
             DUI_FREE_POINT(m_pMenu);
             m_pMenu = new CDuiMenuWnd();
             CDuiPoint point;
@@ -591,6 +600,8 @@ LRESULT CDemoFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
             point.x += 5;
             point.y -= 5;
             m_pMenu->Init(NULL, _T("menu.xml"), point, GetPaintManager(), NULL, eMenuAlignment_Left | eMenuAlignment_Bottom);
+            // 设置状态
+            CDuiMenuWnd::SetMenuItemInfo(_T("qianting"), TRUE);
             // 动态添加后重新设置菜单的大小
             m_pMenu->ResizeMenu();
         }

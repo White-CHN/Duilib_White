@@ -49,5 +49,6 @@ private:
     CDuiEdit* m_pEditXML;
     CDuiIcon m_Icon;
     CControlsName m_ControlsName;
+    CStdStringPtrMap m_MenuInfos;
 };
 

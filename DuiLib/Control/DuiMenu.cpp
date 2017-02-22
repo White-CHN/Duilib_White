@@ -751,13 +751,12 @@ namespace DuiLib
                     {
                         if(CDuiMenuWnd::GetGlobalContextMenuObserver().GetManager() != NULL)
                         {
-                            MenuCmd* pMenuCmd = new MenuCmd();
-                            pMenuCmd->strName = GetName();
-                            pMenuCmd->strUserData = GetUserData();
-                            pMenuCmd->strText = GetText();
-                            pMenuCmd->bChecked = GetChecked();
-                            SendMessage(CDuiMenuWnd::GetGlobalContextMenuObserver().GetManager()->GetPaintWindow(), DUIMSG_MENU_CLICK, (WPARAM)pMenuCmd, (LPARAM)this);
-                            DUI_FREE_POINT(pMenuCmd);
+                            MenuCmd cMenuCmd;
+                            cMenuCmd.strName = GetName();
+                            cMenuCmd.strUserData = GetUserData();
+                            cMenuCmd.strText = GetText();
+                            cMenuCmd.bChecked = GetChecked();
+                            SendMessage(CDuiMenuWnd::GetGlobalContextMenuObserver().GetManager()->GetPaintWindow(), DUIMSG_MENU_CLICK, (WPARAM)&cMenuCmd, (LPARAM)this);
                         }
                     }
                     ContextMenuParam param;
@@ -955,6 +954,10 @@ namespace DuiLib
     void CDuiMenuWnd::ResizeMenu()
     {
         CDuiControl* pRoot = m_PaintManager.GetRoot();
+        if(pRoot == NULL)
+        {
+            return;
+        }
 
 #if defined(WIN32) && !defined(UNDER_CE)
         MONITORINFO oMonitor = {0};
