@@ -265,6 +265,7 @@ namespace DuiLib
         TFontInfo* GetDefaultFontInfo();
         void SetDefaultFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared = FALSE);
         HFONT AddFont(int id, LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared = FALSE);
+        void AddFontArray(LPCTSTR pstrPath);
         HFONT GetFont(int id);
         HFONT GetFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic);
         void RemoveAllFonts();
@@ -490,6 +491,7 @@ namespace DuiLib
         CStdPtrArray m_aPostPaintControls;
         CStdPtrArray m_aFoundControls;
         CStdPtrArray m_aChildWnds;
+        CStdPtrArray m_aFonts;
 
         CStdStringPtrMap m_mNameHash;
         CStdStringPtrMap m_mOptionGroup;

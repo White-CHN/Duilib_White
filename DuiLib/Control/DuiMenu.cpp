@@ -1137,7 +1137,7 @@ namespace DuiLib
             {
                 m_pLayout->ApplyAttributeList(pDefaultAttributes);
             }
-            m_pLayout->SetAutoDestroy(FALSE);
+            m_pLayout->SetAutoDestroy(FALSE);//导致items和header和boby未释放
             for(int i = 0; i < m_pOwner->GetCount(); i++)
             {
                 if(m_pOwner->GetItemAt(i)->GetInterface(DUI_CTR_MENUELEMENT) != NULL)

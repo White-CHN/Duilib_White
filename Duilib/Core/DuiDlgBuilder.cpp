@@ -262,6 +262,24 @@ namespace DuiLib
                         m_pManager->AddStyle(pName, pStyle, shared);
                     }
                 }
+                else if(_tcsicmp(pstrClass, _T("Import")) == 0)
+                {
+                    nAttributes = node.GetAttributeCount();
+                    LPCTSTR pstrPath = NULL;
+                    for(int i = 0; i < nAttributes; i++)
+                    {
+                        pstrName = node.GetAttributeName(i);
+                        pstrValue = node.GetAttributeValue(i);
+                        if(_tcsicmp(pstrName, _T("fontfile")) == 0)
+                        {
+                            pstrPath = pstrValue;
+                        }
+                    }
+                    if(pstrPath)
+                    {
+                        m_pManager->AddFontArray(pstrPath);
+                    }
+                }
             }
             pstrClass = root.GetName();
             if(_tcsicmp(pstrClass, _T("Window")) == 0)
@@ -474,7 +492,8 @@ namespace DuiLib
         {
             LPCTSTR pstrClass = node.GetName();
             if(_tcsicmp(pstrClass, _T("Image")) == 0 || _tcsicmp(pstrClass, _T("Font")) == 0 ||
-                    _tcsicmp(pstrClass, _T("Default")) == 0 || _tcsicmp(pstrClass, _T("Style")) == 0)
+                    _tcsicmp(pstrClass, _T("Default")) == 0 || _tcsicmp(pstrClass, _T("Style")) == 0 ||
+                    _tcsicmp(pstrClass, _T("Import")) == 0)
             {
                 continue;
             }

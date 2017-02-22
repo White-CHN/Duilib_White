@@ -1547,6 +1547,7 @@ namespace DuiLib
         }
         if(FAILED(Hr))
         {
+            CDuiTimeInterval s;
             Hr = ::CoCreateInstance(m_clsid, NULL, CLSCTX_ALL, IID_IOleControl, (LPVOID*)&pOleControl);
         }
         ASSERT(SUCCEEDED(Hr));

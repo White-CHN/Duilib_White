@@ -169,7 +169,22 @@ namespace DuiLib
     }
 
 
-    DWORD CDuiControl::GetBkColor()
+    LPCTSTR CDuiControl::GetGradient() const
+    {
+        return m_sGradient;
+    }
+
+    void CDuiControl::SetGradient(LPCTSTR pStrImage)
+    {
+        if(m_sGradient == pStrImage)
+        {
+            return;
+        }
+        m_sGradient = pStrImage;
+        Invalidate();
+    }
+
+    DWORD CDuiControl::GetBkColor() const
     {
         return m_dwBackColor;
     }
@@ -184,7 +199,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    DWORD CDuiControl::GetBkColor2()
+    DWORD CDuiControl::GetBkColor2() const
     {
         return m_dwBackColor2;
     }
@@ -199,7 +214,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    DWORD CDuiControl::GetBkColor3()
+    DWORD CDuiControl::GetBkColor3() const
     {
         return m_dwBackColor3;
     }
@@ -1505,6 +1520,10 @@ namespace DuiLib
         {
             SetVirtualWnd(pstrValue);
         }
+        else if(_tcsicmp(pstrName, _T("gradient")) == 0)
+        {
+            SetGradient(pstrValue);
+        }
         else if(_tcsicmp(pstrName, _T("cursor")) == 0 && pstrValue)
         {
             if(_tcsicmp(pstrValue, _T("arrow")) == 0)
@@ -1658,20 +1677,21 @@ namespace DuiLib
     {
         if(m_dwBackColor != 0)
         {
+            BOOL bVer = (m_sGradient.CompareNoCase(_T("hor")) != 0);
             if(m_dwBackColor2 != 0)
             {
                 if(m_dwBackColor3 != 0)
                 {
                     RECT rc = m_rcItem;
                     rc.bottom = (rc.bottom + rc.top) / 2;
-                    CRenderEngine::DrawGradient(hDC, rc, GetAdjustColor(m_dwBackColor), GetAdjustColor(m_dwBackColor2), TRUE, 8);
+                    CRenderEngine::DrawGradient(hDC, rc, GetAdjustColor(m_dwBackColor), GetAdjustColor(m_dwBackColor2), bVer, 8);
                     rc.top = rc.bottom;
                     rc.bottom = m_rcItem.bottom;
-                    CRenderEngine::DrawGradient(hDC, rc, GetAdjustColor(m_dwBackColor2), GetAdjustColor(m_dwBackColor3), TRUE, 8);
+                    CRenderEngine::DrawGradient(hDC, rc, GetAdjustColor(m_dwBackColor2), GetAdjustColor(m_dwBackColor3), bVer, 8);
                 }
                 else
                 {
-                    CRenderEngine::DrawGradient(hDC, m_rcItem, GetAdjustColor(m_dwBackColor), GetAdjustColor(m_dwBackColor2), TRUE, 16);
+                    CRenderEngine::DrawGradient(hDC, m_rcItem, GetAdjustColor(m_dwBackColor), GetAdjustColor(m_dwBackColor2), bVer, 16);
                 }
             }
             else if(m_dwBackColor >= 0xFF000000)

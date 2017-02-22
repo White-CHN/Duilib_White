@@ -273,6 +273,12 @@ namespace DuiLib
             DUI_FREE_POINT(pNotify);
             m_aAsyncNotify.Remove(i);
         }
+        for(int i = 0; i < m_aFonts.GetSize(); ++i)
+        {
+            HANDLE handle = static_cast<HANDLE>(m_aFonts.GetAt(i));
+            ::RemoveFontMemResourceEx(handle);
+            m_aFonts.Remove(i);
+        }
         RemoveAllTimers();
         RemoveAllFonts();
         RemoveAllImages();
@@ -1227,6 +1233,123 @@ namespace DuiLib
             }
         }
         return hFont;
+    }
+
+    void CDuiPaintManager::AddFontArray(LPCTSTR pstrPath)
+    {
+        LPBYTE pData = NULL;
+        DWORD dwSize = 0;
+        do
+        {
+            CDuiString sFile = CDuiPaintManager::GetResourcePath();
+            if(CDuiPaintManager::GetResourceZip().IsEmpty())
+            {
+                sFile += pstrPath;
+                HANDLE hFile = ::CreateFile(sFile.GetData(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, \
+                                            FILE_ATTRIBUTE_NORMAL, NULL);
+                if(hFile == INVALID_HANDLE_VALUE)
+                {
+                    break;
+                }
+                dwSize = ::GetFileSize(hFile, NULL);
+                if(dwSize == 0)
+                {
+                    break;
+                }
+
+                DWORD dwRead = 0;
+                pData = new BYTE[dwSize];
+                ::ReadFile(hFile, pData, dwSize, &dwRead, NULL);
+                ::CloseHandle(hFile);
+
+                if(dwRead != dwSize)
+                {
+                    DUI_FREE_ARRAY(pData);
+                    break;
+                }
+            }
+            else
+            {
+                sFile += CDuiPaintManager::GetResourceZip();
+                HZIP hz = NULL;
+                if(CDuiPaintManager::IsCachedResourceZip())
+                {
+                    hz = (HZIP)CDuiPaintManager::GetResourceZipHandle();
+                }
+                else
+                {
+                    CDuiString sFilePwd = CDuiPaintManager::GetResourceZipPwd();
+#ifdef UNICODE
+                    char* pwd = w2a((wchar_t*)sFilePwd.GetData());
+                    hz = OpenZip(sFile.GetData(), pwd);
+                    DUI_FREE_ARRAY(pwd);
+#else
+                    hz = OpenZip(sFile.GetData(), sFilePwd.GetData());
+#endif
+                }
+                if(hz == NULL)
+                {
+                    break;
+                }
+                ZIPENTRY ze;
+                int i;
+                if(FindZipItem(hz, pstrPath, true, &i, &ze) != 0)
+                {
+                    break;
+                }
+                dwSize = ze.unc_size;
+                if(dwSize == 0)
+                {
+                    break;
+                }
+                pData = new BYTE[dwSize];
+                int res = UnzipItem(hz, i, pData, dwSize);
+                if(res != 0x00000000 && res != 0x00000600)
+                {
+                    DUI_FREE_ARRAY(pData);
+                    if(!CDuiPaintManager::IsCachedResourceZip())
+                    {
+                        CloseZip(hz);
+                    }
+                    break;
+                }
+                if(!CDuiPaintManager::IsCachedResourceZip())
+                {
+                    CloseZip(hz);
+                }
+            }
+
+        }
+        while(0);
+
+        while(!pData)
+        {
+            //读不到图片, 则直接去读取bitmap.m_lpstr指向的路径
+            HANDLE hFile = ::CreateFile(pstrPath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+            if(hFile == INVALID_HANDLE_VALUE)
+            {
+                break;
+            }
+            dwSize = ::GetFileSize(hFile, NULL);
+            if(dwSize == 0)
+            {
+                break;
+            }
+
+            DWORD dwRead = 0;
+            pData = new BYTE[dwSize];
+            ::ReadFile(hFile, pData, dwSize, &dwRead, NULL);
+            ::CloseHandle(hFile);
+
+            if(dwRead != dwSize)
+            {
+                DUI_FREE_ARRAY(pData);
+            }
+            break;
+        }
+        DWORD nFonts;
+        HANDLE hFont = ::AddFontMemResourceEx(pData, dwSize, NULL, &nFonts);
+        m_aFonts.Add(hFont);
     }
 
     HFONT CDuiPaintManager::GetFont(int id)
@@ -3376,8 +3499,9 @@ namespace DuiLib
     BOOL CDuiPaintManager::Initialize(HINSTANCE hInstance)
     {
         ASSERT(hInstance);
-        ::OleInitialize(NULL);
         ::CoInitialize(NULL);
+        ::OleInitialize(NULL);
+
         InitCommonControls();
 
         if(hInstance == NULL)
@@ -3488,8 +3612,8 @@ namespace DuiLib
             CloseZip((HZIP)m_hResourceZip);
             m_hResourceZip = NULL;
         }
-        ::CoUninitialize();
         ::OleUninitialize();
+        ::CoUninitialize();
     }
 
     HINSTANCE CDuiPaintManager::GetInstance()

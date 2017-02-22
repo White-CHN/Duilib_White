@@ -39,13 +39,16 @@ namespace DuiLib
         void NeedParentUpdate();
         void NeedUpdate();
         // 图形相关
-        DWORD GetBkColor();
+        LPCTSTR GetGradient() const;
+        void SetGradient(LPCTSTR pStrImage);
+
+        DWORD GetBkColor() const;
         void SetBkColor(DWORD dwBackColor);
 
-        DWORD GetBkColor2();
+        DWORD GetBkColor2() const;
         void SetBkColor2(DWORD dwBackColor);
 
-        DWORD GetBkColor3();
+        DWORD GetBkColor3() const;
         void SetBkColor3(DWORD dwBackColor);
 
         DWORD GetForeColor() const;
@@ -280,6 +283,7 @@ namespace DuiLib
         CDuiString m_sToolTip;		//tooltip属性
         CDuiString m_sUserData;		//userdata属性
         CDuiString m_sVirtualWnd;	//virtualwnd属性
+        CDuiString m_sGradient;
 
         CStdStringPtrMap m_mCustomAttrHash;
     };

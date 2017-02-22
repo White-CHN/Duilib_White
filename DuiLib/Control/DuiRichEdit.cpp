@@ -62,11 +62,11 @@ namespace DuiLib
     HRESULT CTxtWinHost::InitDefaultCharFormat(CDuiRichEdit* re, CHARFORMAT2W* pcf, HFONT hfont)
     {
         memset(pcf, 0, sizeof(CHARFORMAT2W));
-        LOGFONT lf;
         if(!hfont)
         {
             hfont = re->GetManager()->GetFont(re->GetFont());
         }
+        LOGFONT lf;
         ::GetObject(hfont, sizeof(LOGFONT), &lf);
 
         DWORD dwColor = re->GetTextColor();
@@ -170,7 +170,7 @@ namespace DuiLib
 
         m_bInplaceActive = TRUE;
 
-        PCreateTextServices TextServicesProc;
+        PCreateTextServices TextServicesProc = NULL;
 #ifdef _UNICODE
         HMODULE hmod = LoadLibrary(_T("Msftedit.dll"));
 #else

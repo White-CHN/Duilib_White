@@ -2084,6 +2084,7 @@ namespace DuiLib
 
     CDuiList::~CDuiList(void)
     {
+
     }
 
     CDuiString CDuiList::GetClass() const
