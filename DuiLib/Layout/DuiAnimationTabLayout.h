@@ -11,7 +11,7 @@ namespace DuiLib
         virtual ~CDuiAnimationTabLayout(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         void AnimationSwitch();
         BOOL SelectItem(int iIndex) OVERRIDE;

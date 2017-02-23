@@ -132,7 +132,7 @@ namespace DuiLib
         virtual ~CDuiRichEdit(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
 
         long GetTextLength(DWORD dwFlags = GTL_DEFAULT) const;

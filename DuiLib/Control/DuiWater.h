@@ -10,7 +10,7 @@ namespace DuiLib
         virtual ~CDuiWater(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
         void DoInit() OVERRIDE;
         void SetVisible(BOOL bVisible = TRUE) OVERRIDE;
         void SetInternVisible(BOOL bVisible = TRUE) OVERRIDE;

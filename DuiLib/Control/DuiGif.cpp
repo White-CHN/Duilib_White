@@ -29,13 +29,13 @@ namespace DuiLib
         return DUI_CTR_GIF;
     }
 
-    LPVOID CDuiGif::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiGif::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_GIF) == 0)
+        if(strName == DUI_CTR_GIF)
         {
             return static_cast<CDuiGif*>(this);
         }
-        return CDuiControl::GetInterface(pstrName);
+        return CDuiControl::GetInterface(strName);
     }
 
     void CDuiGif::PlayGif()

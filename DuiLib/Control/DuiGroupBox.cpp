@@ -24,13 +24,13 @@ namespace DuiLib
         return DUI_CTR_GROUPBOX;
     }
 
-    LPVOID CDuiGroupBox::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiGroupBox::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_GROUPBOX) == 0)
+        if(strName == DUI_CTR_GROUPBOX)
         {
             return static_cast<CDuiGroupBox*>(this);
         }
-        return CDuiVerticalLayout::GetInterface(pstrName);
+        return CDuiVerticalLayout::GetInterface(strName);
     }
 
     DWORD CDuiGroupBox::GetTextColor() const

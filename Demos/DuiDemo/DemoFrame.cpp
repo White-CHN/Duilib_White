@@ -233,7 +233,7 @@ void CDemoFrame::OnClick(CDuiNotify& msg)
         // 设置状态
         CDuiMenuWnd::SetMenuItemInfo(_T("qianting"), TRUE);
         // 动态添加后重新设置菜单的大小
-        m_pMenu->ResizeMenu();
+        //m_pMenu->ResizeMenu();
 
     }
     else if(msg.pSender->GetName() == _T("skinbtn"))
@@ -603,7 +603,7 @@ LRESULT CDemoFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
             // 设置状态
             CDuiMenuWnd::SetMenuItemInfo(_T("qianting"), TRUE);
             // 动态添加后重新设置菜单的大小
-            m_pMenu->ResizeMenu();
+            //m_pMenu->ResizeMenu();
         }
     }
 

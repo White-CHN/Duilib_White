@@ -21,13 +21,13 @@ namespace DuiLib
         return DUI_CTR_TILELAYOUT;
     }
 
-    LPVOID CDuiTileLayout::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiTileLayout::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_TILELAYOUT) == 0)
+        if(strName == DUI_CTR_TILELAYOUT)
         {
             return static_cast<CDuiTileLayout*>(this);
         }
-        return CDuiContainer::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(strName);
     }
 
     SIZE CDuiTileLayout::GetItemSize() const

@@ -196,13 +196,13 @@ namespace DuiLib
         return DUI_CTR_COLORPALETTE;
     }
 
-    LPVOID CDuiColorPalette::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiColorPalette::GetInterface(CDuiString strName)
     {
-        if(_tcscmp(pstrName, DUI_CTR_COLORPALETTE) == 0)
+        if(strName == DUI_CTR_COLORPALETTE)
         {
             return static_cast<CDuiColorPalette*>(this);
         }
-        return CDuiControl::GetInterface(pstrName);
+        return CDuiControl::GetInterface(strName);
     }
 
     DWORD CDuiColorPalette::GetSelectColor()

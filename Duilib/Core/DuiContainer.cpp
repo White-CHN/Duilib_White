@@ -33,17 +33,17 @@ namespace DuiLib
         return DUI_CTR_CONTAINER;
     }
 
-    LPVOID CDuiContainer::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiContainer::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, GET_CLASS_NAME(IContainer)) == 0)
+        if(strName == GET_CLASS_NAME(IContainer))
         {
             return static_cast<IContainer*>(this);
         }
-        else if(_tcsicmp(pstrName, DUI_CTR_CONTAINER) == 0)
+        else if(strName == DUI_CTR_CONTAINER)
         {
             return static_cast<CDuiContainer*>(this);
         }
-        return CDuiControl::GetInterface(pstrName);
+        return CDuiControl::GetInterface(strName);
     }
 
 

@@ -314,14 +314,14 @@ namespace DuiLib
         , m_trh(0)
         , m_uTimerID(0x1000)
         , m_gdiplusToken(0)
-        , m_pDPI(NULL)
+        , m_pDPI(new CDPI)
         , m_pOffscreenBits(NULL)
         , m_pRoot(NULL)
         , m_pFocus(NULL)
         , m_pEventClick(NULL)
         , m_pEventHover(NULL)
         , m_pEventKey(NULL)
-        , m_pGdiplusStartupInput(NULL)
+        , m_pGdiplusStartupInput(new GdiplusStartupInput)
         , m_currentCaretObject(NULL)
     {
         ZeroMemory(&m_ToolTip, sizeof(m_ToolTip));
@@ -331,11 +331,8 @@ namespace DuiLib
         m_ResInfo.m_dwDefaultLinkFontColor		= m_SharedResInfo.m_dwDefaultLinkFontColor;
         m_ResInfo.m_dwDefaultLinkHoverFontColor = m_SharedResInfo.m_dwDefaultLinkHoverFontColor;
         m_ResInfo.m_dwDefaultSelectedBkColor	= m_SharedResInfo.m_dwDefaultSelectedBkColor;
-        ZeroMemory(&m_SharedResInfo.m_DefaultFontInfo.tm, sizeof(m_SharedResInfo.m_DefaultFontInfo.tm));
 
-        m_pGdiplusStartupInput = new GdiplusStartupInput;
         GdiplusStartup(&m_gdiplusToken, m_pGdiplusStartupInput, NULL);  // ¼ÓÔØGDI½Ó¿Ú
-        m_pDPI = new CDPI;
     }
 
 
@@ -429,6 +426,11 @@ namespace DuiLib
         InitDragDrop();
     }
 
+    BOOL CDuiPaintManager::IsUpdateNeeded() const
+    {
+        return m_bUpdateNeeded;
+    }
+
     void CDuiPaintManager::NeedUpdate()
     {
         m_bUpdateNeeded = TRUE;
@@ -472,6 +474,11 @@ namespace DuiLib
     HWND CDuiPaintManager::GetPaintWindow() const
     {
         return m_hWndPaint;
+    }
+
+    HWND CDuiPaintManager::GetTooltipWindow() const
+    {
+        return m_hwndTooltip;
     }
 
     void CDuiPaintManager::SetPainting(BOOL bIsPainting)
@@ -3591,7 +3598,6 @@ namespace DuiLib
         m_SharedResInfo.m_DefaultFontInfo.bBold			= (lf.lfWeight >= FW_BOLD);
         m_SharedResInfo.m_DefaultFontInfo.bUnderline	= (lf.lfUnderline == TRUE);
         m_SharedResInfo.m_DefaultFontInfo.bItalic		= (lf.lfItalic == TRUE);
-        ZeroMemory(&m_SharedResInfo.m_DefaultFontInfo.tm, sizeof(m_SharedResInfo.m_DefaultFontInfo.tm));
 
         CDuiShadow::Initialize(m_hInstance);
 

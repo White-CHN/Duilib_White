@@ -12,7 +12,7 @@ namespace DuiLib
         virtual ~CDuiLabel(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
 
         int GetFont() const;

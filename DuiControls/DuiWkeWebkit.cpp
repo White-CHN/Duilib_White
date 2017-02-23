@@ -137,15 +137,15 @@ namespace DuiLib
         return DUI_CTR_WKEWEBKIT;
     }
 
-    LPVOID CDuiWkeWebkit::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiWkeWebkit::GetInterface(CDuiString strName)
     {
-        if(_tcscmp(pstrName, DUI_CTR_WKEWEBKIT) == 0)
+        if(strName == DUI_CTR_WKEWEBKIT)
         {
             return static_cast<CDuiWkeWebkit*>(this);
         }
         else
         {
-            return CDuiControl::GetInterface(pstrName);
+            return CDuiControl::GetInterface(strName);
         }
     }
 

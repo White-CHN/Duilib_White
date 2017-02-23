@@ -374,13 +374,13 @@ namespace DuiLib
         return DUI_CTR_EDIT;
     }
 
-    LPVOID CDuiEdit::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiEdit::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_EDIT) == 0)
+        if(strName == DUI_CTR_EDIT)
         {
             return static_cast<CDuiEdit*>(this);
         }
-        return CDuiLabel::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(strName);
     }
 
     UINT CDuiEdit::GetControlFlags() const

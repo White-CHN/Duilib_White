@@ -12,7 +12,7 @@ namespace DuiLib
         virtual ~CDuiGroupBox(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         DWORD GetTextColor() const;
         void SetTextColor(DWORD dwTextColor);

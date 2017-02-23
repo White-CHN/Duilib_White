@@ -27,13 +27,13 @@ namespace DuiLib
         return DUI_CTR_FADEBUTTON;
     }
 
-    LPVOID CDuiFadeButton::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiFadeButton::GetInterface(CDuiString strName)
     {
-        if(_tcscmp(pstrName, DUI_CTR_FADEBUTTON) == 0)
+        if(strName == DUI_CTR_FADEBUTTON)
         {
             return static_cast<CDuiFadeButton*>(this);
         }
-        return CDuiButton::GetInterface(pstrName);
+        return CDuiButton::GetInterface(strName);
     }
 
     void CDuiFadeButton::SetNormalImage(LPCTSTR pStrImage)

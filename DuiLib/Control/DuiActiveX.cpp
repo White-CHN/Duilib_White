@@ -1162,13 +1162,13 @@ namespace DuiLib
         return DUI_CTR_ACTIVEX;
     }
 
-    LPVOID CDuiActiveX::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiActiveX::GetInterface(CDuiString strName)
     {
-        if(_tcscmp(pstrName, DUI_CTR_ACTIVEX) == 0)
+        if(strName == DUI_CTR_ACTIVEX)
         {
             return static_cast<CDuiActiveX*>(this);
         }
-        return CDuiControl::GetInterface(pstrName);
+        return CDuiControl::GetInterface(strName);
     }
 
     IOleObject* CDuiActiveX::GetOleObject() const

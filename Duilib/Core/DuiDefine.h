@@ -194,6 +194,7 @@ namespace DuiLib
 #define  DUI_CTR_ACTIVEX                         (_T("ActiveX"))
 #define  DUI_CTR_WEBBROWSER                      (_T("WebBrowser"))
 #define  DUI_CTR_ROLLTEXT                        (_T("RollText"))
+#define  DUI_CTR_CHART							 (_T("Chart"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))

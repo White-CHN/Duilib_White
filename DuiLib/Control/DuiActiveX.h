@@ -213,7 +213,7 @@ namespace DuiLib
         virtual ~CDuiActiveX(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         IOleObject* GetOleObject() const;
 

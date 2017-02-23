@@ -15,13 +15,13 @@ namespace DuiLib
     }
 
 
-    LPVOID CDuiChildLayout::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiChildLayout::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_CHILDLAYOUT) == 0)
+        if(strName == DUI_CTR_CHILDLAYOUT)
         {
             return static_cast<CDuiChildLayout*>(this);
         }
-        return CDuiContainer::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(strName);
     }
 
     CDuiString CDuiChildLayout::GetClass() const

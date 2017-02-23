@@ -23,13 +23,13 @@ namespace DuiLib
         return DUI_CTR_RING;
     }
 
-    LPVOID CDuiRing::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiRing::GetInterface(CDuiString strName)
     {
-        if(_tcscmp(pstrName, DUI_CTR_RING) == 0)
+        if(strName == DUI_CTR_RING)
         {
             return static_cast<CDuiRing*>(this);
         }
-        return CDuiLabel::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(strName);
     }
 
     void CDuiRing::SetBkImage(LPCTSTR pStrImage)

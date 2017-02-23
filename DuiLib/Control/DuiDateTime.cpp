@@ -203,13 +203,13 @@ namespace DuiLib
         return DUI_CTR_DATETIME;
     }
 
-    LPVOID CDuiDateTime::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiDateTime::GetInterface(CDuiString strName)
     {
-        if(_tcscmp(pstrName, DUI_CTR_DATETIME) == 0)
+        if(strName == DUI_CTR_DATETIME)
         {
             return static_cast<CDuiDateTime*>(this);
         }
-        return CDuiLabel::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(strName);
     }
 
     void CDuiDateTime::SetUpdateFlag(int nDTUpdateFlag)

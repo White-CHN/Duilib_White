@@ -20,13 +20,13 @@ namespace DuiLib
         return DUI_CTR_CHECKBOX;
     }
 
-    LPVOID CDuiCheckBox::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiCheckBox::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_CHECKBOX) == 0)
+        if(strName == DUI_CTR_CHECKBOX)
         {
             return static_cast<CDuiCheckBox*>(this);
         }
-        return CDuiOption::GetInterface(pstrName);
+        return CDuiOption::GetInterface(strName);
     }
 
 

@@ -22,13 +22,13 @@ namespace DuiLib
         return DUI_CTR_HORIZONTALLAYOUT;
     }
 
-    LPVOID CDuiHorizontalLayout::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiHorizontalLayout::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_HORIZONTALLAYOUT) == 0)
+        if(strName == DUI_CTR_HORIZONTALLAYOUT)
         {
             return static_cast<CDuiHorizontalLayout*>(this);
         }
-        return CDuiContainer::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(strName);
     }
 
     UINT CDuiHorizontalLayout::GetControlFlags() const

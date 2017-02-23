@@ -41,7 +41,7 @@ namespace DuiLib
         virtual ~CDuiIPAddress(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         void EmptyIPAddressWnd();
 

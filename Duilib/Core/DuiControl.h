@@ -2,17 +2,7 @@
 
 namespace DuiLib
 {
-
     typedef CDuiControl* (CALLBACK* FINDCONTROLPROC)(CDuiControl*, LPVOID);
-
-    typedef struct tagTPercentInfo
-    {
-        double left;
-        double top;
-        double right;
-        double bottom;
-    } TPercentInfo;
-
 
     class DUILIB_API CDuiControl
     {
@@ -22,7 +12,7 @@ namespace DuiLib
         virtual ~CDuiControl(void);
     public:
         virtual CDuiString GetClass() const;
-        virtual LPVOID GetInterface(LPCTSTR pstrName);
+        virtual LPVOID GetInterface(CDuiString strName);
         virtual UINT GetControlFlags() const;
 
         CDuiControl* GetParent() const;

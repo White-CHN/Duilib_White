@@ -23,6 +23,20 @@ namespace DuiLib
     {
     }
 
+    CDuiString CDuiChart::GetClass() const
+    {
+        return DUI_CTR_CHART;
+    }
+
+    LPVOID CDuiChart::GetInterface(CDuiString strName)
+    {
+        if(strName == DUI_CTR_CHART)
+        {
+            return static_cast<CDuiChart*>(this);
+        }
+        return CDuiControl::GetInterface(strName);
+    }
+
     BOOL CDuiChart::Add(LPCTSTR name, double value)
     {
         CHARTITEM item;

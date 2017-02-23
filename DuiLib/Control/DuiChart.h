@@ -22,6 +22,9 @@ namespace DuiLib
             double value;
         } CHARTITEM, *LPCHARTITEM;
     public:
+        CDuiString GetClass() const OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
+
         BOOL Add(LPCTSTR name, double value);
         BOOL AddAt(LPCTSTR name, double value, int iIndex);
 

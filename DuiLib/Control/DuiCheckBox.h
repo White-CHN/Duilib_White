@@ -10,7 +10,7 @@ namespace DuiLib
         virtual ~CDuiCheckBox(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         BOOL IsAutoCheck() const;
         void SetAutoCheck(BOOL bEnable);

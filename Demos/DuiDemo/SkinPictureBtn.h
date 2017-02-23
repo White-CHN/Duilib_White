@@ -12,7 +12,7 @@ public:
     virtual ~CDuiSkinPictureBtn(void);
 public:
     CDuiString GetClass() const OVERRIDE;
-    LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+    LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
     void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
     void PaintStatusImage(HDC hDC) OVERRIDE;

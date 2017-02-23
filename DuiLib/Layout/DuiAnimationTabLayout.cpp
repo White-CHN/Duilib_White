@@ -29,13 +29,13 @@ namespace DuiLib
         return DUI_CTR_ANIMATION_TABLAYOUT;
     }
 
-    LPVOID CDuiAnimationTabLayout::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiAnimationTabLayout::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_ANIMATION_TABLAYOUT) == 0)
+        if(strName == DUI_CTR_ANIMATION_TABLAYOUT)
         {
             return static_cast<CDuiAnimationTabLayout*>(this);
         }
-        return CDuiTabLayout::GetInterface(pstrName);
+        return CDuiTabLayout::GetInterface(strName);
     }
 
     void CDuiAnimationTabLayout::AnimationSwitch()

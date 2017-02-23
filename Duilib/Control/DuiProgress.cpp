@@ -26,13 +26,13 @@ namespace DuiLib
         return DUI_CTR_PROGRESS;
     }
 
-    LPVOID CDuiProgress::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiProgress::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_PROGRESS) == 0)
+        if(strName == DUI_CTR_PROGRESS)
         {
             return static_cast<CDuiProgress*>(this);
         }
-        return CDuiLabel::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(strName);
     }
 
     BOOL CDuiProgress::IsShowText()

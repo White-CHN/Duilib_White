@@ -11,7 +11,7 @@ namespace DuiLib
         virtual ~CDuiGif(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         void PlayGif();
         void PauseGif();

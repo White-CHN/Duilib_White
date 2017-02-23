@@ -25,13 +25,13 @@ namespace DuiLib
         return DUI_CTR_ROLLTEXT;
     }
 
-    LPVOID CDuiRollText::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiRollText::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_ROLLTEXT) == 0)
+        if(strName == DUI_CTR_ROLLTEXT)
         {
             return static_cast<CDuiRollText*>(this);
         }
-        return CDuiLabel::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(strName);
     }
 
     void CDuiRollText::SetVisible(BOOL bVisible /*= TRUE*/)

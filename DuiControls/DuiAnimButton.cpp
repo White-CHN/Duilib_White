@@ -24,13 +24,13 @@ CDuiString CDuiAnimButton::GetClass() const
     return DUI_CTR_ANIMBUTTON;
 }
 
-LPVOID CDuiAnimButton::GetInterface(LPCTSTR pstrName)
+LPVOID CDuiAnimButton::GetInterface(CDuiString strName)
 {
-    if(_tcsicmp(pstrName, DUI_CTR_ANIMBUTTON) == 0)
+    if(strName == DUI_CTR_ANIMBUTTON)
     {
         return static_cast<CDuiAnimButton*>(this);
     }
-    return CDuiButton::GetInterface(pstrName);
+    return CDuiButton::GetInterface(strName);
 }
 
 int CDuiAnimButton::GetEllapse() const

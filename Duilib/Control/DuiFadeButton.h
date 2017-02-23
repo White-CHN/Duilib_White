@@ -11,7 +11,7 @@ namespace DuiLib
         virtual ~CDuiFadeButton(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         void SetNormalImage(LPCTSTR pStrImage) OVERRIDE;
 

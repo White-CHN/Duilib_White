@@ -10,7 +10,7 @@ namespace DuiLib
         virtual ~CDuiProgress(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         BOOL IsShowText();
         void SetShowText(BOOL bShowText = TRUE);

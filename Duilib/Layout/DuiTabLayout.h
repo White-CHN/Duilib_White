@@ -10,7 +10,7 @@ namespace DuiLib
         virtual ~CDuiTabLayout(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         BOOL Add(CDuiControl* pControl) OVERRIDE;
         BOOL AddAt(CDuiControl* pControl, int iIndex) OVERRIDE;

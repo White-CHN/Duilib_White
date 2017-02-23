@@ -20,13 +20,13 @@ namespace DuiLib
         return DUI_CTR_TABLAYOUT;
     }
 
-    LPVOID CDuiTabLayout::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiTabLayout::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_TABLAYOUT) == 0)
+        if(strName == DUI_CTR_TABLAYOUT)
         {
             return static_cast<CDuiTabLayout*>(this);
         }
-        return CDuiContainer::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(strName);
     }
 
     BOOL CDuiTabLayout::Add(CDuiControl* pControl)

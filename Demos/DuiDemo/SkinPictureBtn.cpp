@@ -18,13 +18,13 @@ CDuiString CDuiSkinPictureBtn::GetClass() const
     return DUI_CTR_PICTUREBTN;
 }
 
-LPVOID CDuiSkinPictureBtn::GetInterface(LPCTSTR pstrName)
+LPVOID CDuiSkinPictureBtn::GetInterface(CDuiString strName)
 {
-    if(_tcscmp(pstrName, DUI_CTR_PICTUREBTN) == 0)
+    if(strName == DUI_CTR_PICTUREBTN)
     {
         return static_cast<CDuiSkinPictureBtn*>(this);
     }
-    return CDuiButton::GetInterface(pstrName);
+    return CDuiButton::GetInterface(strName);
 }
 
 void CDuiSkinPictureBtn::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)

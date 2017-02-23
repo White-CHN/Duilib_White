@@ -35,13 +35,13 @@ CDuiString CDuiAnimLayout::GetClass() const
     return DUI_CTR_ANIMLAYOUT;
 }
 
-LPVOID CDuiAnimLayout::GetInterface(LPCTSTR pstrName)
+LPVOID CDuiAnimLayout::GetInterface(CDuiString strName)
 {
-    if(_tcscmp(pstrName, DUI_CTR_ANIMLAYOUT) == 0)
+    if(strName == DUI_CTR_ANIMLAYOUT)
     {
         return static_cast<CDuiAnimLayout*>(this);
     }
-    return CDuiVerticalLayout::GetInterface(pstrName);
+    return CDuiVerticalLayout::GetInterface(strName);
 }
 
 void CDuiAnimLayout::DoPaint(HDC hDC, const RECT& rcPaint)

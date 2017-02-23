@@ -21,13 +21,13 @@ namespace DuiLib
         return DUI_CTR_WATER;
     }
 
-    LPVOID CDuiWater::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiWater::GetInterface(CDuiString strName)
     {
-        if(_tcscmp(pstrName, DUI_CTR_WATER) == 0)
+        if(strName == DUI_CTR_WATER)
         {
             return static_cast<CDuiWater*>(this);
         }
-        return CDuiLabel::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(strName);
     }
 
     void CDuiWater::DoInit()

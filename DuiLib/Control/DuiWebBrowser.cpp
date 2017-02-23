@@ -31,13 +31,13 @@ namespace DuiLib
         return DUI_CTR_WEBBROWSER;
     }
 
-    LPVOID CDuiWebBrowser::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiWebBrowser::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_WEBBROWSER) == 0)
+        if(strName == DUI_CTR_WEBBROWSER)
         {
             return static_cast<CDuiWebBrowser*>(this);
         }
-        return CDuiActiveX::GetInterface(pstrName);
+        return CDuiActiveX::GetInterface(strName);
     }
 
 

@@ -12,7 +12,7 @@ public:
     virtual ~CDuiAnimLayout(void);
 public:
     CDuiString GetClass() const OVERRIDE;
-    LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+    LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
     void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
 

@@ -30,13 +30,13 @@ namespace DuiLib
         return DUI_CTR_LISTHEADERITEM;
     }
 
-    LPVOID CDuiListHeaderItem::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiListHeaderItem::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_LISTHEADERITEM) == 0)
+        if(strName == DUI_CTR_LISTHEADERITEM)
         {
             return this;
         }
-        return CDuiContainer::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(strName);
     }
 
     UINT CDuiListHeaderItem::GetControlFlags() const
@@ -581,13 +581,13 @@ namespace DuiLib
         return DUI_CTR_LISTHEADER;
     }
 
-    LPVOID CDuiListHeader::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiListHeader::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_LISTHEADER) == 0)
+        if(strName == DUI_CTR_LISTHEADER)
         {
             return this;
         }
-        return CDuiHorizontalLayout::GetInterface(pstrName);
+        return CDuiHorizontalLayout::GetInterface(strName);
     }
 
     BOOL CDuiListHeader::IsScaleHeader() const
@@ -824,17 +824,17 @@ namespace DuiLib
         return UIFLAG_WANTRETURN;
     }
 
-    LPVOID CDuiListContainerElement::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiListContainerElement::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, GET_CLASS_NAME(IListItem)) == 0)
+        if(strName == GET_CLASS_NAME(IListItem))
         {
             return static_cast<IListItem*>(this);
         }
-        if(_tcsicmp(pstrName, DUI_CTR_LISTCONTAINERELEMENT) == 0)
+        if(strName == DUI_CTR_LISTCONTAINERELEMENT)
         {
             return static_cast<CDuiListContainerElement*>(this);
         }
-        return CDuiHorizontalLayout::GetInterface(pstrName);
+        return CDuiHorizontalLayout::GetInterface(strName);
     }
 
     int CDuiListContainerElement::GetIndex() const
@@ -1437,13 +1437,13 @@ namespace DuiLib
         return DUI_CTR_LISTTEXTELEMENT;
     }
 
-    LPVOID CDuiListTextElement::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiListTextElement::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_LISTTEXTELEMENT) == 0)
+        if(strName == DUI_CTR_LISTTEXTELEMENT)
         {
             return static_cast<CDuiListTextElement*>(this);
         }
-        return CDuiListLabelElement::GetInterface(pstrName);
+        return CDuiListLabelElement::GetInterface(strName);
     }
 
     UINT CDuiListTextElement::GetControlFlags() const
@@ -2092,21 +2092,21 @@ namespace DuiLib
         return DUI_CTR_LIST;
     }
 
-    LPVOID CDuiList::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiList::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_LIST) == 0)
+        if(strName == DUI_CTR_LIST)
         {
             return static_cast<CDuiList*>(this);
         }
-        if(_tcsicmp(pstrName, GET_CLASS_NAME(IList)) == 0)
+        if(strName == GET_CLASS_NAME(IList))
         {
             return static_cast<IList*>(this);
         }
-        if(_tcsicmp(pstrName, GET_CLASS_NAME(IListOwner)) == 0)
+        if(strName == GET_CLASS_NAME(IListOwner))
         {
             return static_cast<IListOwner*>(this);
         }
-        return CDuiVerticalLayout::GetInterface(pstrName);
+        return CDuiVerticalLayout::GetInterface(strName);
     }
 
     BOOL CDuiList::IsDelayedDestroy() const

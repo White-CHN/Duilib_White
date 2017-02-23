@@ -17,7 +17,7 @@ namespace DuiLib
         virtual ~CDuiListHeaderItem();
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
 
         void SetEnabled(BOOL bEnable = TRUE) OVERRIDE;
@@ -101,7 +101,7 @@ namespace DuiLib
         virtual ~CDuiListHeader();
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         BOOL IsScaleHeader() const;
         void SetScaleHeader(BOOL bIsScale);
@@ -127,7 +127,7 @@ namespace DuiLib
     public:
         CDuiString GetClass() const OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         int GetIndex() const OVERRIDE;
         void SetIndex(int iIndex) OVERRIDE;
@@ -176,7 +176,7 @@ namespace DuiLib
         virtual ~CDuiListTextElement();
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
 
         LPCTSTR GetText(int iIndex) const;
@@ -258,7 +258,7 @@ namespace DuiLib
         virtual ~CDuiList(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         BOOL IsDelayedDestroy() const OVERRIDE;
         void SetDelayedDestroy(BOOL bDelayed) OVERRIDE;

@@ -24,17 +24,17 @@ namespace DuiLib
         return DUI_CTR_LISTELEMENT;
     }
 
-    LPVOID CDuiListElement::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiListElement::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, GET_CLASS_NAME(IListItem)) == 0)
+        if(strName == GET_CLASS_NAME(IListItem))
         {
             return static_cast<IListItem*>(this);
         }
-        if(_tcsicmp(pstrName, DUI_CTR_LISTELEMENT) == 0)
+        if(strName == DUI_CTR_LISTELEMENT)
         {
             return static_cast<CDuiListElement*>(this);
         }
-        return CDuiControl::GetInterface(pstrName);
+        return CDuiControl::GetInterface(strName);
     }
 
     UINT CDuiListElement::GetControlFlags() const
@@ -277,13 +277,13 @@ namespace DuiLib
         return DUI_CTR_LISTLABELELEMENT;
     }
 
-    LPVOID CDuiListLabelElement::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiListLabelElement::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_LISTLABELELEMENT) == 0)
+        if(strName == DUI_CTR_LISTLABELELEMENT)
         {
             return static_cast<CDuiListLabelElement*>(this);
         }
-        return CDuiListElement::GetInterface(pstrName);
+        return CDuiListElement::GetInterface(strName);
     }
 
     UINT CDuiListLabelElement::GetButtonState()
@@ -936,17 +936,17 @@ namespace DuiLib
         return DUI_CTR_COMBO;
     }
 
-    LPVOID CDuiCombo::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiCombo::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_COMBO) == 0)
+        if(strName == DUI_CTR_COMBO)
         {
             return static_cast<CDuiCombo*>(this);
         }
-        if(_tcsicmp(pstrName, GET_CLASS_NAME(IListOwner)) == 0)
+        else if(strName == GET_CLASS_NAME(IListOwner))
         {
             return static_cast<IListOwner*>(this);
         }
-        return CDuiContainer::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(strName);
     }
 
     CDuiString CDuiCombo::GetText() const

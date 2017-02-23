@@ -23,13 +23,13 @@ namespace DuiLib
         return DUI_CTR_VERTICALLAYOUT;
     }
 
-    LPVOID CDuiVerticalLayout::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiVerticalLayout::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_VERTICALLAYOUT) == 0)
+        if(strName == DUI_CTR_VERTICALLAYOUT)
         {
             return static_cast<CDuiVerticalLayout*>(this);
         }
-        return CDuiContainer::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(strName);
     }
 
     UINT CDuiVerticalLayout::GetControlFlags() const

@@ -67,7 +67,7 @@ namespace DuiLib
         virtual ~CDuiListElement(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
         UINT GetControlFlags() const OVERRIDE;
 
         void Invalidate(); // 直接CControl::Invalidate会导致滚动条刷新，重写减少刷新区域
@@ -100,7 +100,7 @@ namespace DuiLib
         virtual ~CDuiListLabelElement(void);
     public:
         CDuiString GetClass() const OVERRIDE ;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         UINT GetButtonState();
 
@@ -168,7 +168,7 @@ namespace DuiLib
         virtual ~CDuiCombo(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         CDuiString GetText() const OVERRIDE;
         void EmptyComboWnd();

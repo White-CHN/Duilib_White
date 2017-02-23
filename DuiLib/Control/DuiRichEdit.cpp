@@ -825,13 +825,13 @@ err:
         return DUI_CTR_RICHEDIT;
     }
 
-    LPVOID CDuiRichEdit::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiRichEdit::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_RICHEDIT) == 0)
+        if(strName == DUI_CTR_RICHEDIT)
         {
             return static_cast<CDuiRichEdit*>(this);
         }
-        return CDuiContainer::GetInterface(pstrName);
+        return CDuiContainer::GetInterface(strName);
     }
 
     UINT CDuiRichEdit::GetControlFlags() const

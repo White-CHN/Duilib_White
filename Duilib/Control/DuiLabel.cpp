@@ -28,13 +28,13 @@ namespace DuiLib
         return DUI_CTR_LABEL;
     }
 
-    LPVOID CDuiLabel::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiLabel::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_LABEL) == 0)
+        if(strName == DUI_CTR_LABEL)
         {
             return static_cast<CDuiLabel*>(this);
         }
-        return CDuiControl::GetInterface(pstrName);
+        return CDuiControl::GetInterface(strName);
     }
 
     UINT CDuiLabel::GetControlFlags() const

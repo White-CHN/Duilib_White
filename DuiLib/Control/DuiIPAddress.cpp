@@ -169,13 +169,13 @@ namespace DuiLib
         return DUI_CTR_IPADDRESS;
     }
 
-    LPVOID CDuiIPAddress::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiIPAddress::GetInterface(CDuiString strName)
     {
-        if(_tcscmp(pstrName, DUI_CTR_IPADDRESS) == 0)
+        if(strName == DUI_CTR_IPADDRESS)
         {
             return static_cast<CDuiIPAddress*>(this);
         }
-        return CDuiLabel::GetInterface(pstrName);
+        return CDuiLabel::GetInterface(strName);
     }
 
     void CDuiIPAddress::EmptyIPAddressWnd()

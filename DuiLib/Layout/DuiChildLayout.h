@@ -9,7 +9,7 @@ namespace DuiLib
         CDuiChildLayout(void);
         virtual ~CDuiChildLayout(void);
     public:
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
         CDuiString GetClass() const OVERRIDE;
 
         void Init() OVERRIDE;

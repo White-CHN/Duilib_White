@@ -14,7 +14,7 @@ public:
     virtual ~CDuiAnimButton(void);
 public:
     CDuiString GetClass() const OVERRIDE;
-    LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+    LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
     int GetEllapse() const;
     void SetEllapse(int nEllapse);

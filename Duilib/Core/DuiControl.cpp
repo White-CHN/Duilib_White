@@ -54,9 +54,9 @@ namespace DuiLib
         return DUI_CTR_CONTROL;
     }
 
-    LPVOID CDuiControl::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiControl::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_CONTROL) == 0)
+        if(strName == DUI_CTR_CONTROL)
         {
             return this;
         }

@@ -207,12 +207,14 @@ namespace DuiLib
         virtual ~CDuiPaintManager(void);
     public:
         void Init(HWND hWnd);
+        BOOL IsUpdateNeeded() const;
         void NeedUpdate();
         BOOL Invalidate();
         BOOL Invalidate(RECT& rcItem);
 
         HDC GetPaintDC() const;
         HWND GetPaintWindow() const;
+        HWND GetTooltipWindow() const;
 
         void SetPainting(BOOL bIsPainting);
 
@@ -224,6 +226,7 @@ namespace DuiLib
 
         RECT GetSizeBox();
         void SetSizeBox(RECT& rcSizeBox);
+
         RECT GetCaptionRect();
         void SetCaptionRect(RECT& rcCaption);
 
@@ -259,11 +262,11 @@ namespace DuiLib
 
         DWORD GetDefaultSelectedBkColor() const;
         void SetDefaultSelectedBkColor(DWORD dwColor, BOOL bShared = FALSE);
-        // 样式管理
+        // Style
         void AddStyle(LPCTSTR pName, LPCTSTR pstrStyle, BOOL bShared = FALSE);
         LPCTSTR GetStyle(LPCTSTR pName) const;
         void RemoveAllStyle();
-        //焦点相关
+        // Focus
         CDuiControl* GetFocus() const;
         void SetFocus(CDuiControl* pControl);
         void SetFocusNeeded(CDuiControl* pControl);
@@ -271,7 +274,7 @@ namespace DuiLib
         BOOL InitDragDrop();
         static WORD DIBNumColors(void* pv);
         static WORD ColorTableSize(LPVOID lpv);
-        virtual bool OnDrop(FORMATETC* pFmtEtc, STGMEDIUM& medium, DWORD* pdwEffect);
+        bool OnDrop(FORMATETC* pFmtEtc, STGMEDIUM& medium, DWORD* pdwEffect) OVERRIDE;
         // RichEdit光标
         CDuiRichEdit* GetCurrentCaretObject();
         BOOL CreateCaret(HBITMAP hBmp, int nWidth, int nHeight);
@@ -279,7 +282,7 @@ namespace DuiLib
         BOOL SetCaretPos(CDuiRichEdit* pRichEdit, int x, int y);
         void DrawCaret(HDC hDC, const RECT& rcPaint);
 
-        //字体相关
+        // Font
         CDuiFontInfo* GetDefaultFontInfo();
         void SetDefaultFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared = FALSE);
         HFONT AddFont(int id, LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared = FALSE);
@@ -301,23 +304,23 @@ namespace DuiLib
         int GetGdiplusTextRenderingHint() const;
         void SetUseGdiplusText(BOOL bUse);
         void SetGdiplusTextRenderingHint(int trh);
-
+        // Tab
         BOOL SetNextTabControl(BOOL bForward = TRUE);
-
+        // DPI
         CDPI* GetDPIObj();
         void RebuildFont(CDuiFontInfo* pFontInfo);
         void ResetDPIAssets();
         void SetDPI(int iDPI);
-
+        // 阴影
         CDuiShadow* GetShadow();
-
+        // 通知消息
         BOOL AddNotifier(INotify* pNotifier);
         void SendNotify(CDuiNotify& Msg, BOOL bAsync = FALSE);
         void SendNotify(CDuiControl* pControl, LPCTSTR pstrMessage, WPARAM wParam = 0, LPARAM lParam = 0, BOOL bAsync = FALSE);
         BOOL RemoveNotifier(INotify* pNotifier);
-
+        //
         void AddDelayedCleanup(CDuiControl* pControl);
-
+        // Default
         void AddDefaultAttributeList(LPCTSTR pStrControlName, LPCTSTR pStrControlAttrList, BOOL bShared = FALSE);
         LPCTSTR GetDefaultAttributeList(LPCTSTR pStrControlName) const;
         void RemoveAllDefaultAttributeList();
@@ -325,13 +328,13 @@ namespace DuiLib
         BOOL InitControls(CDuiControl* pControl, CDuiControl* pParent = NULL);
         BOOL AttachDialog(CDuiControl* pControl);
         void ReapObjects(CDuiControl* pControl);
-
+        // ChildWnd
         BOOL AddPaintChildWnd(HWND hChildWnd);
         BOOL RemovePaintChildWnd(HWND hChildWnd);
-
+        // PostPaint
         BOOL AddPostPaint(CDuiControl* pControl);
         BOOL RemovePostPaint(CDuiControl* pControl);
-
+        // Group
         CStdPtrArray* GetOptionGroup(LPCTSTR pStrGroupName);
         BOOL AddOptionGroup(LPCTSTR pStrGroupName, CDuiControl* pControl);
         void RemoveOptionGroup(LPCTSTR pStrGroupName, CDuiControl* pControl);
@@ -341,7 +344,7 @@ namespace DuiLib
         CDuiControl* FindControl(POINT pt) const;
         CDuiControl* FindControl(LPCTSTR pstrName) const;
         CDuiControl* FindSubControlByName(CDuiControl* pParent, LPCTSTR pstrName) const;
-
+        // Image
         const CDuiImageInfo* GetImage(LPCTSTR bitmap);
         const CDuiImageInfo* GetImageEx(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, HINSTANCE instance = NULL);
         const CDuiImageInfo* AddImage(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, BOOL bShared = FALSE, HINSTANCE instance = NULL);
@@ -351,23 +354,23 @@ namespace DuiLib
 
         const CDrawInfo* GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify);
         void RemoveAllDrawInfos();
-
+        // PreMessage
         BOOL AddPreMessageFilter(IMessageFilter* pFilter);
         BOOL RemovePreMessageFilter(IMessageFilter* pFilter);
         BOOL PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
 
         BOOL AddMessageFilter(IMessageFilter* pFilter);
         BOOL RemoveMessageFilter(IMessageFilter* pFilter);
-
+        // TranslateAccelerator
         BOOL AddTranslateAccelerator(ITranslateAccelerator* pTranslateAccelerator);
         BOOL RemoveTranslateAccelerator(ITranslateAccelerator* pTranslateAccelerator);
         BOOL TranslateAccelerator(LPMSG pMsg);
-
+        // Timer
         BOOL SetTimer(CDuiControl* pControl, UINT nTimerID, UINT uElapse);
         BOOL KillTimer(CDuiControl* pControl, UINT nTimerID);
         void KillTimer(CDuiControl* pControl);
         void RemoveAllTimers();
-
+        //
         BOOL IsForceUseSharedRes() const;
         void SetForceUseSharedRes(BOOL bForce);
 

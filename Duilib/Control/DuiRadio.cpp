@@ -20,13 +20,13 @@ namespace DuiLib
         return DUI_CTR_RADIO;
     }
 
-    LPVOID CDuiRadio::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiRadio::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_RADIO) == 0)
+        if(strName == DUI_CTR_RADIO)
         {
             return static_cast<CDuiRadio*>(this);
         }
-        return CDuiOption::GetInterface(pstrName);
+        return CDuiOption::GetInterface(strName);
     }
 
     void CDuiRadio::DoEvent(CDuiEvent& event)

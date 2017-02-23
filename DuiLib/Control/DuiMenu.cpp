@@ -177,13 +177,13 @@ namespace DuiLib
         return DUI_CTR_MENUELEMENT;
     }
 
-    LPVOID CDuiMenuElement::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiMenuElement::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_MENUELEMENT) == 0)
+        if(strName == DUI_CTR_MENUELEMENT)
         {
             return static_cast<CDuiMenuElement*>(this);
         }
-        return CDuiListContainerElement::GetInterface(pstrName);
+        return CDuiListContainerElement::GetInterface(strName);
     }
 
     void CDuiMenuElement::EmptyMenuWnd()
@@ -1359,13 +1359,13 @@ namespace DuiLib
         return DUI_CTR_MENU;
     }
 
-    LPVOID CDuiMenu::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiMenu::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_MENU) == 0)
+        if(strName == DUI_CTR_MENU)
         {
             return static_cast<CDuiMenu*>(this);
         }
-        return CDuiList::GetInterface(pstrName);
+        return CDuiList::GetInterface(strName);
     }
 
     BOOL CDuiMenu::Add(CDuiControl* pControl)

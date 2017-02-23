@@ -29,7 +29,7 @@ namespace DuiLib
         virtual ~CDuiContainer(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         virtual CDuiRect GetInset() const;
         virtual void SetInset(CDuiRect rcInset); // 设置内边距，相当于设置客户区

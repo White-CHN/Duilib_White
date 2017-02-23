@@ -15,7 +15,7 @@ namespace DuiLib
         virtual ~CDuiRollText(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         void SetVisible(BOOL bVisible = TRUE) OVERRIDE;
         void SetInternVisible(BOOL bVisible = TRUE) OVERRIDE;

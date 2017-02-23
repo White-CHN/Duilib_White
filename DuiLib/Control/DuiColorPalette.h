@@ -22,7 +22,7 @@ namespace DuiLib
         virtual ~CDuiColorPalette(void);
     public:
         CDuiString GetClass() const OVERRIDE;
-        LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
+        LPVOID GetInterface(CDuiString strName) OVERRIDE;
 
         //获取最终被选择的颜色，可以直接用于设置duilib背景色
         DWORD GetSelectColor();

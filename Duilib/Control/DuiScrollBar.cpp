@@ -34,13 +34,13 @@ namespace DuiLib
         return DUI_CTR_SCROLLBAR;
     }
 
-    LPVOID CDuiScrollBar::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiScrollBar::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_SCROLLBAR) == 0)
+        if(strName == DUI_CTR_SCROLLBAR)
         {
             return static_cast<CDuiScrollBar*>(this);
         }
-        return CDuiControl::GetInterface(pstrName);
+        return CDuiControl::GetInterface(strName);
     }
 
     void CDuiScrollBar::SetOwner(CDuiContainer* pOwner)

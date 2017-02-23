@@ -26,13 +26,13 @@ namespace DuiLib
         return DUI_CTR_OPTION;
     }
 
-    LPVOID CDuiOption::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiOption::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_OPTION) == 0)
+        if(strName == DUI_CTR_OPTION)
         {
             return static_cast<CDuiOption*>(this);
         }
-        return CDuiButton::GetInterface(pstrName);
+        return CDuiButton::GetInterface(strName);
     }
 
     BOOL CDuiOption::Activate()

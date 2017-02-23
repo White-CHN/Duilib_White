@@ -23,13 +23,13 @@ namespace DuiLib
         return DUI_CTR_SLIDER;
     }
 
-    LPVOID CDuiSlider::GetInterface(LPCTSTR pstrName)
+    LPVOID CDuiSlider::GetInterface(CDuiString strName)
     {
-        if(_tcsicmp(pstrName, DUI_CTR_SLIDER) == 0)
+        if(strName == DUI_CTR_SLIDER)
         {
             return static_cast<CDuiSlider*>(this);
         }
-        return CDuiProgress::GetInterface(pstrName);
+        return CDuiProgress::GetInterface(strName);
     }
 
     LPCTSTR CDuiSlider::GetThumbImage() const
