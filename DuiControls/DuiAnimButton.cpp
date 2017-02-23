@@ -111,35 +111,35 @@ void CDuiAnimButton::DoPaint(HDC hDC, const RECT& rcPaint)
     }
 }
 
-void CDuiAnimButton::DoEvent(TEventUI& event)
+void CDuiAnimButton::DoEvent(CDuiEvent& event)
 {
-    if(event.Type == UIEVENT_MOUSEENTER && !IsAnimationRunning(TIMER_ID_ANIMBUTTON_IN))
+    if(event.Type == DUIEVENT_MOUSEENTER && !IsAnimationRunning(TIMER_ID_ANIMBUTTON_IN))
     {
         StopAnimation(TIMER_ID_ANIMBUTTON_OUT);
         StartAnimation(m_nEllapse, m_vtImages.size(), TIMER_ID_ANIMBUTTON_IN);
         Invalidate();
         return;
     }
-    if(event.Type == UIEVENT_MOUSELEAVE && !IsAnimationRunning(TIMER_ID_ANIMBUTTON_OUT))
+    if(event.Type == DUIEVENT_MOUSELEAVE && !IsAnimationRunning(TIMER_ID_ANIMBUTTON_OUT))
     {
         StopAnimation(TIMER_ID_ANIMBUTTON_IN);
         StartAnimation(m_nEllapse, m_vtImages.size(), TIMER_ID_ANIMBUTTON_OUT);
         Invalidate();
         return;
     }
-    if(event.Type ==  UIEVENT_BUTTONUP)
+    if(event.Type ==  DUIEVENT_BUTTONUP)
     {
         StopAnimation(TIMER_ID_ANIMBUTTON_OUT);
         StartAnimation(m_nEllapse, m_vtImages.size(), TIMER_ID_ANIMBUTTON_IN);
         Invalidate();
     }
-    if(event.Type == UIEVENT_BUTTONDOWN)
+    if(event.Type == DUIEVENT_BUTTONDOWN)
     {
         StopAnimation(TIMER_ID_ANIMBUTTON_IN);
         StartAnimation(m_nEllapse, m_vtImages.size(), TIMER_ID_ANIMBUTTON_OUT);
         Invalidate();
     }
-    if(event.Type == UIEVENT_TIMER)
+    if(event.Type == DUIEVENT_TIMER)
     {
         OnAnimationElapse((int)event.wParam);
     }

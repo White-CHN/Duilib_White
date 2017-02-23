@@ -210,9 +210,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiListElement::DoEvent(TEventUI& event)
+    void CDuiListElement::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(m_pOwner != NULL)
             {
@@ -225,7 +225,7 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_DBLCLICK)
+        if(event.Type == DUIEVENT_DBLCLICK)
         {
             if(IsEnabled())
             {
@@ -234,7 +234,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_KEYDOWN && IsEnabled())
+        if(event.Type == DUIEVENT_KEYDOWN && IsEnabled())
         {
             if(event.chKey == VK_RETURN)
             {
@@ -490,9 +490,9 @@ namespace DuiLib
 
     }
 
-    void CDuiListLabelElement::DoEvent(TEventUI& event)
+    void CDuiListLabelElement::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetOwner() != NULL)
             {
@@ -505,7 +505,7 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_BUTTONDOWN)
+        if(event.Type == DUIEVENT_BUTTONDOWN)
         {
             if(IsEnabled())
             {
@@ -520,7 +520,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP)
         {
             if(IsEnabled() && GetManager())
             {
@@ -529,12 +529,12 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             return;
         }
 
-        if(event.Type == UIEVENT_MOUSEENTER)
+        if(event.Type == DUIEVENT_MOUSEENTER)
         {
             if(IsEnabled())
             {
@@ -543,7 +543,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSELEAVE)
+        if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             if((m_uButtonState & UISTATE_HOT) != 0)
             {
@@ -798,8 +798,8 @@ namespace DuiLib
                 PostMessage(WM_KILLFOCUS);
                 break;
             default:
-                TEventUI event;
-                event.Type = UIEVENT_KEYDOWN;
+                CDuiEvent event;
+                event.Type = DUIEVENT_KEYDOWN;
                 event.chKey = (TCHAR)wParam;
                 m_pOwner->DoEvent(event);
                 EnsureVisible(m_pOwner->GetCurSel());
@@ -813,11 +813,10 @@ namespace DuiLib
     LRESULT CDuiComboWnd::OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         int zDelta = (int)(short) HIWORD(wParam);
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_SCROLLWHEEL;
+        CDuiEvent event;
+        event.Type = DUIEVENT_SCROLLWHEEL;
         event.wParam = MAKELPARAM(zDelta < 0 ? SB_LINEDOWN : SB_LINEUP, 0);
         event.lParam = lParam;
-        event.dwTimestamp = ::GetTickCount();
         if(m_pOwner->GetScrollSelect())
         {
             m_pOwner->DoEvent(event);
@@ -883,7 +882,7 @@ namespace DuiLib
         return CDuiWnd::HandleMessage(uMsg, wParam, lParam);
     }
 
-    void CDuiComboWnd::Notify(TNotifyUI& msg)
+    void CDuiComboWnd::Notify(CDuiNotify& msg)
     {
         if(msg.sType == DUI_MSGTYPE_WINDOWINIT)
         {
@@ -2035,9 +2034,9 @@ namespace DuiLib
         return TRUE;
     }
 
-    void CDuiCombo::DoEvent(TEventUI& event)
+    void CDuiCombo::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -2050,15 +2049,15 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_SETFOCUS)
+        if(event.Type == DUIEVENT_SETFOCUS)
         {
             Invalidate();
         }
-        if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == DUIEVENT_KILLFOCUS)
         {
             Invalidate();
         }
-        if(event.Type == UIEVENT_BUTTONDOWN)
+        if(event.Type == DUIEVENT_BUTTONDOWN)
         {
             if(IsEnabled())
             {
@@ -2067,7 +2066,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP)
         {
             if((m_uButtonState & UISTATE_CAPTURED) != 0)
             {
@@ -2076,11 +2075,11 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             return;
         }
-        if(event.Type == UIEVENT_KEYDOWN)
+        if(event.Type == DUIEVENT_KEYDOWN)
         {
             switch(event.chKey)
             {
@@ -2107,7 +2106,7 @@ namespace DuiLib
                     return;
             }
         }
-        if(event.Type == UIEVENT_SCROLLWHEEL)
+        if(event.Type == DUIEVENT_SCROLLWHEEL)
         {
             if(GetScrollSelect())
             {
@@ -2116,11 +2115,11 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_CONTEXTMENU)
+        if(event.Type == DUIEVENT_CONTEXTMENU)
         {
             return;
         }
-        if(event.Type == UIEVENT_MOUSEENTER)
+        if(event.Type == DUIEVENT_MOUSEENTER)
         {
             if(::PtInRect(&GetPos(), event.ptMouse))
             {
@@ -2132,7 +2131,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSELEAVE)
+        if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             if((m_uButtonState & UISTATE_HOT) != 0)
             {

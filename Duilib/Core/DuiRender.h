@@ -31,12 +31,12 @@ namespace DuiLib
     public:
         static DWORD AdjustColor(DWORD dwColor, short H, short S, short L);
         static HBITMAP CreateARGB32Bitmap(HDC hDC, int cx, int cy, BYTE** pBits);
-        static void AdjustImage(BOOL bUseHSL, TImageInfo* imageInfo, short H, short S, short L);
-        static TImageInfo* LoadImage(STRINGorID bitmap, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
+        static void AdjustImage(BOOL bUseHSL, CDuiImageInfo* imageInfo, short H, short S, short L);
+        static CDuiImageInfo* LoadImage(CIdToResource bitmap, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
 
-        static void FreeImage(TImageInfo* bitmap, BOOL bDelete = TRUE);
-        static TImageInfo* LoadImage(LPCTSTR pStrImage, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
-        static TImageInfo* LoadImage(UINT nID, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
+        static void FreeImage(CDuiImageInfo* bitmap, BOOL bDelete = TRUE);
+        static CDuiImageInfo* LoadImage(LPCTSTR pStrImage, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
+        static CDuiImageInfo* LoadImage(UINT nID, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
 
         static Gdiplus::Image*	GdiplusLoadImage(LPCTSTR pstrPath);
         static Gdiplus::Image* GdiplusLoadImage(LPVOID pBuf, size_t dwSize);
@@ -52,7 +52,7 @@ namespace DuiLib
                               const RECT& rcBmpPart, const RECT& rcCorners, BOOL bAlpha, BYTE uFade = 255,
                               BOOL hole = FALSE, BOOL xtiled = FALSE, BOOL ytiled = FALSE);
 
-        static BOOL DrawImageInfo(HDC hDC, CDuiPaintManager* pManager, const RECT& rcItem, const RECT& rcPaint, const TDrawInfo* pDrawInfo, HINSTANCE instance = NULL);
+        static BOOL DrawImageInfo(HDC hDC, CDuiPaintManager* pManager, const RECT& rcItem, const RECT& rcPaint, const CDrawInfo* pDrawInfo, HINSTANCE instance = NULL);
         static BOOL DrawImageString(HDC hDC, CDuiPaintManager* pManager, const RECT& rcItem, const RECT& rcPaint, LPCTSTR pStrImage, LPCTSTR pStrModify = NULL, HINSTANCE instance = NULL);
 
         static void DrawColor(HDC hDC, const RECT& rc, DWORD color);

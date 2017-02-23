@@ -55,7 +55,7 @@ LRESULT CSkinSliderDlg::OnMouseLeave(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
     return 0;
 }
 
-void CSkinSliderDlg::OnValueChanged(TNotifyUI& msg)
+void CSkinSliderDlg::OnValueChanged(CDuiNotify& msg)
 {
     if(msg.pSender == m_pSlider)
     {
@@ -66,7 +66,7 @@ void CSkinSliderDlg::OnValueChanged(TNotifyUI& msg)
     }
 }
 
-void CSkinSliderDlg::OnValueChangedMove(TNotifyUI& msg)
+void CSkinSliderDlg::OnValueChangedMove(CDuiNotify& msg)
 {
     if(msg.pSender == m_pSlider)
     {

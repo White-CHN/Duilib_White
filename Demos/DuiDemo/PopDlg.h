@@ -9,6 +9,6 @@ public:
 public:
     CDuiString GetSkinFile() OVERRIDE;
     LPCTSTR GetWindowClassName() const OVERRIDE;
-    void OnClick(TNotifyUI& msg);
+    void OnClick(CDuiNotify& msg);
 };
 

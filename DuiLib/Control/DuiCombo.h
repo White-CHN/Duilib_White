@@ -40,7 +40,7 @@ namespace DuiLib
         virtual BOOL SelectItem(int iIndex, BOOL bTakeFocus = FALSE) = 0;
         virtual BOOL SelectMultiItem(int iIndex, BOOL bTakeFocus = FALSE) = 0;
         virtual BOOL UnSelectItem(int iIndex, BOOL bOthers = FALSE) = 0;
-        virtual void DoEvent(TEventUI& event) = 0;
+        virtual void DoEvent(CDuiEvent& event) = 0;
     };
 
     class IListItem
@@ -85,7 +85,7 @@ namespace DuiLib
 
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         BOOL m_bSelected;
         int m_iIndex;
@@ -110,7 +110,7 @@ namespace DuiLib
         virtual void DrawItemText(HDC hDC, const RECT& rcItem) ;
         void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         UINT m_uButtonState;
     };
@@ -120,7 +120,7 @@ namespace DuiLib
 
     class CDuiComboWnd
         : public CDuiWnd
-        , public INotifyUI
+        , public INotify
     {
     public:
         CDuiComboWnd(void);
@@ -147,7 +147,7 @@ namespace DuiLib
         virtual LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) OVERRIDE;
 
-        void Notify(TNotifyUI& msg) OVERRIDE;
+        void Notify(CDuiNotify& msg) OVERRIDE;
     private:
         BOOL m_bHitItem;
         int m_iOldSel;
@@ -287,7 +287,7 @@ namespace DuiLib
         void PaintStatusImage(HDC hDC) OVERRIDE;
 
         BOOL Activate() OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         CDuiComboWnd* m_pComboWnd;
         BOOL m_bShowHtml;

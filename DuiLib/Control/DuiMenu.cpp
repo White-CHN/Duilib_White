@@ -519,8 +519,8 @@ namespace DuiLib
             }
             SIZE cxyFixed = GetFixedXY();
             int padding = GetManager()->GetDPIObj()->Scale(ITEM_DEFAULT_EXPLAND_ICON_WIDTH) / 3;
-            const TDrawInfo* pDrawInfo = GetManager()->GetDrawInfo((LPCTSTR)strExplandIcon, NULL);
-            const TImageInfo* pImageInfo = GetManager()->GetImageEx(pDrawInfo->sImageName, NULL, 0);
+            const CDrawInfo* pDrawInfo = GetManager()->GetDrawInfo((LPCTSTR)strExplandIcon, NULL);
+            const CDuiImageInfo* pImageInfo = GetManager()->GetImageEx(pDrawInfo->sImageName, NULL, 0);
             if(!pImageInfo)
             {
                 return;
@@ -662,9 +662,9 @@ namespace DuiLib
         m_pMenuWnd->Init(static_cast<CDuiMenuElement*>(this), _T(""), CDuiPoint(), NULL);
     }
 
-    void CDuiMenuElement::DoEvent(TEventUI& event)
+    void CDuiMenuElement::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_MOUSEENTER)
+        if(event.Type == DUIEVENT_MOUSEENTER)
         {
             CDuiListContainerElement::DoEvent(event);
             if(m_pMenuWnd)
@@ -698,7 +698,7 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_MOUSELEAVE)
+        if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             BOOL hasSubMenu = FALSE;
             for(int i = 0; i < GetCount(); ++i)
@@ -715,7 +715,7 @@ namespace DuiLib
             }
         }
 
-        if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP)
         {
             this;
             if(IsEnabled())
@@ -768,7 +768,7 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_KEYDOWN && event.chKey == VK_RIGHT)
+        if(event.Type == DUIEVENT_KEYDOWN && event.chKey == VK_RIGHT)
         {
             if(m_pMenuWnd)
             {
@@ -849,7 +849,7 @@ namespace DuiLib
         }
     }
 
-    void CDuiMenuWnd::Notify(TNotifyUI& msg)
+    void CDuiMenuWnd::Notify(CDuiNotify& msg)
     {
         if(GetGlobalContextMenuObserver().GetManager() != NULL)
         {
@@ -907,7 +907,7 @@ namespace DuiLib
         return TRUE;
     }
 
-    void CDuiMenuWnd::Init(CDuiMenuElement* pOwner, STRINGorID xml, POINT point, CDuiPaintManager* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo /*= NULL*/, DWORD dwAlignment /*= eMenuAlignment_Left | eMenuAlignment_Top*/)
+    void CDuiMenuWnd::Init(CDuiMenuElement* pOwner, CIdToResource xml, POINT point, CDuiPaintManager* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo /*= NULL*/, DWORD dwAlignment /*= eMenuAlignment_Left | eMenuAlignment_Top*/)
     {
         m_BasedPoint = point;
         m_pOwner = pOwner;

@@ -185,9 +185,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiRollText::DoEvent(TEventUI& event)
+    void CDuiRollText::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_TIMER && event.wParam == TIMER_ID_ROLLTEXT)
+        if(event.Type == DUIEVENT_TIMER && event.wParam == TIMER_ID_ROLLTEXT)
         {
             rcClient = GetPos();
             rcClient.left += GetTextPadding().left;

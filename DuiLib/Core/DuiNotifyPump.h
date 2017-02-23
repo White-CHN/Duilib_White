@@ -4,21 +4,21 @@ namespace DuiLib
 {
     class CDuiNotifyPump;	//声明
 
-    typedef void (CDuiNotifyPump::*DUI_PMSG)(TNotifyUI& msg);  //指针类型
+    typedef void (CDuiNotifyPump::*DUI_PMSG)(CDuiNotify& msg);  //指针类型
 
     // 消息类型
     enum DuiSig
     {
         DuiSig_end = 0, // [marks end of message map]
         DuiSig_lwl,     // LRESULT (WPARAM, LPARAM)
-        DuiSig_vn,      // void (TNotifyUI)
+        DuiSig_vn,      // void (CDuiNotify)
     };
 
     union DuiMessageMapFunctions
     {
         DUI_PMSG pfn;   // generic member function pointer
         LRESULT(CDuiNotifyPump::*pfn_Notify_lwl)(WPARAM, LPARAM);
-        void (CDuiNotifyPump::*pfn_Notify_vn)(TNotifyUI&);
+        void (CDuiNotifyPump::*pfn_Notify_vn)(CDuiNotify&);
     };
 
     //定义一个结构体，来存放消息信息
@@ -161,12 +161,12 @@ protected:                                                                \
         CDuiNotifyPump(void);
         virtual ~CDuiNotifyPump(void);
     private:
-        static const DUI_MSGMAP_ENTRY* DuiFindMessageEntry(const DUI_MSGMAP_ENTRY* lpEntry, TNotifyUI& msg);
-        BOOL LoopDispatch(TNotifyUI& msg);
+        static const DUI_MSGMAP_ENTRY* DuiFindMessageEntry(const DUI_MSGMAP_ENTRY* lpEntry, CDuiNotify& msg);
+        BOOL LoopDispatch(CDuiNotify& msg);
     public:
         BOOL AddVirtualWnd(CDuiString strName, CDuiNotifyPump* pObject);
         BOOL RemoveVirtualWnd(CDuiString strName);
-        void NotifyPump(TNotifyUI& msg);
+        void NotifyPump(CDuiNotify& msg);
     private:
         CStdStringPtrMap m_VirtualWndMap;
     };

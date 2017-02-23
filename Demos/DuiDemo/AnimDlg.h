@@ -17,9 +17,9 @@ public:
 
     LRESULT OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
 
-    void OnWindowInit(TNotifyUI& msg);
+    void OnWindowInit(CDuiNotify& msg);
 
-    void OnClick(TNotifyUI& msg);
+    void OnClick(CDuiNotify& msg);
 private:
     CDuiAnimLayout*		m_pAnimLayout;
 };

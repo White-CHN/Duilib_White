@@ -111,12 +111,12 @@ namespace DuiLib
         return TRUE;
     }
 
-    void CDuiAnimationTabLayout::OnAnimationStart(INT nAnimationID, BOOL bFirstLoop)
+    void CDuiAnimationTabLayout::OnAnimationStart(int nAnimationID, BOOL bFirstLoop)
     {
 
     }
 
-    void CDuiAnimationTabLayout::OnAnimationStep(INT nTotalFrame, INT nCurFrame, INT nAnimationID)
+    void CDuiAnimationTabLayout::OnAnimationStep(int nTotalFrame, int nCurFrame, int nAnimationID)
     {
         if(!m_bControlVisibleFlag)
         {
@@ -154,7 +154,7 @@ namespace DuiLib
         SetPos(m_rcCurPos);
     }
 
-    void CDuiAnimationTabLayout::OnAnimationStop(INT nAnimationID)
+    void CDuiAnimationTabLayout::OnAnimationStop(int nAnimationID)
     {
         SetPos(m_rcItemOld);
         NeedParentUpdate();
@@ -169,9 +169,9 @@ namespace DuiLib
         return CDuiTabLayout::SetAttribute(pstrName, pstrValue);
     }
 
-    void CDuiAnimationTabLayout::DoEvent(TEventUI& event)
+    void CDuiAnimationTabLayout::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_TIMER)
+        if(event.Type == DUIEVENT_TIMER)
         {
             int nTimerID = (int)event.wParam;
             OnAnimationElapse(nTimerID);

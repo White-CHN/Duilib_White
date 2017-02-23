@@ -110,7 +110,7 @@ LRESULT CAnimDlg::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
     return HTCLIENT;
 }
 
-void CAnimDlg::OnWindowInit(TNotifyUI& msg)
+void CAnimDlg::OnWindowInit(CDuiNotify& msg)
 {
     for(int i = 0; i < 79; i++)
     {
@@ -118,7 +118,7 @@ void CAnimDlg::OnWindowInit(TNotifyUI& msg)
     }
 }
 
-void CAnimDlg::OnClick(TNotifyUI& msg)
+void CAnimDlg::OnClick(CDuiNotify& msg)
 {
     if(msg.pSender->GetName() == _T("closebtn"))
     {

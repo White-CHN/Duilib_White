@@ -53,7 +53,7 @@ LPCTSTR CMessageBox::GetWindowClassName() const
     return GET_CLASS_NAME(CMessageBox);
 }
 
-void CMessageBox::OnClick(TNotifyUI& msg)
+void CMessageBox::OnClick(CDuiNotify& msg)
 {
     if(msg.pSender->GetName() == _T("closebtn"))
     {

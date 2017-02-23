@@ -214,15 +214,15 @@ namespace DuiLib
         ::BitBlt(hDC, m_RendData.rt.left, m_RendData.rt.top, m_RendData.rt.right - m_RendData.rt.left, m_RendData.rt.bottom - m_RendData.rt.top, m_RendData.hDC, 0, 0, SRCCOPY);
     }
 
-    void CDuiWkeWebkit::DoEvent(TEventUI& event)
+    void CDuiWkeWebkit::DoEvent(CDuiEvent& event)
     {
         RECT rc = GetPos();
         POINT pt = {event.ptMouse.x - rc.left, event.ptMouse.y - rc.top};
         switch(event.Type)
         {
-            case UIEVENT_MOUSEENTER:
-            case UIEVENT_MOUSELEAVE:
-            case UIEVENT_MOUSEMOVE:
+            case DUIEVENT_MOUSEENTER:
+            case DUIEVENT_MOUSELEAVE:
+            case DUIEVENT_MOUSEMOVE:
             {
                 unsigned int flags = 0;
                 if(event.wParam & MK_CONTROL)
@@ -248,39 +248,39 @@ namespace DuiLib
                 wkeFireMouseEvent(m_pWebView, WKE_MSG_MOUSEMOVE, pt.x, pt.y, flags);
             }
             break;
-            case UIEVENT_BUTTONDOWN:
+            case DUIEVENT_BUTTONDOWN:
                 wkeFireMouseEvent(m_pWebView, WKE_MSG_LBUTTONDOWN, pt.x, pt.y, event.wKeyState);
                 break;
-            case UIEVENT_BUTTONUP:
+            case DUIEVENT_BUTTONUP:
                 wkeFireMouseEvent(m_pWebView, WKE_MSG_LBUTTONUP, pt.x, pt.y, event.wKeyState);
                 break;
-            case UIEVENT_RBUTTONDOWN:
+            case DUIEVENT_RBUTTONDOWN:
                 wkeFireMouseEvent(m_pWebView, WKE_MSG_RBUTTONDOWN, pt.x, pt.y, event.wKeyState);
                 break;
-            case UIEVENT_DBLCLICK:
+            case DUIEVENT_DBLCLICK:
                 wkeFireMouseEvent(m_pWebView, WKE_MSG_LBUTTONDBLCLK, pt.x, pt.y, event.wKeyState);
                 break;
-            case UIEVENT_SCROLLWHEEL:
+            case DUIEVENT_SCROLLWHEEL:
                 wkeFireMouseWheelEvent(m_pWebView, pt.x, pt.y, event.wParam == SB_LINEUP ? 120 : -120, event.wKeyState);
                 break;
-            case UIEVENT_KEYDOWN:
+            case DUIEVENT_KEYDOWN:
                 wkeFireKeyDownEvent(m_pWebView, event.chKey, event.lParam, false);
                 break;
-            case UIEVENT_KEYUP:
+            case DUIEVENT_KEYUP:
                 wkeFireKeyUpEvent(m_pWebView, event.chKey, event.lParam, false);
                 break;
-            case UIEVENT_CHAR:
+            case DUIEVENT_CHAR:
                 wkeFireKeyPressEvent(m_pWebView, event.chKey, event.lParam, false);
                 break;
-            case UIEVENT_SETFOCUS:
+            case DUIEVENT_SETFOCUS:
                 wkeSetFocus(m_pWebView);
                 break;
-            case UIEVENT_KILLFOCUS:
+            case DUIEVENT_KILLFOCUS:
                 wkeKillFocus(m_pWebView);
                 break;
-            case UIEVENT_SETCURSOR:
+            case DUIEVENT_SETCURSOR:
                 return;
-            case UIEVENT_CONTEXTMENU:
+            case DUIEVENT_CONTEXTMENU:
             {
                 unsigned int flags = 0;
                 if(event.wParam & MK_CONTROL)
@@ -294,7 +294,7 @@ namespace DuiLib
                 wkeFireContextMenuEvent(m_pWebView, pt.x, pt.y, flags);
                 break;
             }
-            case UIEVENT_TIMER:
+            case DUIEVENT_TIMER:
                 if(event.wParam == EVENT_TICK_TIEMER_ID)
                 {
                     Invalidate();

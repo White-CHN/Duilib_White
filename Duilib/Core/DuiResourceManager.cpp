@@ -135,7 +135,7 @@ namespace DuiLib
         return TRUE;
     }
 
-    BOOL CDuiResourceManager::LoadResource(STRINGorID xml, LPCTSTR type /*= NULL*/)
+    BOOL CDuiResourceManager::LoadResource(CIdToResource xml, LPCTSTR type /*= NULL*/)
     {
         if(HIWORD(xml.m_lpstr) != NULL)
         {

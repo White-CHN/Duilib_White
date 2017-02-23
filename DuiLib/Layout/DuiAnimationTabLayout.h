@@ -16,13 +16,13 @@ namespace DuiLib
         void AnimationSwitch();
         BOOL SelectItem(int iIndex) OVERRIDE;
 
-        void OnAnimationStart(INT nAnimationID, BOOL bFirstLoop) OVERRIDE;
-        void OnAnimationStep(INT nTotalFrame, INT nCurFrame, INT nAnimationID) OVERRIDE;
-        void OnAnimationStop(INT nAnimationID) OVERRIDE;
+        void OnAnimationStart(int nAnimationID, BOOL bFirstLoop) OVERRIDE;
+        void OnAnimationStep(int nTotalFrame, int nCurFrame, int nAnimationID) OVERRIDE;
+        void OnAnimationStop(int nAnimationID) OVERRIDE;
 
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         enum
         {

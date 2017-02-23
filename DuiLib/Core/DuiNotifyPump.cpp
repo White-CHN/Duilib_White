@@ -16,14 +16,10 @@ namespace DuiLib
     {
     }
 
-    const DUI_MSGMAP_ENTRY* CDuiNotifyPump::DuiFindMessageEntry(const DUI_MSGMAP_ENTRY* lpEntry, TNotifyUI& msg)
+    const DUI_MSGMAP_ENTRY* CDuiNotifyPump::DuiFindMessageEntry(const DUI_MSGMAP_ENTRY* lpEntry, CDuiNotify& msg)
     {
         CDuiString sMsgType = msg.sType;
         CDuiString sCtrlName = msg.pSender->GetName();
-        if(sCtrlName == _T("root") && sMsgType == _T("windowsize"))
-        {
-            int i = 0;
-        }
         const DUI_MSGMAP_ENTRY* pMsgTypeEntry = NULL;
         while(lpEntry->nSig != DuiSig_end)
         {
@@ -46,7 +42,7 @@ namespace DuiLib
         return pMsgTypeEntry;
     }
 
-    BOOL CDuiNotifyPump::LoopDispatch(TNotifyUI& msg)
+    BOOL CDuiNotifyPump::LoopDispatch(CDuiNotify& msg)
     {
         const DUI_MSGMAP_ENTRY* lpEntry = NULL;
         const DUI_MSGMAP* pMessageMap = NULL;
@@ -109,7 +105,7 @@ namespace DuiLib
         return FALSE;
     }
 
-    void CDuiNotifyPump::NotifyPump(TNotifyUI& msg)
+    void CDuiNotifyPump::NotifyPump(CDuiNotify& msg)
     {
         ///±éÀúÐéÄâ´°¿Ú
         if(!msg.sVirtualWnd.IsEmpty())

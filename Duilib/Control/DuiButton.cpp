@@ -557,9 +557,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiButton::DoEvent(TEventUI& event)
+    void CDuiButton::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -572,15 +572,15 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_SETFOCUS)
+        if(event.Type == DUIEVENT_SETFOCUS)
         {
             Invalidate();
         }
-        if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == DUIEVENT_KILLFOCUS)
         {
             Invalidate();
         }
-        if(event.Type == UIEVENT_KEYDOWN)
+        if(event.Type == DUIEVENT_KEYDOWN)
         {
             if(IsKeyboardEnabled())
             {
@@ -591,7 +591,7 @@ namespace DuiLib
                 }
             }
         }
-        if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
+        if(event.Type == DUIEVENT_BUTTONDOWN || event.Type == DUIEVENT_DBLCLICK)
         {
             if(::PtInRect(&GetPos(), event.ptMouse) && IsEnabled())
             {
@@ -600,7 +600,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             if((m_uButtonState & UISTATE_CAPTURED) != 0)
             {
@@ -616,7 +616,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP)
         {
             if((m_uButtonState & UISTATE_CAPTURED) != 0)
             {
@@ -629,7 +629,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_CONTEXTMENU)
+        if(event.Type == DUIEVENT_CONTEXTMENU)
         {
             if(IsContextMenuUsed())
             {
@@ -637,7 +637,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSEENTER)
+        if(event.Type == DUIEVENT_MOUSEENTER)
         {
             if(IsEnabled())
             {
@@ -645,7 +645,7 @@ namespace DuiLib
                 Invalidate();
             }
         }
-        if(event.Type == UIEVENT_MOUSELEAVE)
+        if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             if(IsEnabled())
             {
@@ -653,13 +653,13 @@ namespace DuiLib
                 Invalidate();
             }
         }
-        if(event.Type == UIEVENT_SYSKEYDOWN)
+        if(event.Type == DUIEVENT_SYSKEYDOWN)
         {
             m_uButtonState |= UISTATE_PUSHED | UISTATE_CAPTURED;
             Invalidate();
             return;
         }
-        if(event.Type == UIEVENT_SYSKEYUP)
+        if(event.Type == DUIEVENT_SYSKEYUP)
         {
             m_uButtonState &= ~(UISTATE_PUSHED | UISTATE_CAPTURED);
             Invalidate();

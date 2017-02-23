@@ -18,7 +18,7 @@ namespace DuiLib
         void OnAnimationStep(int nTotalFrame, int nCurFrame, int nAnimationID) OVERRIDE;
 
         void OnTimer(int nTimerID);
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
 
         void PaintStatusImage(HDC hDC) OVERRIDE;
     private:

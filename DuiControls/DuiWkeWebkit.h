@@ -83,7 +83,7 @@ namespace DuiLib
         void DoInit() OVERRIDE;
         void SetPos(RECT rc, BOOL bNeedUpdate = TRUE) OVERRIDE;
         void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
 
         wkeWebView GetWebView();
 

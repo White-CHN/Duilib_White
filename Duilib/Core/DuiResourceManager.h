@@ -22,7 +22,7 @@ namespace DuiLib
 
         BOOL LoadLanguage(LPCTSTR pstrXml);
 
-        BOOL LoadResource(STRINGorID xml, LPCTSTR type = NULL);
+        BOOL LoadResource(CIdToResource xml, LPCTSTR type = NULL);
 
         void SetTextQueryInterface(IQueryControlText* pInterface);
         CDuiString GetText(LPCTSTR lpstrId, LPCTSTR lpstrType = NULL);

@@ -24,7 +24,7 @@ public:
     void OnAnimationStep(int nTotalFrame, int nCurFrame, int nAnimationID) OVERRIDE;
 
     void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
-    void DoEvent(TEventUI& event) OVERRIDE;
+    void DoEvent(CDuiEvent& event) OVERRIDE;
 private:
     enum
     {

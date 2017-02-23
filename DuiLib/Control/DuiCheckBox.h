@@ -16,7 +16,7 @@ namespace DuiLib
         void SetAutoCheck(BOOL bEnable);
 
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         BOOL m_bAutoCheck;
     };

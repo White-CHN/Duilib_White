@@ -18,7 +18,7 @@ namespace DuiLib
         void SetVisible(BOOL bVisible = TRUE) OVERRIDE;
         void SetInternVisible(BOOL bVisible = TRUE) OVERRIDE;
         void DoInit() OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         void PlayImage();
         void StopImage();

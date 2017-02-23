@@ -12,8 +12,8 @@ public:
     void InitWindow() OVERRIDE;
     CDuiString GetSkinFile() OVERRIDE;
     LPCTSTR GetWindowClassName() const OVERRIDE;
-    void OnClick(TNotifyUI& msg);
-    void OnSelectChanged(TNotifyUI& msg);
+    void OnClick(CDuiNotify& msg);
+    void OnSelectChanged(CDuiNotify& msg);
 private:
     CDemoFrame* m_pDemoFrame;
     CDuiAnimationTabLayout* m_pTabSwitch ;

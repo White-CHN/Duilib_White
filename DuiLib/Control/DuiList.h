@@ -66,7 +66,7 @@ namespace DuiLib
         void PaintText(HDC hDC) OVERRIDE;
         RECT GetThumbRect() const;
         void PaintStatusImage(HDC hDC) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         BOOL m_bShowHtml;
         BOOL m_bDragable;
@@ -157,7 +157,7 @@ namespace DuiLib
 
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         int m_iIndex;
         BOOL m_bSelected;
@@ -185,7 +185,7 @@ namespace DuiLib
         void SetOwner(CDuiControl* pOwner) OVERRIDE;
         CDuiString* GetLinkContent(int iIndex);
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
         SIZE EstimateSize(SIZE szAvailable) OVERRIDE;
 
         void DrawItemText(HDC hDC, const RECT& rcItem) OVERRIDE;
@@ -216,7 +216,7 @@ namespace DuiLib
         int GetScrollStepSize() const OVERRIDE;
         void SetScrollPos(SIZE szPos, BOOL bMsg = TRUE) OVERRIDE;
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     protected:
         static int __cdecl ItemComareFunc(void* pvlocale, const void* item1, const void* item2);
         int __cdecl ItemComareFunc(const void* item1, const void* item2);
@@ -396,7 +396,7 @@ namespace DuiLib
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
         void Move(SIZE szOffset, BOOL bNeedInvalidate = TRUE) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     protected:
         int GetMinSelItemIndex();
         int GetMaxSelItemIndex();

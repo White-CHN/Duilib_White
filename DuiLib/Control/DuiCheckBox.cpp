@@ -52,9 +52,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiCheckBox::DoEvent(TEventUI& event)
+    void CDuiCheckBox::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -66,7 +66,7 @@ namespace DuiLib
             }
             return;
         }
-        if(m_bAutoCheck && (event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK))
+        if(m_bAutoCheck && (event.Type == DUIEVENT_BUTTONDOWN || event.Type == DUIEVENT_DBLCLICK))
         {
             if(::PtInRect(&GetPos(), event.ptMouse) && IsEnabled())
             {

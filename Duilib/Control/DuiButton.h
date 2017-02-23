@@ -57,7 +57,7 @@ namespace DuiLib
 
         BOOL Activate() OVERRIDE;
         void SetEnabled(BOOL bEnable = TRUE) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         int	m_iBindTabIndex;
         UINT m_uButtonState;

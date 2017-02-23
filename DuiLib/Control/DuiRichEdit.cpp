@@ -378,12 +378,12 @@ err:
         return m_pRichEdit->GetManager()->GetPaintDC();
     }
 
-    INT CTxtWinHost::TxReleaseDC(HDC hdc)
+    int CTxtWinHost::TxReleaseDC(HDC hdc)
     {
         return 1;
     }
 
-    BOOL CTxtWinHost::TxShowScrollBar(INT fnBar, BOOL fShow)
+    BOOL CTxtWinHost::TxShowScrollBar(int fnBar, BOOL fShow)
     {
         CDuiScrollBar* pVerticalScrollBar = m_pRichEdit->GetVerticalScrollBar();
         CDuiScrollBar* pHorizontalScrollBar = m_pRichEdit->GetHorizontalScrollBar();
@@ -409,7 +409,7 @@ err:
         return TRUE;
     }
 
-    BOOL CTxtWinHost::TxEnableScrollBar(INT fuSBFlags, INT fuArrowflags)
+    BOOL CTxtWinHost::TxEnableScrollBar(int fuSBFlags, int fuArrowflags)
     {
         if(fuSBFlags == SB_VERT)
         {
@@ -430,7 +430,7 @@ err:
         return TRUE;
     }
 
-    BOOL CTxtWinHost::TxSetScrollRange(INT fnBar, LONG nMinPos, INT nMaxPos, BOOL fRedraw)
+    BOOL CTxtWinHost::TxSetScrollRange(int fnBar, LONG nMinPos, int nMaxPos, BOOL fRedraw)
     {
         CDuiScrollBar* pVerticalScrollBar = m_pRichEdit->GetVerticalScrollBar();
         CDuiScrollBar* pHorizontalScrollBar = m_pRichEdit->GetHorizontalScrollBar();
@@ -461,7 +461,7 @@ err:
         return TRUE;
     }
 
-    BOOL CTxtWinHost::TxSetScrollPos(INT fnBar, INT nPos, BOOL fRedraw)
+    BOOL CTxtWinHost::TxSetScrollPos(int fnBar, int nPos, BOOL fRedraw)
     {
         CDuiScrollBar* pVerticalScrollBar = m_pRichEdit->GetVerticalScrollBar();
         CDuiScrollBar* pHorizontalScrollBar = m_pRichEdit->GetHorizontalScrollBar();
@@ -496,7 +496,7 @@ err:
     }
 
 
-    BOOL CTxtWinHost::TxCreateCaret(HBITMAP hbmp, INT xWidth, INT yHeight)
+    BOOL CTxtWinHost::TxCreateCaret(HBITMAP hbmp, int xWidth, int yHeight)
     {
         m_iCaretWidth = xWidth;
         m_iCaretHeight = yHeight;
@@ -539,7 +539,7 @@ err:
         }
     }
 
-    BOOL CTxtWinHost::TxSetCaretPos(INT x, INT y)
+    BOOL CTxtWinHost::TxSetCaretPos(int x, int y)
     {
         if(m_pRichEdit->GetManager()->IsLayered())
         {
@@ -564,7 +564,7 @@ err:
         m_bTimer = FALSE;
     }
 
-    void CTxtWinHost::TxScrollWindowEx(INT dx, INT dy, LPCRECT lprcScroll,	LPCRECT lprcClip,	HRGN hrgnUpdate, LPRECT lprcUpdate,	UINT fuScroll)
+    void CTxtWinHost::TxScrollWindowEx(int dx, int dy, LPCRECT lprcScroll,	LPCRECT lprcClip,	HRGN hrgnUpdate, LPRECT lprcUpdate,	UINT fuScroll)
     {
         return;
     }
@@ -1694,9 +1694,9 @@ err:
         }
     }
 
-    void CDuiRichEdit::DoEvent(TEventUI& event)
+    void CDuiRichEdit::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -1708,14 +1708,14 @@ err:
             }
             return;
         }
-        if(event.Type == UIEVENT_SETCURSOR && IsEnabled())
+        if(event.Type == DUIEVENT_SETCURSOR && IsEnabled())
         {
             if(m_pTwh && m_pTwh->DoSetCursor(NULL, &event.ptMouse))
             {
                 return;
             }
         }
-        else if(event.Type == UIEVENT_SETFOCUS)
+        else if(event.Type == DUIEVENT_SETFOCUS)
         {
             if(m_pTwh)
             {
@@ -1726,7 +1726,7 @@ err:
             Invalidate();
             return;
         }
-        else if(event.Type == UIEVENT_KILLFOCUS)
+        else if(event.Type == DUIEVENT_KILLFOCUS)
         {
             if(m_pTwh)
             {
@@ -1737,7 +1737,7 @@ err:
             Invalidate();
             return;
         }
-        else if(event.Type == UIEVENT_TIMER)
+        else if(event.Type == DUIEVENT_TIMER)
         {
             if(m_pTwh)
             {
@@ -1745,26 +1745,26 @@ err:
             }
             return;
         }
-        else if(event.Type == UIEVENT_SCROLLWHEEL)
+        else if(event.Type == DUIEVENT_SCROLLWHEEL)
         {
             if((event.wKeyState & MK_CONTROL) != 0)
             {
                 return;
             }
         }
-        else if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
+        else if(event.Type == DUIEVENT_BUTTONDOWN || event.Type == DUIEVENT_DBLCLICK)
         {
             return;
         }
-        else if(event.Type == UIEVENT_MOUSEMOVE)
+        else if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             return;
         }
-        else if(event.Type == UIEVENT_BUTTONUP)
+        else if(event.Type == DUIEVENT_BUTTONUP)
         {
             return;
         }
-        else if(event.Type == UIEVENT_MOUSEENTER)
+        else if(event.Type == DUIEVENT_MOUSEENTER)
         {
             if(IsEnabled())
             {
@@ -1773,7 +1773,7 @@ err:
             }
             return;
         }
-        else if(event.Type == UIEVENT_MOUSELEAVE)
+        else if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             if(IsEnabled())
             {
@@ -1782,7 +1782,7 @@ err:
             }
             return;
         }
-        if(event.Type > UIEVENT__KEYBEGIN && event.Type < UIEVENT__KEYEND)
+        if(event.Type > DUIEVENT__KEYBEGIN && event.Type < DUIEVENT__KEYEND)
         {
             return;
         }

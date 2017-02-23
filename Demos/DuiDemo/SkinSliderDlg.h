@@ -12,8 +12,8 @@ public:
     LPCTSTR GetWindowClassName() const OVERRIDE;
     LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
     LRESULT OnMouseLeave(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
-    void OnValueChanged(TNotifyUI& msg);
-    void OnValueChangedMove(TNotifyUI& msg);
+    void OnValueChanged(CDuiNotify& msg);
+    void OnValueChangedMove(CDuiNotify& msg);
 private:
     CDuiPaintManager* m_pPaintManager;
     CDuiButton* m_pBtn;

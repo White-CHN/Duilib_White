@@ -176,14 +176,14 @@ namespace DuiLib
         return CDuiControl::EstimateSize(szAvailable);
     }
 
-    void CDuiLabel::DoEvent(TEventUI& event)
+    void CDuiLabel::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_SETFOCUS)
+        if(event.Type == DUIEVENT_SETFOCUS)
         {
             SetFocused(TRUE);
             return;
         }
-        if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == DUIEVENT_KILLFOCUS)
         {
             SetFocused(FALSE);
             return;

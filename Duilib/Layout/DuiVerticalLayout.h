@@ -22,12 +22,12 @@ namespace DuiLib
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
 
         RECT GetThumbRect(BOOL bUseNew = FALSE) const;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
 
         void DoPostPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
     private:
         BOOL m_bImmMode;
-        INT m_iSepHeight;
+        int m_iSepHeight;
         UINT m_uButtonState;
         CDuiPoint ptLastMouse;
         CDuiRect m_rcNewPos;

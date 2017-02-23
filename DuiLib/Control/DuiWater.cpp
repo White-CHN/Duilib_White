@@ -87,9 +87,9 @@ namespace DuiLib
 
     }
 
-    void CDuiWater::DoEvent(TEventUI& event)
+    void CDuiWater::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_TIMER && event.wParam == TIMER_ID_WATER)
+        if(event.Type == DUIEVENT_TIMER && event.wParam == TIMER_ID_WATER)
         {
             m_waterEffect.Render((DWORD*)m_renderSrc.GetDIBits(), (DWORD*)m_renderDest.GetDIBits());
             POINT ptOrigin;
@@ -97,7 +97,7 @@ namespace DuiLib
             ptOrigin.y = GetPos().top;
             m_renderDest.Draw(GetManager()->GetPaintDC(), ptOrigin);
         }
-        else if(event.Type == UIEVENT_BUTTONDOWN)
+        else if(event.Type == DUIEVENT_BUTTONDOWN)
         {
             POINT   point;
             point.x = event.ptMouse.x;
@@ -110,7 +110,7 @@ namespace DuiLib
                 m_waterEffect.Blob(point.x , point.y, 10, 1600, m_waterEffect.m_iHpage);
             }
         }
-        else if(event.Type == UIEVENT_MOUSEMOVE)
+        else if(event.Type == DUIEVENT_MOUSEMOVE)
         {
 
             POINT   point;

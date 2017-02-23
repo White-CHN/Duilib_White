@@ -199,7 +199,7 @@ namespace DuiLib
         ::SetFocus(hWndParent);
         if(msg.message == WM_QUIT)
         {
-            ::PostQuitMessage((INT)msg.wParam);
+            ::PostQuitMessage((int)msg.wParam);
         }
         return (int)msg.wParam;
     }

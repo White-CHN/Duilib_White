@@ -16,19 +16,19 @@ namespace DuiLib
         CDuiDlgBuilder(void);
         ~CDuiDlgBuilder(void);
     public:
-        CDuiControl* Create(STRINGorID xml, LPCTSTR type = NULL, IDialogBuilderCallback* pCallback = NULL,
+        CDuiControl* Create(CIdToResource xml, LPCTSTR lpType = NULL, IDialogBuilderCallback* pCallback = NULL,
                             CDuiPaintManager* pManager = NULL, CDuiControl* pParent = NULL);
 
-        void GetLastErrorMessage(LPTSTR pstrMessage, SIZE_T cchMax) const;
-        void GetLastErrorLocation(LPTSTR pstrSource, SIZE_T cchMax) const;
+        void GetLastErrorMessage(LPTSTR lpMessage, SIZE_T szMax) const;
+        void GetLastErrorLocation(LPTSTR lpSource, SIZE_T szMax) const;
     private:
         CDuiControl* Create(CDuiControl* pParent);
         CDuiControl* Parse(CDuiMarkupNode* pRoot, CDuiControl* pParent);
     private:
         CDuiPaintManager* m_pManager;
         IDialogBuilderCallback* m_pCallback;
+        LPCTSTR m_lpType;
 
-        LPCTSTR m_pstrtype;
         CDuiMarkup m_xml;
     };
 

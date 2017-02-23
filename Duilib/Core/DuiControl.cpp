@@ -1842,7 +1842,7 @@ namespace DuiLib
 
 
 
-    void CDuiControl::Event(TEventUI& event)
+    void CDuiControl::Event(CDuiEvent& event)
     {
         if(OnEvent(&event))
         {
@@ -1850,9 +1850,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiControl::DoEvent(TEventUI& event)
+    void CDuiControl::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_SETCURSOR)
+        if(event.Type == DUIEVENT_SETCURSOR)
         {
             if(GetCursor())
             {
@@ -1864,24 +1864,24 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_SETFOCUS)
+        if(event.Type == DUIEVENT_SETFOCUS)
         {
             m_bFocused = TRUE;
             Invalidate();
             return;
         }
-        if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == DUIEVENT_KILLFOCUS)
         {
             m_bFocused = FALSE;
             Invalidate();
             return;
         }
-        if(event.Type == UIEVENT_TIMER)
+        if(event.Type == DUIEVENT_TIMER)
         {
             m_pManager->SendNotify(this, DUI_MSGTYPE_TIMER, event.wParam, event.lParam);
             return;
         }
-        if(event.Type == UIEVENT_CONTEXTMENU)
+        if(event.Type == DUIEVENT_CONTEXTMENU)
         {
             if(IsContextMenuUsed())
             {

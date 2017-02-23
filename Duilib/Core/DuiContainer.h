@@ -91,7 +91,7 @@ namespace DuiLib
         void Move(SIZE szOffset, BOOL bNeedInvalidate = TRUE) OVERRIDE;
         void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
         void SetVisible(BOOL bVisible = TRUE) OVERRIDE;
         void SetInternVisible(BOOL bVisible = TRUE) OVERRIDE;
         void SetEnabled(BOOL bEnabled) OVERRIDE;

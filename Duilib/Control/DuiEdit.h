@@ -90,7 +90,7 @@ namespace DuiLib
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
         void PaintStatusImage(HDC hDC) OVERRIDE;
         void PaintText(HDC hDC) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         TCHAR m_cPasswordChar;
         DWORD m_dwEditbkColor;
@@ -98,7 +98,7 @@ namespace DuiLib
         DWORD m_dwTipValueColor;
         BOOL m_bReadOnly;
         BOOL m_bPasswordMode;
-        INT m_iWindowStyls;
+        int m_iWindowStyls;
         UINT m_uMaxChar;
         UINT m_uButtonState;
         CDuiEditWnd* m_pEditWnd;

@@ -15,7 +15,7 @@ namespace DuiLib
         void SetVisible(BOOL bVisible = TRUE) OVERRIDE;
         void SetInternVisible(BOOL bVisible = TRUE) OVERRIDE;
         void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
     private:
         BOOL m_bUpdate;

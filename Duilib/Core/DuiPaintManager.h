@@ -2,8 +2,9 @@
 
 namespace DuiLib
 {
-    class CDuiRichEdit;
 #define CARET_TIMERID	0x1999
+
+    typedef CDuiControl* (*LPCREATECONTROL)(LPCTSTR pstrType);
 
     enum DUILIB_RESTYPE
     {
@@ -13,105 +14,156 @@ namespace DuiLib
         DUILIB_ZIPRESOURCE	,		// 来自资源的zip压缩包
     };
 
-    typedef enum EVENTTYPE_UI
+    enum DUILIB_EVENTTYPE
     {
-        UIEVENT__FIRST = 1,
-        UIEVENT__KEYBEGIN,
-        UIEVENT_KEYDOWN,
-        UIEVENT_KEYUP,
-        UIEVENT_CHAR,
-        UIEVENT_SYSKEYDOWN,
-        UIEVENT_SYSKEYUP,
-        UIEVENT__KEYEND,
-        UIEVENT__MOUSEBEGIN,
-        UIEVENT_MOUSEMOVE,
-        UIEVENT_MOUSELEAVE,
-        UIEVENT_MOUSEENTER,
-        UIEVENT_MOUSEHOVER,
-        UIEVENT_BUTTONDOWN,
-        UIEVENT_BUTTONUP,
-        UIEVENT_RBUTTONDOWN,
-        UIEVENT_RBUTTONUP,
-        UIEVENT_MBUTTONDOWN,
-        UIEVENT_MBUTTONUP,
-        UIEVENT_DBLCLICK,
-        UIEVENT_CONTEXTMENU,
-        UIEVENT_SCROLLWHEEL,
-        UIEVENT__MOUSEEND,
-        UIEVENT_KILLFOCUS,
-        UIEVENT_SETFOCUS,
-        UIEVENT_WINDOWSIZE,
-        UIEVENT_SETCURSOR,
-        UIEVENT_TIMER,
-        UIEVENT__LAST,
+        DUIEVENT__FIRST = 1,
+        DUIEVENT__KEYBEGIN,
+        DUIEVENT_KEYDOWN,
+        DUIEVENT_KEYUP,
+        DUIEVENT_CHAR,
+        DUIEVENT_SYSKEYDOWN,
+        DUIEVENT_SYSKEYUP,
+        DUIEVENT__KEYEND,
+        DUIEVENT__MOUSEBEGIN,
+        DUIEVENT_MOUSEMOVE,
+        DUIEVENT_MOUSELEAVE,
+        DUIEVENT_MOUSEENTER,
+        DUIEVENT_MOUSEHOVER,
+        DUIEVENT_BUTTONDOWN,
+        DUIEVENT_BUTTONUP,
+        DUIEVENT_RBUTTONDOWN,
+        DUIEVENT_RBUTTONUP,
+        DUIEVENT_MBUTTONDOWN,
+        DUIEVENT_MBUTTONUP,
+        DUIEVENT_DBLCLICK,
+        DUIEVENT_CONTEXTMENU,
+        DUIEVENT_SCROLLWHEEL,
+        DUIEVENT__MOUSEEND,
+        DUIEVENT_KILLFOCUS,
+        DUIEVENT_SETFOCUS,
+        DUIEVENT_WINDOWSIZE,
+        DUIEVENT_SETCURSOR,
+        DUIEVENT_TIMER,
+        DUIEVENT__LAST,
     };
 
-    typedef struct tagSHORTCUT
+    class CShortCut
     {
-        TCHAR ch;
-        BOOL bPickNext;
-    } SHORTCUT;
-    // Structure for notifications from the system
-    // to the control implementation.
-    typedef struct tagTEventUI
+    public:
+        CShortCut();
+    public:
+        TCHAR m_ch;
+        BOOL m_bPickNext;
+    };
+
+    class CDuiEvent
     {
-        int Type;
-        CDuiControl* pSender;
-        DWORD dwTimestamp;
-        POINT ptMouse;
+    public:
+        CDuiEvent();
+    public:
         TCHAR chKey;
         WORD wKeyState;
+        DWORD dwTimestamp;
+        int Type;
         WPARAM wParam;
         LPARAM lParam;
-    } TEventUI;
+        CDuiControl* pSender;
+        CDuiPoint ptMouse;
+    };
 
-    // Structure for notifications to the outside world
-    typedef struct tagTNotifyUI
+
+    class CDuiNotify
     {
+    public:
+        CDuiNotify();
+    public:
+        DWORD dwTimestamp;
+        WPARAM wParam;
+        LPARAM lParam;
+        CDuiControl* pSender;
+        CDuiPoint ptMouse;
         CDuiString sType;
         CDuiString sVirtualWnd;
-        CDuiControl* pSender;
-        DWORD dwTimestamp;
-        POINT ptMouse;
-        WPARAM wParam;
-        LPARAM lParam;
-    } TNotifyUI;
+    };
 
-    typedef struct tagTFontInfo
+    class CDuiFontInfo
     {
-        HFONT hFont;
-        CDuiString sFontName;
-        int iSize;
+    public:
+        CDuiFontInfo();
+    public:
         BOOL bBold;
         BOOL bUnderline;
         BOOL bItalic;
+        int iSize;
+        HFONT hFont;
         TEXTMETRIC tm;
-    } TFontInfo;
+        CDuiString sFontName;
+    };
 
-    typedef struct tagTResInfo
+    class CDuiResInfo
     {
+    public:
+        CDuiResInfo();
+    public:
         DWORD m_dwDefaultDisabledColor;
         DWORD m_dwDefaultFontColor;
         DWORD m_dwDefaultLinkFontColor;
         DWORD m_dwDefaultLinkHoverFontColor;
         DWORD m_dwDefaultSelectedBkColor;
-        TFontInfo m_DefaultFontInfo;
         CStdStringPtrMap m_CustomFonts;
         CStdStringPtrMap m_ImageHash;
         CStdStringPtrMap m_AttrHash;
         CStdStringPtrMap m_StyleHash;
         CStdStringPtrMap m_DrawInfoHash;
-    } TResInfo;
+        CDuiFontInfo m_DefaultFontInfo;
+    };
 
-    class CDuiPaintManager;
-
-    class TDrawInfo
+    class CDuiImageInfo
     {
     public:
-        TDrawInfo();
-        ~TDrawInfo();
+        CDuiImageInfo();
     public:
-        void Parse(LPCTSTR pStrImage, LPCTSTR pStrModify, CDuiPaintManager* paintManager);
+        BOOL bAlpha;
+        BOOL bUseHSL;
+        DWORD dwMask;
+        int nX;
+        int nY;
+        HBITMAP hBitmap;
+        LPBYTE pBits;
+        LPBYTE pSrcBits;
+        CDuiString sResType;
+    };
+
+    class CDuiTabInfo
+    {
+    public:
+        CDuiTabInfo();
+    public:
+        BOOL bForward;
+        BOOL bNextIsIt;
+        CDuiControl* pFocus;
+        CDuiControl* pLast;
+    };
+
+    class CDuiTimerInfo
+    {
+    public:
+        CDuiTimerInfo();
+    public:
+        BOOL bKilled;
+        UINT nLocalID;
+        UINT uWinTimer;
+        HWND hWnd;
+        CDuiControl* pSender;
+    };
+
+    class CDuiPaintManager;
+    class CDrawInfo
+    {
+    public:
+        CDrawInfo();
+    public:
+        void Parse(LPCTSTR lpImage, LPCTSTR lpModify, CDuiPaintManager* pPaintManager);
     public:
         BYTE uFade;
         BOOL bHole;
@@ -129,64 +181,30 @@ namespace DuiLib
         CDuiString sResType;
     };
 
-    typedef struct tagTImageInfo
-    {
-        HBITMAP hBitmap;
-        LPBYTE pBits;
-        LPBYTE pSrcBits;
-        int nX;
-        int nY;
-        BOOL bAlpha;
-        BOOL bUseHSL;
-        CDuiString sResType;
-        DWORD dwMask;
-    } TImageInfo;
-
-    typedef struct tagTABINFO
-    {
-        CDuiControl* pFocus;
-        CDuiControl* pLast;
-        BOOL bForward;
-        BOOL bNextIsIt;
-    } TABINFO;
-
-    typedef struct tagTIMERINFO
-    {
-        CDuiControl* pSender;
-        UINT nLocalID;
-        HWND hWnd;
-        UINT uWinTimer;
-        BOOL bKilled;
-    } TIMERINFO;
-
     class ITranslateAccelerator
     {
     public:
         virtual LRESULT TranslateAccelerator(MSG* pMsg) = 0;
     };
 
-    // Listener interface
-    class INotifyUI
+    class INotify
     {
     public:
-        virtual void Notify(TNotifyUI& msg) = 0;
+        virtual void Notify(CDuiNotify& msg) = 0;
     };
 
-    // MessageFilter interface
-    class IMessageFilterUI
+    class IMessageFilter
     {
     public:
         virtual LRESULT MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) = 0;
     };
 
-    typedef CDuiControl* (*LPCREATECONTROL)(LPCTSTR pstrType);
-
+    class CDuiRichEdit;
     class DUILIB_API CDuiPaintManager : public CIDropTarget
     {
     public:
         CDuiPaintManager(void);
         virtual ~CDuiPaintManager(void);
-
     public:
         void Init(HWND hWnd);
         void NeedUpdate();
@@ -262,15 +280,15 @@ namespace DuiLib
         void DrawCaret(HDC hDC, const RECT& rcPaint);
 
         //字体相关
-        TFontInfo* GetDefaultFontInfo();
+        CDuiFontInfo* GetDefaultFontInfo();
         void SetDefaultFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared = FALSE);
         HFONT AddFont(int id, LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic, BOOL bShared = FALSE);
         void AddFontArray(LPCTSTR pstrPath);
         HFONT GetFont(int id);
         HFONT GetFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic);
         void RemoveAllFonts();
-        TFontInfo* GetFontInfo(int id);
-        TFontInfo* GetFontInfo(HFONT hFont);
+        CDuiFontInfo* GetFontInfo(int id);
+        CDuiFontInfo* GetFontInfo(HFONT hFont);
 
         //鼠标捕获
         BOOL IsCaptured();
@@ -287,16 +305,16 @@ namespace DuiLib
         BOOL SetNextTabControl(BOOL bForward = TRUE);
 
         CDPI* GetDPIObj();
-        void RebuildFont(TFontInfo* pFontInfo);
+        void RebuildFont(CDuiFontInfo* pFontInfo);
         void ResetDPIAssets();
         void SetDPI(int iDPI);
 
         CDuiShadow* GetShadow();
 
-        BOOL AddNotifier(INotifyUI* pNotifier);
-        void SendNotify(TNotifyUI& Msg, BOOL bAsync = FALSE);
+        BOOL AddNotifier(INotify* pNotifier);
+        void SendNotify(CDuiNotify& Msg, BOOL bAsync = FALSE);
         void SendNotify(CDuiControl* pControl, LPCTSTR pstrMessage, WPARAM wParam = 0, LPARAM lParam = 0, BOOL bAsync = FALSE);
-        BOOL RemoveNotifier(INotifyUI* pNotifier);
+        BOOL RemoveNotifier(INotify* pNotifier);
 
         void AddDelayedCleanup(CDuiControl* pControl);
 
@@ -324,22 +342,22 @@ namespace DuiLib
         CDuiControl* FindControl(LPCTSTR pstrName) const;
         CDuiControl* FindSubControlByName(CDuiControl* pParent, LPCTSTR pstrName) const;
 
-        const TImageInfo* GetImage(LPCTSTR bitmap);
-        const TImageInfo* GetImageEx(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, HINSTANCE instance = NULL);
-        const TImageInfo* AddImage(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, BOOL bShared = FALSE, HINSTANCE instance = NULL);
-        const TImageInfo* AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int iWidth, int iHeight, BOOL bAlpha, BOOL bShared = FALSE);
+        const CDuiImageInfo* GetImage(LPCTSTR bitmap);
+        const CDuiImageInfo* GetImageEx(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, HINSTANCE instance = NULL);
+        const CDuiImageInfo* AddImage(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0, BOOL bUseHSL = FALSE, BOOL bShared = FALSE, HINSTANCE instance = NULL);
+        const CDuiImageInfo* AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int iWidth, int iHeight, BOOL bAlpha, BOOL bShared = FALSE);
         void RemoveImage(LPCTSTR bitmap, BOOL bShared = FALSE);
         void RemoveAllImages();
 
-        const TDrawInfo* GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify);
+        const CDrawInfo* GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify);
         void RemoveAllDrawInfos();
 
-        BOOL AddPreMessageFilter(IMessageFilterUI* pFilter);
-        BOOL RemovePreMessageFilter(IMessageFilterUI* pFilter);
+        BOOL AddPreMessageFilter(IMessageFilter* pFilter);
+        BOOL RemovePreMessageFilter(IMessageFilter* pFilter);
         BOOL PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes);
 
-        BOOL AddMessageFilter(IMessageFilterUI* pFilter);
-        BOOL RemoveMessageFilter(IMessageFilterUI* pFilter);
+        BOOL AddMessageFilter(IMessageFilter* pFilter);
+        BOOL RemoveMessageFilter(IMessageFilter* pFilter);
 
         BOOL AddTranslateAccelerator(ITranslateAccelerator* pTranslateAccelerator);
         BOOL RemoveTranslateAccelerator(ITranslateAccelerator* pTranslateAccelerator);
@@ -467,7 +485,7 @@ namespace DuiLib
 
         TOOLINFO m_ToolTip;
 
-        TResInfo m_ResInfo;
+        CDuiResInfo m_ResInfo;
 
         CDuiPoint m_ptLastMousePos;					//鼠标坐标
 
@@ -510,7 +528,7 @@ namespace DuiLib
         static CDuiString m_pStrResourceZipPwd;	//zip密码
         static CStdPtrArray m_aPreMessages;		//CDuiPaintManager句柄
         static CStdPtrArray m_aPlugins;			//插件
-        static TResInfo m_SharedResInfo;		//共享的所有属性
+        static CDuiResInfo m_SharedResInfo;		//共享的所有属性
 
         static short m_Hue;
         static short m_Saturation;

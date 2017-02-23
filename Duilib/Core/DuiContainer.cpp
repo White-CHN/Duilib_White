@@ -780,9 +780,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiContainer::DoEvent(TEventUI& event)
+    void CDuiContainer::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -794,17 +794,17 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_SETFOCUS)
+        if(event.Type == DUIEVENT_SETFOCUS)
         {
             SetFocused(TRUE);
             return;
         }
-        if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == DUIEVENT_KILLFOCUS)
         {
             SetFocused(FALSE);
             return;
         }
-        if(event.Type == UIEVENT_KEYDOWN)
+        if(event.Type == DUIEVENT_KEYDOWN)
         {
             if(m_pVerticalScrollBar != NULL && m_pVerticalScrollBar->IsVisible() && m_pVerticalScrollBar->IsEnabled())
             {
@@ -855,7 +855,7 @@ namespace DuiLib
                 }
             }
         }
-        if(event.Type == UIEVENT_SCROLLWHEEL)
+        if(event.Type == DUIEVENT_SCROLLWHEEL)
         {
             if(m_pVerticalScrollBar != NULL && m_pVerticalScrollBar->IsVisible() && m_pVerticalScrollBar->IsEnabled())
             {

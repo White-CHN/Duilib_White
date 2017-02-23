@@ -31,7 +31,7 @@ namespace DuiLib
         void DoInit() OVERRIDE;
 
         void PaintText(HDC hDC) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
         void SetText(LPCTSTR pstrText) OVERRIDE;
     private:

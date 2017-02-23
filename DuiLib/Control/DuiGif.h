@@ -32,7 +32,7 @@ namespace DuiLib
 
         void DoInit() OVERRIDE;
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         void DrawFrame(HDC hDC);		// ªÊ÷∆GIF√ø÷°
         void InitGifImage();

@@ -327,9 +327,9 @@ namespace DuiLib
         PaintPallet(hDC);
     }
 
-    void CDuiColorPalette::DoEvent(TEventUI& event)
+    void CDuiColorPalette::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_BUTTONDOWN)
+        if(event.Type == DUIEVENT_BUTTONDOWN)
         {
             CDuiRect rc = GetPos();
             if(event.ptMouse.x >= rc.left && event.ptMouse.y >= rc.top &&
@@ -380,7 +380,7 @@ namespace DuiLib
             NeedParentUpdate();
             return;
         }
-        if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP)
         {
             if((m_uButtonState & UISTATE_PUSHED) && (IsEnabled()))
             {
@@ -394,7 +394,7 @@ namespace DuiLib
             NeedParentUpdate();
             return;
         }
-        if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             CDuiRect rc = GetPos();
             if(!(m_uButtonState & UISTATE_PUSHED))

@@ -22,14 +22,14 @@ public:
 
     LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType) OVERRIDE;
 
-    void OnClick(TNotifyUI& msg);
-    void OnWindowInit(TNotifyUI& msg);
-    void OnValueChanged(TNotifyUI& msg);
-    void OnValueChangedMove(TNotifyUI& msg);
-    void OnItemSelect(TNotifyUI& msg);
-    void OnSelectChanged(TNotifyUI& msg);
-    void OnColorChanged(TNotifyUI& msg);
-    void OnShowActiveX(TNotifyUI& msg);
+    void OnClick(CDuiNotify& msg);
+    void OnWindowInit(CDuiNotify& msg);
+    void OnValueChanged(CDuiNotify& msg);
+    void OnValueChangedMove(CDuiNotify& msg);
+    void OnItemSelect(CDuiNotify& msg);
+    void OnSelectChanged(CDuiNotify& msg);
+    void OnColorChanged(CDuiNotify& msg);
+    void OnShowActiveX(CDuiNotify& msg);
     LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
 
     // WebBrowser

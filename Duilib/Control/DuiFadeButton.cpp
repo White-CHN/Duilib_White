@@ -54,9 +54,9 @@ namespace DuiLib
         OnAnimationElapse(nTimerID);
     }
 
-    void CDuiFadeButton::DoEvent(TEventUI& event)
+    void CDuiFadeButton::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_MOUSEENTER && !IsAnimationRunning(TIMER_ID_FADEBUTTON_IN))
+        if(event.Type == DUIEVENT_MOUSEENTER && !IsAnimationRunning(TIMER_ID_FADEBUTTON_IN))
         {
             m_bFadeAlpha = 0;
             m_bMouseHove = TRUE;
@@ -65,7 +65,7 @@ namespace DuiLib
             Invalidate();
             return;
         }
-        if(event.Type == UIEVENT_MOUSELEAVE && !IsAnimationRunning(TIMER_ID_FADEBUTTON_OUT))
+        if(event.Type == DUIEVENT_MOUSELEAVE && !IsAnimationRunning(TIMER_ID_FADEBUTTON_OUT))
         {
             m_bFadeAlpha = 0;
             m_bMouseLeave = TRUE;
@@ -74,7 +74,7 @@ namespace DuiLib
             Invalidate();
             return;
         }
-        if(event.Type == UIEVENT_TIMER)
+        if(event.Type == DUIEVENT_TIMER)
         {
             OnTimer((int)event.wParam);
         }

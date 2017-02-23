@@ -32,7 +32,7 @@ namespace DuiLib
         RECT GetThumbRect() const;
         void PaintForeImage(HDC hDC) OVERRIDE;
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         BOOL m_bSendMove;
         int m_nStep;

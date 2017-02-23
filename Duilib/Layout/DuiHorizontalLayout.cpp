@@ -367,11 +367,11 @@ namespace DuiLib
         }
     }
 
-    void CDuiHorizontalLayout::DoEvent(TEventUI& event)
+    void CDuiHorizontalLayout::DoEvent(CDuiEvent& event)
     {
         if(m_iSepWidth != 0)
         {
-            if(event.Type == UIEVENT_BUTTONDOWN && IsEnabled())
+            if(event.Type == DUIEVENT_BUTTONDOWN && IsEnabled())
             {
                 RECT rcSeparator = GetThumbRect(FALSE);
                 if(::PtInRect(&rcSeparator, event.ptMouse))
@@ -386,7 +386,7 @@ namespace DuiLib
                     return;
                 }
             }
-            if(event.Type == UIEVENT_BUTTONUP)
+            if(event.Type == DUIEVENT_BUTTONUP)
             {
                 if((m_uButtonState & UISTATE_CAPTURED) != 0)
                 {
@@ -400,7 +400,7 @@ namespace DuiLib
                     return;
                 }
             }
-            if(event.Type == UIEVENT_MOUSEMOVE)
+            if(event.Type == DUIEVENT_MOUSEMOVE)
             {
                 if((m_uButtonState & UISTATE_CAPTURED) != 0)
                 {
@@ -485,7 +485,7 @@ namespace DuiLib
                     return;
                 }
             }
-            if(event.Type == UIEVENT_SETCURSOR)
+            if(event.Type == DUIEVENT_SETCURSOR)
             {
                 RECT rcSeparator = GetThumbRect(FALSE);
                 if(IsEnabled() && ::PtInRect(&rcSeparator, event.ptMouse))

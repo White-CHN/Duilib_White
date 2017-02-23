@@ -694,7 +694,7 @@ namespace DuiLib
         return ::InvalidateRgn(m_pOwner->GetHostWindow(), hRGN, fErase) ? S_OK : E_FAIL;
     }
 
-    STDMETHODIMP CActiveXCtrl::ScrollRect(INT dx, INT dy, LPCRECT pRectScroll, LPCRECT pRectClip)
+    STDMETHODIMP CActiveXCtrl::ScrollRect(int dx, int dy, LPCRECT pRectScroll, LPCRECT pRectClip)
     {
         DUI_TRACE("AX: CActiveXCtrl::ScrollRect");
         return S_OK;

@@ -167,7 +167,7 @@ namespace DuiLib
         SIZE EstimateSize(SIZE szAvailable) OVERRIDE;
 
         void CreateMenuWnd();
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         BOOL m_bCheckItem;
         BOOL m_bDrawLine;	//画分隔线
@@ -186,7 +186,7 @@ namespace DuiLib
     class DUILIB_API CDuiMenuWnd
         : public CDuiWnd
         , public MenuReceiverImpl
-        , public INotifyUI
+        , public INotify
         , public IDialogBuilderCallback
     {
     public:
@@ -195,7 +195,7 @@ namespace DuiLib
     public:
         LPCTSTR GetWindowClassName() const OVERRIDE;
         void OnFinalMessage(HWND hWnd) OVERRIDE;
-        void Notify(TNotifyUI& msg) OVERRIDE;
+        void Notify(CDuiNotify& msg) OVERRIDE;
         CDuiControl* CreateControl(LPCTSTR pstrClassName) OVERRIDE;
         void Close(UINT nRet = IDOK) OVERRIDE;
         BOOL Receive(ContextMenuParam param) OVERRIDE;
@@ -207,7 +207,7 @@ namespace DuiLib
          *	@pMenuCheckInfo	保存菜单的单选和复选信息结构指针
          *	@dwAlignment		菜单的出现位置，默认出现在鼠标的右下侧。
          */
-        void Init(CDuiMenuElement* pOwner, STRINGorID xml, POINT point,
+        void Init(CDuiMenuElement* pOwner, CIdToResource xml, POINT point,
                   CDuiPaintManager* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo = NULL,
                   DWORD dwAlignment = eMenuAlignment_Left | eMenuAlignment_Top);
 
@@ -231,7 +231,7 @@ namespace DuiLib
         DWORD m_dwAlignment;	//菜单对齐方式
         CDuiMenu* m_pLayout;
         CDuiMenuElement* m_pOwner;
-        STRINGorID m_xml;
+        CIdToResource m_xml;
         CDuiPoint m_BasedPoint;
         CDuiPaintManager m_PaintManager;
     };

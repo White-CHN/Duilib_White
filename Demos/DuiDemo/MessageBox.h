@@ -12,7 +12,7 @@ public:
 
     CDuiString GetSkinFile() OVERRIDE;
     LPCTSTR GetWindowClassName() const OVERRIDE;
-    void OnClick(TNotifyUI& msg);
+    void OnClick(CDuiNotify& msg);
 
     static int MessageBox(HWND hParent, LPCTSTR lpstrTitle, LPCTSTR lpstrMsg);
     static void ShowMessageBox(HWND hParent, LPCTSTR lpstrTitle, LPCTSTR lpstrMsg);

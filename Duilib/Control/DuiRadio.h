@@ -11,6 +11,6 @@ namespace DuiLib
     public:
         CDuiString GetClass() const  OVERRIDE;
         LPVOID GetInterface(LPCTSTR pstrName) OVERRIDE;
-        void DoEvent(TEventUI& event)  OVERRIDE;
+        void DoEvent(CDuiEvent& event)  OVERRIDE;
     };
 }

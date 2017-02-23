@@ -184,7 +184,7 @@ LPCTSTR CDemoFrame::QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType)
     return CDuiDlgImplBase::QueryControlText(lpstrId, lpstrType);
 }
 
-void CDemoFrame::OnClick(TNotifyUI& msg)
+void CDemoFrame::OnClick(CDuiNotify& msg)
 {
     if(msg.pSender->GetName() == _T("home"))
     {
@@ -317,20 +317,12 @@ void CDemoFrame::OnClick(TNotifyUI& msg)
     }
 }
 
-void CDemoFrame::OnWindowInit(TNotifyUI& msg)
+void CDemoFrame::OnWindowInit(CDuiNotify& msg)
 {
 
 }
 
-void CDemoFrame::OnValueChanged(TNotifyUI& msg)
-{
-    if(msg.pSender == m_pSlider && m_pProgress != NULL)
-    {
-        m_pProgress->SetValue(m_pSlider->GetValue());
-    }
-}
-
-void CDemoFrame::OnValueChangedMove(TNotifyUI& msg)
+void CDemoFrame::OnValueChanged(CDuiNotify& msg)
 {
     if(msg.pSender == m_pSlider && m_pProgress != NULL)
     {
@@ -338,7 +330,15 @@ void CDemoFrame::OnValueChangedMove(TNotifyUI& msg)
     }
 }
 
-void CDemoFrame::OnItemSelect(TNotifyUI& msg)
+void CDemoFrame::OnValueChangedMove(CDuiNotify& msg)
+{
+    if(msg.pSender == m_pSlider && m_pProgress != NULL)
+    {
+        m_pProgress->SetValue(m_pSlider->GetValue());
+    }
+}
+
+void CDemoFrame::OnItemSelect(CDuiNotify& msg)
 {
     if(msg.pSender == m_pComboControlNames)
     {
@@ -476,7 +476,7 @@ void CDemoFrame::OnItemSelect(TNotifyUI& msg)
     }
 }
 
-void CDemoFrame::OnSelectChanged(TNotifyUI& msg)
+void CDemoFrame::OnSelectChanged(CDuiNotify& msg)
 {
     if(msg.pSender->GetName() == _T("basic_tab"))
     {
@@ -512,7 +512,7 @@ void CDemoFrame::OnSelectChanged(TNotifyUI& msg)
     }
 }
 
-void CDemoFrame::OnColorChanged(TNotifyUI& msg)
+void CDemoFrame::OnColorChanged(CDuiNotify& msg)
 {
     if(msg.pSender->GetName() == _T("Pallet"))
     {
@@ -522,7 +522,7 @@ void CDemoFrame::OnColorChanged(TNotifyUI& msg)
     }
 }
 
-void CDemoFrame::OnShowActiveX(TNotifyUI& msg)
+void CDemoFrame::OnShowActiveX(CDuiNotify& msg)
 {
     if(msg.pSender->GetName() == _T("ani_flash"))
     {

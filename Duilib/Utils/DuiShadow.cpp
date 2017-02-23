@@ -294,7 +294,7 @@ namespace DuiLib
         if(m_bIsImageMode)
         {
             RECT rcPaint = {0, 0, nShadWndWid, nShadWndHei};
-            const TImageInfo* data = m_pManager->GetImageEx((LPCTSTR)m_sShadowImage, NULL, 0);
+            const CDuiImageInfo* data = m_pManager->GetImageEx((LPCTSTR)m_sShadowImage, NULL, 0);
             if(!data)
             {
                 return;

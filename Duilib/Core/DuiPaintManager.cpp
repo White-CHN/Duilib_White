@@ -3,9 +3,96 @@
 
 namespace DuiLib
 {
+    CShortCut::CShortCut()
+        : m_ch(0)
+        , m_bPickNext(FALSE)
+    {
+
+    }
+    /////////////////////////////////////////////////////////
+    CDuiEvent::CDuiEvent()
+        : chKey(0)
+        , wKeyState(0)
+        , dwTimestamp(::GetTickCount())
+        , Type(0)
+        , wParam(0)
+        , lParam(0)
+        , pSender(NULL)
+    {
+
+    }
 
 
-    TDrawInfo::TDrawInfo()
+    ///////////////////////////////////////////////////////
+    CDuiNotify::CDuiNotify()
+        : dwTimestamp(::GetTickCount())
+        , wParam(0)
+        , lParam(0)
+        , pSender(NULL)
+    {
+
+    }
+
+    ////////////////////////////////////////////////////////
+    CDuiFontInfo::CDuiFontInfo()
+        : bBold(FALSE)
+        , bUnderline(FALSE)
+        , bItalic(FALSE)
+        , iSize(0)
+        , hFont(NULL)
+    {
+        ZeroMemory(&tm, sizeof(tm));
+    }
+    ///////////////////////////////////////////////////////////
+    CDuiResInfo::CDuiResInfo()
+        : m_dwDefaultDisabledColor(0)
+        , m_dwDefaultFontColor(0)
+        , m_dwDefaultLinkFontColor(0)
+        , m_dwDefaultLinkHoverFontColor(0)
+        , m_dwDefaultSelectedBkColor(0)
+    {
+
+    }
+    /////////////////////////////////////////////////////////////
+    CDuiImageInfo::CDuiImageInfo()
+        : bAlpha(FALSE)
+        , bUseHSL(FALSE)
+        , dwMask(0)
+        , nX(0)
+        , nY(0)
+        , hBitmap(NULL)
+        , pBits(NULL)
+        , pSrcBits(NULL)
+    {
+
+    }
+
+    ///////////////////////////////////////////////////////
+    CDuiTabInfo::CDuiTabInfo()
+        : bForward(FALSE)
+        , bNextIsIt(FALSE)
+        , pFocus(NULL)
+        , pLast(NULL)
+    {
+
+    }
+
+    ////////////////////////////////////////////////////////
+    CDuiTimerInfo::CDuiTimerInfo()
+        : bKilled(FALSE)
+        , nLocalID(0)
+        , uWinTimer(0)
+        , hWnd(NULL)
+        , pSender(NULL)
+    {
+
+    }
+
+
+
+
+    ///////////////////////////////////////////////////////
+    CDrawInfo::CDrawInfo()
         : uFade(255)
         , bHole(FALSE)
         , bTiledX(FALSE)
@@ -16,19 +103,14 @@ namespace DuiLib
 
     }
 
-    TDrawInfo::~TDrawInfo()
-    {
-
-    }
-
-    void TDrawInfo::Parse(LPCTSTR pStrImage, LPCTSTR pStrModify, CDuiPaintManager* paintManager)
+    void CDrawInfo::Parse(LPCTSTR lpImage, LPCTSTR lpModify, CDuiPaintManager* pPaintManager)
     {
         // 1、aaa.jpg
         // 2、file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0'
         // mask='#FF0000' fade='255' hole='FALSE' xtiled='FALSE' ytiled='FALSE'
-        sDrawString = pStrImage;
-        sDrawModify = pStrModify;
-        sImageName = pStrImage;
+        sDrawString = lpImage;
+        sDrawModify = lpModify;
+        sImageName = lpImage;
         CDuiString sItem;
         CDuiString sValue;
         LPTSTR pstr = NULL;
@@ -36,53 +118,53 @@ namespace DuiLib
         {
             if(i == 1)
             {
-                pStrImage = pStrModify;
+                lpImage = lpModify;
             }
-            if(!pStrImage)
+            if(!lpImage)
             {
                 continue;
             }
-            while(*pStrImage != _T('\0'))
+            while(*lpImage != _T('\0'))
             {
                 sItem.Empty();
                 sValue.Empty();
-                while(*pStrImage > _T('\0') && *pStrImage <= _T(' '))
+                while(*lpImage > _T('\0') && *lpImage <= _T(' '))
                 {
-                    pStrImage = ::CharNext(pStrImage);
+                    lpImage = ::CharNext(lpImage);
                 }
-                while(*pStrImage != _T('\0') && *pStrImage != _T('=') && *pStrImage > _T(' '))
+                while(*lpImage != _T('\0') && *lpImage != _T('=') && *lpImage > _T(' '))
                 {
-                    LPTSTR pstrTemp = ::CharNext(pStrImage);
-                    while(pStrImage < pstrTemp)
+                    LPTSTR pstrTemp = ::CharNext(lpImage);
+                    while(lpImage < pstrTemp)
                     {
-                        sItem += *pStrImage++;
+                        sItem += *lpImage++;
                     }
                 }
-                while(*pStrImage > _T('\0') && *pStrImage <= _T(' '))
+                while(*lpImage > _T('\0') && *lpImage <= _T(' '))
                 {
-                    pStrImage = ::CharNext(pStrImage);
+                    lpImage = ::CharNext(lpImage);
                 }
-                if(*pStrImage++ != _T('='))
+                if(*lpImage++ != _T('='))
                 {
                     break;
                 }
-                while(*pStrImage > _T('\0') && *pStrImage <= _T(' '))
+                while(*lpImage > _T('\0') && *lpImage <= _T(' '))
                 {
-                    pStrImage = ::CharNext(pStrImage);
+                    lpImage = ::CharNext(lpImage);
                 }
-                if(*pStrImage++ != _T('\''))
+                if(*lpImage++ != _T('\''))
                 {
                     break;
                 }
-                while(*pStrImage != _T('\0') && *pStrImage != _T('\''))
+                while(*lpImage != _T('\0') && *lpImage != _T('\''))
                 {
-                    LPTSTR pstrTemp = ::CharNext(pStrImage);
-                    while(pStrImage < pstrTemp)
+                    LPTSTR pstrTemp = ::CharNext(lpImage);
+                    while(lpImage < pstrTemp)
                     {
-                        sValue += *pStrImage++;
+                        sValue += *lpImage++;
                     }
                 }
-                if(*pStrImage++ != _T('\''))
+                if(*lpImage++ != _T('\''))
                 {
                     break;
                 }
@@ -106,7 +188,7 @@ namespace DuiLib
                         ASSERT(pstr);
                         rcDest.bottom = _tcstol(pstr + 1, &pstr, 10);
                         ASSERT(pstr);
-                        paintManager->GetDPIObj()->Scale(&rcDest);
+                        pPaintManager->GetDPIObj()->Scale(&rcDest);
                     }
                     else if(sItem == _T("source"))
                     {
@@ -118,7 +200,7 @@ namespace DuiLib
                         ASSERT(pstr);
                         rcSource.bottom = _tcstol(pstr + 1, &pstr, 10);
                         ASSERT(pstr);
-                        paintManager->GetDPIObj()->Scale(&rcSource);
+                        pPaintManager->GetDPIObj()->Scale(&rcSource);
                     }
                     else if(sItem == _T("corner"))
                     {
@@ -130,7 +212,7 @@ namespace DuiLib
                         ASSERT(pstr);
                         rcCorner.bottom = _tcstol(pstr + 1, &pstr, 10);
                         ASSERT(pstr);
-                        paintManager->GetDPIObj()->Scale(&rcCorner);
+                        pPaintManager->GetDPIObj()->Scale(&rcCorner);
                     }
                     else if(sItem == _T("mask"))
                     {
@@ -164,7 +246,7 @@ namespace DuiLib
                         bHSL = (_tcsicmp(sValue.GetData(), _T("TRUE")) == 0);
                     }
                 }
-                if(*pStrImage++ != _T(' '))
+                if(*lpImage++ != _T(' '))
                 {
                     break;
                 }
@@ -176,10 +258,10 @@ namespace DuiLib
         {
             sImageName = strImage;
         }
-        if(paintManager->GetDPIObj()->GetScale() != 100)
+        if(pPaintManager->GetDPIObj()->GetScale() != 100)
         {
             CDuiString sScale;
-            sScale.Format(_T("@%d."), paintManager->GetDPIObj()->GetScale());
+            sScale.Format(_T("@%d."), pPaintManager->GetDPIObj()->GetScale());
             sImageName.Replace(_T("."), sScale);
         }
     }
@@ -205,7 +287,7 @@ namespace DuiLib
     short CDuiPaintManager::m_Lightness = 100;
     BOOL CDuiPaintManager::m_bUseHSL = FALSE;
 
-    TResInfo CDuiPaintManager::m_SharedResInfo = {0};
+    CDuiResInfo CDuiPaintManager::m_SharedResInfo;
 
     CDuiPaintManager::CDuiPaintManager(void)
         : m_hWndPaint(NULL)
@@ -269,7 +351,7 @@ namespace DuiLib
 
         for(int i = 0; i < m_aAsyncNotify.GetSize(); i++)
         {
-            TNotifyUI* pNotify = static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
+            CDuiNotify* pNotify = static_cast<CDuiNotify*>(m_aAsyncNotify[i]);
             DUI_FREE_POINT(pNotify);
             m_aAsyncNotify.Remove(i);
         }
@@ -710,10 +792,9 @@ namespace DuiLib
         }
         if(m_pFocus != NULL)
         {
-            TEventUI event = { 0 };
-            event.Type = UIEVENT_KILLFOCUS;
+            CDuiEvent event;
+            event.Type = DUIEVENT_KILLFOCUS;
             event.pSender = pControl;
-            event.dwTimestamp = ::GetTickCount();
             m_pFocus->Event(event);
             SendNotify(m_pFocus, DUI_MSGTYPE_KILLFOCUS);
             m_pFocus = NULL;
@@ -728,10 +809,9 @@ namespace DuiLib
                 && pControl->IsEnabled())
         {
             m_pFocus = pControl;
-            TEventUI event = { 0 };
-            event.Type = UIEVENT_SETFOCUS;
+            CDuiEvent event;
+            event.Type = DUIEVENT_SETFOCUS;
             event.pSender = pControl;
-            event.dwTimestamp = ::GetTickCount();
             m_pFocus->Event(event);
             SendNotify(m_pFocus, DUI_MSGTYPE_SETFOCUS);
         }
@@ -746,15 +826,14 @@ namespace DuiLib
         }
         if(m_pFocus != NULL)
         {
-            TEventUI event = { 0 };
-            event.Type = UIEVENT_KILLFOCUS;
+            CDuiEvent event;
+            event.Type = DUIEVENT_KILLFOCUS;
             event.pSender = pControl;
-            event.dwTimestamp = ::GetTickCount();
             m_pFocus->Event(event);
             SendNotify(m_pFocus, DUI_MSGTYPE_KILLFOCUS);
             m_pFocus = NULL;
         }
-        TABINFO info = { 0 };
+        CDuiTabInfo info;
         info.pFocus = pControl;
         info.bForward = FALSE;
         m_pFocus = m_pRoot->FindControl(__FindControlFromTab, &info, UIFIND_VISIBLE | UIFIND_ENABLED | UIFIND_ME_FIRST);
@@ -1061,7 +1140,7 @@ namespace DuiLib
         }
     }
 
-    TFontInfo* CDuiPaintManager::GetDefaultFontInfo()
+    CDuiFontInfo* CDuiPaintManager::GetDefaultFontInfo()
     {
         if(m_ResInfo.m_DefaultFontInfo.sFontName.IsEmpty())
         {
@@ -1179,12 +1258,12 @@ namespace DuiLib
         {
             return NULL;
         }
-        TFontInfo* pFontInfo = new TFontInfo;
+        CDuiFontInfo* pFontInfo = new CDuiFontInfo;
         if(!pFontInfo)
         {
             return FALSE;
         }
-        ::ZeroMemory(pFontInfo, sizeof(TFontInfo));
+        ::ZeroMemory(pFontInfo, sizeof(CDuiFontInfo));
         pFontInfo->hFont = hFont;
         pFontInfo->sFontName = lf.lfFaceName;
         pFontInfo->iSize = nSize;
@@ -1202,7 +1281,7 @@ namespace DuiLib
         _itot(id, idBuffer, 10);
         if(bShared || m_bForceUseSharedRes)
         {
-            TFontInfo* pOldFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(idBuffer));
+            CDuiFontInfo* pOldFontInfo = static_cast<CDuiFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(idBuffer));
             if(pOldFontInfo)
             {
                 ::DeleteObject(pOldFontInfo->hFont);
@@ -1218,7 +1297,7 @@ namespace DuiLib
         }
         else
         {
-            TFontInfo* pOldFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(idBuffer));
+            CDuiFontInfo* pOldFontInfo = static_cast<CDuiFontInfo*>(m_ResInfo.m_CustomFonts.Find(idBuffer));
             if(pOldFontInfo)
             {
                 ::DeleteObject(pOldFontInfo->hFont);
@@ -1361,10 +1440,10 @@ namespace DuiLib
         TCHAR idBuffer[16];
         ::ZeroMemory(idBuffer, sizeof(idBuffer));
         _itot(id, idBuffer, 10);
-        TFontInfo* pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(idBuffer));
+        CDuiFontInfo* pFontInfo = static_cast<CDuiFontInfo*>(m_ResInfo.m_CustomFonts.Find(idBuffer));
         if(!pFontInfo)
         {
-            pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(idBuffer));
+            pFontInfo = static_cast<CDuiFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(idBuffer));
         }
         if(!pFontInfo)
         {
@@ -1375,12 +1454,12 @@ namespace DuiLib
 
     HFONT CDuiPaintManager::GetFont(LPCTSTR pStrFontName, int nSize, BOOL bBold, BOOL bUnderline, BOOL bItalic)
     {
-        TFontInfo* pFontInfo = NULL;
+        CDuiFontInfo* pFontInfo = NULL;
         for(int i = 0; i < m_ResInfo.m_CustomFonts.GetSize(); i++)
         {
             if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i))
             {
-                pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
+                pFontInfo = static_cast<CDuiFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
                 if(pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize &&
                         pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic)
                 {
@@ -1392,7 +1471,7 @@ namespace DuiLib
         {
             if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i))
             {
-                pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
+                pFontInfo = static_cast<CDuiFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
                 if(pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize &&
                         pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic)
                 {
@@ -1405,12 +1484,12 @@ namespace DuiLib
 
     void CDuiPaintManager::RemoveAllFonts()
     {
-        TFontInfo* pFontInfo = NULL;
+        CDuiFontInfo* pFontInfo = NULL;
         for(int i = 0; i < m_ResInfo.m_CustomFonts.GetSize(); i++)
         {
             if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i))
             {
-                pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key, FALSE));
+                pFontInfo = static_cast<CDuiFontInfo*>(m_ResInfo.m_CustomFonts.Find(key, FALSE));
                 if(pFontInfo)
                 {
                     ::DeleteObject(pFontInfo->hFont);
@@ -1421,7 +1500,7 @@ namespace DuiLib
         m_ResInfo.m_CustomFonts.RemoveAll();
     }
 
-    TFontInfo* CDuiPaintManager::GetFontInfo(int id)
+    CDuiFontInfo* CDuiPaintManager::GetFontInfo(int id)
     {
         if(id < 0)
         {
@@ -1430,10 +1509,10 @@ namespace DuiLib
         TCHAR idBuffer[16];
         ::ZeroMemory(idBuffer, sizeof(idBuffer));
         _itot(id, idBuffer, 10);
-        TFontInfo* pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(idBuffer));
+        CDuiFontInfo* pFontInfo = static_cast<CDuiFontInfo*>(m_ResInfo.m_CustomFonts.Find(idBuffer));
         if(!pFontInfo)
         {
-            pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(idBuffer));
+            pFontInfo = static_cast<CDuiFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(idBuffer));
         }
         if(!pFontInfo)
         {
@@ -1448,14 +1527,14 @@ namespace DuiLib
         return pFontInfo;
     }
 
-    TFontInfo* CDuiPaintManager::GetFontInfo(HFONT hFont)
+    CDuiFontInfo* CDuiPaintManager::GetFontInfo(HFONT hFont)
     {
-        TFontInfo* pFontInfo = NULL;
+        CDuiFontInfo* pFontInfo = NULL;
         for(int i = 0; i < m_ResInfo.m_CustomFonts.GetSize(); i++)
         {
             if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i))
             {
-                pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
+                pFontInfo = static_cast<CDuiFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
                 if(pFontInfo && pFontInfo->hFont == hFont)
                 {
                     break;
@@ -1468,7 +1547,7 @@ namespace DuiLib
             {
                 if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i))
                 {
-                    pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
+                    pFontInfo = static_cast<CDuiFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
                     if(pFontInfo && pFontInfo->hFont == hFont)
                     {
                         break;
@@ -1542,7 +1621,7 @@ namespace DuiLib
             return TRUE;
         }
         // Find next/previous tabbable control
-        TABINFO info1 = { 0 };
+        CDuiTabInfo info1;
         info1.pFocus = m_pFocus;
         info1.bForward = bForward;
         CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromTab, &info1, UIFIND_VISIBLE | UIFIND_ENABLED | UIFIND_ME_FIRST);
@@ -1551,7 +1630,7 @@ namespace DuiLib
             if(bForward)
             {
                 // Wrap around
-                TABINFO info2 = { 0 };
+                CDuiTabInfo info2;
                 info2.pFocus = bForward ? NULL : info1.pLast;
                 info2.bForward = bForward;
                 pControl = m_pRoot->FindControl(__FindControlFromTab, &info2, UIFIND_VISIBLE | UIFIND_ENABLED | UIFIND_ME_FIRST);
@@ -1577,7 +1656,7 @@ namespace DuiLib
         return m_pDPI;
     }
 
-    void CDuiPaintManager::RebuildFont(TFontInfo* pFontInfo)
+    void CDuiPaintManager::RebuildFont(CDuiFontInfo* pFontInfo)
     {
         ::DeleteObject(pFontInfo->hFont);
         LOGFONT lf = { 0 };
@@ -1616,14 +1695,14 @@ namespace DuiLib
 
         for(int it = 0; it < m_ResInfo.m_CustomFonts.GetSize(); it++)
         {
-            TFontInfo* pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(m_ResInfo.m_CustomFonts[it]));
+            CDuiFontInfo* pFontInfo = static_cast<CDuiFontInfo*>(m_ResInfo.m_CustomFonts.Find(m_ResInfo.m_CustomFonts[it]));
             RebuildFont(pFontInfo);
         }
         RebuildFont(&m_ResInfo.m_DefaultFontInfo);
 
         for(int it = 0; it < m_SharedResInfo.m_CustomFonts.GetSize(); it++)
         {
-            TFontInfo* pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(m_SharedResInfo.m_CustomFonts[it]));
+            CDuiFontInfo* pFontInfo = static_cast<CDuiFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(m_SharedResInfo.m_CustomFonts[it]));
             RebuildFont(pFontInfo);
         }
         RebuildFont(&m_SharedResInfo.m_DefaultFontInfo);
@@ -1666,13 +1745,13 @@ namespace DuiLib
         return &m_shadow;
     }
 
-    BOOL CDuiPaintManager::AddNotifier(INotifyUI* pNotifier)
+    BOOL CDuiPaintManager::AddNotifier(INotify* pNotifier)
     {
         ASSERT(m_aNotifiers.Find(pNotifier) < 0);
         return m_aNotifiers.Add(pNotifier);
     }
 
-    void CDuiPaintManager::SendNotify(TNotifyUI& Msg, BOOL bAsync /*= FALSE*/)
+    void CDuiPaintManager::SendNotify(CDuiNotify& Msg, BOOL bAsync /*= FALSE*/)
     {
         Msg.ptMouse = m_ptLastMousePos;
         Msg.dwTimestamp = ::GetTickCount();
@@ -1692,12 +1771,12 @@ namespace DuiLib
             }
             for(int i = 0; i < m_aNotifiers.GetSize(); i++)
             {
-                static_cast<INotifyUI*>(m_aNotifiers[i])->Notify(Msg);
+                static_cast<INotify*>(m_aNotifiers[i])->Notify(Msg);
             }
         }
         else
         {
-            TNotifyUI* pMsg = new TNotifyUI;
+            CDuiNotify* pMsg = new CDuiNotify;
             pMsg->pSender = Msg.pSender;
             pMsg->sType = Msg.sType;
             pMsg->wParam = Msg.wParam;
@@ -1711,7 +1790,7 @@ namespace DuiLib
 
     void CDuiPaintManager::SendNotify(CDuiControl* pControl, LPCTSTR pstrMessage, WPARAM wParam /*= 0*/, LPARAM lParam /*= 0*/, BOOL bAsync /*= FALSE*/)
     {
-        TNotifyUI Msg;
+        CDuiNotify Msg;
         Msg.pSender = pControl;
         Msg.sType = pstrMessage;
         Msg.wParam = wParam;
@@ -1719,11 +1798,11 @@ namespace DuiLib
         SendNotify(Msg, bAsync);
     }
 
-    BOOL CDuiPaintManager::RemoveNotifier(INotifyUI* pNotifier)
+    BOOL CDuiPaintManager::RemoveNotifier(INotify* pNotifier)
     {
         for(int i = 0; i < m_aNotifiers.GetSize(); i++)
         {
-            if(static_cast<INotifyUI*>(m_aNotifiers[i]) == pNotifier)
+            if(static_cast<INotify*>(m_aNotifiers[i]) == pNotifier)
             {
                 return m_aNotifiers.Remove(i);
             }
@@ -1850,7 +1929,7 @@ namespace DuiLib
         }
         for(int i = 0; i < m_aAsyncNotify.GetSize(); i++)
         {
-            TNotifyUI* pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
+            CDuiNotify* pMsg = static_cast<CDuiNotify*>(m_aAsyncNotify[i]);
             if(pMsg && pMsg->pSender == pControl)
             {
                 pMsg->pSender = NULL;
@@ -2003,43 +2082,43 @@ namespace DuiLib
         return pParent->FindControl(__FindControlFromName, (LPVOID)pstrName, UIFIND_ALL);
     }
 
-    const TImageInfo* CDuiPaintManager::GetImage(LPCTSTR bitmap)
+    const CDuiImageInfo* CDuiPaintManager::GetImage(LPCTSTR bitmap)
     {
-        TImageInfo* data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
+        CDuiImageInfo* data = static_cast<CDuiImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
         if(!data)
         {
-            data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
+            data = static_cast<CDuiImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
         }
         return data;
     }
 
-    const TImageInfo* CDuiPaintManager::GetImageEx(LPCTSTR bitmap, LPCTSTR type /*= NULL*/, DWORD mask /*= 0*/, BOOL bUseHSL /*= FALSE*/, HINSTANCE instance /*= NULL*/)
+    const CDuiImageInfo* CDuiPaintManager::GetImageEx(LPCTSTR bitmap, LPCTSTR type /*= NULL*/, DWORD mask /*= 0*/, BOOL bUseHSL /*= FALSE*/, HINSTANCE instance /*= NULL*/)
     {
-        const TImageInfo* data = GetImage(bitmap);
+        const CDuiImageInfo* data = GetImage(bitmap);
         if(!data)
         {
             if(AddImage(bitmap, type, mask, bUseHSL, FALSE, instance))
             {
                 if(m_bForceUseSharedRes)
                 {
-                    data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
+                    data = static_cast<CDuiImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
                 }
                 else
                 {
-                    data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
+                    data = static_cast<CDuiImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
                 }
             }
         }
         return data;
     }
 
-    const TImageInfo* CDuiPaintManager::AddImage(LPCTSTR bitmap, LPCTSTR type /*= NULL*/, DWORD mask /*= 0*/, BOOL bUseHSL /*= FALSE*/, BOOL bShared /*= FALSE*/, HINSTANCE instance /*= NULL*/)
+    const CDuiImageInfo* CDuiPaintManager::AddImage(LPCTSTR bitmap, LPCTSTR type /*= NULL*/, DWORD mask /*= 0*/, BOOL bUseHSL /*= FALSE*/, BOOL bShared /*= FALSE*/, HINSTANCE instance /*= NULL*/)
     {
         if(bitmap == NULL || bitmap[0] == _T('\0'))
         {
             return NULL;
         }
-        TImageInfo* data = NULL;
+        CDuiImageInfo* data = NULL;
         if(type != NULL)
         {
             if(isdigit(*bitmap))
@@ -2080,7 +2159,7 @@ namespace DuiLib
         {
             if(bShared || m_bForceUseSharedRes)
             {
-                TImageInfo* pOldImageInfo = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
+                CDuiImageInfo* pOldImageInfo = static_cast<CDuiImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
                 if(pOldImageInfo)
                 {
                     CRenderEngine::FreeImage(pOldImageInfo);
@@ -2094,7 +2173,7 @@ namespace DuiLib
             }
             else
             {
-                TImageInfo* pOldImageInfo = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
+                CDuiImageInfo* pOldImageInfo = static_cast<CDuiImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
                 if(pOldImageInfo)
                 {
                     CRenderEngine::FreeImage(pOldImageInfo);
@@ -2110,7 +2189,7 @@ namespace DuiLib
         return data;
     }
 
-    const TImageInfo* CDuiPaintManager::AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int iWidth, int iHeight, BOOL bAlpha, BOOL bShared /*= FALSE*/)
+    const CDuiImageInfo* CDuiPaintManager::AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int iWidth, int iHeight, BOOL bAlpha, BOOL bShared /*= FALSE*/)
     {
         // 因无法确定外部HBITMAP格式，不能使用hsl调整
         if(bitmap == NULL || bitmap[0] == _T('\0'))
@@ -2121,7 +2200,7 @@ namespace DuiLib
         {
             return NULL;
         }
-        TImageInfo* data = new TImageInfo;
+        CDuiImageInfo* data = new CDuiImageInfo;
         data->pBits = NULL;
         data->pSrcBits = NULL;
         data->hBitmap = hBitmap;
@@ -2153,10 +2232,10 @@ namespace DuiLib
 
     void CDuiPaintManager::RemoveImage(LPCTSTR bitmap, BOOL bShared /*= FALSE*/)
     {
-        TImageInfo* data = NULL;
+        CDuiImageInfo* data = NULL;
         if(bShared)
         {
-            data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
+            data = static_cast<CDuiImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
             if(data)
             {
                 CRenderEngine::FreeImage(data) ;
@@ -2165,7 +2244,7 @@ namespace DuiLib
         }
         else
         {
-            data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
+            data = static_cast<CDuiImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
             if(data)
             {
                 CRenderEngine::FreeImage(data) ;
@@ -2176,12 +2255,12 @@ namespace DuiLib
 
     void CDuiPaintManager::RemoveAllImages()
     {
-        TImageInfo* data = NULL;
+        CDuiImageInfo* data = NULL;
         for(int i = 0; i < m_ResInfo.m_ImageHash.GetSize(); i++)
         {
             if(LPCTSTR key = m_ResInfo.m_ImageHash.GetAt(i))
             {
-                data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(key, FALSE));
+                data = static_cast<CDuiImageInfo*>(m_ResInfo.m_ImageHash.Find(key, FALSE));
                 if(data)
                 {
                     CRenderEngine::FreeImage(data);
@@ -2191,15 +2270,15 @@ namespace DuiLib
         m_ResInfo.m_ImageHash.RemoveAll();
     }
 
-    const TDrawInfo* CDuiPaintManager::GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify)
+    const CDrawInfo* CDuiPaintManager::GetDrawInfo(LPCTSTR pStrImage, LPCTSTR pStrModify)
     {
         CDuiString sStrImage = pStrImage;
         CDuiString sStrModify = pStrModify;
         CDuiString sKey = sStrImage + sStrModify;
-        TDrawInfo* pDrawInfo = static_cast<TDrawInfo*>(m_ResInfo.m_DrawInfoHash.Find(sKey));
+        CDrawInfo* pDrawInfo = static_cast<CDrawInfo*>(m_ResInfo.m_DrawInfoHash.Find(sKey));
         if(pDrawInfo == NULL && !sKey.IsEmpty())
         {
-            pDrawInfo = new TDrawInfo();
+            pDrawInfo = new CDrawInfo();
             pDrawInfo->Parse(pStrImage, pStrModify, this);
             m_ResInfo.m_DrawInfoHash.Insert(sKey, pDrawInfo);
         }
@@ -2208,30 +2287,30 @@ namespace DuiLib
 
     void CDuiPaintManager::RemoveAllDrawInfos()
     {
-        TDrawInfo* pDrawInfo = NULL;
+        CDrawInfo* pDrawInfo = NULL;
         for(int i = 0; i < m_ResInfo.m_DrawInfoHash.GetSize(); i++)
         {
             LPCTSTR key = m_ResInfo.m_DrawInfoHash.GetAt(i);
             if(key != NULL)
             {
-                pDrawInfo = static_cast<TDrawInfo*>(m_ResInfo.m_DrawInfoHash.Find(key, FALSE));
+                pDrawInfo = static_cast<CDrawInfo*>(m_ResInfo.m_DrawInfoHash.Find(key, FALSE));
                 DUI_FREE_POINT(pDrawInfo);
             }
         }
         m_ResInfo.m_DrawInfoHash.RemoveAll();
     }
 
-    BOOL CDuiPaintManager::AddPreMessageFilter(IMessageFilterUI* pFilter)
+    BOOL CDuiPaintManager::AddPreMessageFilter(IMessageFilter* pFilter)
     {
         ASSERT(m_aPreMessageFilters.Find(pFilter) < 0);
         return m_aPreMessageFilters.Add(pFilter);
     }
 
-    BOOL CDuiPaintManager::RemovePreMessageFilter(IMessageFilterUI* pFilter)
+    BOOL CDuiPaintManager::RemovePreMessageFilter(IMessageFilter* pFilter)
     {
         for(int i = 0; i < m_aPreMessageFilters.GetSize(); i++)
         {
-            if(static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i]) == pFilter)
+            if(static_cast<IMessageFilter*>(m_aPreMessageFilters[i]) == pFilter)
             {
                 return m_aPreMessageFilters.Remove(i);
             }
@@ -2244,7 +2323,7 @@ namespace DuiLib
         for(int i = 0; i < m_aPreMessageFilters.GetSize(); i++)
         {
             BOOL bHandled = FALSE;
-            LRESULT lResult = static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
+            LRESULT lResult = static_cast<IMessageFilter*>(m_aPreMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
             if(bHandled)
             {
                 return TRUE;
@@ -2276,7 +2355,7 @@ namespace DuiLib
             case WM_SYSCHAR:
             {
                 // Handle ALT-shortcut key-combinations
-                /*SHORTCUT fs = { 0 };
+                /*CShortCut fs = { 0 };
                 fs.ch = toupper((int)wParam);
                 CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromShortcut, &fs, UIFIND_ENABLED | UIFIND_ME_FIRST | UIFIND_TOP_FIRST);
                 if(pControl != NULL)
@@ -2289,8 +2368,8 @@ namespace DuiLib
             break;
             case WM_SYSKEYDOWN:
             {
-                SHORTCUT fs = { 0 };
-                fs.ch = toupper((int)wParam);
+                CShortCut fs;
+                fs.m_ch = toupper((int)wParam);
                 CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromShortcut, &fs, UIFIND_ENABLED | UIFIND_ME_FIRST | UIFIND_TOP_FIRST);
                 if(pControl != NULL)
                 {
@@ -2298,20 +2377,19 @@ namespace DuiLib
                 }
                 if(m_pFocus != NULL)
                 {
-                    TEventUI event = { 0 };
-                    event.Type = UIEVENT_SYSKEYDOWN;
+                    CDuiEvent event;
+                    event.Type = DUIEVENT_SYSKEYDOWN;
                     event.chKey = (TCHAR)wParam;
                     event.ptMouse = m_ptLastMousePos;
                     event.wKeyState = MapKeyState();
-                    event.dwTimestamp = ::GetTickCount();
                     m_pFocus->Event(event);
                 }
             }
             break;
             case WM_SYSKEYUP:
             {
-                SHORTCUT fs = { 0 };
-                fs.ch = toupper((int)wParam);
+                CShortCut fs;
+                fs.m_ch = toupper((int)wParam);
                 CDuiControl* pControl = m_pRoot->FindControl(__FindControlFromShortcut, &fs, UIFIND_ENABLED | UIFIND_ME_FIRST | UIFIND_TOP_FIRST);
                 if(pControl != NULL)
                 {
@@ -2319,12 +2397,11 @@ namespace DuiLib
                 }
                 if(m_pFocus != NULL)
                 {
-                    TEventUI event = { 0 };
-                    event.Type = UIEVENT_SYSKEYUP;
+                    CDuiEvent event;
+                    event.Type = DUIEVENT_SYSKEYUP;
                     event.chKey = (TCHAR)wParam;
                     event.ptMouse = m_ptLastMousePos;
                     event.wKeyState = MapKeyState();
-                    event.dwTimestamp = ::GetTickCount();
                     m_pFocus->Event(event);
                 }
             }
@@ -2335,17 +2412,17 @@ namespace DuiLib
         return FALSE;
     }
 
-    BOOL CDuiPaintManager::AddMessageFilter(IMessageFilterUI* pFilter)
+    BOOL CDuiPaintManager::AddMessageFilter(IMessageFilter* pFilter)
     {
         ASSERT(m_aMessageFilters.Find(pFilter) < 0);
         return m_aMessageFilters.Add(pFilter);
     }
 
-    BOOL CDuiPaintManager::RemoveMessageFilter(IMessageFilterUI* pFilter)
+    BOOL CDuiPaintManager::RemoveMessageFilter(IMessageFilter* pFilter)
     {
         for(int i = 0; i < m_aMessageFilters.GetSize(); i++)
         {
-            if(static_cast<IMessageFilterUI*>(m_aMessageFilters[i]) == pFilter)
+            if(static_cast<IMessageFilter*>(m_aMessageFilters[i]) == pFilter)
             {
                 return m_aMessageFilters.Remove(i);
             }
@@ -2389,7 +2466,7 @@ namespace DuiLib
         ASSERT(pControl != NULL);
         for(int i = 0; i < m_aTimers.GetSize(); i++)
         {
-            TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
+            CDuiTimerInfo* pTimer = static_cast<CDuiTimerInfo*>(m_aTimers[i]);
             if(pTimer->pSender == pControl
                     && pTimer->hWnd == m_hWndPaint
                     && pTimer->nLocalID == nTimerID)
@@ -2411,7 +2488,7 @@ namespace DuiLib
         {
             return FALSE;
         }
-        TIMERINFO* pTimer = new TIMERINFO;
+        CDuiTimerInfo* pTimer = new CDuiTimerInfo;
         if(pTimer == NULL)
         {
             return FALSE;
@@ -2429,7 +2506,7 @@ namespace DuiLib
         ASSERT(pControl != NULL);
         for(int i = 0; i < m_aTimers.GetSize(); i++)
         {
-            TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
+            CDuiTimerInfo* pTimer = static_cast<CDuiTimerInfo*>(m_aTimers[i]);
             if(pTimer->pSender == pControl
                     && pTimer->hWnd == m_hWndPaint
                     && pTimer->nLocalID == nTimerID)
@@ -2453,7 +2530,7 @@ namespace DuiLib
         ASSERT(pControl != NULL);
         for(int i = 0, j = 0; i < m_aTimers.GetSize(); i++)
         {
-            TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i - j]);
+            CDuiTimerInfo* pTimer = static_cast<CDuiTimerInfo*>(m_aTimers[i - j]);
             if(pTimer->pSender == pControl && pTimer->hWnd == m_hWndPaint)
             {
                 if(pTimer->bKilled == FALSE)
@@ -2471,7 +2548,7 @@ namespace DuiLib
     {
         for(int i = 0; i < m_aTimers.GetSize(); i++)
         {
-            TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
+            CDuiTimerInfo* pTimer = static_cast<CDuiTimerInfo*>(m_aTimers[i]);
             if(pTimer && pTimer->hWnd == m_hWndPaint)
             {
                 if(pTimer->bKilled == FALSE)
@@ -2513,8 +2590,8 @@ namespace DuiLib
             DUI_FREE_POINT(pControl);
         }
         m_aDelayedCleanup.Empty();
-        TNotifyUI* pMsg = NULL;
-        while(pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify.GetAt(0)))
+        CDuiNotify* pMsg = NULL;
+        while(pMsg = static_cast<CDuiNotify*>(m_aAsyncNotify.GetAt(0)))
         {
             m_aAsyncNotify.Remove(0);
             if(pMsg->pSender != NULL)
@@ -2526,7 +2603,7 @@ namespace DuiLib
             }
             for(int i = 0; i < m_aNotifiers.GetSize(); i++)
             {
-                static_cast<INotifyUI*>(m_aNotifiers[i])->Notify(*pMsg);
+                static_cast<INotify*>(m_aNotifiers[i])->Notify(*pMsg);
             }
             DUI_FREE_POINT(pMsg);
         }
@@ -2537,19 +2614,18 @@ namespace DuiLib
     {
         bHandled = FALSE;
         // Make sure all matching "closing" events are sent
-        TEventUI event = { 0 };
+        CDuiEvent event;
         event.ptMouse = m_ptLastMousePos;
         event.wKeyState = MapKeyState();
-        event.dwTimestamp = ::GetTickCount();
         if(m_pEventHover != NULL)
         {
-            event.Type = UIEVENT_MOUSELEAVE;
+            event.Type = DUIEVENT_MOUSELEAVE;
             event.pSender = m_pEventHover;
             m_pEventHover->Event(event);
         }
         if(m_pEventClick != NULL)
         {
-            event.Type = UIEVENT_BUTTONUP;
+            event.Type = DUIEVENT_BUTTONUP;
             event.pSender = m_pEventClick;
             m_pEventClick->Event(event);
         }
@@ -2807,10 +2883,9 @@ namespace DuiLib
     {
         if(m_pFocus != NULL)
         {
-            TEventUI event = { 0 };
-            event.Type = UIEVENT_WINDOWSIZE;
+            CDuiEvent event;
+            event.Type = DUIEVENT_WINDOWSIZE;
             event.pSender = m_pFocus;
-            event.dwTimestamp = ::GetTickCount();
             m_pFocus->Event(event);
         }
         if(m_pRoot != NULL)
@@ -2852,14 +2927,13 @@ namespace DuiLib
         // 事件处理
         m_pEventClick = pControl;
         pControl->SetFocus();
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_BUTTONDOWN;
+        CDuiEvent event;
+        event.Type = DUIEVENT_BUTTONDOWN;
         event.pSender = pControl;
         event.wParam = wParam;
         event.lParam = lParam;
         event.ptMouse = pt;
         event.wKeyState = (WORD)wParam;
-        event.dwTimestamp = ::GetTickCount();
         pControl->Event(event);
         return 0;
     }
@@ -2881,14 +2955,13 @@ namespace DuiLib
             return 0;
         }
 
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_DBLCLICK;
+        CDuiEvent event;
+        event.Type = DUIEVENT_DBLCLICK;
         event.pSender = pControl;
         event.ptMouse = pt;
         event.wParam = wParam;
         event.lParam = lParam;
         event.wKeyState = (WORD)wParam;
-        event.dwTimestamp = ::GetTickCount();
         pControl->Event(event);
         m_pEventClick = pControl;
         return 0;
@@ -2905,14 +2978,13 @@ namespace DuiLib
             return 0;
         }
 
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_BUTTONUP;
+        CDuiEvent event;
+        event.Type = DUIEVENT_BUTTONUP;
         event.pSender = m_pEventClick;
         event.wParam = wParam;
         event.lParam = lParam;
         event.ptMouse = pt;
         event.wKeyState = (WORD)wParam;
-        event.dwTimestamp = ::GetTickCount();
         CDuiControl* pClick = m_pEventClick;
         m_pEventClick = NULL;
         pClick->Event(event);
@@ -2936,14 +3008,13 @@ namespace DuiLib
         }
         pControl->SetFocus();
         SetCapture();
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_RBUTTONDOWN;
+        CDuiEvent event;
+        event.Type = DUIEVENT_RBUTTONDOWN;
         event.pSender = pControl;
         event.wParam = wParam;
         event.lParam = lParam;
         event.ptMouse = pt;
         event.wKeyState = (WORD)wParam;
-        event.dwTimestamp = ::GetTickCount();
         pControl->Event(event);
         m_pEventClick = pControl;
         return 0;
@@ -2961,14 +3032,13 @@ namespace DuiLib
         {
             return 0;
         }
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_RBUTTONUP;
+        CDuiEvent event;
+        event.Type = DUIEVENT_RBUTTONUP;
         event.pSender = m_pEventClick;
         event.wParam = wParam;
         event.lParam = lParam;
         event.ptMouse = pt;
         event.wKeyState = (WORD)wParam;
-        event.dwTimestamp = ::GetTickCount();
         m_pEventClick->Event(event);
         return 0;
     }
@@ -2985,15 +3055,14 @@ namespace DuiLib
         {
             for(int i = 0; i < m_aTimers.GetSize(); i++)
             {
-                const TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
+                const CDuiTimerInfo* pTimer = static_cast<CDuiTimerInfo*>(m_aTimers[i]);
                 if(pTimer->hWnd == m_hWndPaint &&
                         pTimer->uWinTimer == LOWORD(wParam) &&
                         pTimer->bKilled == FALSE)
                 {
-                    TEventUI event = { 0 };
-                    event.Type = UIEVENT_TIMER;
+                    CDuiEvent event;
+                    event.Type = DUIEVENT_TIMER;
                     event.pSender = pTimer->pSender;
-                    event.dwTimestamp = ::GetTickCount();
                     event.ptMouse = m_ptLastMousePos;
                     event.wKeyState = MapKeyState();
                     event.wParam = pTimer->nLocalID;
@@ -3019,12 +3088,11 @@ namespace DuiLib
         // Generate mouse hover event
         if(m_pEventHover != NULL)
         {
-            TEventUI event = { 0 };
-            event.Type = UIEVENT_MOUSEHOVER;
+            CDuiEvent event;
+            event.Type = DUIEVENT_MOUSEHOVER;
             event.pSender = m_pEventHover;
             event.wParam = wParam;
             event.lParam = lParam;
-            event.dwTimestamp = ::GetTickCount();
             event.ptMouse = pt;
             event.wKeyState = MapKeyState();
             m_pEventHover->Event(event);
@@ -3180,14 +3248,13 @@ namespace DuiLib
             m_bDragMode = FALSE;
             return 0;
         }
-        TEventUI event = { 0 };
+        CDuiEvent event;
         event.ptMouse = pt;
         event.wParam = wParam;
         event.lParam = lParam;
-        event.dwTimestamp = ::GetTickCount();
         if(pControl != m_pEventHover && m_pEventHover != NULL)
         {
-            event.Type = UIEVENT_MOUSELEAVE;
+            event.Type = DUIEVENT_MOUSELEAVE;
             event.pSender = m_pEventHover;
             m_pEventHover->Event(event);
             m_pEventHover = NULL;
@@ -3198,20 +3265,20 @@ namespace DuiLib
         }
         if(pControl != m_pEventHover && pControl != NULL)
         {
-            event.Type = UIEVENT_MOUSEENTER;
+            event.Type = DUIEVENT_MOUSEENTER;
             event.pSender = pControl;
             pControl->Event(event);
             m_pEventHover = pControl;
         }
         if(m_pEventClick != NULL)
         {
-            event.Type = UIEVENT_MOUSEMOVE;
+            event.Type = DUIEVENT_MOUSEMOVE;
             event.pSender = m_pEventClick;
             m_pEventClick->Event(event);
         }
         else if(pControl != NULL)
         {
-            event.Type = UIEVENT_MOUSEMOVE;
+            event.Type = DUIEVENT_MOUSEMOVE;
             event.pSender = pControl;
             pControl->Event(event);
         }
@@ -3225,15 +3292,14 @@ namespace DuiLib
         {
             return 0;
         }
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_KEYDOWN;
+        CDuiEvent event;
+        event.Type = DUIEVENT_KEYDOWN;
         event.pSender = m_pFocus;
         event.wParam = wParam;
         event.lParam = lParam;
         event.chKey = (TCHAR)wParam;
         event.ptMouse = m_ptLastMousePos;
         event.wKeyState = MapKeyState();
-        event.dwTimestamp = ::GetTickCount();
         m_pFocus->Event(event);
         m_pEventKey = m_pFocus;
         return 0;
@@ -3246,15 +3312,14 @@ namespace DuiLib
         {
             return 0;
         }
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_KEYUP;
+        CDuiEvent event;
+        event.Type = DUIEVENT_KEYUP;
         event.pSender = m_pEventKey;
         event.wParam = wParam;
         event.lParam = lParam;
         event.chKey = (TCHAR)wParam;
         event.ptMouse = m_ptLastMousePos;
         event.wKeyState = MapKeyState();
-        event.dwTimestamp = ::GetTickCount();
         m_pEventKey->Event(event);
         m_pEventKey = NULL;
         return 0;
@@ -3275,14 +3340,13 @@ namespace DuiLib
             return 0;
         }
         int zDelta = (int)(short) HIWORD(wParam);
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_SCROLLWHEEL;
+        CDuiEvent event;
+        event.Type = DUIEVENT_SCROLLWHEEL;
         event.pSender = pControl;
         event.wParam = MAKELPARAM(zDelta < 0 ? SB_LINEDOWN : SB_LINEUP, 0);
         event.lParam = lParam;
         event.ptMouse = pt;
         event.wKeyState = MapKeyState();
-        event.dwTimestamp = ::GetTickCount();
         pControl->Event(event);
 
         // Let's make sure that the scroll item below the cursor is the same as before...
@@ -3317,14 +3381,13 @@ namespace DuiLib
             bHandled = FALSE;
             return 0;
         }
-        TEventUI event = { 0 };
-        event.Type = UIEVENT_SETCURSOR;
+        CDuiEvent event;
+        event.Type = DUIEVENT_SETCURSOR;
         event.pSender = pControl;
         event.wParam = wParam;
         event.lParam = lParam;
         event.ptMouse = pt;
         event.wKeyState = MapKeyState();
-        event.dwTimestamp = ::GetTickCount();
         pControl->Event(event);
         return 0;
     }
@@ -3333,12 +3396,11 @@ namespace DuiLib
     {
         if(m_pFocus != NULL)
         {
-            TEventUI event = { 0 };
-            event.Type = UIEVENT_SETFOCUS;
+            CDuiEvent event;
+            event.Type = DUIEVENT_SETFOCUS;
             event.wParam = wParam;
             event.lParam = lParam;
             event.pSender = m_pFocus;
-            event.dwTimestamp = ::GetTickCount();
             m_pFocus->Event(event);
         }
         bHandled = FALSE;
@@ -3408,7 +3470,7 @@ namespace DuiLib
         for(int i = 0; i < m_aMessageFilters.GetSize(); i++)
         {
             bHandled = FALSE;
-            lResult = static_cast<IMessageFilterUI*>(m_aMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
+            lResult = static_cast<IMessageFilter*>(m_aMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
             if(bHandled)
             {
                 lRes = lResult;
@@ -3555,12 +3617,12 @@ namespace DuiLib
         }
         m_SharedResInfo.m_AttrHash.RemoveAll();
 
-        TImageInfo* data = NULL;
+        CDuiImageInfo* data = NULL;
         for(int i = 0; i < m_SharedResInfo.m_ImageHash.GetSize(); i++)
         {
             if(LPCTSTR key = m_SharedResInfo.m_ImageHash.GetAt(i))
             {
-                data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(key, FALSE));
+                data = static_cast<CDuiImageInfo*>(m_SharedResInfo.m_ImageHash.Find(key, FALSE));
                 if(data)
                 {
                     CRenderEngine::FreeImage(data);
@@ -3569,12 +3631,12 @@ namespace DuiLib
         }
         m_SharedResInfo.m_ImageHash.RemoveAll();
 
-        TFontInfo* pFontInfo = NULL;
+        CDuiFontInfo* pFontInfo = NULL;
         for(int i = 0; i < m_SharedResInfo.m_CustomFonts.GetSize(); i++)
         {
             if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i))
             {
-                pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key, FALSE));
+                pFontInfo = static_cast<CDuiFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key, FALSE));
                 if(pFontInfo)
                 {
                     ::DeleteObject(pFontInfo->hFont);
@@ -3970,7 +4032,7 @@ namespace DuiLib
 
     CDuiControl* CALLBACK CDuiPaintManager::__FindControlFromTab(CDuiControl* pThis, LPVOID pData)
     {
-        TABINFO* pInfo = static_cast<TABINFO*>(pData);
+        CDuiTabInfo* pInfo = static_cast<CDuiTabInfo*>(pData);
         if(pInfo->pFocus == pThis)
         {
             if(pInfo->bForward)
@@ -4003,16 +4065,16 @@ namespace DuiLib
         {
             return NULL;
         }
-        SHORTCUT* pFS = static_cast<SHORTCUT*>(pData);
-        if(pFS->ch == toupper(pThis->GetShortcut()))
+        CShortCut* pFS = static_cast<CShortCut*>(pData);
+        if(pFS->m_ch == toupper(pThis->GetShortcut()))
         {
-            pFS->bPickNext = TRUE;
+            pFS->m_bPickNext = TRUE;
         }
         if(pThis->GetClass() == DUI_CTR_LABEL)
         {
             return NULL;    // Labels never get focus!
         }
-        return pFS->bPickNext ? pThis : NULL;
+        return pFS->m_bPickNext ? pThis : NULL;
     }
 
     CDuiControl* CALLBACK CDuiPaintManager::__FindControlFromName(CDuiControl* pThis, LPVOID pData)

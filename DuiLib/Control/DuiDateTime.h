@@ -56,7 +56,7 @@ namespace DuiLib
         SYSTEMTIME& GetTime();
         void SetTime(SYSTEMTIME* pst);
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         int m_nDTUpdateFlag;
         CDuiDateTimeWnd* m_pDateTimeWnd;

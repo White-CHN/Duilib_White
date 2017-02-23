@@ -27,7 +27,7 @@ LPCTSTR CPopDlg::GetWindowClassName() const
     return GET_CLASS_NAME(CPopDlg);
 }
 
-void CPopDlg::OnClick(TNotifyUI& msg)
+void CPopDlg::OnClick(CDuiNotify& msg)
 {
     if(msg.pSender->GetName() == _T("minbtn"))
     {

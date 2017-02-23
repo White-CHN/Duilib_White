@@ -84,13 +84,13 @@ namespace DuiLib
     //
     //
 
-    STRINGorID::STRINGorID(LPCTSTR lpString)
+    CIdToResource::CIdToResource(LPCTSTR lpString)
         : m_lpstr(lpString)
     {
     }
 
 
-    STRINGorID::STRINGorID(UINT nID)
+    CIdToResource::CIdToResource(UINT nID)
         : m_lpstr(MAKEINTRESOURCE(nID))
     {
     }

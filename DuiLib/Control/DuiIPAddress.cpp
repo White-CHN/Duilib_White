@@ -224,9 +224,9 @@ namespace DuiLib
         UpdateText();
     }
 
-    void CDuiIPAddress::DoEvent(TEventUI& event)
+    void CDuiIPAddress::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -239,26 +239,26 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_SETCURSOR && IsEnabled())
+        if(event.Type == DUIEVENT_SETCURSOR && IsEnabled())
         {
             ::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_IBEAM)));
             return;
         }
-        if(event.Type == UIEVENT_WINDOWSIZE)
+        if(event.Type == DUIEVENT_WINDOWSIZE)
         {
             if(m_pIPAddressWnd != NULL)
             {
                 GetManager()->SetFocusNeeded(this);
             }
         }
-        if(event.Type == UIEVENT_SCROLLWHEEL)
+        if(event.Type == DUIEVENT_SCROLLWHEEL)
         {
             if(m_pIPAddressWnd != NULL)
             {
                 return;
             }
         }
-        if(event.Type == UIEVENT_SETFOCUS && IsEnabled())
+        if(event.Type == DUIEVENT_SETFOCUS && IsEnabled())
         {
             if(m_pIPAddressWnd)
             {
@@ -268,11 +268,11 @@ namespace DuiLib
             ASSERT(m_pIPAddressWnd);
             m_pIPAddressWnd->Init(this);
         }
-        if(event.Type == UIEVENT_KILLFOCUS && IsEnabled())
+        if(event.Type == DUIEVENT_KILLFOCUS && IsEnabled())
         {
             Invalidate();
         }
-        if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK || event.Type == UIEVENT_RBUTTONDOWN)
+        if(event.Type == DUIEVENT_BUTTONDOWN || event.Type == DUIEVENT_DBLCLICK || event.Type == DUIEVENT_RBUTTONDOWN)
         {
             if(IsEnabled())
             {
@@ -289,23 +289,23 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             return;
         }
-        if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP)
         {
             return;
         }
-        if(event.Type == UIEVENT_CONTEXTMENU)
+        if(event.Type == DUIEVENT_CONTEXTMENU)
         {
             return;
         }
-        if(event.Type == UIEVENT_MOUSEENTER)
+        if(event.Type == DUIEVENT_MOUSEENTER)
         {
             return;
         }
-        if(event.Type == UIEVENT_MOUSELEAVE)
+        if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             return;
         }

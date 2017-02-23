@@ -5,9 +5,9 @@ namespace DuiLib
 
     class DUILIB_API CDuiDlgImplBase
         : public CDuiWnd
-        , public IMessageFilterUI
+        , public IMessageFilter
         , public IDialogBuilderCallback
-        , public INotifyUI
+        , public INotify
         , public IQueryControlText
         , public CDuiNotifyPump
     {
@@ -17,22 +17,21 @@ namespace DuiLib
         virtual ~CDuiDlgImplBase(void);
     public:
         CDuiPaintManager* GetPaintManager();
+        void AddStaticControl(LPCTSTR lpControl);
     protected:
         virtual void InitWindow();
 
         virtual CDuiString GetSkinType();		//FindResource第三个参数，资源类型，自定义资源类型的名称
         virtual CDuiString GetSkinFile() = 0;
 
-        void Notify(TNotifyUI& msg) OVERRIDE;
+        void Notify(CDuiNotify& msg) OVERRIDE;
         CDuiControl* CreateControl(LPCTSTR pstrClass) OVERRIDE;
         LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType) OVERRIDE;
-
         virtual LRESULT ResponseDefaultKeyEvent(WPARAM wParam);
         LRESULT MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) OVERRIDE;
+        void OnFinalMessage(HWND hWnd) OVERRIDE;
 
         virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-
-        void OnFinalMessage(HWND hWnd) OVERRIDE;
 
         virtual LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
         virtual LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);

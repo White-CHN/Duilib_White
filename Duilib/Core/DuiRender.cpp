@@ -238,7 +238,7 @@ namespace DuiLib
         {
             return FALSE;
         }
-        const TImageInfo* data = NULL;
+        const CDuiImageInfo* data = NULL;
         if(sImageResType.IsEmpty())
         {
             data = pManager->GetImageEx((LPCTSTR)sImageName, NULL, dwMask, FALSE, instance);
@@ -295,7 +295,7 @@ namespace DuiLib
         return dwColor;
     }
 
-    TImageInfo* CRenderEngine::LoadImage(STRINGorID bitmap, LPCTSTR type, DWORD mask, HINSTANCE instance)
+    CDuiImageInfo* CRenderEngine::LoadImage(CIdToResource bitmap, LPCTSTR type, DWORD mask, HINSTANCE instance)
     {
         LPBYTE pData = NULL;
         DWORD dwSize = 0;
@@ -493,7 +493,7 @@ namespace DuiLib
             }
         }
         stbi_image_free(pImage);
-        TImageInfo* data = new TImageInfo;
+        CDuiImageInfo* data = new CDuiImageInfo;
         data->pBits = NULL;
         data->pSrcBits = NULL;
         data->hBitmap = hBitmap;
@@ -503,7 +503,7 @@ namespace DuiLib
         return data;
     }
 
-    void CRenderEngine::FreeImage(TImageInfo* bitmap, BOOL bDelete)
+    void CRenderEngine::FreeImage(CDuiImageInfo* bitmap, BOOL bDelete)
     {
         if(bitmap == NULL)
         {
@@ -891,19 +891,19 @@ namespace DuiLib
         return TRUE;
     }
 
-    TImageInfo* CRenderEngine::LoadImage(LPCTSTR pStrImage, LPCTSTR type, DWORD mask, HINSTANCE instance)
+    CDuiImageInfo* CRenderEngine::LoadImage(LPCTSTR pStrImage, LPCTSTR type, DWORD mask, HINSTANCE instance)
     {
         if(pStrImage == NULL)
         {
             return NULL;
         }
         CDuiString sStrPath = pStrImage;
-        return LoadImage(STRINGorID(sStrPath.GetData()), type, mask, instance);
+        return LoadImage(CIdToResource(sStrPath.GetData()), type, mask, instance);
     }
 
-    TImageInfo* CRenderEngine::LoadImage(UINT nID, LPCTSTR type, DWORD mask, HINSTANCE instance)
+    CDuiImageInfo* CRenderEngine::LoadImage(UINT nID, LPCTSTR type, DWORD mask, HINSTANCE instance)
     {
-        return LoadImage(STRINGorID(nID), type, mask, instance);
+        return LoadImage(CIdToResource(nID), type, mask, instance);
     }
 
     void CRenderEngine::DrawText(HDC hDC, CDuiPaintManager* pManager, RECT& rc, LPCTSTR pstrText, DWORD dwTextColor, \
@@ -1428,7 +1428,7 @@ namespace DuiLib
         ::DeleteDC(hCloneDC);
     }
 
-    BOOL CRenderEngine::DrawImageInfo(HDC hDC, CDuiPaintManager* pManager, const RECT& rcItem, const RECT& rcPaint, const TDrawInfo* pDrawInfo, HINSTANCE instance)
+    BOOL CRenderEngine::DrawImageInfo(HDC hDC, CDuiPaintManager* pManager, const RECT& rcItem, const RECT& rcPaint, const CDrawInfo* pDrawInfo, HINSTANCE instance)
     {
         if(pManager == NULL || hDC == NULL || pDrawInfo == NULL)
         {
@@ -1461,7 +1461,7 @@ namespace DuiLib
         {
             return FALSE;
         }
-        const TDrawInfo* pDrawInfo = pManager->GetDrawInfo(pStrImage, pStrModify);
+        const CDrawInfo* pDrawInfo = pManager->GetDrawInfo(pStrImage, pStrModify);
         return DrawImageInfo(hDC, pManager, rcItem, rcPaint, pDrawInfo, instance);
     }
 
@@ -2025,10 +2025,10 @@ namespace DuiLib
                         //}
                         aColorArray.Add((LPVOID)clrColor);
                         ::SetTextColor(hDC,  RGB(GetBValue(clrColor), GetGValue(clrColor), GetRValue(clrColor)));
-                        TFontInfo* pFontInfo = pManager->GetDefaultFontInfo();
+                        CDuiFontInfo* pFontInfo = pManager->GetDefaultFontInfo();
                         if(aFontArray.GetSize() > 0)
                         {
-                            pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
+                            pFontInfo = (CDuiFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
                         }
                         if(pFontInfo->bUnderline == FALSE)
                         {
@@ -2050,10 +2050,10 @@ namespace DuiLib
                     case _T('b'):  // Bold
                     {
                         pstrText++;
-                        TFontInfo* pFontInfo = pManager->GetDefaultFontInfo();
+                        CDuiFontInfo* pFontInfo = pManager->GetDefaultFontInfo();
                         if(aFontArray.GetSize() > 0)
                         {
-                            pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
+                            pFontInfo = (CDuiFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
                         }
                         if(pFontInfo->bBold == FALSE)
                         {
@@ -2098,7 +2098,7 @@ namespace DuiLib
                         //if( isdigit(*pstrText) ) { // debug版本会引起异常
                         if(pstrTemp != pstrText)
                         {
-                            TFontInfo* pFontInfo = pManager->GetFontInfo(iFont);
+                            CDuiFontInfo* pFontInfo = pManager->GetFontInfo(iFont);
                             aFontArray.Add(pFontInfo);
                             pTm = &pFontInfo->tm;
                             ::SelectObject(hDC, pFontInfo->hFont);
@@ -2157,7 +2157,7 @@ namespace DuiLib
                             {
                                 hFont = pManager->AddFont(g_iFontID, sFontName, iFontSize, bBold, bUnderline, bItalic);
                             }
-                            TFontInfo* pFontInfo = pManager->GetFontInfo(hFont);
+                            CDuiFontInfo* pFontInfo = pManager->GetFontInfo(hFont);
                             aFontArray.Add(pFontInfo);
                             pTm = &pFontInfo->tm;
                             ::SelectObject(hDC, pFontInfo->hFont);
@@ -2176,7 +2176,7 @@ namespace DuiLib
                         {
                             pstrText = ::CharNext(pstrText);
                         }
-                        const TImageInfo* pImageInfo = NULL;
+                        const CDuiImageInfo* pImageInfo = NULL;
                         CDuiString sName;
                         while(*pstrText != _T('\0') && *pstrText != _T('>') && *pstrText != _T('}') && *pstrText != _T(' '))
                         {
@@ -2189,10 +2189,10 @@ namespace DuiLib
                         if(sName.IsEmpty())     // Italic
                         {
                             pstrNextStart = NULL;
-                            TFontInfo* pFontInfo = pManager->GetDefaultFontInfo();
+                            CDuiFontInfo* pFontInfo = pManager->GetDefaultFontInfo();
                             if(aFontArray.GetSize() > 0)
                             {
-                                pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
+                                pFontInfo = (CDuiFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
                             }
                             if(pFontInfo->bItalic == FALSE)
                             {
@@ -2396,10 +2396,10 @@ namespace DuiLib
                     case _T('u'):  // Underline text
                     {
                         pstrText++;
-                        TFontInfo* pFontInfo = pManager->GetDefaultFontInfo();
+                        CDuiFontInfo* pFontInfo = pManager->GetDefaultFontInfo();
                         if(aFontArray.GetSize() > 0)
                         {
-                            pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
+                            pFontInfo = (CDuiFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
                         }
                         if(pFontInfo->bUnderline == FALSE)
                         {
@@ -2522,7 +2522,7 @@ namespace DuiLib
                     {
                         pstrText++;
                         aFontArray.Remove(aFontArray.GetSize() - 1);
-                        TFontInfo* pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
+                        CDuiFontInfo* pFontInfo = (CDuiFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
                         if(pFontInfo == NULL)
                         {
                             pFontInfo = pManager->GetDefaultFontInfo();
@@ -2721,7 +2721,7 @@ namespace DuiLib
                         clrColor = (int)aColorArray.GetAt(aColorArray.GetSize() - 1);
                     }
                     ::SetTextColor(hDC, RGB(GetBValue(clrColor), GetGValue(clrColor), GetRValue(clrColor)));
-                    TFontInfo* pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
+                    CDuiFontInfo* pFontInfo = (CDuiFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
                     if(pFontInfo == NULL)
                     {
                         pFontInfo = pManager->GetDefaultFontInfo();
@@ -2852,7 +2852,7 @@ namespace DuiLib
         return hBitmap;
     }
 
-    void CRenderEngine::AdjustImage(BOOL bUseHSL, TImageInfo* imageInfo, short H, short S, short L)
+    void CRenderEngine::AdjustImage(BOOL bUseHSL, CDuiImageInfo* imageInfo, short H, short S, short L)
     {
         if(imageInfo == NULL || imageInfo->bUseHSL == FALSE || imageInfo->hBitmap == NULL ||
                 imageInfo->pBits == NULL || imageInfo->pSrcBits == NULL)

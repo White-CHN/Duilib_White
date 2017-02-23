@@ -29,9 +29,9 @@ namespace DuiLib
         return CDuiOption::GetInterface(pstrName);
     }
 
-    void CDuiRadio::DoEvent(TEventUI& event)
+    void CDuiRadio::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -43,7 +43,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
+        if(event.Type == DUIEVENT_BUTTONDOWN || event.Type == DUIEVENT_DBLCLICK)
         {
             Selected(TRUE);
             return;

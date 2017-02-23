@@ -53,7 +53,7 @@ namespace DuiLib
         DWORD GetIP();
         void SetIP(DWORD dwIP);
 
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         DWORD m_dwIP;
         int	m_nIPUpdateFlag;

@@ -49,7 +49,7 @@ LPCTSTR CSkinDlg::GetWindowClassName() const
     return GET_CLASS_NAME(CSkinDlg);
 }
 
-void CSkinDlg::OnClick(TNotifyUI& msg)
+void CSkinDlg::OnClick(CDuiNotify& msg)
 {
     if(msg.pSender->GetName() == _T("closebtn"))
     {
@@ -91,7 +91,7 @@ void CSkinDlg::OnClick(TNotifyUI& msg)
     }
 }
 
-void CSkinDlg::OnSelectChanged(TNotifyUI& msg)
+void CSkinDlg::OnSelectChanged(CDuiNotify& msg)
 {
     if(msg.pSender->GetName() == _T("OptionPic"))
     {

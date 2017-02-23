@@ -3740,10 +3740,10 @@ void CPagePeelEffect::ComputeOneFrame(InternalAnimationParam* internalParam)
             if(m_intersectTop)
             {
                 rg1.Reset();
-                rg1.AddLine((INT)rcClient.left, (INT)rcClient.top, ptintsect1.X, ptintsect1.Y);
+                rg1.AddLine((int)rcClient.left, (int)rcClient.top, ptintsect1.X, ptintsect1.Y);
                 rg1.AddLine(ptintsect1, ptintsect2);
-                rg1.AddLine(ptintsect2.X, ptintsect2.Y, (INT)rcClient.left, (INT)rcClient.bottom);
-                rg1.AddLine((INT)rcClient.left, (INT)rcClient.bottom, (INT)rcClient.left, (INT)rcClient.top);
+                rg1.AddLine(ptintsect2.X, ptintsect2.Y, (int)rcClient.left, (int)rcClient.bottom);
+                rg1.AddLine((int)rcClient.left, (int)rcClient.bottom, (int)rcClient.left, (int)rcClient.top);
                 rg1.CloseAllFigures();
 
                 //计算弧线
@@ -3772,11 +3772,11 @@ void CPagePeelEffect::ComputeOneFrame(InternalAnimationParam* internalParam)
             else
             {
                 rg1.Reset();
-                rg1.AddLine((INT)rcClient.left, (INT)rcClient.top, (INT)rcClient.right, (INT)rcClient.top);
-                rg1.AddLine((INT)rcClient.right, (INT)rcClient.top, ptintsect1.X, ptintsect1.Y);
+                rg1.AddLine((int)rcClient.left, (int)rcClient.top, (int)rcClient.right, (int)rcClient.top);
+                rg1.AddLine((int)rcClient.right, (int)rcClient.top, ptintsect1.X, ptintsect1.Y);
                 rg1.AddLine(ptintsect1, ptintsect2);
-                rg1.AddLine(ptintsect2.X, ptintsect2.Y, (INT)rcClient.left, (INT)rcClient.bottom);
-                rg1.AddLine((INT)rcClient.left, (INT)rcClient.bottom, (INT)rcClient.left, (INT)rcClient.top);
+                rg1.AddLine(ptintsect2.X, ptintsect2.Y, (int)rcClient.left, (int)rcClient.bottom);
+                rg1.AddLine((int)rcClient.left, (int)rcClient.bottom, (int)rcClient.left, (int)rcClient.top);
                 rg1.CloseAllFigures();
 
                 //计算弧线
@@ -3895,10 +3895,10 @@ void CPagePeelEffect::ComputeOneFrame(InternalAnimationParam* internalParam)
             if(m_intersectTop)
             {
                 rg1.Reset();
-                rg1.AddLine((INT)rcClient.left, (INT)rcClient.top, ptintsect1.X, ptintsect1.Y);
+                rg1.AddLine((int)rcClient.left, (int)rcClient.top, ptintsect1.X, ptintsect1.Y);
                 rg1.AddLine(ptintsect1, ptintsect2);
-                rg1.AddLine(ptintsect2.X, ptintsect2.Y, (INT)rcClient.left, (INT)rcClient.bottom);
-                rg1.AddLine((INT)rcClient.left, (INT)rcClient.bottom, (INT)rcClient.left, (INT)rcClient.top);
+                rg1.AddLine(ptintsect2.X, ptintsect2.Y, (int)rcClient.left, (int)rcClient.bottom);
+                rg1.AddLine((int)rcClient.left, (int)rcClient.bottom, (int)rcClient.left, (int)rcClient.top);
                 rg1.CloseAllFigures();
 
                 //计算弧线
@@ -3927,11 +3927,11 @@ void CPagePeelEffect::ComputeOneFrame(InternalAnimationParam* internalParam)
             else
             {
                 rg1.Reset();
-                rg1.AddLine((INT)rcClient.left, (INT)rcClient.top, (INT)rcClient.right, (INT)rcClient.top);
-                rg1.AddLine((INT)rcClient.right, (INT)rcClient.top, ptintsect1.X, ptintsect1.Y);
+                rg1.AddLine((int)rcClient.left, (int)rcClient.top, (int)rcClient.right, (int)rcClient.top);
+                rg1.AddLine((int)rcClient.right, (int)rcClient.top, ptintsect1.X, ptintsect1.Y);
                 rg1.AddLine(ptintsect1, ptintsect2);
-                rg1.AddLine(ptintsect2.X, ptintsect2.Y, (INT)rcClient.left, (INT)rcClient.bottom);
-                rg1.AddLine((INT)rcClient.left, (INT)rcClient.bottom, (INT)rcClient.left, (INT)rcClient.top);
+                rg1.AddLine(ptintsect2.X, ptintsect2.Y, (int)rcClient.left, (int)rcClient.bottom);
+                rg1.AddLine((int)rcClient.left, (int)rcClient.bottom, (int)rcClient.left, (int)rcClient.top);
                 rg1.CloseAllFigures();
 
                 //计算弧线

@@ -32,6 +32,11 @@ namespace DuiLib
         return &m_PaintManager;
     }
 
+    void CDuiDlgImplBase::AddStaticControl(LPCTSTR lpControl)
+    {
+        m_vtStaticName.push_back(lpControl);
+    }
+
     void CDuiDlgImplBase::InitWindow()
     {
     }
@@ -41,7 +46,7 @@ namespace DuiLib
         return _T("");
     }
 
-    void CDuiDlgImplBase::Notify(TNotifyUI& msg)
+    void CDuiDlgImplBase::Notify(CDuiNotify& msg)
     {
         return CDuiNotifyPump::NotifyPump(msg);
     }
@@ -85,18 +90,18 @@ namespace DuiLib
         return 0;
     }
 
-    LRESULT CDuiDlgImplBase::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
-    {
-        bHandled = FALSE;
-        return 0;
-    }
-
     void CDuiDlgImplBase::OnFinalMessage(HWND hWnd)
     {
         m_PaintManager.RemovePreMessageFilter(this);
         m_PaintManager.RemoveNotifier(this);
         m_PaintManager.ReapObjects(m_PaintManager.GetRoot());
         CDuiWnd::OnFinalMessage(hWnd);
+    }
+
+    LRESULT CDuiDlgImplBase::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        bHandled = FALSE;
+        return 0;
     }
 
     LRESULT CDuiDlgImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
@@ -120,7 +125,7 @@ namespace DuiLib
         CDuiString sSkinType = GetSkinType();
         if(!sSkinType.IsEmpty())
         {
-            STRINGorID xml(_ttoi(GetSkinFile().GetData()));
+            CIdToResource xml(_ttoi(GetSkinFile().GetData()));
             pRoot = builder.Create(xml, sSkinType, this, &m_PaintManager);
         }
         else
@@ -177,13 +182,14 @@ namespace DuiLib
 
     LRESULT CDuiDlgImplBase::OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
-        POINT pt;
+        POINT pt = {0};
+        RECT rcClient = {0};
+        HWND hWnd = GetHWND();
         pt.x = GET_X_LPARAM(lParam);
         pt.y = GET_Y_LPARAM(lParam);
-        ::ScreenToClient(GetHWND(), &pt);
-        RECT rcClient;
-        ::GetClientRect(GetHWND(), &rcClient);
-        if(!::IsZoomed(GetHWND()))
+        ::ScreenToClient(hWnd, &pt);
+        ::GetClientRect(hWnd, &rcClient);
+        if(!::IsZoomed(hWnd))
         {
             RECT rcSizeBox = m_PaintManager.GetSizeBox();
             if(pt.y < rcClient.top + rcSizeBox.top)
@@ -255,7 +261,6 @@ namespace DuiLib
         lpMMI->ptMaxTrackSize.y = rcWork.bottom - rcWork.top;
         lpMMI->ptMinTrackSize.x = m_PaintManager.GetMinInfo().cx;
         lpMMI->ptMinTrackSize.y = m_PaintManager.GetMinInfo().cy;
-        bHandled = TRUE;
         return 0;
     }
 
@@ -276,16 +281,17 @@ namespace DuiLib
     LRESULT CDuiDlgImplBase::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         SIZE szRoundCorner = m_PaintManager.GetRoundCorner();
+        HWND hWnd = GetHWND();
 #if defined(WIN32) && !defined(UNDER_CE)
-        if(!::IsIconic(GetHWND()))
+        if(!::IsIconic(hWnd))
         {
             CDuiRect rcWnd;
-            ::GetWindowRect(GetHWND(), &rcWnd);
+            ::GetWindowRect(hWnd, &rcWnd);
             rcWnd.Offset(-rcWnd.left, -rcWnd.top);
             rcWnd.right++;
             rcWnd.bottom++;
             HRGN hRgn = ::CreateRoundRectRgn(rcWnd.left, rcWnd.top, rcWnd.right, rcWnd.bottom, szRoundCorner.cx, szRoundCorner.cy);
-            ::SetWindowRgn(GetHWND(), hRgn, TRUE);
+            ::SetWindowRgn(hWnd, hRgn, TRUE);
             ::DeleteObject(hRgn);
         }
 #endif
@@ -304,14 +310,14 @@ namespace DuiLib
     {
         if(wParam == SC_CLOSE)
         {
-            bHandled = TRUE;
             SendMessage(WM_CLOSE);
             return 0;
         }
 #if defined(WIN32) && !defined(UNDER_CE)
-        BOOL bZoomed = ::IsZoomed(GetHWND());
+        HWND hWnd = GetHWND();
+        BOOL bZoomed = ::IsZoomed(hWnd);
         LRESULT lRes = CDuiWnd::HandleMessage(uMsg, wParam, lParam);
-        if(::IsZoomed(GetHWND()) != bZoomed)
+        if(::IsZoomed(hWnd) != bZoomed)
         {
             if(!bZoomed)
             {

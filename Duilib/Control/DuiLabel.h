@@ -39,7 +39,7 @@ namespace DuiLib
         virtual void SetAutoCalcWidth(BOOL bAutoCalcWidth);
 
         SIZE EstimateSize(SIZE szAvailable) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
 
         void PaintText(HDC hDC) OVERRIDE;

@@ -204,9 +204,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiSlider::DoEvent(TEventUI& event)
+    void CDuiSlider::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -218,7 +218,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
+        if(event.Type == DUIEVENT_BUTTONDOWN || event.Type == DUIEVENT_DBLCLICK)
         {
             if(IsEnabled())
             {
@@ -259,7 +259,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_BUTTONUP || event.Type == UIEVENT_RBUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP || event.Type == DUIEVENT_RBUTTONUP)
         {
             if(IsEnabled())
             {
@@ -303,11 +303,11 @@ namespace DuiLib
                 return;
             }
         }
-        if(event.Type == UIEVENT_CONTEXTMENU)
+        if(event.Type == DUIEVENT_CONTEXTMENU)
         {
             return;
         }
-        if(event.Type == UIEVENT_SCROLLWHEEL)
+        if(event.Type == DUIEVENT_SCROLLWHEEL)
         {
             if(IsEnabled())
             {
@@ -324,7 +324,7 @@ namespace DuiLib
                 }
             }
         }
-        if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             if((m_uButtonState & UISTATE_CAPTURED) != 0)
             {
@@ -380,7 +380,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_SETCURSOR)
+        if(event.Type == DUIEVENT_SETCURSOR)
         {
             RECT rcThumb = GetThumbRect();
             if(IsEnabled())
@@ -389,7 +389,7 @@ namespace DuiLib
                 return;
             }
         }
-        if(event.Type == UIEVENT_MOUSELEAVE)
+        if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             if(IsEnabled())
             {

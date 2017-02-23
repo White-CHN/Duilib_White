@@ -111,7 +111,7 @@ namespace DuiLib
         STDMETHOD(ReleaseDC)(HDC hDC);
         STDMETHOD(InvalidateRect)(LPCRECT pRect, BOOL fErase);
         STDMETHOD(InvalidateRgn)(HRGN hRGN, BOOL fErase);
-        STDMETHOD(ScrollRect)(INT dx, INT dy, LPCRECT pRectScroll, LPCRECT pRectClip);
+        STDMETHOD(ScrollRect)(int dx, int dy, LPCRECT pRectScroll, LPCRECT pRectClip);
         STDMETHOD(AdjustRect)(LPRECT prc);
         STDMETHOD(OnDefWindowMessage)(UINT msg, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
 
@@ -205,7 +205,7 @@ namespace DuiLib
 
     class DUILIB_API CDuiActiveX
         : public CDuiControl
-        , public IMessageFilterUI
+        , public IMessageFilter
     {
         DECLARE_DUICONTROL(CDuiActiveX)
     public:

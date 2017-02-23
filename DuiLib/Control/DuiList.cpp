@@ -427,9 +427,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiListHeaderItem::DoEvent(TEventUI& event)
+    void CDuiListHeaderItem::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -442,15 +442,15 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_SETFOCUS)
+        if(event.Type == DUIEVENT_SETFOCUS)
         {
             Invalidate();
         }
-        if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == DUIEVENT_KILLFOCUS)
         {
             Invalidate();
         }
-        if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
+        if(event.Type == DUIEVENT_BUTTONDOWN || event.Type == DUIEVENT_DBLCLICK)
         {
             if(!IsEnabled())
             {
@@ -481,7 +481,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP)
         {
             if((m_uButtonState & UISTATE_CAPTURED) != 0)
             {
@@ -498,7 +498,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             if((m_uButtonState & UISTATE_CAPTURED) != 0)
             {
@@ -524,7 +524,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_SETCURSOR)
+        if(event.Type == DUIEVENT_SETCURSOR)
         {
             RECT rcSeparator = GetThumbRect();
             if(m_iSepWidth >= 0) //111024 by cddjr, 增加分隔符区域，方便用户拖动
@@ -541,7 +541,7 @@ namespace DuiLib
                 return;
             }
         }
-        if(event.Type == UIEVENT_MOUSEENTER)
+        if(event.Type == DUIEVENT_MOUSEENTER)
         {
             if(IsEnabled())
             {
@@ -550,7 +550,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSELEAVE)
+        if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             if(IsEnabled())
             {
@@ -1295,9 +1295,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiListContainerElement::DoEvent(TEventUI& event)
+    void CDuiListContainerElement::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(m_pOwner != NULL)
             {
@@ -1310,7 +1310,7 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_DBLCLICK)
+        if(event.Type == DUIEVENT_DBLCLICK)
         {
             if(IsEnabled())
             {
@@ -1319,7 +1319,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_KEYDOWN && IsEnabled())
+        if(event.Type == DUIEVENT_KEYDOWN && IsEnabled())
         {
             if(event.chKey == VK_RETURN)
             {
@@ -1328,7 +1328,7 @@ namespace DuiLib
                 return;
             }
         }
-        if(event.Type == UIEVENT_BUTTONDOWN)
+        if(event.Type == DUIEVENT_BUTTONDOWN)
         {
             if(IsEnabled())
             {
@@ -1343,7 +1343,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP)
         {
             if(IsEnabled())
             {
@@ -1351,11 +1351,11 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             return;
         }
-        if(event.Type == UIEVENT_MOUSEENTER)
+        if(event.Type == DUIEVENT_MOUSEENTER)
         {
             if(IsEnabled())
             {
@@ -1364,7 +1364,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSELEAVE)
+        if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             if((m_uButtonState & UISTATE_HOT) != 0)
             {
@@ -1373,13 +1373,13 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_TIMER)
+        if(event.Type == DUIEVENT_TIMER)
         {
             GetManager()->SendNotify(this, DUI_MSGTYPE_TIMER, event.wParam, event.lParam);
             return;
         }
 
-        if(event.Type == UIEVENT_CONTEXTMENU)
+        if(event.Type == DUIEVENT_CONTEXTMENU)
         {
             if(IsContextMenuUsed())
             {
@@ -1512,9 +1512,9 @@ namespace DuiLib
         return NULL;
     }
 
-    void CDuiListTextElement::DoEvent(TEventUI& event)
+    void CDuiListTextElement::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(m_pOwner != NULL)
             {
@@ -1528,7 +1528,7 @@ namespace DuiLib
         }
 
         // When you hover over a link
-        if(event.Type == UIEVENT_SETCURSOR)
+        if(event.Type == DUIEVENT_SETCURSOR)
         {
             for(int i = 0; i < m_nLinks; i++)
             {
@@ -1539,7 +1539,7 @@ namespace DuiLib
                 }
             }
         }
-        if(event.Type == UIEVENT_BUTTONUP && IsEnabled())
+        if(event.Type == DUIEVENT_BUTTONUP && IsEnabled())
         {
             for(int i = 0; i < m_nLinks; i++)
             {
@@ -1550,7 +1550,7 @@ namespace DuiLib
                 }
             }
         }
-        if(m_nLinks > 0 && event.Type == UIEVENT_MOUSEMOVE)
+        if(m_nLinks > 0 && event.Type == DUIEVENT_MOUSEMOVE)
         {
             int nHoverLink = -1;
             for(int i = 0; i < m_nLinks; i++)
@@ -1568,7 +1568,7 @@ namespace DuiLib
                 m_nHoverLink = nHoverLink;
             }
         }
-        if(m_nLinks > 0 && event.Type == UIEVENT_MOUSELEAVE)
+        if(m_nLinks > 0 && event.Type == DUIEVENT_MOUSELEAVE)
         {
             if(m_nHoverLink != -1)
             {
@@ -2008,9 +2008,9 @@ namespace DuiLib
         ProcessScrollBar(rc, cxNeeded, cyNeeded);
     }
 
-    void CDuiListBody::DoEvent(TEventUI& event)
+    void CDuiListBody::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(m_pOwner != NULL)
             {
@@ -3450,9 +3450,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiList::DoEvent(TEventUI& event)
+    void CDuiList::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(GetParent() != NULL)
             {
@@ -3465,17 +3465,17 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_SETFOCUS)
+        if(event.Type == DUIEVENT_SETFOCUS)
         {
             SetFocused(TRUE);
             return;
         }
-        if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == DUIEVENT_KILLFOCUS)
         {
             SetFocused(FALSE);
             return;
         }
-        if(event.Type == UIEVENT_KEYDOWN)
+        if(event.Type == DUIEVENT_KEYDOWN)
         {
             switch(event.chKey)
             {
@@ -3527,7 +3527,7 @@ namespace DuiLib
                 }
             }
         }
-        if(event.Type == UIEVENT_SCROLLWHEEL)
+        if(event.Type == DUIEVENT_SCROLLWHEEL)
         {
             switch(LOWORD(event.wParam))
             {

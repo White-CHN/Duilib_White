@@ -217,8 +217,8 @@ namespace DuiLib
         virtual void DoPaint(HDC hDC, const RECT& rcPaint);
         virtual void DoPostPaint(HDC hDC, const RECT& rcPaint);
 
-        virtual void Event(TEventUI& event);
-        virtual void DoEvent(TEventUI& event);
+        virtual void Event(CDuiEvent& event);
+        virtual void DoEvent(CDuiEvent& event);
 
         virtual CDuiControl* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags);
     public:

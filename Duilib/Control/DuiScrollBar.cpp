@@ -1083,9 +1083,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiScrollBar::DoEvent(TEventUI& event)
+    void CDuiScrollBar::DoEvent(CDuiEvent& event)
     {
-        if(!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND)
+        if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
         {
             if(m_pOwner != NULL)
             {
@@ -1098,15 +1098,15 @@ namespace DuiLib
             return;
         }
 
-        if(event.Type == UIEVENT_SETFOCUS)
+        if(event.Type == DUIEVENT_SETFOCUS)
         {
             return;
         }
-        if(event.Type == UIEVENT_KILLFOCUS)
+        if(event.Type == DUIEVENT_KILLFOCUS)
         {
             return;
         }
-        if(event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
+        if(event.Type == DUIEVENT_BUTTONDOWN || event.Type == DUIEVENT_DBLCLICK)
         {
             if(!IsEnabled())
             {
@@ -1234,7 +1234,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_BUTTONUP)
+        if(event.Type == DUIEVENT_BUTTONUP)
         {
             m_nScrollRepeatDelay = 0;
             m_nLastScrollOffset = 0;
@@ -1257,7 +1257,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSEMOVE)
+        if(event.Type == DUIEVENT_MOUSEMOVE)
         {
             if((m_uThumbState & UISTATE_CAPTURED) != 0)
             {
@@ -1303,11 +1303,11 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_CONTEXTMENU)
+        if(event.Type == DUIEVENT_CONTEXTMENU)
         {
             return;
         }
-        if(event.Type == UIEVENT_TIMER && event.wParam == TIMER_ID_SCROLLBAR)
+        if(event.Type == DUIEVENT_TIMER && event.wParam == TIMER_ID_SCROLLBAR)
         {
             ++m_nScrollRepeatDelay;
             if((m_uThumbState & UISTATE_CAPTURED) != 0)
@@ -1456,7 +1456,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSEENTER)
+        if(event.Type == DUIEVENT_MOUSEENTER)
         {
             if(IsEnabled())
             {
@@ -1470,7 +1470,7 @@ namespace DuiLib
             }
             return;
         }
-        if(event.Type == UIEVENT_MOUSELEAVE)
+        if(event.Type == DUIEVENT_MOUSELEAVE)
         {
             if(IsEnabled())
             {

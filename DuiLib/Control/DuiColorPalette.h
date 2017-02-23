@@ -44,7 +44,7 @@ namespace DuiLib
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
         virtual void PaintPallet(HDC hDC);
         void PaintBkColor(HDC hDC) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     protected:
         //更新数据
         void UpdatePalletData();

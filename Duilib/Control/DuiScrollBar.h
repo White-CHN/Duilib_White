@@ -66,7 +66,7 @@ namespace DuiLib
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
         void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
         void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         enum
         {

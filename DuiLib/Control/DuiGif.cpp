@@ -173,9 +173,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiGif::DoEvent(TEventUI& event)
+    void CDuiGif::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_TIMER && event.wParam == TIMER_ID_GIF)
+        if(event.Type == DUIEVENT_TIMER && event.wParam == TIMER_ID_GIF)
         {
             m_nFramePosition = (++m_nFramePosition) % m_nFrameCount;
             Invalidate();

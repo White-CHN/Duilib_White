@@ -94,9 +94,9 @@ namespace DuiLib
         }
     }
 
-    void CDuiRing::DoEvent(TEventUI& event)
+    void CDuiRing::DoEvent(CDuiEvent& event)
     {
-        if(event.Type == UIEVENT_TIMER && event.wParam == TIMER_ID_RING)
+        if(event.Type == DUIEVENT_TIMER && event.wParam == TIMER_ID_RING)
         {
             if(m_fCurAngle > 359)
             {

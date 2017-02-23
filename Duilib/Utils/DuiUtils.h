@@ -23,11 +23,11 @@ namespace DuiLib
         DWORD m_dwMesc;
     };
 
-    class DUILIB_API STRINGorID
+    class DUILIB_API CIdToResource
     {
     public:
-        STRINGorID(LPCTSTR lpString);
-        STRINGorID(UINT nID);
+        CIdToResource(LPCTSTR lpString);
+        CIdToResource(UINT nID);
     public:
         LPCTSTR m_lpstr;
     };

@@ -9,7 +9,7 @@ namespace DuiLib
     CDuiDlgBuilder::CDuiDlgBuilder(void)
         : m_pManager(NULL)
         , m_pCallback(NULL)
-        , m_pstrtype(NULL)
+        , m_lpType(NULL)
     {
     }
 
@@ -18,19 +18,19 @@ namespace DuiLib
     {
     }
 
-    void CDuiDlgBuilder::GetLastErrorMessage(LPTSTR pstrMessage, SIZE_T cchMax) const
+    void CDuiDlgBuilder::GetLastErrorMessage(LPTSTR lpMessage, SIZE_T szMax) const
     {
-        return m_xml.GetLastErrorMessage(pstrMessage, cchMax);
+        return m_xml.GetLastErrorMessage(lpMessage, szMax);
     }
 
-    void CDuiDlgBuilder::GetLastErrorLocation(LPTSTR pstrSource, SIZE_T cchMax) const
+    void CDuiDlgBuilder::GetLastErrorLocation(LPTSTR lpSource, SIZE_T szMax) const
     {
-        return m_xml.GetLastErrorLocation(pstrSource, cchMax);
+        return m_xml.GetLastErrorLocation(lpSource, szMax);
     }
 
-    CDuiControl* CDuiDlgBuilder::Create(STRINGorID xml, LPCTSTR type /*= NULL*/, IDialogBuilderCallback* pCallback /*= NULL*/, CDuiPaintManager* pManager /*= NULL*/, CDuiControl* pParent /*= NULL*/)
+    CDuiControl* CDuiDlgBuilder::Create(CIdToResource xml, LPCTSTR lpType /*= NULL*/, IDialogBuilderCallback* pCallback /*= NULL*/, CDuiPaintManager* pManager /*= NULL*/, CDuiControl* pParent /*= NULL*/)
     {
-        m_pstrtype = type;
+        m_lpType = lpType;
         m_pManager = pManager;
         m_pCallback = pCallback;
         if(HIWORD(xml.m_lpstr) != NULL && *(xml.m_lpstr) != _T('<'))
@@ -70,10 +70,10 @@ namespace DuiLib
                 DUI_ERROR("this[0x%p] GetResourceDll[NULL] ", this);
                 return NULL;
             }
-            HRSRC hResource = ::FindResource(hInstence, xml.m_lpstr, type);
+            HRSRC hResource = ::FindResource(hInstence, xml.m_lpstr, lpType);
             if(hResource == NULL)
             {
-                DUI_ERROR("this[0x%p] FindResource[NULL] hInstence[0x%x] m_lpstr[%s] type[%d]", this, hInstence, xml.m_lpstr, type);
+                DUI_ERROR("this[0x%p] FindResource[NULL] hInstence[0x%x] m_lpstr[%s] type[%d]", this, hInstence, xml.m_lpstr, lpType);
                 return NULL;
             }
             HGLOBAL hGlobal = ::LoadResource(hInstence, hResource);
@@ -520,11 +520,11 @@ namespace DuiLib
                 for(int i = 0; i < count; i++)
                 {
                     CDuiDlgBuilder builder;
-                    if(m_pstrtype != NULL)
+                    if(m_lpType != NULL)
                     {
                         // 使用资源dll，从资源中读取
                         WORD id = (WORD)_tcstol(szValue, &pstr, 10);
-                        pControl = builder.Create((UINT)id, m_pstrtype, m_pCallback, m_pManager, pParent);
+                        pControl = builder.Create((UINT)id, m_lpType, m_pCallback, m_pManager, pParent);
                     }
                     else
                     {

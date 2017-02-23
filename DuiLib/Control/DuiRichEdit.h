@@ -55,19 +55,19 @@ namespace DuiLib
         HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, __RPC__deref_out void __RPC_FAR* __RPC_FAR* ppvObject) OVERRIDE;
 
         HDC 		TxGetDC() OVERRIDE;
-        INT			TxReleaseDC(HDC hdc) OVERRIDE;
-        BOOL 		TxShowScrollBar(INT fnBar, BOOL fShow) OVERRIDE;
-        BOOL 		TxEnableScrollBar(INT fuSBFlags, INT fuArrowflags) OVERRIDE;
-        BOOL 		TxSetScrollRange(INT fnBar, LONG nMinPos, INT nMaxPos, BOOL fRedraw) OVERRIDE;
-        BOOL 		TxSetScrollPos(INT fnBar, INT nPos, BOOL fRedraw) OVERRIDE;
+        int			TxReleaseDC(HDC hdc) OVERRIDE;
+        BOOL 		TxShowScrollBar(int fnBar, BOOL fShow) OVERRIDE;
+        BOOL 		TxEnableScrollBar(int fuSBFlags, int fuArrowflags) OVERRIDE;
+        BOOL 		TxSetScrollRange(int fnBar, LONG nMinPos, int nMaxPos, BOOL fRedraw) OVERRIDE;
+        BOOL 		TxSetScrollPos(int fnBar, int nPos, BOOL fRedraw) OVERRIDE;
         void		TxInvalidateRect(LPCRECT prc, BOOL fMode) OVERRIDE;
         void 		TxViewChange(BOOL fUpdate) OVERRIDE;
-        BOOL		TxCreateCaret(HBITMAP hbmp, INT xWidth, INT yHeight) OVERRIDE;
+        BOOL		TxCreateCaret(HBITMAP hbmp, int xWidth, int yHeight) OVERRIDE;
         BOOL		TxShowCaret(BOOL fShow) OVERRIDE;
-        BOOL		TxSetCaretPos(INT x, INT y) OVERRIDE;
+        BOOL		TxSetCaretPos(int x, int y) OVERRIDE;
         BOOL 		TxSetTimer(UINT idTimer, UINT uTimeout) OVERRIDE;
         void 		TxKillTimer(UINT idTimer) OVERRIDE;
-        void		TxScrollWindowEx(INT dx, INT dy, LPCRECT lprcScroll, LPCRECT lprcClip, HRGN hrgnUpdate, LPRECT lprcUpdate, UINT fuScroll) OVERRIDE;
+        void		TxScrollWindowEx(int dx, int dy, LPCRECT lprcScroll, LPCRECT lprcClip, HRGN hrgnUpdate, LPRECT lprcUpdate, UINT fuScroll) OVERRIDE;
         void		TxSetCapture(BOOL fCapture) OVERRIDE;
         void		TxSetFocus() OVERRIDE;
         void 		TxSetCursor(HCURSOR hcur, BOOL fText) OVERRIDE;
@@ -110,10 +110,10 @@ namespace DuiLib
         LONG laccelpos;				// Accelerator position
         ULONG cRefs;					// Reference Count
         DWORD m_dwStyle;				// style bits
-        INT m_iCaretWidth;
-        INT m_iCaretHeight;
-        INT m_iCaretLastWidth;
-        INT m_iCaretLastHeight;
+        int m_iCaretWidth;
+        int m_iCaretHeight;
+        int m_iCaretLastWidth;
+        int m_iCaretLastHeight;
         ITextServices* pserv;		    // pointer to Text Services object
         CDuiRichEdit* m_pRichEdit;
         RECT rcClient;				// Client Rect for this control
@@ -124,7 +124,7 @@ namespace DuiLib
 
     class DUILIB_API CDuiRichEdit
         : public CDuiContainer
-        , public IMessageFilterUI
+        , public IMessageFilter
     {
         DECLARE_DUICONTROL(CDuiRichEdit)
     public:
@@ -216,7 +216,7 @@ namespace DuiLib
 
         void SetPos(RECT rc, BOOL bNeedInvalidate = TRUE) OVERRIDE;
         void Move(SIZE szOffset, BOOL bNeedInvalidate = TRUE) OVERRIDE;
-        void DoEvent(TEventUI& event) OVERRIDE;
+        void DoEvent(CDuiEvent& event) OVERRIDE;
         void PaintStatusImage(HDC hDC) OVERRIDE;
         void DoPaint(HDC hDC, const RECT& rcPaint) OVERRIDE;
         void DoInit() OVERRIDE;
