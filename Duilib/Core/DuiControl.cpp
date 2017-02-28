@@ -274,7 +274,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    DWORD CDuiControl::GetFocusBorderColor()
+    DWORD CDuiControl::GetFocusBorderColor() const
     {
         return m_dwFocusBorderColor;
     }
@@ -299,7 +299,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    CDuiSize CDuiControl::GetBorderRound()
+    CDuiSize CDuiControl::GetBorderRound() const
     {
         return m_cxyBorderRound;
     }
@@ -314,7 +314,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    int CDuiControl::GetBorderSize()
+    int CDuiControl::GetBorderSize() const
     {
         return m_nBorderSize;
     }
@@ -329,6 +329,11 @@ namespace DuiLib
         Invalidate();
     }
 
+    CDuiRect CDuiControl::GetBorderSizeV2() const
+    {
+        return m_rcBorderSize;
+    }
+
     void CDuiControl::SetBorderSize(CDuiRect rc)
     {
         if(m_rcBorderSize == rc)
@@ -339,12 +344,7 @@ namespace DuiLib
         Invalidate();
     }
 
-    CDuiRect CDuiControl::GetBorderSizeV2()
-    {
-        return m_rcBorderSize;
-    }
-
-    DWORD CDuiControl::GetBorderColor()
+    DWORD CDuiControl::GetBorderColor() const
     {
         return m_dwBorderColor;
     }

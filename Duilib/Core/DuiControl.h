@@ -50,21 +50,21 @@ namespace DuiLib
         CDuiString GetForeImage() const;
         void SetForeImage(LPCTSTR pStrImage);
 
-        DWORD GetFocusBorderColor();
+        DWORD GetFocusBorderColor() const;
         void SetFocusBorderColor(DWORD dwBorderColor);
 
         void SetColorHSL(BOOL bColorHSL);
 
-        CDuiSize GetBorderRound();
+        CDuiSize GetBorderRound() const;
         void SetBorderRound(CDuiSize cxyRound);
         //±ß¿òÏà¹Ø
-        int GetBorderSize();
+        int GetBorderSize() const;
         void SetBorderSize(int nSize);
 
-        CDuiRect GetBorderSizeV2();
+        CDuiRect GetBorderSizeV2() const;
         void SetBorderSize(CDuiRect rc);
 
-        DWORD GetBorderColor();
+        DWORD GetBorderColor() const;
         void SetBorderColor(DWORD dwBorderColor);
 
         int GetLeftBorderSize() const;
