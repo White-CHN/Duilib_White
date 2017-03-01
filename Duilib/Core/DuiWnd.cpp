@@ -257,6 +257,48 @@ namespace DuiLib
         return TRUE;
     }
 
+    BOOL CDuiWnd::GetClientRect(LPRECT lpRect)
+    {
+        ASSERT(::IsWindow(m_hWnd));
+        if(!::IsWindow(m_hWnd))
+        {
+            return FALSE;
+        }
+        if(lpRect == NULL)
+        {
+            return FALSE;
+        }
+        return ::GetClientRect(m_hWnd, lpRect);
+    }
+
+    BOOL CDuiWnd::GetWindowRect(LPRECT lpRect)
+    {
+        ASSERT(::IsWindow(m_hWnd));
+        if(!::IsWindow(m_hWnd))
+        {
+            return FALSE;
+        }
+        if(lpRect == NULL)
+        {
+            return FALSE;
+        }
+        return ::GetWindowRect(m_hWnd, lpRect);
+    }
+
+    BOOL CDuiWnd::MoveWindow(LPRECT lpRect, BOOL bRepaint /*= TRUE*/)
+    {
+        ASSERT(::IsWindow(m_hWnd));
+        if(!::IsWindow(m_hWnd))
+        {
+            return FALSE;
+        }
+        if(lpRect == NULL)
+        {
+            return FALSE;
+        }
+        return ::MoveWindow(m_hWnd, lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top, bRepaint);
+    }
+
     UINT CDuiWnd::GetClassStyle() const
     {
         return 0;

@@ -999,7 +999,7 @@ namespace DuiLib
             rc.top = rc.bottom - nHeight;
         }
         SetForegroundWindow(GetHWND());
-        MoveWindow(GetHWND(), rc.left, rc.top, rc.GetWidth(), rc.GetHeight(), FALSE);
+        MoveWindow(&rc, FALSE);
         ::SetWindowPos(GetHWND(), HWND_TOPMOST, rc.left, rc.top, rc.GetWidth(), rc.GetHeight() + pMenuRoot->GetInset().bottom + pMenuRoot->GetInset().top, SWP_SHOWWINDOW);
     }
 
@@ -1038,14 +1038,13 @@ namespace DuiLib
         }
 
         RECT rcWindow;
-        GetWindowRect(m_pOwner->GetManager()->GetPaintWindow(), &rcWindow);
+        ::GetWindowRect(m_pOwner->GetManager()->GetPaintWindow(), &rcWindow);
 
-        rc.top = rcOwner.top;
+        rc.top = rcOwner.top - 3; //子菜单向上移动3像素
         rc.bottom = rc.top + cyFixed;
         ::MapWindowRect(m_pOwner->GetManager()->GetPaintWindow(), HWND_DESKTOP, &rc);
-        rc.left = rcWindow.right;
+        rc.left = rcWindow.right - 3; //子菜单向左移动3像素
         rc.right = rc.left + cxFixed;
-        rc.right += 2;
 
         BOOL bReachBottom = FALSE;
         BOOL bReachRight = FALSE;
@@ -1060,7 +1059,7 @@ namespace DuiLib
             CDuiMenuWnd* pContextMenu = dynamic_cast<CDuiMenuWnd*>(pReceiver);
             if(pContextMenu != NULL)
             {
-                GetWindowRect(pContextMenu->GetHWND(), &rcPreWindow);
+                ::GetWindowRect(pContextMenu->GetHWND(), &rcPreWindow);
 
                 bReachRight = rcPreWindow.left >= rcWindow.right;
                 bReachBottom = rcPreWindow.top >= rcWindow.bottom;
@@ -1108,7 +1107,7 @@ namespace DuiLib
             rc.right = rc.left + cxFixed;
         }
 
-        MoveWindow(GetHWND(), rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top + m_pLayout->GetInset().top + m_pLayout->GetInset().bottom, FALSE);
+        ::MoveWindow(GetHWND(), rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top + m_pLayout->GetInset().top + m_pLayout->GetInset().bottom, FALSE);
     }
 
     LRESULT CDuiMenuWnd::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)

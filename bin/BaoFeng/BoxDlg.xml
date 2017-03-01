@@ -1,0 +1,22 @@
+﻿<!-- 注释 -->
+<?xml version="1.0" encoding="utf-8"?>
+
+<Window size="250,610" sizebox="0,4,0,6" caption="0,0,0,30"  mininfo="250,250" showshadow="true" shadowimage="shadow/shadow.png" shadowsize="6"  shadowcorner="0,0,8,8" >
+	<VerticalLayout bkcolor="#FFFFFFFF" >
+		<HorizontalLayout childvalign="vcenter" height="30" bkimage="bkimage/box_caption.bmp">
+		<Button width="23" height="21" tooltip="后退" normalimage="file='bkimage/box_back.bmp' source='0,0,23,21'" hotimage="file='bkimage/box_back.bmp' source='23,0,46,21'" pushedimage="file='bkimage/box_back.bmp' source='46,0,69,21'" />
+			<Button width="23" height="21" tooltip="前进" normalimage="file='bkimage/box_forward.bmp' source='0,0,23,21'" hotimage="file='bkimage/box_forward.bmp' source='23,0,46,21'" pushedimage="file='bkimage/box_forward.bmp' source='46,0,69,21'" />
+		<Button width="23" height="21" tooltip="刷新" normalimage="file='bkimage/box_refresh.bmp' source='0,0,23,21'" hotimage="file='bkimage/box_refresh.bmp' source='23,0,46,21'" pushedimage="file='bkimage/box_refresh.bmp' source='46,0,69,21'" />
+		<Control/>
+		<Button name="maxbtn" width="23" height="21" tooltip="最大化" normalimage="file='bkimage/box_maximize.bmp' source='0,0,23,21'" hotimage="file='bkimage/box_maximize.bmp' source='23,0,46,21'" pushedimage="file='bkimage/box_maximize.bmp' source='46,0,69,21'" />
+		<Button name="restorebtn" width="23" height="21" visible="false" tooltip="还原" normalimage="file='bkimage/box_restore.bmp' source='0,0,23,21'" hotimage="file='bkimage/box_restore.bmp' source='23,0,46,21'" pushedimage="file='bkimage/box_restore.bmp' source='46,0,69,21'" />
+		<Button name="closebtn" width="23" height="21" tooltip="关闭" normalimage="file='bkimage/close.bmp' source='0,0,23,21'" hotimage="file='bkimage/close.bmp' source='23,0,46,21'" pushedimage="file='bkimage/close.bmp' source='46,0,69,21'" />
+		
+		</HorizontalLayout>
+		<HorizontalLayout bkcolor="#FF202F42" >
+		</HorizontalLayout>
+		<VerticalLayout height="43"  bkimage="bkimage/bk_bar.bmp" >
+			<Control height="4" bkimage="bkimage/bk_transition.bmp" />
+			</VerticalLayout>
+	</VerticalLayout>
+</Window>

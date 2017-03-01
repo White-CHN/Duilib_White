@@ -57,6 +57,7 @@ namespace DuiLib
 
         BOOL Activate() OVERRIDE;
         void SetEnabled(BOOL bEnable = TRUE) OVERRIDE;
+        void SetVisible(BOOL bVisible = TRUE) OVERRIDE;
         void DoEvent(CDuiEvent& event) OVERRIDE;
     private:
         int	m_iBindTabIndex;

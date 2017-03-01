@@ -1,0 +1,90 @@
+﻿<!-- 注释 -->
+<?xml version="1.0" encoding="utf-8"?>
+
+<Window size="248,293" mininfo="248,293" layered="true" maxinfo="248,293" >
+	<Font id="1" name="宋体" size="15"/>
+	<Font id="2" name="宋体" size="12" default="true"/>
+	<VerticalLayout bkimage="bkimage/tools_window.png" >
+		<HorizontalLayout childvalign="vcenter" inset="0,0,4,0" height="30" >
+			<Control/>
+			<Button name="closebtn" width="25" height="22" tooltip="关闭" normalimage="file='bkimage/tools_close.png' source='0,0,25,22'" hotimage="file='bkimage/tools_close.png' source='25,0,50,22'" pushedimage="file='bkimage/tools_close.png' source='50,0,75,22'" />
+		</HorizontalLayout>
+		<VerticalLayout height="70" >
+			<HorizontalLayout childvalign="bottom" childpadding="12" >
+				<Control/>
+				<Button width="52" height="32" tooltip="3D" normalimage="file='bkimage/tool_3D.png' source='0,0,52,32'" hotimage="file='bkimage/tool_3D.png' source='52,0,104,32'" pushedimage="file='bkimage/tool_3D.png' source='104,0,156,32'" />
+				<Button width="52" height="32" tooltip="3D" normalimage="file='bkimage/tool_lefteye.png' source='0,0,52,32'" hotimage="file='bkimage/tool_lefteye.png' source='52,0,104,32'" pushedimage="file='bkimage/tool_lefteye.png' source='104,0,156,32'" />
+				<Button width="52" height="32" tooltip="3D" normalimage="file='bkimage/tool_surround_sound.png' source='0,0,52,32'" hotimage="file='bkimage/tool_surround_sound.png' source='52,0,104,32'" pushedimage="file='bkimage/tool_surround_sound.png' source='104,0,156,32'" />
+				<Control/>
+			</HorizontalLayout>
+			<HorizontalLayout childpadding="12" height="25" childvalign="vcenter" >
+				<Control/>
+				<Label width="52" font="1" align="center" text="3D"/>
+				<Label width="52" font="1" align="center" text="左眼"/>
+				<Label width="52" font="1" align="center" text="环绕声"/>
+				<Control/>
+			</HorizontalLayout>
+		</VerticalLayout>
+		<Control height="30" />
+		<HorizontalLayout inset="4,0,4,0" childvalign="vcenter">
+			<Button name="PrevBtn" width="10" height="18" normalimage="file='bkimage/tool_prev.png' source='0,0,10,18'" hotimage="file='bkimage/tool_prev.png' source='10,0,20,18'" pushedimage="file='bkimage/tool_prev.png' source='20,0,30,18'" />
+			<AnimationTabLayout name="tab_switch">
+				<VerticalLayout>
+					<HorizontalLayout childvalign="bottom" childpadding="20">
+						<Control/>
+						<Button width="32" height="32" tooltip="飞屏" normalimage="file='bkimage/tool_flyscreen.png' source='0,0,32,32'" hotimage="file='bkimage/tool_flyscreen.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_flyscreen.png' source='64,0,96,32'" />
+						<Button width="32" height="32" tooltip="游戏" normalimage="file='bkimage/tool_game.png' source='0,0,32,32'" hotimage="file='bkimage/tool_game.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_game.png' source='64,0,96,32'" />
+						<Button width="32" height="32" tooltip="下载" normalimage="file='bkimage/tool_download.png' source='0,0,32,32'" hotimage="file='bkimage/tool_download.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_download.png' source='64,0,96,32'" />
+						<Button width="32" height="32" tooltip="转码" normalimage="file='bkimage/tool_transcode.png' source='0,0,32,32'" hotimage="file='bkimage/tool_transcode.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_transcode.png' source='64,0,96,32'" />
+						<Control/>
+					</HorizontalLayout>
+					<HorizontalLayout childpadding="20">
+						<Control/>
+						<Label width="32" align="center" text="飞屏"/>
+						<Label width="32" align="center" text="游戏"/>
+						<Label width="32" align="center" text="下载"/>
+						<Label width="32" align="center" text="转码"/>
+						<Control/>
+					</HorizontalLayout>
+					<HorizontalLayout childvalign="bottom" childpadding="20">
+						<Control/>
+						<Button width="32" height="32" tooltip="影视" normalimage="file='bkimage/tool_movielib.png' source='0,0,32,32'" hotimage="file='bkimage/tool_movielib.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_movielib.png' source='64,0,96,32'" />
+						<Button width="32" height="32" tooltip="弹幕" normalimage="file='bkimage/tool_barrage.png' source='0,0,32,32'" hotimage="file='bkimage/tool_barrage.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_barrage.png' source='64,0,96,32'" />
+						<Button width="32" height="32" tooltip="dlna" normalimage="file='bkimage/tool_dlna.png' source='0,0,32,32'" hotimage="file='bkimage/tool_dlna.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_dlna.png' source='64,0,96,32'" />
+						<Button width="32" height="32" tooltip="资讯" normalimage="file='bkimage/tool_news.png' source='0,0,32,32'" hotimage="file='bkimage/tool_news.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_news.png' source='64,0,96,32'" />
+						<Control/>
+					</HorizontalLayout>
+					<HorizontalLayout childpadding="20">
+						<Control/>
+						<Label width="32" align="center" text="影视"/>
+						<Label width="32" align="center" text="弹幕"/>
+						<Label width="32" align="center" text="dlna"/>
+						<Label width="32" align="center" text="资讯"/>
+						<Control/>
+					</HorizontalLayout>
+				</VerticalLayout>
+				<VerticalLayout>
+					<HorizontalLayout childvalign="bottom" childpadding="20">
+						<Control/>
+						<Button width="32" height="32" tooltip="截图" normalimage="file='bkimage/tool_screenshots.png' source='0,0,32,32'" hotimage="file='bkimage/tool_screenshots.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_screenshots.png' source='64,0,96,32'" />
+						<Button width="32" height="32" tooltip="连拍" normalimage="file='bkimage/tool_shoot.png' source='0,0,32,32'" hotimage="file='bkimage/tool_shoot.png' source='32,0,64,32'" pushedimage="file='bkimage/tool_shoot.png' source='64,0,96,32'" />
+						<Button width="32" height="32" />
+						<Button width="32" height="32" />
+						<Control/>
+					</HorizontalLayout>
+					<HorizontalLayout childpadding="20">
+						<Control/>
+						<Label width="32" align="center" text="截图"/>
+						<Label width="32" align="center" text="连拍"/>
+						<Label width="32" />
+						<Label width="32" />
+						<Control/>
+					</HorizontalLayout>
+					<Control/>
+					<Control/>
+				</VerticalLayout>
+			</AnimationTabLayout>
+			<Button name="NextBtn" width="10" height="18" normalimage="file='bkimage/tool_next.png' source='0,0,10,18'" hotimage="file='bkimage/tool_next.png' source='10,0,20,18'" pushedimage="file='bkimage/tool_next.png' source='20,0,30,18'" />
+		</HorizontalLayout>
+	</VerticalLayout>
+</Window>

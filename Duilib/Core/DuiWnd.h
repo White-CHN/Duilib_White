@@ -30,6 +30,11 @@ namespace DuiLib
         void SetIcon(UINT nRes);
 
         BOOL ResizeClient(int cx = -1, int cy = -1);
+
+        BOOL GetClientRect(LPRECT lpRect);
+        BOOL GetWindowRect(LPRECT lpRect);
+
+        BOOL MoveWindow(LPRECT lpRect, BOOL bRepaint = TRUE);
     protected:
         virtual UINT GetClassStyle() const;
         virtual LPCTSTR GetSuperClassName() const;

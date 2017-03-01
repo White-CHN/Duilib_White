@@ -7,6 +7,7 @@ del bin\*.lib
 del bin\*.exe
 
 del Demos\DuiDemo\*.aps
+del Demos\BaoFeng\*.aps
 
 rd /s /q Lib
 rd /s /q Temp

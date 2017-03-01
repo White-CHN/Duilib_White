@@ -300,6 +300,12 @@ namespace DuiLib
     }
 
 
+    LRESULT CDuiDlgImplBase::OnMove(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+    {
+        bHandled = FALSE;
+        return 0;
+    }
+
     LRESULT CDuiDlgImplBase::OnChar(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         bHandled = FALSE;
@@ -431,6 +437,9 @@ namespace DuiLib
 #endif
             case WM_SIZE:
                 lRes = OnSize(uMsg, wParam, lParam, bHandled);
+                break;
+            case  WM_MOVE:
+                lRes = OnMove(uMsg, wParam, lParam, bHandled);
                 break;
             case WM_CHAR:
                 lRes = OnChar(uMsg, wParam, lParam, bHandled);

@@ -13,7 +13,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
     CDuiPaintManager::SetResourceType(DUILIB_FILE);
     // 资源路径
     CDuiString strResourcePath = CDuiPaintManager::GetInstancePath();
-    strResourcePath += _T("BaoFeng\\");
+    strResourcePath += _T("BaoFong\\");
     CDuiPaintManager::SetResourcePath(strResourcePath.GetData());
 
     // 创建主窗口

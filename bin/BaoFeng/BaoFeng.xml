@@ -1,10 +1,14 @@
 ﻿<!-- 注释 -->
 <?xml version="1.0" encoding="utf-8"?>
-<Window size="880,610" sizebox="4,4,6,6" caption="0,0,0,30"  mininfo="880,610" showshadow="true" shadowimage="shadow/shadow.png" shadowsize="6"  shadowcorner="0,0,8,8" >
 
-	<VerticalLayout bkcolor="#FFFFFFFF" childvalign="vcenter" >
+<Window size="880,610" sizebox="4,4,6,6" caption="0,0,0,30"  mininfo="880,610" showshadow="true" shadowimage="shadow/shadow.png" shadowsize="6"  shadowcorner="0,0,8,8" >
+	<Font id="1" name="宋体" size="15" default="true" />
+	<Font id="2" name="宋体" size="12"/>
+	<Style name="edit_style" value="normalimage=&quot;res='bkimage/button_pushed.png' corner='6,6,6,6'&quot; hotimage=&quot;file='bkimage/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot; focusedimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot;" />
+
+	<VerticalLayout>
 		<HorizontalLayout  height="27" childvalign="vcenter" inset="1,0,2,1" bkimage="bkimage/box_caption.bmp" >
-			<Button tooltip="主菜单" width="103" normalimage="file='bkimage/icon.bmp' source='0,0,103,26'" hotimage="file='bkimage/icon.bmp' source='103,0,206,26'" pushedimage="file='bkimage/icon.bmp' source='206,0,309,26'" />
+			<Button name="MainMenuBtn" tooltip="主菜单" width="103" height="26" normalimage="file='bkimage/icon.bmp' source='0,0,103,26'" hotimage="file='bkimage/icon.bmp' source='103,0,206,26'" pushedimage="file='bkimage/icon.bmp' source='206,0,309,26'" />
 			<Control/>
 			<Button tooltip="意见反馈" width="23" height="21" normalimage="file='bkimage/feedback.bmp' source='0,0,23,21'" hotimage="file='bkimage/feedback.bmp' source='23,0,46,21'" pushedimage="file='bkimage/feedback.bmp' source='46,0,69,21'" />
 			<Button tooltip="皮肤管理" width="23" height="21" normalimage="file='bkimage/skins.bmp' source='0,0,23,21'" hotimage="file='bkimage/skins.bmp' source='23,0,46,21'" pushedimage="file='bkimage/skins.bmp' source='46,0,69,21'" />
@@ -13,25 +17,70 @@
 			<Button name="restorebtn" visible="false" width="23" tooltip="还原" height="21" normalimage="file='bkimage/restore.bmp' source='0,0,23,21'" hotimage="file='bkimage/restore.bmp' source='23,0,46,21'" pushedimage="file='bkimage/restore.bmp' source='46,0,69,21'" />
 			<Button name="closebtn" width="23" height="21" tooltip="关闭" normalimage="file='bkimage/close.bmp' source='0,0,23,21'" hotimage="file='bkimage/close.bmp' source='23,0,46,21'" pushedimage="file='bkimage/close.bmp' source='46,0,69,21'" />
 		</HorizontalLayout>
-		<VerticalLayout bkcolor="#FF000000">
-			<HorizontalLayout childvalign="vcenter" >
-				<Control/>
-				<VerticalLayout height="307" width="435" childvalign="vcenter" bkimage="bkimage/bg_player.bmp" >
-					<Control height="200"/>
-					<HorizontalLayout >
-						<Control/>
-						<Button tooltip="打开文件" width="120" height="28" normalimage="file='bkimage/open.bmp' source='0,0,120,28'" hotimage="file='bkimage/open.bmp' source='120,0,240,28'" pushedimage="file='bkimage/open.bmp' source='240,0,360,28'" />
-						<Control/>
-					</HorizontalLayout>
-				</VerticalLayout>
-				<Control/>
-			</HorizontalLayout>
-			<Control height="30" bkimage="bkimage/slider.bmp" />
-		</VerticalLayout>
+		<HorizontalLayout>
+			<VerticalLayout bkcolor="#FF000000">
+				<HorizontalLayout childvalign="vcenter" >
+					<Control/>
+					<VerticalLayout height="307" width="435" childvalign="vcenter" bkimage="bkimage/bg_player.bmp" >
+						<Control height="200"/>
+						<HorizontalLayout childpadding="1" >
+							<Control/>
+							<Button tooltip="打开文件" width="93" height="28" normalimage="file='bkimage/open.bmp' source='0,0,93,28'" hotimage="file='bkimage/open.bmp' source='120,0,213,28'" pushedimage="file='bkimage/open.bmp' source='240,0,333,28'" />
+							<Button tooltip="打开文件" width="26" height="28" normalimage="file='bkimage/open.bmp' source='95,0,120,28'" hotimage="file='bkimage/open.bmp' source='215,0,240,28'" pushedimage="file='bkimage/open.bmp' source='335,0,360,28'" />
+							<Control/>
+						</HorizontalLayout>
+					</VerticalLayout>
+					<Control/>
+				</HorizontalLayout>
+				<Control height="20" bkimage="bkimage/slider.bmp" />
+			</VerticalLayout>
+			<VerticalLayout name="ViewRight" visible="false" width="300" bkcolor="#FF000000">
+				<HorizontalLayout height="30">
+					<Option text="在线影视" textcolor="#FFFFFFFF" valign="vcenter" align="center" name="OptionVideo" normalimage="file='bkimage/tab_left.png' source='0,0,10,33'" hotimage="file='bkimage/tab_left.png' source='10,0,20,33'" pushedimage="file='bkimage/tab_left.png' source='20,0,30,33'" selectedimage="file='bkimage/tab_left.png' source='20,0,30,33'" group="ListView" selected="true" />
+					<Option text="正在播放" textcolor="#FFFFFFFF" valign="vcenter" align="center" name="OptionPlaying" normalimage="file='bkimage/tab_left.png' source='0,0,10,33'" hotimage="file='bkimage/tab_left.png' source='10,0,20,33'" pushedimage="file='bkimage/tab_left.png' source='20,0,30,33'" selectedimage="file='bkimage/tab_left.png' source='20,0,30,33'" group="ListView" />
+				</HorizontalLayout>
+				<AnimationTabLayout  name="tab_switch">
+					<VerticalLayout bkcolor="#FF2b2d33">
+						<VerticalLayout height="55" bkimage="bkimage/page1_caption.bmp">
+							<HorizontalLayout height="32" childvalign="vcenter" childpadding="8" inset="3,0,3,0" >
+								<Edit height="22" style="edit_style" />
+								<Button tooltip="查询" width="47" height="22" normalimage="file='bkimage/page1_query.bmp' source='0,0,47,22'" hotimage="file='bkimage/page1_query.bmp' source='47,0,94,22'" pushedimage="file='bkimage/page1_query.bmp' source='94,0,141,22'" />
+							</HorizontalLayout>
+							<HorizontalLayout childvalign="vcenter" childpadding="2">
+								<Button tooltip="刷新" width="17" height="17" normalimage="file='bkimage/page1_refresh.bmp' source='0,0,17,17'" hotimage="file='bkimage/page1_refresh.bmp' source='17,0,34,17'" pushedimage="file='bkimage/page1_refresh.bmp' source='34,0,51,17'"/>
+								<Label text="暴风影视" font="2" textcolor="#FFFFFFFF" valign="vcenter" />
+								<Control width="2" height="16" bkimage="bkimage/page1_caption_sep.png"/>
+								<Label width="7" height="16" bkimage="bkimage/page1_menu_down.png"/>
+								<Label width="35" text="观众" font="2" textcolor="#FFFFFFFF"/>
+							</HorizontalLayout>
+						</VerticalLayout>
+					</VerticalLayout>
+					<VerticalLayout bkcolor="#FF2b2d33">
+					<VerticalLayout height="21" bkimage="bkimage/page2_caption.bmp">
+							<HorizontalLayout childvalign="vcenter" childpadding="2" inset="3,0,3,0">
+							<Label width="35" text="全部" font="2" textcolor="#FFFFFFFF"/>
+							<Control/>
+							<Button tooltip="添加到播放列表" width="17" height="17" normalimage="file='bkimage/page2_add.bmp' source='0,0,17,17'" hotimage="file='bkimage/page2_add.bmp' source='17,0,34,17'" pushedimage="file='bkimage/page2_add.bmp' source='34,0,51,17'"/>
+							<Button tooltip="从播放列表删除" width="17" height="17" normalimage="file='bkimage/page2_delete.bmp' source='0,0,17,17'" hotimage="file='bkimage/page2_delete.bmp' source='17,0,34,17'" pushedimage="file='bkimage/page2_delete.bmp' source='34,0,51,17'"/>
+							<Button tooltip="清空播放列表" width="17" height="17" normalimage="file='bkimage/page2_clear.bmp' source='0,0,17,17'" hotimage="file='bkimage/page2_clear.bmp' source='17,0,34,17'" pushedimage="file='bkimage/page2_clear.bmp' source='34,0,51,17'"/>
+							
+							<Button tooltip="顺序播放" width="17" height="17" normalimage="file='bkimage/page2_OrderPlay.png' source='0,0,17,17'" hotimage="file='bkimage/page2_OrderPlay.png' source='17,0,34,17'" pushedimage="file='bkimage/page2_OrderPlay.png' source='34,0,51,17'"/>
+							<Button tooltip="单个播放" width="17" height="17" normalimage="file='bkimage/page2_SinglePlay.png' source='0,0,17,17'" hotimage="file='bkimage/page2_SinglePlay.png' source='17,0,34,17'" pushedimage="file='bkimage/page2_SinglePlay.png' source='34,0,51,17'"/>
+							<Button tooltip="随机播放" width="17" height="17" normalimage="file='bkimage/page2_RandomPlay.png' source='0,0,17,17'" hotimage="file='bkimage/page2_RandomPlay.png' source='17,0,34,17'" pushedimage="file='bkimage/page2_RandomPlay.png' source='34,0,51,17'"/>
+							<Button tooltip="单个循环" width="17" height="17" normalimage="file='bkimage/page2_SingleCycle.png' source='0,0,17,17'" hotimage="file='bkimage/page2_SingleCycle.png' source='17,0,34,17'" pushedimage="file='bkimage/page2_SingleCycle.png' source='34,0,51,17'"/>
+							<Button tooltip="列表循环" width="17" height="17" normalimage="file='bkimage/page2_ListCycle.png' source='0,0,17,17'" hotimage="file='bkimage/page2_ListCycle.png' source='17,0,34,17'" pushedimage="file='bkimage/page2_ListCycle.png' source='34,0,51,17'"/>
+							
+							</HorizontalLayout>
+						</VerticalLayout>
+					</VerticalLayout>
+				</AnimationTabLayout>
+				<Control height="20" bkimage="bkimage/playlist_bar.bmp" />
+			</VerticalLayout>
+		</HorizontalLayout>
 		<VerticalLayout height="43"  bkimage="bkimage/bk_bar.bmp" >
 			<Control height="4" bkimage="bkimage/bk_transition.bmp" />
 			<HorizontalLayout inset="10,0,10,0" childpadding="10" childvalign="vcenter" >
-				<Button tooltip="工具箱" width="34" height="27" normalimage="file='bkimage/tools.bmp' source='0,0,34,27'" hotimage="file='bkimage/tools.bmp' source='34,0,68,27'" pushedimage="file='bkimage/tools.bmp' source='68,0,102,27'" />
+				<Button name="ToolsBtn" tooltip="工具箱" width="34" height="27" normalimage="file='bkimage/tools.bmp' source='0,0,34,27'" hotimage="file='bkimage/tools.bmp' source='34,0,68,27'" pushedimage="file='bkimage/tools.bmp' source='68,0,102,27'" />
 				<Control width="1" height="27" bkimage="bkimage/divider_line.bmp" />
 				<Option tooltip="左眼" width="51" height="33" normalimage="file='bkimage/left_eye.bmp' source='0,0,51,33'" hotimage="file='bkimage/left_eye.bmp' source='51,0,102,33'" pushedimage="file='bkimage/left_eye.bmp' source='102,0,153,33'" selectedimage="file='bkimage/left_eyed.bmp' source='0,0,51,33'" selectedhotimage="file='bkimage/left_eyed.bmp' source='51,0,102,33'" selectedpushedimage="file='bkimage/left_eyed.bmp' source='102,0,153,33'" />
 				<Control/>
@@ -47,9 +96,9 @@
 					<Option tooltip="全屏" width="23" height="21" normalimage="file='bkimage/fullscreen.bmp' source='0,0,23,21'" hotimage="file='bkimage/fullscreen.bmp' source='23,0,46,21'" pushedimage="file='bkimage/fullscreen.bmp' source='46,0,69,21'" selectedimage="file='bkimage/quit_fullscreen.bmp' source='0,0,23,21'" selectedhotimage="file='bkimage/quit_fullscreen.bmp' source='23,0,46,21'" selectedpushedimage="file='bkimage/quit_fullscreen.bmp' source='46,0,69,21'" />
 				</HorizontalLayout>
 				<Control/>
-				<Option tooltip="播放列表" width="31" height="27" normalimage="file='bkimage/list_show.bmp' source='0,0,31,27'" hotimage="file='bkimage/list_show.bmp' source='31,0,62,27'" pushedimage="file='bkimage/list_show.bmp' source='62,0,93,27'" selectedimage="file='bkimage/list_showed.bmp' source='0,0,31,27'" selectedhotimage="file='bkimage/list_showed.bmp' source='31,0,62,27'" selectedpushedimage="file='bkimage/list_showed.bmp' source='62,0,93,27'" />
+				<Option name="OptionPlayList" tooltip="播放列表" width="31" height="27" normalimage="file='bkimage/list_show.bmp' source='0,0,31,27'" hotimage="file='bkimage/list_show.bmp' source='31,0,62,27'" pushedimage="file='bkimage/list_show.bmp' source='62,0,93,27'" selectedimage="file='bkimage/list_showed.bmp' source='0,0,31,27'" selectedhotimage="file='bkimage/list_showed.bmp' source='31,0,62,27'" selectedpushedimage="file='bkimage/list_showed.bmp' source='62,0,93,27'" />
 				<Control width="1" height="27" bkimage="bkimage/divider_line.bmp" />
-				<Option tooltip="暴风盒子" width="34" height="27" normalimage="file='bkimage/box.bmp' source='0,0,34,27'" hotimage="file='bkimage/box.bmp' source='34,0,68,27'" pushedimage="file='bkimage/box.bmp' source='68,0,102,27'" selectedimage="file='bkimage/boxed.bmp' source='0,0,34,27'" selectedhotimage="file='bkimage/boxed.bmp' source='34,0,68,27'" selectedpushedimage="file='bkimage/boxed.bmp' source='68,0,102,27'" />
+				<Option name="OptionBox" tooltip="暴风盒子" width="34" height="27" normalimage="file='bkimage/box.bmp' source='0,0,34,27'" hotimage="file='bkimage/box.bmp' source='34,0,68,27'" pushedimage="file='bkimage/box.bmp' source='68,0,102,27'" selectedimage="file='bkimage/boxed.bmp' source='0,0,34,27'" selectedhotimage="file='bkimage/boxed.bmp' source='34,0,68,27'" selectedpushedimage="file='bkimage/boxed.bmp' source='68,0,102,27'" />
 			</HorizontalLayout>
 		</VerticalLayout>
 	</VerticalLayout>

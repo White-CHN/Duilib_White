@@ -16,12 +16,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="..\..\bin\BaoFeng\ico\BaoFeng.ico">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="BaoFengFrame.h">
@@ -32,11 +44,22 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BaoFeng.cpp">
+    <ClCompile Include="BoxDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="BaoFengFrame.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="BaoFeng.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BaoFeng.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

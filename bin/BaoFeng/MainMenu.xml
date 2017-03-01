@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window  showshadow="true" >
+	<Font name="宋体" size="12" default="true" />
+
+	<!-- Menu样式 -->
+	<Default name="Menu" value="bordersize=&quot;1&quot; borderround=&quot;1,1&quot; bordercolor=&quot;0x202122&quot; inset=&quot;1,1,1,1&quot; itemtextpadding=&quot;26,0,0,0&quot; bkimage=&quot;file='bkimage/menu_skin.bmp' source='0,0,150,26'&quot; itemhotimage=&quot;file='bkimage/menu_skin.bmp' source='150,0,300,26'&quot; itemselectedimage=&quot;file='bkimage/menu_skin.bmp' source='150,0,300,26'&quot; itemdisabledimage=&quot;file='bkimage/menu_skin.bmp' source='0,0,150,26'&quot;"  />
+	<!-- ExplandIcon样式 -->
+	<Default name="ExplandIcon" value="bkimage/menu_expand.png" />
+
+	<Menu>
+		<MenuElement text="文件(&F)" icon="file='bkimage/menu_icon.png' source='0,0,16,14'" expland="true">
+			<MenuElement text="打开文件(&O)" />
+			<MenuElement  text="打开文件夹" />
+			<MenuElement  text="打开URL"/>
+			<MenuElement  text="打开3D视频" />
+			<MenuElement  text="打开碟片/DVD" enabled="false" />
+		</MenuElement>
+		<MenuElement  text="播放(&P)" expland="true" icon="file='bkimage/menu_icon.png' source='32,0,48,14'" iconsize="16,14">
+			<MenuElement  text="播放" enabled="false"/>
+			<MenuElement  text="停止(&S)" enabled="false"/>
+			<MenuElement  text="全屏" enabled="false"/>
+			<MenuElement  text="最小界面" enabled="false"/>
+			<MenuElement  text="播放控制" />
+			<MenuElement  text="AB点重复" enabled="false"/>
+			<MenuElement  text="循环模式" />
+			<MenuElement  text="显示比例/尺寸" />
+			<MenuElement  text="置顶显示" />
+			<MenuElement  text="声道/音量" />
+			<MenuElement  text="播放后操作" />
+		</MenuElement>
+		<MenuElement text="DVD导航(&D)" expland="true" enabled="false" />
+		<MenuElement text="帮助(&H)" expland="true">
+			<MenuElement  text="官方论坛(&F)" />
+			<MenuElement  text="检查更新" />
+			<MenuElement  text="关于(&A)" />
+		</MenuElement>
+		<MenuElement text="高级选项" icon="file='bkimage/menu_icon.png' source='64,0,80,14'" iconsize="16,14"/>
+		<MenuElement text="开启VIP去广告模式" icon="file='bkimage/menu_icon.png' source='96,0,112,14'" iconsize="16,14"/>
+		<MenuElement text="退出" icon="file='bkimage/menu_icon.png' source='128,0,144,14'" iconsize="16,14"/>
+	</Menu>
+</Window>

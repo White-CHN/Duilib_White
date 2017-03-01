@@ -557,6 +557,15 @@ namespace DuiLib
         }
     }
 
+    void CDuiButton::SetVisible(BOOL bVisible /*= TRUE*/)
+    {
+        CDuiControl::SetVisible(bVisible);
+        if(!IsVisible())
+        {
+            m_uButtonState = 0;
+        }
+    }
+
     void CDuiButton::DoEvent(CDuiEvent& event)
     {
         if(!IsMouseEnabled() && event.Type > DUIEVENT__MOUSEBEGIN && event.Type < DUIEVENT__MOUSEEND)
