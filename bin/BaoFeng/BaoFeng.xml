@@ -6,7 +6,7 @@
 	<Font id="2" name="宋体" size="12"/>
 	<Style name="edit_style" value="normalimage=&quot;res='bkimage/button_pushed.png' corner='6,6,6,6'&quot; hotimage=&quot;file='bkimage/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot; focusedimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot;" />
 
-	<VerticalLayout>
+	<VerticalLayout bkcolor="#FFFFFFFF">
 		<HorizontalLayout  height="27" childvalign="vcenter" inset="1,0,2,1" bkimage="bkimage/box_caption.bmp" >
 			<Button name="MainMenuBtn" tooltip="主菜单" width="103" height="26" normalimage="file='bkimage/icon.bmp' source='0,0,103,26'" hotimage="file='bkimage/icon.bmp' source='103,0,206,26'" pushedimage="file='bkimage/icon.bmp' source='206,0,309,26'" />
 			<Control/>
@@ -17,7 +17,7 @@
 			<Button name="restorebtn" visible="false" width="23" tooltip="还原" height="21" normalimage="file='bkimage/restore.bmp' source='0,0,23,21'" hotimage="file='bkimage/restore.bmp' source='23,0,46,21'" pushedimage="file='bkimage/restore.bmp' source='46,0,69,21'" />
 			<Button name="closebtn" width="23" height="21" tooltip="关闭" normalimage="file='bkimage/close.bmp' source='0,0,23,21'" hotimage="file='bkimage/close.bmp' source='23,0,46,21'" pushedimage="file='bkimage/close.bmp' source='46,0,69,21'" />
 		</HorizontalLayout>
-		<HorizontalLayout>
+		<HorizontalLayout >
 			<VerticalLayout bkcolor="#FF000000">
 				<HorizontalLayout childvalign="vcenter" >
 					<Control/>

@@ -1377,9 +1377,11 @@ namespace DuiLib
                 {
                     break;
                 }
-                ZIPENTRY ze;
-                int i;
-                if(FindZipItem(hz, pstrPath, true, &i, &ze) != 0)
+                ZIPENTRY ze = {0};
+                int i = 0;
+                CDuiString key = pstrPath;
+                key.Replace(_T("\\"), _T("/"));
+                if(FindZipItem(hz, key, true, &i, &ze) != 0)
                 {
                     break;
                 }

@@ -202,9 +202,11 @@ namespace DuiLib
             {
                 return _Failed(_T("Error opening zip file"));
             }
-            ZIPENTRY ze;
-            int i;
-            if(FindZipItem(hz, pstrFilename, true, &i, &ze) != 0)
+            ZIPENTRY ze = {0};
+            int i = 0;
+            CDuiString key = pstrFilename;
+            key.Replace(_T("\\"), _T("/"));
+            if(FindZipItem(hz, key, true, &i, &ze) != 0)
             {
                 return _Failed(_T("Could not find ziped file"));
             }
