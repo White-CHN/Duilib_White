@@ -14,6 +14,7 @@ namespace DuiLib
 
         BOOL Activate() OVERRIDE;
 
+        LPCTSTR GetGroup() const;
         void SetGroup(LPCTSTR pStrGroupName = NULL);
 
         BOOL IsSelected() const;

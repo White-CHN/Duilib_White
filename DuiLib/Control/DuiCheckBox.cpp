@@ -40,6 +40,16 @@ namespace DuiLib
         m_bAutoCheck = bEnable;
     }
 
+    BOOL CDuiCheckBox::GetCheck() const
+    {
+        return IsSelected();
+    }
+
+    void CDuiCheckBox::SetCheck(BOOL bCheck)
+    {
+        Selected(bCheck);
+    }
+
     void CDuiCheckBox::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
     {
         if(_tcsicmp(pstrName, _T("EnableAutoCheck")) == 0)

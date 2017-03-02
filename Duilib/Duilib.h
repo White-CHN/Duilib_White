@@ -106,6 +106,7 @@ using namespace Gdiplus;
 #include "Control/DuiActiveX.h"
 #include "Control/DuiRollText.h"
 #include "Control/DuiWebBrowser.h"
+#include "Control/DuiTreeView.h"
 
 
 #pragma comment( lib, "GdiPlus.lib" )

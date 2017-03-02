@@ -212,6 +212,8 @@ namespace DuiLib
 #define  DUI_CTR_TILELAYOUT                      (_T("TileLayout"))
 #define  DUI_CTR_CHILDLAYOUT                     (_T("ChildLayout"))
 #define  DUI_CTR_RICHEDIT                        (_T("RichEdit"))
+#define  DUI_CTR_TREENODE                        (_T("TreeNode"))
+#define  DUI_CTR_TREEVIEW                        (_T("TreeView"))
 ///
 //////////////END控件名称宏定义//////////////////////////////////////////////////
 

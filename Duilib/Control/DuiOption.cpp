@@ -53,6 +53,11 @@ namespace DuiLib
         return TRUE;
     }
 
+    LPCTSTR CDuiOption::GetGroup() const
+    {
+        return m_sGroupName;
+    }
+
     void CDuiOption::SetGroup(LPCTSTR pStrGroupName /*= NULL*/)
     {
         if(pStrGroupName == NULL)

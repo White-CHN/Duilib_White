@@ -9,7 +9,9 @@
 	<Style name="list_style" value="headerbkimage=&quot;res='list/list_header_bg.png'&quot; itemalign=&quot;center&quot; itemlinecolor=&quot;#FF888888&quot; itemshowrowline=&quot;true&quot; itemshowcolumnline=&quot;true&quot;" />
 	<Style name="edit_style" value="align=&quot;center&quot; normalimage=&quot;res='button/button_pushed.png' corner='6,6,6,6'&quot; hotimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot; focusedimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot;" />
 	<Style name="combo_style" value="textpadding=&quot;4,0,0,0&quot; normalimage=&quot;file='combox/combo.png' source='0,0,100,22' corner='2,2,20,2'&quot; hotimage=&quot;file='combox\combo.png' source='0,22,100,44' corner='2,2,22,2'&quot; pushedimage=&quot;file='combox\combo.png' source='0,44,100,66' corner='2,2,22,2'&quot;" />
-
+	<Style name="treenode_folder_style" value="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='common/treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='common/treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='common/treeview_a.png' source='16,0,32,16' &quot;"/>
+	<Style name="treenode_checkbox_style" value="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/unchecked.png' &quot; selectedimage=&quot;file='common/checked.png'&quot;" />
+	<Style name="treeview_style" value="folderattr=&quot;treenode_folder_style&quot; checkboxattr=&quot;treenode_checkbox_style&quot;"/>
 	<Font id="0"  size="13" default="true" />
 	<Font id="1" name="华文彩云" size="35" />
 	<Font id="2" name="微软雅黑" size="12" underline="true" />
@@ -185,6 +187,45 @@
 				<HorizontalLayout height="200" childvalign="vcenter" inset="0,6,0,6" >
 					<Label font="3" valign="center" cursor="hand" align="center"  text="Tree" tooltip="Tree演示" width="80" textcolor="#FFFFFFFF" />
 					<VerticalLayout height="200" bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
+						<TreeView bkcolor="#FFFFFFFF" visiblefolderbtn="true" visiblecheckbtn="true" vscrollbar="true" >
+							<TreeNode text="A1" style="treeview_style" itemattr="visible=&quot;true&quot; font=&quot;3&quot;">
+								<TreeNode text="B1" innerstyle="selitemtextcolor=&quot;#FFFF0000&quot; folderattr=&quot;treenode_folder_style&quot; checkboxattr=&quot;treenode_checkbox_style&quot;" itemattr="font=&quot;3&quot;" >
+									<TreeNode text="C1" innerstyle="selitemtextcolor=&quot;#FFFF0000&quot; folderattr=&quot;treenode_folder_style&quot; checkboxattr=&quot;treenode_checkbox_style&quot;" >
+										<TreeNode text="D1" horizattr="width=&quot;128&quot; bkcolor=&quot;#FFFF0000&quot;" innerstyle="folderattr=&quot;treenode_folder_style&quot; checkboxattr=&quot;treenode_checkbox_style&quot;" >
+											<HorizontalLayout bkcolor="#FFFF00FF" width="300">
+											</HorizontalLayout>
+										</TreeNode>
+										<Button text="扩展按钮" style="btn_style" width="100" />
+									</TreeNode>
+									<Edit text="请输入编辑内容" style="edit_style" tipvalue="扩展文本框"  />
+								</TreeNode>
+								<Edit text="编辑" style="edit_style" tipvalue="扩展文本框" />
+							</TreeNode>
+							<TreeNode text="A2" itemtextcolor="#FFFF0000" itemattr="font=&quot;3&quot;" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='common/treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='common/treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='common/treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/unchecked.png' &quot; selectedimage=&quot;file='common/checked.png' &quot;" >
+								<TreeNode text="B2" itemattr="font=&quot;3&quot;" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='common/treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='common/treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='common/treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/unchecked.png' &quot; selectedimage=&quot;file='common/checked.png' &quot;" >
+									<TreeNode text="C2" itemattr="font=&quot;3&quot;" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='common/treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='common/treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='common/treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/unchecked.png' &quot; selectedimage=&quot;file='common/checked.png' &quot;" >
+										<TreeNode text="D2" itemattr="font=&quot;3&quot;" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='common/treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='common/treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='common/treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/unchecked.png' &quot; selectedimage=&quot;file='common/checked.png' &quot;" >
+											<Option text="扩展单选框" width="100" group="RadioBoxTest" />
+										</TreeNode>
+										<Option text="扩展单选框" width="100" group="RadioBoxTest" />
+									</TreeNode>
+									<CheckBox text="扩展复选框" width="100" />
+								</TreeNode>
+								<CheckBox text="扩展复选框" width="100" />
+							</TreeNode>
+							<TreeNode text="A3" itemtextcolor="#FFFF0000" itemattr="font=&quot;3&quot;" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='common/treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='common/treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='common/treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/unchecked.png' &quot; selectedimage=&quot;file='common/checked.png' &quot;" >
+								<TreeNode text="B3" itemattr="font=&quot;3&quot;" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='common/treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='common/treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='common/treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/unchecked.png' &quot; selectedimage=&quot;file='common/checked.png' &quot;" >
+									<TreeNode text="C3" itemattr="font=&quot;3&quot;" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='common/treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='common/treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='common/treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/unchecked.png' &quot; selectedimage=&quot;file='common/checked.png' &quot;" >
+										<TreeNode text="D3" itemattr="font=&quot;3&quot;" folderattr="padding=&quot;0,1,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/treeview_b.png' source='0,0,16,16' &quot; hotimage=&quot;file='common/treeview_b.png' source='16,0,32,16' &quot; selectedimage=&quot;file='common/treeview_a.png' source='0,0,16,16' &quot; selectedhotimage=&quot;file='common/treeview_a.png' source='16,0,32,16' &quot;" checkboxattr="width=&quot;16&quot; height=&quot;16&quot; normalimage=&quot;file='common/unchecked.png' &quot; selectedimage=&quot;file='common/checked.png' &quot;" >
+											<Option text="扩展单选框" width="100" group="RadioBoxTest" />
+										</TreeNode>
+										<Option text="扩展单选框" width="100" group="RadioBoxTest" />
+									</TreeNode>
+									<CheckBox text="扩展复选框" width="100" />
+								</TreeNode>
+								<CheckBox text="扩展复选框" width="100" />
+							</TreeNode>
+						</TreeView>
 					</VerticalLayout>
 					<Control width="30"/>
 				</HorizontalLayout>
@@ -221,7 +262,7 @@
 			</VerticalLayout>
 			<VerticalLayout vscrollbar="true" ><!-- 分割窗口 -->
 				<VerticalLayout bkcolor="#FFFFFFFF" inset="0,0,0,6" sepimm="true" sepheight="6" height="350" minheight="200" maxheight="400">
-				<WebBrowser name="webbrowser1" homepage="www.hao123.com" autonavi="true" delaycreate="true" />
+					<WebBrowser name="webbrowser1" homepage="www.hao123.com" autonavi="true" delaycreate="true" />
 				</VerticalLayout>
 				<WkeWebkit homepage="www.hao123.com"/>
 			</VerticalLayout>

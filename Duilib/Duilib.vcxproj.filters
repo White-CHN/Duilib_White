@@ -228,6 +228,9 @@
     <ClInclude Include="Utils\downloadmgr.h">
       <Filter>头文件\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Control\DuiTreeView.h">
+      <Filter>头文件\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -402,6 +405,9 @@
       <Filter>源文件\Control</Filter>
     </ClCompile>
     <ClCompile Include="Control\DuiWebBrowser.cpp">
+      <Filter>源文件\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\DuiTreeView.cpp">
       <Filter>源文件\Control</Filter>
     </ClCompile>
   </ItemGroup>

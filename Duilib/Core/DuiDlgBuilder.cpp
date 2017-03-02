@@ -574,22 +574,59 @@ namespace DuiLib
             }
             // Attach to parent
             // 因为某些属性和父窗口相关，比如selected，必须先Add到父窗口
+            CDuiTreeView* pTreeView = NULL;
             if(pParent != NULL && pControl != NULL)
             {
-                IContainer* pContainer = NULL;
-                if(pContainer == NULL)
+                CDuiTreeNode* pParentTreeNode = static_cast<CDuiTreeNode*>(pParent->GetInterface(DUI_CTR_TREENODE));
+                CDuiTreeNode* pTreeNode = static_cast<CDuiTreeNode*>(pControl->GetInterface(DUI_CTR_TREENODE));
+                pTreeView = static_cast<CDuiTreeView*>(pParent->GetInterface(DUI_CTR_TREEVIEW));
+                // TreeNode子节点
+                if(pTreeNode != NULL)
                 {
-                    pContainer = static_cast<IContainer*>(pParent->GetInterface(GET_CLASS_NAME(IContainer)));
+                    if(pParentTreeNode)
+                    {
+                        pTreeView = pParentTreeNode->GetTreeView();
+                        if(!pParentTreeNode->Add(pTreeNode))
+                        {
+                            DUI_FREE_POINT(pTreeNode);
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if(pTreeView != NULL)
+                        {
+                            if(!pTreeView->Add(pTreeNode))
+                            {
+                                DUI_FREE_POINT(pTreeNode);
+                                continue;
+                            }
+                        }
+                    }
                 }
-                ASSERT(pContainer);
-                if(pContainer == NULL)
+                // TreeNode子控件
+                else if(pParentTreeNode != NULL)
                 {
-                    return NULL;
+                    pParentTreeNode->GetTreeNodeHoriznotal()->Add(pControl);
                 }
-                if(!pContainer->Add(pControl))
+                // 普通控件
+                else
                 {
-                    DUI_FREE_POINT(pControl);
-                    continue;
+                    IContainer* pContainer = NULL;
+                    if(pContainer == NULL)
+                    {
+                        pContainer = static_cast<IContainer*>(pParent->GetInterface(GET_CLASS_NAME(IContainer)));
+                    }
+                    ASSERT(pContainer);
+                    if(pContainer == NULL)
+                    {
+                        return NULL;
+                    }
+                    if(!pContainer->Add(pControl))
+                    {
+                        DUI_FREE_POINT(pControl);
+                        continue;
+                    }
                 }
             }
             if(pControl == NULL)
@@ -599,7 +636,14 @@ namespace DuiLib
             // Init default attributes
             if(m_pManager)
             {
-                pControl->SetManager(m_pManager, NULL, FALSE);
+                if(pTreeView != NULL)
+                {
+                    pControl->SetManager(m_pManager, pTreeView, TRUE);
+                }
+                else
+                {
+                    pControl->SetManager(m_pManager, NULL, FALSE);
+                }
                 LPCTSTR pDefaultAttributes = m_pManager->GetDefaultAttributeList(pstrClass);
                 if(pDefaultAttributes)
                 {
@@ -614,6 +658,13 @@ namespace DuiLib
                 for(int i = 0; i < nAttributes; i++)
                 {
                     pControl->SetAttribute(node.GetAttributeName(i), node.GetAttributeValue(i));
+                }
+            }
+            if(m_pManager)
+            {
+                if(pTreeView == NULL)
+                {
+                    pControl->SetManager(NULL, NULL, false);
                 }
             }
             // Return first item
