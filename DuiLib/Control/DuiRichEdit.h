@@ -1,6 +1,10 @@
 #pragma once
 namespace DuiLib
 {
+#include <Imm.h>
+#pragma comment(lib,"imm32.lib")
+#include <textserv.h>
+
 #define ID_RICH_UNDO			101
 #define ID_RICH_CUT				102
 #define ID_RICH_COPY			103
@@ -17,7 +21,6 @@ namespace DuiLib
     #define HIMETRIC_PER_INCH 2540
 #endif
 
-#include <textserv.h>
 
 #define TEXTMAX ((32 * 1024) - 1)
 

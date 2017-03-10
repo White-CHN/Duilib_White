@@ -1,0 +1,39 @@
+﻿<!-- 注释 -->
+<?xml version="1.0" encoding="utf-8"?>
+
+<Window size="480,320" caption="0,0,0,30"  showshadow="true" shadowimage="shadow/shadow.png" shadowsize="6" shadowcorner="8,8,8,8" >
+	<Font id="0" name="微软雅黑" size="12" default="true" />
+	<Font id="1" name="微软雅黑" size="14" />
+	<Style name="btn_style" value="align=&quot;center&quot; normalimage=&quot;file='button/btn_edit_normal.png'&quot; hotimage=&quot;res='button/btn_edit_hover.png'&quot; pushedimage=&quot;res='button/btn_edit_down.png'&quot;"  />
+	<Style name="edit_style" value="normalimage=&quot;res='button/button_pushed.png' corner='6,6,6,6'&quot; hotimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot; focusedimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot;" />
+
+	<VerticalLayout bkcolor="#FF202223">
+		<HorizontalLayout inset="6,-1,0,0"  height="30" >
+			<Label text="Player Information" textcolor="#FFFFFFFF" font="1" />
+			<FadeButton name="closebtn" width="36" height="20" tooltip="关闭" normalimage="file='sysbtn/btn_close_normal.png'" hotimage="file='sysbtn/btn_close_highlight.png'" pushedimage="file='sysbtn/btn_close_down.png' "/>
+		</HorizontalLayout>
+		<VerticalLayout bkcolor="#FF666666" childpadding="10">
+		<Control height="30" />
+		<HorizontalLayout childpadding="10" height="24" >
+			<Control/>
+			<Label align="right" width="50" text="姓名：" textcolor="#FFFFFFFF" />
+			<Edit width="100"  />
+			<Control/>
+		</HorizontalLayout>
+		
+		<HorizontalLayout childpadding="10" height="24">
+			<Control/>
+			<Label align="right" width="50" text="职业：" textcolor="#FFFFFFFF" />
+			<Combo width="100"  />
+			<Control/>
+		</HorizontalLayout>
+		
+		<HorizontalLayout childpadding="10" height="24">
+			<Control/>
+			<Label align="right" width="50" text="累计分数：" textcolor="#FFFFFFFF" />
+			<Edit width="100"  />
+			<Control/>
+		</HorizontalLayout>
+		</VerticalLayout>
+	</VerticalLayout>
+</Window>

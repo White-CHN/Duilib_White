@@ -1,7 +1,5 @@
 #include "StdAfx.h"
 #include "DuiRichEdit.h"
-#include <Imm.h>
-#pragma comment(lib,"imm32.lib")
 
 namespace DuiLib
 {
