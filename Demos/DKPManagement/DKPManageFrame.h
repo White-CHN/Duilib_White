@@ -1,5 +1,18 @@
 #pragma once
 #include "MiniAdo.h"
+#include "Utility.h"
+
+
+const CDuiString g_Profession[8] = {_T("ÊØ»¤"), _T("½£ÐÇ"), _T("ÖÎÓú"), _T("»¤·¨"),
+                                    _T("Ä§µÀ"), _T("¾«Áé"), _T("É±ÐÇ"), _T("¹­ÐÇ")
+                                   };
+
+enum
+{
+    TYPE_ADD,
+    TYPE_SUBTRACT
+};
+
 class CDKPManageFrame
     : public CDuiDlgImplBase
 {
@@ -20,8 +33,23 @@ public:
     void OnDelMarkBtn(CDuiNotify& msg);
     void OnUnselectedBtn(CDuiNotify& msg);
     void OnExcelBtn(CDuiNotify& msg);
+    void OnSelectChanged(CDuiNotify& msg);
+    void OnItemSelect(CDuiNotify& msg);
+    void OnTextChanged(CDuiNotify& msg);
+
+    void OnTypeComboItemSelect();
+    void OnNameEditTextChanged();
 private:
-    CDuiList* m_pList;
+
+    BOOL OnAddListItem(UINT uID, CDuiString strName, CDuiString strProfession, int nAddMark, int nDelMark, int nMark, CDuiString strTime, CDuiString strRemarks);
+    BOOL OnAddHisListItem(CDuiString strID, CDuiString strTime, CDuiString strRecord);
+private:
+    CDuiList* m_pInfoList;
+    CDuiList* m_pHisList;
+    CDuiAnimationTabLayout* m_pTab;
+    CDuiCombo* m_pTypeCombo;
+    CDuiEdit* m_pNameEdit;
+    CDuiCombo* m_pHisCombo;
     CADODatabase m_DateDB;
 };
 

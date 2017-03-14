@@ -204,7 +204,7 @@ namespace DuiLib
         return (int)msg.wParam;
     }
 
-    void CDuiWnd::Close(UINT nRet /*= IDOK*/)
+    void CDuiWnd::Close(UINT nRet /*= IDCANCEL*/)
     {
         ASSERT(::IsWindow(m_hWnd));
         if(!::IsWindow(m_hWnd))

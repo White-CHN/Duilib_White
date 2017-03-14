@@ -26,6 +26,7 @@
 
 
 #include <afxdisp.h>        // MFC 自动化类
+#include <atlsafe.h>
 
 
 
@@ -77,6 +78,10 @@ using namespace DuiLib;
 
 #import "../../bin/msado15.dll" rename("EOF", "EndOfFile")
 using namespace ADODB;
+
+#include "mso9.tlh"
+#include "VBE6EXT.tlh"
+#include "excel9.tlh"
 
 #ifdef _UNICODE
     #if defined _M_IX86

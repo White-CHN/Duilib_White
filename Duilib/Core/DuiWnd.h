@@ -25,7 +25,7 @@ namespace DuiLib
 
         int ShowModal();
 
-        virtual void Close(UINT nRet = IDOK);
+        virtual void Close(UINT nRet = IDCANCEL);
 
         void SetIcon(UINT nRes);
 

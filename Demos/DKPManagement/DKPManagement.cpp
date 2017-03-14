@@ -70,12 +70,41 @@ BOOL CDKPManagementApp::InitInstance()
     // 全局初始化
     CDuiPaintManager::Initialize(m_hInstance);
     // 资源类型
+#ifdef _DEBUG
     CDuiPaintManager::SetResourceType(DUILIB_FILE);
-    // 资源路径
-    CDuiString strResourcePath = CDuiPaintManager::GetInstancePath();
-    strResourcePath += _T("DKPManagement\\");
-    CDuiPaintManager::SetResourcePath(strResourcePath.GetData());
-
+#else
+    CDuiPaintManager::SetResourceType(DUILIB_ZIPRESOURCE);
+#endif
+    switch(CDuiPaintManager::GetResourceType())
+    {
+        case DUILIB_FILE:
+        {
+            // 资源路径
+            CDuiString strResourcePath = CDuiPaintManager::GetInstancePath();
+            strResourcePath += _T("DKPManagement\\");
+            CDuiPaintManager::SetResourcePath(strResourcePath.GetData());
+        }
+        break;
+        case DUILIB_ZIPRESOURCE:
+        {
+            HRSRC hResource = ::FindResource(CDuiPaintManager::GetResourceDll(), _T("IDR_ZIPRES"), _T("ZIPRES"));
+            if(hResource != NULL)
+            {
+                DWORD dwSize = 0;
+                HGLOBAL hGlobal = ::LoadResource(CDuiPaintManager::GetResourceDll(), hResource);
+                if(hGlobal != NULL)
+                {
+                    dwSize = ::SizeofResource(CDuiPaintManager::GetResourceDll(), hResource);
+                    if(dwSize > 0)
+                    {
+                        CDuiPaintManager::SetResourceZip((LPBYTE)::LockResource(hGlobal), dwSize);
+                    }
+                }
+                ::FreeResource(hResource);
+            }
+        }
+        break;
+    }
     // 创建主窗口
     CDKPManageFrame* pFrame = new CDKPManageFrame;
     pFrame->Create(NULL, _T("Aion DKP Management System"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);

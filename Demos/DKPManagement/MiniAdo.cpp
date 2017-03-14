@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "MiniAdo.h"
-//#include "..\Utility\Utility.h"
+#include "Utility.h"
 
 miniAdo::miniAdo(void)
 {
@@ -34,7 +34,7 @@ BOOL miniAdo::Execute(CString sql)
         CString msg;
         msg.Format(_T("%s [%s]"), (LPCTSTR)bD, (LPCTSTR)sql);
 
-        //CCommon::WriteLog(msg);
+        CCommon::WriteLog(msg);
 
 #ifdef _DEBUG
         AfxMessageBox(msg, MB_ICONHAND);
@@ -355,7 +355,7 @@ BOOL miniAdo::OpenConnect(CString sServer, CString sData, CString sUser, CString
 
             CString sInfo;
             sInfo.Format(_T("Error connecting to database <%s>"), sql);
-            //CCommon::WriteLog(sInfo);
+            CCommon::WriteLog(sInfo);
 
             return FALSE;
         }
@@ -367,7 +367,7 @@ BOOL miniAdo::OpenConnect(CString sServer, CString sData, CString sUser, CString
 
         CString sInfo;
         sInfo.Format(_T("Error connecting to database <%s>"), sql);
-        //CCommon::WriteLog(sInfo);
+        CCommon::WriteLog(sInfo);
 
         return FALSE;
     }

@@ -4,12 +4,16 @@
 <Window size="980,650" sizebox="4,4,6,6" caption="0,0,0,64"  mininfo="980,650" showshadow="true" shadowimage="shadow/shadow.png" shadowsize="6" shadowcorner="8,8,8,8" >
 	<Font id="0" name="微软雅黑" size="14" default="true" />
 	<Font id="1" name="consolas" size="18" />
+	<Font id="2" name="微软雅黑" size="16" />
 	<Default name="VScrollBar" shared="true" value="button1normalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,90,16,106' mask='#FFFF00FF'&quot; button1hotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,90,34,106' mask='#FFFF00FF'&quot; button1pushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,90,52,106' mask='#FFFF00FF'&quot; button1disabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,90,70,106' mask='#FFFF00FF'&quot; button2normalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,108,16,124' mask='#FFFF00FF'&quot; button2hotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,108,34,124' mask='#FFFF00FF'&quot; button2pushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,108,52,124' mask='#FFFF00FF'&quot; button2disabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,108,70,124' mask='#FFFF00FF'&quot; thumbnormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,126,16,142' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,126,34,142' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,126,52,142' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbdisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,126,70,142' corner='2,2,2,2' mask='#FFFF00FF'&quot; railnormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,144,16,160' corner='2,2,2,2' mask='#FFFF00FF'&quot; railhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,144,34,160' corner='2,2,2,2' mask='#FFFF00FF'&quot; railpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,144,52,160' corner='2,2,2,2' mask='#FFFF00FF'&quot; raildisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,144,70,160' corner='2,2,2,2' mask='#FFFF00FF'&quot; bknormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,162,16,178' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,162,34,178' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,162,52,178' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkdisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,162,70,178' corner='2,2,2,2' mask='#FFFF00FF'&quot; " />
 	<Default name="HScrollBar" shared="true" value="button1normalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,0,16,16' mask='#FFFF00FF'&quot; button1hotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,0,34,16' mask='#FFFF00FF'&quot; button1pushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,0,52,16' mask='#FFFF00FF'&quot; button1disabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,0,70,16' mask='#FFFF00FF'&quot; button2normalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,18,16,34' mask='#FFFF00FF'&quot; button2hotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,18,34,34' mask='#FFFF00FF'&quot; button2pushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,18,52,34' mask='#FFFF00FF'&quot; button2disabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,18,70,34' mask='#FFFF00FF'&quot; thumbnormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,36,16,52' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,36,34,52' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,36,52,52' corner='2,2,2,2' mask='#FFFF00FF'&quot; thumbdisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,36,70,52' corner='2,2,2,2' mask='#FFFF00FF'&quot; railnormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,54,16,70' corner='2,2,2,2' mask='#FFFF00FF'&quot; railhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,54,34,70' corner='2,2,2,2' mask='#FFFF00FF'&quot; railpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,54,52,70' corner='2,2,2,2' mask='#FFFF00FF'&quot; raildisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,54,70,70' corner='2,2,2,2' mask='#FFFF00FF'&quot; bknormalimage=&quot;file='scrollbar/scrollbar.bmp' source='0,72,16,88' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkhotimage=&quot;file='scrollbar/scrollbar.bmp' source='18,72,34,88' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkpushedimage=&quot;file='scrollbar/scrollbar.bmp' source='36,72,52,88' corner='2,2,2,2' mask='#FFFF00FF'&quot; bkdisabledimage=&quot;file='scrollbar/scrollbar.bmp' source='54,72,70,88' corner='2,2,2,2' mask='#FFFF00FF'&quot; " />
-	<Style name="list_style" value="headerbkimage=&quot;res='list/list_header_bg.png'&quot; itemalign=&quot;center&quot; itemlinecolor=&quot;#FF888888&quot; itemshowrowline=&quot;true&quot; itemshowcolumnline=&quot;true&quot;" />
-	<Style name="btn_style" value="align=&quot;center&quot; normalimage=&quot;file='button/btn_edit_normal.png'&quot; hotimage=&quot;res='button/btn_edit_hover.png'&quot; pushedimage=&quot;res='button/btn_edit_down.png'&quot;"  />
-	<Style name="edit_style" value="normalimage=&quot;res='button/button_pushed.png' corner='6,6,6,6'&quot; hotimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot; focusedimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot;" />
-	
+	<Style name="list_style" shared="true" value="headerbkimage=&quot;res='list/list_header_bg.png'&quot; itemalign=&quot;center&quot; itemlinecolor=&quot;#FF888888&quot; itemshowrowline=&quot;true&quot; itemshowcolumnline=&quot;true&quot;" />
+	<Style name="btn_style" shared="true" value="align=&quot;center&quot; normalimage=&quot;file='button/btn_edit_normal.png'&quot; hotimage=&quot;res='button/btn_edit_hover.png'&quot; pushedimage=&quot;res='button/btn_edit_down.png'&quot;"  />
+	<Style name="edit_style" shared="true" value="normalimage=&quot;res='button/button_pushed.png' corner='6,6,6,6'&quot; hotimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot; focusedimage=&quot;file='combox/combo.png' source='0,22,80,44' corner='2,2,22,2'&quot;" />
+	<Style name="colortab_style" shared="true" value="textcolor=&quot;#FFAFADAD&quot; hottextcolor=&quot;#FFFFFFFF&quot; selectedtextcolor=&quot;#FFFFFFFF&quot; textpadding=&quot;6,0,6,0&quot; bkcolor=&quot;#FF2c2c2c&quot; hotbkcolor=&quot;#FF4b4b4b&quot; pushedbkcolor=&quot;#FF424242&quot; selectedbkcolor=&quot;#FF666666&quot; group=&quot;tab_header&quot;"  />
+	<Style name="colorbtn_style" shared="true" value="textcolor=&quot;#FFAFADAD&quot; hottextcolor=&quot;#FFFFFFFF&quot; textpadding=&quot;6,0,6,0&quot; bkcolor=&quot;#FF2c2c2c&quot; hotbkcolor=&quot;#FF4b4b4b&quot; pushedbkcolor=&quot;#FF424242&quot;"  />
+	<Style name="combo_style" shared="true" value="normalimage=&quot;file='combox/combo.png' source='0,0,100,22' corner='2,2,20,2'&quot; hotimage=&quot;file='combox\combo.png' source='0,22,100,44' corner='2,2,22,2'&quot; pushedimage=&quot;file='combox\combo.png' source='0,44,100,66' corner='2,2,22,2'&quot;" />
+
 	<VerticalLayout bkcolor="#FF202223">
 		<HorizontalLayout height="64"  >
 			<Control bkimage="bkimage/2.jpg" width="260"/>
@@ -23,42 +27,97 @@
 			</HorizontalLayout>
 
 		</HorizontalLayout>
-		<VerticalLayout bkcolor="#FF666666">
-			<HorizontalLayout height="60"/>
-			<HorizontalLayout >
-				<Control width="60"/>
-				<VerticalLayout  bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
-					<List name="list" hscrollbar="true" vscrollbar="true" bkcolor="#FFFFFFFF" style="list_style" itemalign="center" itemvalign="vcenter" scrollstepsize="100">
-						<ListHeader bkcolor="#FFFF0000" height="30">
-							<ListHeaderItem width="24" minwidth="24" maxwidth="24" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-							<ListHeaderItem text="编号" width="50" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-							<ListHeaderItem text="姓名" width="100" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-							<ListHeaderItem text="职业" width="60" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-							<ListHeaderItem text="累计分数" width="80" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-							<ListHeaderItem text="扣除分数" width="80" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-							<ListHeaderItem text="当前分数" width="80" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-							<ListHeaderItem text="最后执行时间" width="120" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
-							
-							<ListHeaderItem text="备注" width="200" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+		<HorizontalLayout bkcolor="#FF666666">
 
-						</ListHeader>
-					</List>
-				</VerticalLayout>
-				<VerticalLayout childpadding="20" childalign="center" width="120">
+			<VerticalLayout inset="1,0,0,0" width="35" bkcolor="#FF888888">
+				<Control height="20" />
+				<Option height="95"  text="信息预览" wordbreak="true" align="center" name="InfoOpt" style="colortab_style" selected="true" />
+				<Option height="95"  text="历史记录" wordbreak="true" align="center" name="HisOpt" style="colortab_style" />
+				<Control />
+			</VerticalLayout>
+			<AnimationTabLayout name="Tab" animationdirection="vertical">
+				<VerticalLayout>
+					<!-- 信息预览 -->
+					<HorizontalLayout childvalign="vcenter" childpadding="10" height="45">
+						<Control width="20"/>
+						<Label align="right" width="80" text="职业：" textcolor="#FFFFFFFF" />
+						<Combo name="TypeCombo" height="28" width="100" dropboxsize="0,220" textpadding="30,0,0,0" itemalign="center" style="combo_style">
+							<ListLabelElement text="全部" selected="true" height="25" />
+							<ListLabelElement text="守护" height="25" />
+							<ListLabelElement text="剑星" height="25" />
+							<ListLabelElement text="治愈" height="25" />
+							<ListLabelElement text="护法" height="25" />
+							<ListLabelElement text="魔道" height="25" />
+							<ListLabelElement text="精灵" height="25" />
+							<ListLabelElement text="杀星" height="25" />
+							<ListLabelElement text="弓星" height="25" />
+						</Combo>
+						<Control width="20"/>
+						<Label align="right" width="80" text="姓名：" textcolor="#FFFFFFFF" />
+						<Edit name="NameEdit" height="25" width="100"  />
+						<Control/>
+					</HorizontalLayout>
+					<HorizontalLayout >
+						<Control width="30"/>
+						<VerticalLayout  bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
+							<List name="InfoList" hscrollbar="true" vscrollbar="true" bkcolor="#FFFFFFFF" style="list_style" itemalign="center" itemvalign="vcenter" scrollstepsize="100">
+								<ListHeader bkcolor="#FFFF0000" height="30">
+									<ListHeaderItem width="24" minwidth="24" maxwidth="24" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="编号" width="45" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="姓名" width="120" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="职业" width="45" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="累计分数" width="70" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="扣除分数" width="70" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="当前分数" width="70" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="最后执行时间" width="150" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="备注" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+								</ListHeader>
+							</List>
+						</VerticalLayout>
+						<VerticalLayout childpadding="20" childalign="center" width="110">
+							<Control height="30"/>
+							<Button name="AddBtn" text="增加人员" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0" />
+							<Button name="DelBtn" text="删除人员" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Control height="1"/>
+							<Button name="AddMarkBtn" text="加分" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Button name="DelMarkBtn" text="扣分" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Button name="UnselectedBtn" text="清空选中" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Control height="1"/>
+							<Button name="ExcelBtn" text="导出Excel表" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Control/>
+						</VerticalLayout>
+					</HorizontalLayout >
 					<Control height="30"/>
-					<Button name="AddBtn" text="增加人员" height="28" width="100" tooltip="Button演示" textcolor="#FF000000" style="btn_style" />
-					<Button name="DelBtn" text="删除人员" height="28" width="100" tooltip="Button演示" textcolor="#FF000000" style="btn_style" />
-					<Control height="1"/>
-					<Button name="AddMarkBtn" text="加分" height="28" width="100" tooltip="Button演示" textcolor="#FF000000" style="btn_style" />
-					<Button name="DelMarkBtn" text="扣分" height="28" width="100" tooltip="Button演示" textcolor="#FF000000" style="btn_style" />
-					<Button name="UnselectedBtn" text="清空选中" height="28" width="100" tooltip="Button演示" textcolor="#FF000000" style="btn_style" />
-					<Control height="1"/>
-					<Button name="ExcelBtn" text="导出Excel表" height="28" width="100" tooltip="Button演示" textcolor="#FF000000" style="btn_style" />
-					<Control/>
 				</VerticalLayout>
-			</HorizontalLayout >
-			<HorizontalLayout height="30"/>
-		</VerticalLayout>
+				<VerticalLayout>
+					<!-- 历史记录 -->
+					<HorizontalLayout childvalign="vcenter" childpadding="10" height="45">
+						<Control width="20"/>
+						<Label align="right" width="80" text="编号：" textcolor="#FFFFFFFF" />
+						<Combo name="HisCombo" height="28" width="100" dropboxsize="0,220" textpadding="30,0,0,0" itemalign="center" style="combo_style">
+							
+						</Combo>
+						<Control/>
+					</HorizontalLayout>
+
+					<HorizontalLayout >
+						<Control width="30"/>
+						<VerticalLayout  bordersize="1" bordercolor="#FFFFFFFF" inset="2,2,2,2">
+							<List name="HisList" hscrollbar="true" vscrollbar="true" bkcolor="#FFFFFFFF" style="list_style" itemalign="center" itemvalign="vcenter" scrollstepsize="100">
+								<ListHeader bkcolor="#FFFF0000" height="30">
+									<ListHeaderItem text="编号" width="50" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="时间" width="150" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+									<ListHeaderItem text="操作记录" hotimage="res='list/list_header_hot.png'" pushedimage="res='list/list_header_pushed.png'" sepimage="res='list/list_header_sep.png'" sepwidth="1"/>
+
+								</ListHeader>
+							</List>
+						</VerticalLayout>
+						<Control width="110"/>
+					</HorizontalLayout >
+					<Control height="30"/>
+				</VerticalLayout>
+			</AnimationTabLayout>
+		</HorizontalLayout>
 		<HorizontalLayout inset="6,0,0,0" height="28" >
 			<Label text="欢迎使用" textcolor="#FFFEFEFE" />
 		</HorizontalLayout>

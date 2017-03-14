@@ -99,15 +99,23 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\bin\DKPManagement\DKPManagement.zip" />
     <None Include="..\..\bin\DKPManagement\ico\Aion.ico" />
+    <None Include="excel9.tlh" />
+    <None Include="excel9.tli" />
+    <None Include="mso9.tlh" />
+    <None Include="mso9.tli" />
     <None Include="ReadMe.txt" />
     <None Include="res\DKPManagement.ico" />
+    <None Include="VBE6EXT.tlh" />
+    <None Include="VBE6EXT.tli" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ado.h" />
     <ClInclude Include="DKPManageFrame.h" />
     <ClInclude Include="DKPManagement.h" />
     <ClInclude Include="MiniAdo.h" />
+    <ClInclude Include="OperateMarkDlg.h" />
     <ClInclude Include="PlayerInfoDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -119,6 +127,7 @@
     <ClCompile Include="DKPManageFrame.cpp" />
     <ClCompile Include="DKPManagement.cpp" />
     <ClCompile Include="MiniAdo.cpp" />
+    <ClCompile Include="OperateMarkDlg.cpp" />
     <ClCompile Include="PlayerInfoDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

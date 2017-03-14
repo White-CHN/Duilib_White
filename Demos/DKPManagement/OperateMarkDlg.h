@@ -1,11 +1,11 @@
 #pragma once
-class CPlayerInfoDlg
+class COperateMarkDlg
     : public CDuiDlgImplBase
 {
     DUI_DECLARE_MESSAGE_MAP()
 public:
-    CPlayerInfoDlg(CDuiString* pName, CDuiString* pProfession);
-    virtual ~CPlayerInfoDlg(void);
+    COperateMarkDlg(CDuiString* pMark, CDuiString* pRemarks);
+    virtual ~COperateMarkDlg(void);
 public:
     CDuiString GetSkinFile() OVERRIDE;
     LPCTSTR GetWindowClassName() const OVERRIDE;
@@ -13,9 +13,11 @@ public:
 
     void OnClick(CDuiNotify& msg);
 private:
-    CDuiEdit* m_pNameEdit;
-    CDuiCombo* m_pCombo;
-    CDuiString* m_pName;
-    CDuiString* m_pProfession;
+    CDuiString* m_pMark;
+    CDuiString* m_pRemarks;
+    CDuiEdit* m_pMarkEdit;
+    CDuiEdit* m_pRemarksEdit;
+public:
+    int m_nType;
 };
 

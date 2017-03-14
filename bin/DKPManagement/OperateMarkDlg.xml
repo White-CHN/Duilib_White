@@ -6,32 +6,23 @@
 	<Font id="1" name="微软雅黑" size="14" />
 	<VerticalLayout bkcolor="#FF202223" >
 		<HorizontalLayout inset="6,-1,0,0"  height="30" >
-			<Label text="添加成员" textcolor="#FFFFFFFF" font="1" />
+			<Label name="TitleLabel" text="加分" textcolor="#FFFFFFFF" font="1" />
 			<FadeButton name="closebtn" width="36" height="20" tooltip="关闭" normalimage="file='sysbtn/btn_close_normal.png'" hotimage="file='sysbtn/btn_close_highlight.png'" pushedimage="file='sysbtn/btn_close_down.png' "/>
 		</HorizontalLayout>
 		<VerticalLayout bkcolor="#FF666666" childpadding="15">
 			<Control height="30" />
 			<HorizontalLayout childpadding="10" height="23" >
 				<Control/>
-				<Label align="right" width="80" text="姓名：" textcolor="#FFFFFFFF" />
-				<Edit name="NameEdit" width="100"  />
+				<Label align="right" width="80" text="分数：" textcolor="#FFFFFFFF" />
+				<Edit name="MarkEdit" width="100" numberonly="true" />
 				<Control/>
 				<Control/>
 			</HorizontalLayout>
 
 			<HorizontalLayout childpadding="10" height="25">
 				<Control/>
-				<Label align="right" width="80" text="职业：" textcolor="#FFFFFFFF" />
-				<Combo name="Combo" width="100" dropboxsize="0,220" textpadding="37,0,0,0" itemalign="center" style="combo_style">
-					<ListLabelElement text="守护" selected="true" height="25" />
-					<ListLabelElement text="剑星" height="25" />
-					<ListLabelElement text="治愈" height="25" />
-					<ListLabelElement text="护法" height="25" />
-					<ListLabelElement text="魔道" height="25" />
-					<ListLabelElement text="精灵" height="25" />
-					<ListLabelElement text="杀星" height="25" />
-					<ListLabelElement text="弓星" height="25" />
-				</Combo>
+				<Label align="right" width="80" text="备注：" textcolor="#FFFFFFFF" />
+				<Edit name="RemarksEdit" width="100" />
 				<Control/>
 				<Control/>
 			</HorizontalLayout>

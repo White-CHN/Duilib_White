@@ -19,6 +19,12 @@
     <Filter Include="源文件\Ado">
       <UniqueIdentifier>{5588c37a-0764-48f6-866e-1007f4158a75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Excel">
+      <UniqueIdentifier>{aa66cd00-ebd3-45eb-a2cb-4a971aaba581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Excel">
+      <UniqueIdentifier>{2fbc7c85-1181-462e-b5fb-add926813106}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -28,6 +34,25 @@
     <None Include="..\..\bin\DKPManagement\ico\Aion.ico">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="excel9.tlh">
+      <Filter>头文件\Excel</Filter>
+    </None>
+    <None Include="mso9.tlh">
+      <Filter>头文件\Excel</Filter>
+    </None>
+    <None Include="VBE6EXT.tlh">
+      <Filter>头文件\Excel</Filter>
+    </None>
+    <None Include="excel9.tli">
+      <Filter>源文件\Excel</Filter>
+    </None>
+    <None Include="mso9.tli">
+      <Filter>源文件\Excel</Filter>
+    </None>
+    <None Include="VBE6EXT.tli">
+      <Filter>源文件\Excel</Filter>
+    </None>
+    <None Include="..\..\bin\DKPManagement\DKPManagement.zip" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DKPManagement.h">
@@ -57,6 +82,9 @@
     <ClInclude Include="PlayerInfoDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="OperateMarkDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DKPManagement.cpp">
@@ -78,6 +106,9 @@
       <Filter>源文件\Ado</Filter>
     </ClCompile>
     <ClCompile Include="PlayerInfoDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OperateMarkDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
