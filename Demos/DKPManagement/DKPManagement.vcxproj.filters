@@ -25,6 +25,12 @@
     <Filter Include="源文件\Excel">
       <UniqueIdentifier>{2fbc7c85-1181-462e-b5fb-add926813106}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\sqlite">
+      <UniqueIdentifier>{b5c7d230-774c-46c2-b50e-8373a96170fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\sqlite">
+      <UniqueIdentifier>{44647e89-d2fb-4640-a2ec-41e467961e8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -85,6 +91,15 @@
     <ClInclude Include="OperateMarkDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="sqlite3.h">
+      <Filter>头文件\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite3ext.h">
+      <Filter>头文件\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="MySqlite.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DKPManagement.cpp">
@@ -109,6 +124,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="OperateMarkDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="shell.c">
+      <Filter>源文件\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite3.c">
+      <Filter>源文件\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="MySqlite.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

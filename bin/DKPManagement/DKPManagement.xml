@@ -76,14 +76,14 @@
 						</VerticalLayout>
 						<VerticalLayout childpadding="20" childalign="center" width="110">
 							<Control height="30"/>
-							<Button name="AddBtn" text="增加人员" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0" />
-							<Button name="DelBtn" text="删除人员" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Button name="AddBtn" text="增加人员" height="28" width="95" tooltip="增加人员" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0" />
+							<Button name="DelBtn" text="删除人员" height="28" width="95" tooltip="删除人员" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Control height="1"/>
-							<Button name="AddMarkBtn" text="加分" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
-							<Button name="DelMarkBtn" text="扣分" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
-							<Button name="UnselectedBtn" text="清空选中" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Button name="AddMarkBtn" text="加分" height="28" width="95" tooltip="加分" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Button name="DelMarkBtn" text="扣分" height="28" width="95" tooltip="扣分" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Button name="UnselectedBtn" text="清空选中" height="28" width="95" tooltip="清空选中" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Control height="1"/>
-							<Button name="ExcelBtn" text="导出Excel表" height="28" width="95" tooltip="Button演示" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Button name="ExcelBtn" text="导出Excel表" height="28" width="95" tooltip="导出Excel表" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Control/>
 						</VerticalLayout>
 					</HorizontalLayout >
@@ -119,7 +119,7 @@
 			</AnimationTabLayout>
 		</HorizontalLayout>
 		<HorizontalLayout inset="6,0,0,0" height="28" >
-			<Label text="欢迎使用" textcolor="#FFFEFEFE" />
+			<Label name="TipLabel" text="欢迎使用" textcolor="#FFFEFEFE" />
 		</HorizontalLayout>
 	</VerticalLayout>
 </Window>

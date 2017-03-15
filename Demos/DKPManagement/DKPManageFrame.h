@@ -1,7 +1,6 @@
 #pragma once
-#include "MiniAdo.h"
 #include "Utility.h"
-
+#include "MySqlite.h"
 
 const CDuiString g_Profession[8] = {_T("守护"), _T("剑星"), _T("治愈"), _T("护法"),
                                     _T("魔道"), _T("精灵"), _T("杀星"), _T("弓星")
@@ -50,6 +49,7 @@ private:
     CDuiCombo* m_pTypeCombo;
     CDuiEdit* m_pNameEdit;
     CDuiCombo* m_pHisCombo;
-    CADODatabase m_DateDB;
+    CDuiLabel* m_pTipLabel;
+    CMySqlite m_MySqlite;
 };
 
