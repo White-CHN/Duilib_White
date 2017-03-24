@@ -10,6 +10,7 @@ DUI_ON_CLICK_CTRNAME(_T("AddBtn"), OnAddBtn)
 DUI_ON_CLICK_CTRNAME(_T("DelBtn"), OnDelBtn)
 DUI_ON_CLICK_CTRNAME(_T("AddMarkBtn"), OnAddMarkBtn)
 DUI_ON_CLICK_CTRNAME(_T("DelMarkBtn"), OnDelMarkBtn)
+DUI_ON_CLICK_CTRNAME(_T("ClearMarkBtn"), OnClearMarkBtn)
 DUI_ON_CLICK_CTRNAME(_T("UnselectedBtn"), OnUnselectedBtn)
 DUI_ON_CLICK_CTRNAME(_T("ExcelBtn"), OnExcelBtn)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_SELECTCHANGED, OnSelectChanged)
@@ -71,28 +72,7 @@ void CDKPManageFrame::InitWindow()
     else
     {
         // 加载人员信息
-        CString strSQL;
-        strSQL.Format(_T("select ID,Name,Profession,AddMark,DelMark,Mark,CreateTime,Remarks from PlayerInfo order by ID"));
-        CRecords* pRecords = new CRecords;
-        if(m_MySqlite.Execute(strSQL.GetBuffer(), (void*)pRecords))
-        {
-            for(int i = 0; i < pRecords->GetRow(); i++)
-            {
-                int nIndex = 0;
-                UINT uID				= _ttoi(pRecords->GetItem(i, nIndex++));
-                CString strName			= pRecords->GetItem(i, nIndex++);
-                CString strProfession	= pRecords->GetItem(i, nIndex++);
-                int nAddMark			= _ttoi(pRecords->GetItem(i, nIndex++));
-                int nDelMark			= _ttoi(pRecords->GetItem(i, nIndex++));
-                int nMark				= _ttoi(pRecords->GetItem(i, nIndex++));
-                CString strTime			= pRecords->GetItem(i, nIndex++);
-                CString strRemarks		= pRecords->GetItem(i, nIndex++);
-                OnAddListItem(uID, strName.GetBuffer(), strProfession.GetBuffer(), nAddMark, nDelMark, nMark, strTime.GetBuffer(), strRemarks.GetBuffer());
-            }
-        }
-        delete pRecords;
-        pRecords =  NULL;
-
+        OnInitInfoOrderBy(_T("ID"));
     }
 }
 
@@ -158,7 +138,7 @@ void CDKPManageFrame::OnAddBtn(CDuiNotify& msg)
         }
         else
         {
-            m_pTipLabel->SetText(_T("添加人员失败"));
+            m_pTipLabel->SetText(_T("添加人员失败，名字重复"));
         }
     }
 }
@@ -188,8 +168,19 @@ void CDKPManageFrame::OnDelBtn(CDuiNotify& msg)
                     {
                         CDuiLabel* pLabelName = static_cast<CDuiOption*>(pContainer->GetItemAt(2));
                         CDuiLabel* pLabelProfession = static_cast<CDuiOption*>(pContainer->GetItemAt(3));
+
+                        CDuiLabel* pLabelAddMark = static_cast<CDuiOption*>(pContainer->GetItemAt(4));
+                        int nAddMark =  _ttoi(pLabelAddMark->GetText());
+
+                        CDuiLabel* pLabelDelMark = static_cast<CDuiOption*>(pContainer->GetItemAt(5));
+                        int nDelMark =  _ttoi(pLabelDelMark->GetText());
+
+                        CDuiLabel* pLabelMark = static_cast<CDuiOption*>(pContainer->GetItemAt(6));
+                        int nMark =  _ttoi(pLabelMark->GetText());
+
                         CString strRecord;
-                        strRecord.Format(_T("删除成员：姓名[%s] 职业[%s]"), pLabelName->GetText().GetData(), pLabelProfession->GetText().GetData());
+                        strRecord.Format(_T("删除成员：姓名[%s] 职业[%s] 累计[%d] 扣除[%d] 当前[%d]"),
+                                         pLabelName->GetText().GetData(), pLabelProfession->GetText().GetData(), nAddMark, nDelMark, nMark);
                         strSQL.Format(_T("insert into HistoryRecord (Owner,CreateTime,Record) VALUES (%d,datetime('now', 'localtime'),'%s')"), nID, strRecord);
                         m_MySqlite.Execute(strSQL);
                         m_pInfoList->RemoveAt(i);
@@ -362,6 +353,63 @@ void CDKPManageFrame::OnDelMarkBtn(CDuiNotify& msg)
         }
         m_pTipLabel->SetText(_T("扣分成功"));
     }
+}
+
+void CDKPManageFrame::OnClearMarkBtn(CDuiNotify& msg)
+{
+    if(m_pInfoList->GetCount() == 0)
+    {
+        return;
+    }
+    m_pTipLabel->SetText(_T("正在清分"));
+    for(int i = 0; i < m_pInfoList->GetCount(); i++)
+    {
+        CDuiListContainerElement* pContainer = static_cast<CDuiListContainerElement*>(m_pInfoList->GetItemAt(i));
+        if(pContainer)
+        {
+            CDuiOption* pOption = static_cast<CDuiOption*>(pContainer->GetItemAt(0));
+            if(pOption && pOption->IsSelected() && pContainer->IsVisible())
+            {
+                CDuiLabel* pLabelID = static_cast<CDuiOption*>(pContainer->GetItemAt(1));
+                int nID = _ttoi(pLabelID->GetText());
+
+                CDuiLabel* pLabelAddMark = static_cast<CDuiOption*>(pContainer->GetItemAt(4));
+                int nAddMark =  _ttoi(pLabelAddMark->GetText());
+
+                CDuiLabel* pLabelDelMark = static_cast<CDuiOption*>(pContainer->GetItemAt(5));
+                int nDelMark =  _ttoi(pLabelDelMark->GetText());
+
+                CDuiLabel* pLabelMark = static_cast<CDuiOption*>(pContainer->GetItemAt(6));
+                int nMark =  _ttoi(pLabelMark->GetText());
+
+                CString strSQL;
+                strSQL.Format(_T("update PlayerInfo set AddMark=0,DelMark=0,Mark=0,CreateTime=datetime('now', 'localtime') where ID=%d"), nID);
+                if(m_MySqlite.Execute(strSQL))
+                {
+                    pLabelAddMark->SetText(_T("0"));
+                    pLabelDelMark->SetText(_T("0"));
+                    pLabelMark->SetText(_T("0"));
+
+                    CDuiLabel* pLabelTime = static_cast<CDuiOption*>(pContainer->GetItemAt(7));
+                    CTime tm = CTime::GetCurrentTime();
+                    CDuiString strTime;
+                    strTime.Format(_T("%04d-%02d-%02d %02d:%02d:%02d"), tm.GetYear(), tm.GetMonth(), tm.GetDay(), tm.GetHour(), tm.GetMinute(), tm.GetMinute());
+                    pLabelTime->SetText(strTime);
+
+                    CDuiLabel* pLabelName = static_cast<CDuiOption*>(pContainer->GetItemAt(2));
+                    CDuiLabel* pLabelProfession = static_cast<CDuiOption*>(pContainer->GetItemAt(3));
+
+                    CString strRecord;
+                    strRecord.Format(_T("清分操作：姓名[%s] 职业[%s] 累计[%d] 扣除[%d] 当前[%d]"),
+                                     pLabelName->GetText().GetData(), pLabelProfession->GetText().GetData(), nAddMark, nDelMark, nMark);
+                    strSQL.Format(_T("insert into HistoryRecord (Owner,CreateTime,Record) VALUES (%d,datetime('now', 'localtime'),'%s')"), nID, strRecord);
+                    m_MySqlite.Execute(strSQL);
+
+                }
+            }
+        }
+    }
+    m_pTipLabel->SetText(_T("清分成功"));
 }
 
 void CDKPManageFrame::OnUnselectedBtn(CDuiNotify& msg)
@@ -556,6 +604,20 @@ void CDKPManageFrame::OnItemSelect(CDuiNotify& msg)
             }
         }
     }
+    else if(msg.pSender->GetName() == _T("OrderCombo"))
+    {
+        CDuiCombo* pCombo = static_cast<CDuiCombo*>(msg.pSender);
+        if(pCombo->GetCurSel() == 0)
+        {
+            OnInitInfoOrderBy(_T("ID"));
+        }
+        else if(pCombo->GetCurSel() == 1)
+        {
+            OnInitInfoOrderBy(_T("Profession"));
+        }
+        OnTypeComboItemSelect();
+        OnNameEditTextChanged();
+    }
 }
 
 void CDKPManageFrame::OnTextChanged(CDuiNotify& msg)
@@ -650,6 +712,32 @@ void CDKPManageFrame::OnNameEditTextChanged()
             }
         }
     }
+}
+
+void CDKPManageFrame::OnInitInfoOrderBy(CString strOrder)
+{
+    m_pInfoList->RemoveAll();
+    CString strSQL;
+    strSQL.Format(_T("select ID,Name,Profession,AddMark,DelMark,Mark,CreateTime,Remarks from PlayerInfo order by %s"), strOrder);
+    CRecords* pRecords = new CRecords;
+    if(m_MySqlite.Execute(strSQL.GetBuffer(), (void*)pRecords))
+    {
+        for(int i = 0; i < pRecords->GetRow(); i++)
+        {
+            int nIndex = 0;
+            UINT uID				= _ttoi(pRecords->GetItem(i, nIndex++));
+            CString strName			= pRecords->GetItem(i, nIndex++);
+            CString strProfession	= pRecords->GetItem(i, nIndex++);
+            int nAddMark			= _ttoi(pRecords->GetItem(i, nIndex++));
+            int nDelMark			= _ttoi(pRecords->GetItem(i, nIndex++));
+            int nMark				= _ttoi(pRecords->GetItem(i, nIndex++));
+            CString strTime			= pRecords->GetItem(i, nIndex++);
+            CString strRemarks		= pRecords->GetItem(i, nIndex++);
+            OnAddListItem(uID, strName.GetBuffer(), strProfession.GetBuffer(), nAddMark, nDelMark, nMark, strTime.GetBuffer(), strRemarks.GetBuffer());
+        }
+    }
+    delete pRecords;
+    pRecords =  NULL;
 }
 
 BOOL CDKPManageFrame::OnAddListItem(UINT uID, CDuiString strName, CDuiString strProfession, int nAddMark, int nDelMark, int nMark, CDuiString strTime, CDuiString strRemarks)

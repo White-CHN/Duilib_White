@@ -30,6 +30,7 @@ public:
     void OnDelBtn(CDuiNotify& msg);
     void OnAddMarkBtn(CDuiNotify& msg);
     void OnDelMarkBtn(CDuiNotify& msg);
+    void OnClearMarkBtn(CDuiNotify& msg);
     void OnUnselectedBtn(CDuiNotify& msg);
     void OnExcelBtn(CDuiNotify& msg);
     void OnSelectChanged(CDuiNotify& msg);
@@ -39,7 +40,7 @@ public:
     void OnTypeComboItemSelect();
     void OnNameEditTextChanged();
 private:
-
+    void OnInitInfoOrderBy(CString strOrder);
     BOOL OnAddListItem(UINT uID, CDuiString strName, CDuiString strProfession, int nAddMark, int nDelMark, int nMark, CDuiString strTime, CDuiString strRemarks);
     BOOL OnAddHisListItem(CDuiString strID, CDuiString strTime, CDuiString strRecord);
 private:
