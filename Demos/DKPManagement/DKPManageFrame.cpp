@@ -6,13 +6,20 @@
 
 DUI_BEGIN_MESSAGE_MAP(CDKPManageFrame, CDuiDlgImplBase)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
+
 DUI_ON_CLICK_CTRNAME(_T("AddBtn"), OnAddBtn)
 DUI_ON_CLICK_CTRNAME(_T("DelBtn"), OnDelBtn)
+
 DUI_ON_CLICK_CTRNAME(_T("AddMarkBtn"), OnAddMarkBtn)
 DUI_ON_CLICK_CTRNAME(_T("DelMarkBtn"), OnDelMarkBtn)
 DUI_ON_CLICK_CTRNAME(_T("ClearMarkBtn"), OnClearMarkBtn)
+
+DUI_ON_CLICK_CTRNAME(_T("SelectedBtn"), OnSelectedBtn)
 DUI_ON_CLICK_CTRNAME(_T("UnselectedBtn"), OnUnselectedBtn)
+
+DUI_ON_CLICK_CTRNAME(_T("ImportBtn"), OnImportBtn)
 DUI_ON_CLICK_CTRNAME(_T("ExcelBtn"), OnExcelBtn)
+
 DUI_ON_MSGTYPE(DUI_MSGTYPE_SELECTCHANGED, OnSelectChanged)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_ITEMSELECT, OnItemSelect)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_TEXTCHANGED, OnTextChanged)
@@ -109,37 +116,8 @@ void CDKPManageFrame::OnAddBtn(CDuiNotify& msg)
     dlg->CenterWindow();
     if(dlg->ShowModal() == IDOK)
     {
-        m_pTipLabel->SetText(_T("正在添加人员"));
-        CString strSQL;
-        strSQL.Format(_T("insert into PlayerInfo (Name,Profession,CreateTime) VALUES ('%s','%s',datetime('now', 'localtime'))"), strName.GetData(), strProfession.GetData());
-        if(m_MySqlite.Execute(strSQL.GetBuffer()))
-        {
-            CRecords* pRecords = new CRecords;
-            strSQL.Format(_T("select ID,CreateTime from PlayerInfo where Name='%s'"), strName.GetData());
-            if(m_MySqlite.Execute(strSQL.GetBuffer(), (void*)pRecords))
-            {
-                for(int i = 0; i < pRecords->GetRow(); i++)
-                {
-                    int nIndex = 0;
-                    UINT uID				= _ttoi(pRecords->GetItem(i, nIndex++));
-                    CString strTime			= pRecords->GetItem(i, nIndex++);
-                    if(OnAddListItem(uID, strName, strProfession, 0, 0, 0, strTime.GetBuffer(), _T("")))
-                    {
-                        CString strRecord;
-                        strRecord.Format(_T("添加成员：姓名[%s] 职业[%s]"), strName.GetData(), strProfession.GetData());
-                        strSQL.Format(_T("insert into HistoryRecord (Owner,CreateTime,Record) VALUES (%d,datetime('now', 'localtime'),'%s')"), uID, strRecord);
-                        m_MySqlite.Execute(strSQL.GetBuffer());
-                        m_pTipLabel->SetText(_T("添加人员成功"));
-                    }
-                }
-            }
-            delete pRecords;
-            pRecords = NULL;
-        }
-        else
-        {
-            m_pTipLabel->SetText(_T("添加人员失败，名字重复"));
-        }
+        OnAddPlayer(strName.GetData(), strProfession.GetData());
+
     }
 }
 
@@ -156,7 +134,7 @@ void CDKPManageFrame::OnDelBtn(CDuiNotify& msg)
         for(int i = 0; i < m_pInfoList->GetCount(); i++)
         {
             CDuiListContainerElement* pContainer = static_cast<CDuiListContainerElement*>(m_pInfoList->GetItemAt(i));
-            if(pContainer)
+            if(pContainer && pContainer->IsVisible())
             {
                 CDuiOption* pOption = static_cast<CDuiOption*>(pContainer->GetItemAt(0));
                 if(pOption && pOption->IsSelected() && pContainer->IsVisible())
@@ -217,7 +195,7 @@ void CDKPManageFrame::OnAddMarkBtn(CDuiNotify& msg)
         for(int i = 0; i < m_pInfoList->GetCount(); i++)
         {
             CDuiListContainerElement* pContainer = static_cast<CDuiListContainerElement*>(m_pInfoList->GetItemAt(i));
-            if(pContainer)
+            if(pContainer && pContainer->IsVisible())
             {
                 CDuiOption* pOption = static_cast<CDuiOption*>(pContainer->GetItemAt(0));
                 if(pOption && pOption->IsSelected() && pContainer->IsVisible())
@@ -296,7 +274,7 @@ void CDKPManageFrame::OnDelMarkBtn(CDuiNotify& msg)
         for(int i = 0; i < m_pInfoList->GetCount(); i++)
         {
             CDuiListContainerElement* pContainer = static_cast<CDuiListContainerElement*>(m_pInfoList->GetItemAt(i));
-            if(pContainer)
+            if(pContainer && pContainer->IsVisible())
             {
                 CDuiOption* pOption = static_cast<CDuiOption*>(pContainer->GetItemAt(0));
                 if(pOption && pOption->IsSelected() && pContainer->IsVisible())
@@ -365,7 +343,7 @@ void CDKPManageFrame::OnClearMarkBtn(CDuiNotify& msg)
     for(int i = 0; i < m_pInfoList->GetCount(); i++)
     {
         CDuiListContainerElement* pContainer = static_cast<CDuiListContainerElement*>(m_pInfoList->GetItemAt(i));
-        if(pContainer)
+        if(pContainer && pContainer->IsVisible())
         {
             CDuiOption* pOption = static_cast<CDuiOption*>(pContainer->GetItemAt(0));
             if(pOption && pOption->IsSelected() && pContainer->IsVisible())
@@ -412,12 +390,28 @@ void CDKPManageFrame::OnClearMarkBtn(CDuiNotify& msg)
     m_pTipLabel->SetText(_T("清分成功"));
 }
 
+void CDKPManageFrame::OnSelectedBtn(CDuiNotify& msg)
+{
+    for(int i = 0; i < m_pInfoList->GetCount(); i++)
+    {
+        CDuiListContainerElement* p = static_cast<CDuiListContainerElement*>(m_pInfoList->GetItemAt(i));
+        if(p && p->IsVisible())
+        {
+            CDuiOption* pOption = static_cast<CDuiOption*>(p->GetItemAt(0));
+            if(pOption)
+            {
+                pOption->Selected(TRUE);
+            }
+        }
+    }
+}
+
 void CDKPManageFrame::OnUnselectedBtn(CDuiNotify& msg)
 {
     for(int i = 0; i < m_pInfoList->GetCount(); i++)
     {
         CDuiListContainerElement* p = static_cast<CDuiListContainerElement*>(m_pInfoList->GetItemAt(i));
-        if(p)
+        if(p && p->IsVisible())
         {
             CDuiOption* pOption = static_cast<CDuiOption*>(p->GetItemAt(0));
             if(pOption)
@@ -425,6 +419,51 @@ void CDKPManageFrame::OnUnselectedBtn(CDuiNotify& msg)
                 pOption->Selected(FALSE);
             }
         }
+    }
+}
+
+void CDKPManageFrame::OnImportBtn(CDuiNotify& msg)
+{
+    CFileDialog FileDlg(TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("文件 (*.xls)|*.xls|文件 (*.xlsx)|*.xlsx||"), NULL);
+    if(FileDlg.DoModal() == IDOK)
+    {
+        CString strFileName = FileDlg.GetPathName();
+        Excel::_ApplicationPtr ptrExcelApp;
+        Excel::_WorkbookPtr ptrBook;
+        Excel::_WorksheetPtr ptrSheet;
+        Excel::RangePtr ptrRange;
+        Excel::RangePtr ptrResizeRange;
+
+        ptrExcelApp.CreateInstance(__uuidof(Excel::Application));
+        if(ptrExcelApp == NULL)
+        {
+            return ;
+        }
+        ptrBook =  ptrExcelApp->Workbooks->Open(_bstr_t(strFileName));
+        ptrSheet =  ptrBook->Sheets->GetItem(1);
+        int nCount = ptrSheet->GetRows()->GetCount() - 2;
+        for(int i = 0 ; i < nCount; i++)
+        {
+            CString strIndex;
+            strIndex.Format(_T("A%d"), i + 2);
+            ptrRange = ptrSheet->GetRange(_variant_t(strIndex), _variant_t(strIndex));
+            CString strName = ptrRange->GetValue();
+            if(strName.IsEmpty())
+            {
+                break;
+            }
+
+            strIndex.Format(_T("B%d"), i + 2);
+            ptrRange = ptrSheet->GetRange(_variant_t(strIndex), _variant_t(strIndex));
+            CString strProfession = ptrRange->GetValue();
+            if(strProfession.IsEmpty())
+            {
+                break;
+            }
+            OnAddPlayer(strName, strProfession);
+        }
+        ptrExcelApp->Quit();
+        m_pTipLabel->SetText(_T("导入信息成功"));
     }
 }
 
@@ -483,11 +522,14 @@ void CDKPManageFrame::OnExcelBtn(CDuiNotify& msg)
         for(nIndex[0] = 0; nIndex[0] < nRows; nIndex[0]++)
         {
             CDuiListContainerElement* pContainer = static_cast<CDuiListContainerElement*>(m_pInfoList->GetItemAt(nIndex[0]));
-            for(nIndex[1] = 0; nIndex[1] < nCols; nIndex[1]++)
+            if(pContainer && pContainer->IsVisible())
             {
-                CDuiLabel* pLabel = static_cast<CDuiLabel*>(pContainer->GetItemAt(nIndex[1] + 1));
-                sItemValue = pLabel->GetText().GetData();
-                saData.MultiDimSetAt((long*)nIndex, CComVariant(sItemValue));
+                for(nIndex[1] = 0; nIndex[1] < nCols; nIndex[1]++)
+                {
+                    CDuiLabel* pLabel = static_cast<CDuiLabel*>(pContainer->GetItemAt(nIndex[1] + 1));
+                    sItemValue = pLabel->GetText().GetData();
+                    saData.MultiDimSetAt((long*)nIndex, CComVariant(sItemValue));
+                }
             }
         }
 
@@ -693,7 +735,7 @@ void CDKPManageFrame::OnNameEditTextChanged()
         for(int i = 0; i < m_pInfoList->GetCount(); i++)
         {
             CDuiListContainerElement* pContainer = static_cast<CDuiListContainerElement*>(m_pInfoList->GetItemAt(i));
-            if(pContainer)
+            if(pContainer && pContainer->IsVisible())
             {
                 CDuiLabel* pLabel = static_cast<CDuiLabel*>(pContainer->GetItemAt(1));
                 BOOL bExist = FALSE;
@@ -738,6 +780,42 @@ void CDKPManageFrame::OnInitInfoOrderBy(CString strOrder)
     }
     delete pRecords;
     pRecords =  NULL;
+}
+
+BOOL CDKPManageFrame::OnAddPlayer(CString strName, CString strProfession)
+{
+    m_pTipLabel->SetText(_T("正在添加人员"));
+    CString strSQL;
+    strSQL.Format(_T("insert into PlayerInfo (Name,Profession,CreateTime) VALUES ('%s','%s',datetime('now', 'localtime'))"), strName, strProfession.Trim());
+    if(m_MySqlite.Execute(strSQL.GetBuffer()))
+    {
+        CRecords* pRecords = new CRecords;
+        strSQL.Format(_T("select ID,CreateTime from PlayerInfo where Name='%s'"), strName);
+        if(m_MySqlite.Execute(strSQL.GetBuffer(), (void*)pRecords))
+        {
+            for(int i = 0; i < pRecords->GetRow(); i++)
+            {
+                int nIndex = 0;
+                UINT uID				= _ttoi(pRecords->GetItem(i, nIndex++));
+                CString strTime			= pRecords->GetItem(i, nIndex++);
+                if(OnAddListItem(uID, strName.GetBuffer(), strProfession.GetBuffer(), 0, 0, 0, strTime.GetBuffer(), _T("")))
+                {
+                    CString strRecord;
+                    strRecord.Format(_T("添加成员：姓名[%s] 职业[%s]"), strName, strProfession);
+                    strSQL.Format(_T("insert into HistoryRecord (Owner,CreateTime,Record) VALUES (%d,datetime('now', 'localtime'),'%s')"), uID, strRecord);
+                    m_MySqlite.Execute(strSQL.GetBuffer());
+                    m_pTipLabel->SetText(_T("添加人员成功"));
+                }
+            }
+        }
+        delete pRecords;
+        pRecords = NULL;
+    }
+    else
+    {
+        m_pTipLabel->SetText(_T("添加人员失败，名字重复"));
+    }
+    return TRUE;
 }
 
 BOOL CDKPManageFrame::OnAddListItem(UINT uID, CDuiString strName, CDuiString strProfession, int nAddMark, int nDelMark, int nMark, CDuiString strTime, CDuiString strRemarks)

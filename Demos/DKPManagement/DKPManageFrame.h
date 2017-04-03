@@ -28,12 +28,18 @@ public:
     void OnClick(CDuiNotify& msg);
     void OnAddBtn(CDuiNotify& msg);
     void OnDelBtn(CDuiNotify& msg);
+
     void OnAddMarkBtn(CDuiNotify& msg);
     void OnDelMarkBtn(CDuiNotify& msg);
     void OnClearMarkBtn(CDuiNotify& msg);
+
+    void OnSelectedBtn(CDuiNotify& msg);
     void OnUnselectedBtn(CDuiNotify& msg);
+
+    void OnImportBtn(CDuiNotify& msg);
     void OnExcelBtn(CDuiNotify& msg);
     void OnSelectChanged(CDuiNotify& msg);
+
     void OnItemSelect(CDuiNotify& msg);
     void OnTextChanged(CDuiNotify& msg);
 
@@ -41,6 +47,7 @@ public:
     void OnNameEditTextChanged();
 private:
     void OnInitInfoOrderBy(CString strOrder);
+    BOOL OnAddPlayer(CString strName, CString strProfession);
     BOOL OnAddListItem(UINT uID, CDuiString strName, CDuiString strProfession, int nAddMark, int nDelMark, int nMark, CDuiString strTime, CDuiString strRemarks);
     BOOL OnAddHisListItem(CDuiString strID, CDuiString strTime, CDuiString strRecord);
 private:

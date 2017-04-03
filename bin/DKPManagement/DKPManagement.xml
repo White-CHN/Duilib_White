@@ -80,15 +80,17 @@
 							</List>
 						</VerticalLayout>
 						<VerticalLayout childpadding="20" childalign="center" width="110">
-							<Control height="30"/>
 							<Button name="AddBtn" text="增加人员" height="28" width="95" tooltip="增加人员" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0" />
 							<Button name="DelBtn" text="删除人员" height="28" width="95" tooltip="删除人员" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Control height="1"/>
 							<Button name="AddMarkBtn" text="加分" height="28" width="95" tooltip="加分" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Button name="DelMarkBtn" text="扣分" height="28" width="95" tooltip="扣分" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Button name="ClearMarkBtn" text="清分" height="28" width="95" tooltip="清分" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
+							<Control height="1"/>
+							<Button name="SelectedBtn" text="全选" height="28" width="95" tooltip="全选" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Button name="UnselectedBtn" text="清空选中" height="28" width="95" tooltip="清空选中" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Control height="1"/>
+							<Button name="ImportBtn" text="信息导入" height="28" width="95" tooltip="信息导入" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Button name="ExcelBtn" text="导出Excel表" height="28" width="95" tooltip="导出Excel表" textcolor="#FF000000" style="btn_style" textpadding="0,-3,0,0"/>
 							<Control/>
 						</VerticalLayout>
